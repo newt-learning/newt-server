@@ -1,0 +1,16 @@
+{
+  "name": "newt-server",
+  "version": "0.1.0",
+  "description": "Newt server",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "Nehal Udyavar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.8.1",
+    "nodemon": "^2.0.2"
+  }
+}
