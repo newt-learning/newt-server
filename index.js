@@ -2,14 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
 
+// Require models
+require("./models");
+
+// Initialize app
 const app = express();
 
+// Connect to Mongo database
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true
 });
 
+// If successfully connected, log message. Otherwise log error
 mongoose.connection.on("connected", () => {
   console.log("Connected to Mongo instance");
 });
