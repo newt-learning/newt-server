@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Require routes
-require("./routes");
+require("./routes")(app);
 
 // Connect to Mongo database
 mongoose.connect(keys.mongoURI, {

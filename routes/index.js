@@ -1,1 +1,1 @@
-module.exports = Object.assign({}, require("./authRoutes"));
+module.exports = app => Object.assign({}, require("./authRoutes")(app));
