@@ -7,7 +7,6 @@ module.exports = app => {
   // GET request to fetch user through user id
   app.get("/api/user/:userId", async (req, res) => {
     const { userId } = req.params;
-    console.log(userId);
 
     try {
       const user = await User.findById(userId);
