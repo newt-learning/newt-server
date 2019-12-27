@@ -1,1 +1,1 @@
-module.exports = Object.assign({}, require("./User"));
+module.exports = Object.assign({}, require("./User"), require("./Content"));
