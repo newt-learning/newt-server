@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 
+// Require firebase admin initialization
+require("./config/firebase-admin");
+
 // Require models
 require("./models");
 
