@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 const contentSchema = new Schema({
   name: String,
   description: String,
+  type: {
+    type: String,
+    enum: ["book"]
+  },
   shelf: {
     type: [String],
     enum: ["Currently Learning", "Want to Learn", "Finished Learning"]
@@ -11,6 +15,10 @@ const contentSchema = new Schema({
   dateAdded: Date,
   dateCompleted: Date,
   lastUpdated: Date,
+  _user: {
+    type: String,
+    ref: "User"
+  },
   // Data from Book API and book-related data
   bookInfo: {
     bookId: String,
@@ -18,9 +26,13 @@ const contentSchema = new Schema({
     subtitle: String,
     description: String,
     authors: [String],
-    thumbnails: {
-      standard: String,
-      small: String
+    imageLinks: {
+      smallThumbnail: String,
+      thumbnail: String,
+      small: String,
+      medium: String,
+      large: String,
+      extraLarge: String
     },
     industryIdentifiers: {
       ISBN_10: String,
