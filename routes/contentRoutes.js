@@ -5,6 +5,19 @@ const requireLogin = require("../middleware/requireLogin");
 const Content = mongoose.model("content");
 
 module.exports = app => {
+  // GET request to fetch all of a user's content
+  app.get("/api/content", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+
+    Content.find({ _user: userId }, (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(content);
+      }
+    });
+  });
+
   // POST request to add content to database
   app.post("/api/content/create", requireLogin, async (req, res) => {
     try {
