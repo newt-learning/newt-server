@@ -9,7 +9,7 @@ const contentSchema = new Schema({
     enum: ["book"]
   },
   shelf: {
-    type: [String],
+    type: String,
     enum: ["Currently Learning", "Want to Learn", "Finished Learning"]
   },
   dateAdded: Date,
