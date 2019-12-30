@@ -4,6 +4,8 @@ const { Schema } = mongoose;
 const contentSchema = new Schema({
   name: String,
   description: String,
+  authors: [String],
+  thumbnailUrl: String,
   type: {
     type: String,
     enum: ["book"]
