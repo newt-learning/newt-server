@@ -35,4 +35,26 @@ module.exports = app => {
       res.status(500).send(error);
     }
   });
+
+  // PUT request to update content information
+  app.put("/api/content/:contentId/update", requireLogin, (req, res) => {
+    const { contentId } = req.params;
+    const data = req.body;
+    // Set lastUpdated field to now
+    data.lastUpdated = Date.now();
+
+    // Find Content by id and update
+    Content.findByIdAndUpdate(
+      contentId,
+      data,
+      { new: true },
+      (error, content) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(content);
+        }
+      }
+    );
+  });
 };
