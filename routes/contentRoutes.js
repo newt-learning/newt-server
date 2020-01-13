@@ -18,6 +18,27 @@ module.exports = app => {
     });
   });
 
+  // GET request to check if a Google Book already exists in user's library
+  app.get(
+    "/api/content/check-book/:googleBookId",
+    requireLogin,
+    async (req, res) => {
+      const { googleBookId } = req.params;
+      const userId = req.user.uid;
+
+      Content.find(
+        { _user: userId, "bookInfo.bookId": googleBookId },
+        (error, content) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.send(content);
+          }
+        }
+      );
+    }
+  );
+
   // POST request to add content to database
   app.post("/api/content/create", requireLogin, async (req, res) => {
     try {
