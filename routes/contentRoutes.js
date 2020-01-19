@@ -78,4 +78,23 @@ module.exports = app => {
       }
     );
   });
+
+  // PUT request to update number of pages read for a book
+  app.put("/api/content/:contentId/book-progress", requireLogin, (req, res) => {
+    const { contentId } = req.params;
+    const { pagesRead } = req.body;
+
+    Content.findByIdAndUpdate(
+      contentId,
+      { $set: { "bookInfo.pagesRead": pagesRead } },
+      { new: true },
+      (error, content) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(content);
+        }
+      }
+    );
+  });
 };

@@ -21,7 +21,8 @@ require("./routes")(app);
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 // If successfully connected, log message. Otherwise log error
