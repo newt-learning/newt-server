@@ -97,4 +97,17 @@ module.exports = app => {
       }
     );
   });
+
+  // DELETE request to delete content
+  app.delete("/api/content/:contentId", requireLogin, (req, res) => {
+    const { contentId } = req.params;
+
+    Content.findByIdAndDelete(contentId, error => {
+      if (error) {
+        res.status(500).send(error)
+      } else {
+        res.sendStatus(200)
+      }
+    })
+  })
 };
