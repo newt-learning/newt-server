@@ -21,8 +21,9 @@ module.exports = app => {
   app.post("/api/learning-updates/create", requireLogin, async (req, res) => {
     try {
       const data = req.body;
-      // Add timestamp to data object
+      // Add userId and timestamp to data object
       data.timestamp = Date.now();
+      data._user = req.user.uid;
 
       // Create Learning Update, save to database and send back to client
       const learningUpdate = new LearningUpdate(data);

@@ -12,17 +12,12 @@ const learningUpdateSchema = new Schema({
   },
   previousPagesRead: Number,
   updatedPagesRead: Number,
+  numPagesRead: Number,
   contentType: {
     type: String,
     enum: ["book"]
   },
   timestamp: Date
-});
-
-// Since numPagesRead is a computed value, gonna use Mongoose virtual
-// https://mongoosejs.com/docs/tutorials/virtuals.html
-learningUpdateSchema.virtual("numPagesRead").get(function() {
-  return updatedPagesRead - previousPagesRead;
 });
 
 mongoose.model("learning-updates", learningUpdateSchema);
