@@ -1,0 +1,35 @@
+const mongoose = require("mongoose");
+const requireLogin = require("../middleware/requireLogin");
+
+const LearningUpdate = mongoose.model("learning-updates");
+
+module.exports = app => {
+  // GET request to fetch all of a user's learning updates
+  app.get("/api/learning-updates/", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+
+    LearningUpdate.find({ _user: userId }, (error, learningUpdates) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(learningUpdates);
+      }
+    });
+  });
+
+  // POST request to create a learning update
+  app.post("/api/learning-updates/all", requireLogin, async (req, res) => {
+    try {
+      const data = req.body;
+      // Add timestamp to data object
+      data.timestamp = Date.now();
+
+      // Create Learning Update, save to database and send back to client
+      const learningUpdate = new LearningUpdate(data);
+      await learningUpdate.save();
+      res.send(learningUpdate);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  });
+};

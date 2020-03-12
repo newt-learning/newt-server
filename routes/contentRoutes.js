@@ -1,4 +1,3 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
@@ -104,10 +103,10 @@ module.exports = app => {
 
     Content.findByIdAndDelete(contentId, error => {
       if (error) {
-        res.status(500).send(error)
+        res.status(500).send(error);
       } else {
-        res.sendStatus(200)
+        res.sendStatus(200);
       }
-    })
-  })
+    });
+  });
 };
