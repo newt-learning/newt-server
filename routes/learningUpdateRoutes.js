@@ -18,7 +18,7 @@ module.exports = app => {
   });
 
   // POST request to create a learning update
-  app.post("/api/learning-updates/all", requireLogin, async (req, res) => {
+  app.post("/api/learning-updates/create", requireLogin, async (req, res) => {
     try {
       const data = req.body;
       // Add timestamp to data object
