@@ -5,15 +5,15 @@ const moment = require("moment");
 function initializeStatsArray(period) {
   switch (period) {
     case "week":
-      return [
-        { x: "Sun", y: 0 },
-        { x: "Mon", y: 0 },
-        { x: "Tue", y: 0 },
-        { x: "Wed", y: 0 },
-        { x: "Thu", y: 0 },
-        { x: "Fri", y: 0 },
-        { x: "Sat", y: 0 }
-      ];
+      const weekdaysShort = moment.weekdaysShort();
+      return weekdaysShort.map(weekday => {
+        return { x: weekday, y: 0 };
+      });
+    case "year":
+      const monthsShort = moment.monthsShort();
+      return monthsShort.map(month => {
+        return { x: month, y: 0 };
+      });
     default:
       return null;
   }
@@ -25,8 +25,13 @@ function getFormattedStatsByPeriod(data, period) {
 
   if (period === "week") {
     data.forEach(update => {
-      const dayNumber = moment(update.timestamp).weekday();
-      statsArray[dayNumber].y += update.numPagesRead;
+      const weekdayNumber = moment(update.timestamp).weekday();
+      statsArray[weekdayNumber].y += update.numPagesRead;
+    });
+  } else if (period === "year") {
+    data.forEach(update => {
+      const monthNumber = moment(update.timestamp).month();
+      statsArray[monthNumber].y += update.numPagesRead;
     });
   }
 
