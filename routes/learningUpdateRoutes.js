@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 const requireLogin = require("../middleware/requireLogin");
+const { getFormattedStatsByPeriod } = require("../helpers/routesHelpers");
 
 const LearningUpdate = mongoose.model("learning-updates");
 
@@ -75,4 +76,34 @@ module.exports = app => {
       res.status(500).send(error);
     }
   });
+
+  // GET request to fetch and format stats for a given period (day, week, month, year)
+  app.get(
+    "/api/stats/by-:period/:startDate.:endDate",
+    requireLogin,
+    async (req, res) => {
+      // Period param above is day, week, month, or year
+      const { period, startDate, endDate } = req.params;
+      const userId = req.user.uid;
+
+      LearningUpdate.find(
+        {
+          _user: userId,
+          // Query timestamp field for greater than start date and less than end date
+          timestamp: {
+            $gte: startDate,
+            $lte: endDate
+          }
+        },
+        (error, learningUpdates) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            const stats = getFormattedStatsByPeriod(learningUpdates, period);
+            res.send(stats);
+          }
+        }
+      );
+    }
+  );
 };
