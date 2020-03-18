@@ -4,6 +4,8 @@ const moment = require("moment");
 // manually declared.
 function initializeStatsArray(period) {
   switch (period) {
+    case "day":
+      return [{ contentType: "Books", value: 0, unit: "pages read" }];
     case "week":
       const weekdaysShort = moment.weekdaysShort();
       return weekdaysShort.map(weekday => {
@@ -23,7 +25,13 @@ function initializeStatsArray(period) {
 function getFormattedStatsByPeriod(data, period) {
   const statsArray = initializeStatsArray(period);
 
-  if (period === "week") {
+  if (period === "day") {
+    data.forEach(update => {
+      if (update.contentType === "book") {
+        statsArray[0].value += update.numPagesRead;
+      }
+    });
+  } else if (period === "week") {
     data.forEach(update => {
       const weekdayNumber = moment(update.timestamp).weekday();
       statsArray[weekdayNumber].y += update.numPagesRead;
