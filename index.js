@@ -22,14 +22,14 @@ mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 
 // If successfully connected, log message. Otherwise log error
 mongoose.connection.on("connected", () => {
   console.log("Connected to Mongo instance");
 });
-mongoose.connection.on("error", error => {
+mongoose.connection.on("error", (error) => {
   console.error("Error connecting to Mongo", error);
 });
 

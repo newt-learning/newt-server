@@ -1,9 +1,8 @@
-const express = require("express");
 const mongoose = require("mongoose");
 
 const User = mongoose.model("users");
 
-module.exports = app => {
+module.exports = (app) => {
   // GET request to fetch user through user id
   app.get("/api/user/:userId", async (req, res) => {
     const { userId } = req.params;
@@ -43,7 +42,7 @@ module.exports = app => {
         lastName,
         email,
         dateCreated: Date.now(),
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       }).save();
 
       const newUser = await User.findOne({ _id });
