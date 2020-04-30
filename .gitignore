@@ -2,3 +2,4 @@ node_modules
 dev.js
 firebaseServiceAccountKey.json
 .vscode
+.env.*
