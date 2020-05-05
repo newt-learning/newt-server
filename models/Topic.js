@@ -9,6 +9,10 @@ const topicSchema = new Schema({
       ref: "Content",
     },
   ],
+  _user: {
+    type: String,
+    ref: "User",
+  },
   dateAdded: Date,
   lastUpdated: Date,
 });
