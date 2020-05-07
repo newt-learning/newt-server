@@ -16,4 +16,22 @@ module.exports = (app) => {
       }
     });
   });
+
+  // POST request to create a topic
+  app.post("/api/topics/create", requireLogin, async (req, res) => {
+    try {
+      const data = req.body;
+      // Add user id and dates to data object
+      data._user = req.user.uid;
+      data.dateAdded = Date.now();
+      data.lastUpdated = Date.now();
+
+      // Create Topic, save to database and send back to client
+      const topic = new Topic(data);
+      await topic.save();
+      res.send(topic);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  });
 };
