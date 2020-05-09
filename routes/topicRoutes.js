@@ -34,4 +34,23 @@ module.exports = (app) => {
       res.status(500).send(error);
     }
   });
+
+  // PUT request to add content (contentId) to multiple topics
+  app.put("/api/topics/add-content", requireLogin, (req, res) => {
+    const { topicIds, contentId } = req.body;
+
+    // First argument matches _ids in the topicIds array, second argument pushes
+    // the contentId to those matched topics
+    Topic.updateMany(
+      { _id: { $in: topicIds } },
+      { $push: { content: contentId } },
+      (error, result) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.sendStatus(200);
+        }
+      }
+    );
+  });
 };
