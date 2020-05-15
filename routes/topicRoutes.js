@@ -44,7 +44,26 @@ module.exports = (app) => {
     Topic.updateMany(
       { _id: { $in: topicIds } },
       { $push: { content: contentId } },
-      (error, result) => {
+      (error) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.sendStatus(200);
+        }
+      }
+    );
+  });
+
+  // PUT request to remove content (contentId) to multiple topics
+  app.put("/api/topics/remove-content", requireLogin, (req, res) => {
+    const { topicIds, contentId } = req.body;
+
+    // First argument matches _ids in the topicIds array, second argument pulls
+    // (removes) the contentId to those matched topics
+    Topic.updateMany(
+      { _id: { $in: topicIds } },
+      { $pull: { content: contentId } },
+      (error) => {
         if (error) {
           res.status(500).send(error);
         } else {
