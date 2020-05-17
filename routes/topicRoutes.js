@@ -35,6 +35,23 @@ module.exports = (app) => {
     }
   });
 
+  // PUT request to edit a topic
+  app.put("/api/topics/:topicId/update", requireLogin, (req, res) => {
+    const { topicId } = req.params;
+    const data = req.body;
+    // Set lastUpdated field to now
+    data.lastUpdated = Date.now();
+
+    // Find topic by id and update
+    Topic.findByIdAndUpdate(topicId, data, { new: true }, (error, topic) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(topic);
+      }
+    });
+  });
+
   // PUT request to add content (contentId) to multiple topics
   app.put("/api/topics/add-content", requireLogin, (req, res) => {
     const { topicIds, contentId } = req.body;
