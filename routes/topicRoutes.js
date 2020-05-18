@@ -89,4 +89,17 @@ module.exports = (app) => {
       }
     );
   });
+
+  // DELETE request to delete a topic
+  app.delete("/api/topics/:topicId", requireLogin, (req, res) => {
+    const { topicId } = req.params;
+
+    Topic.findByIdAndDelete(topicId, (error) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.sendStatus(200);
+      }
+    });
+  });
 };
