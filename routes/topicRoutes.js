@@ -92,7 +92,7 @@ module.exports = (app) => {
   });
 
   // DELETE request to delete a topic and remove all pointers to the topic that
-  // might be there in particular content
+  // were there in particular content
   app.delete("/api/topics/:topicId", requireLogin, (req, res) => {
     const { topicId } = req.params;
 
@@ -104,15 +104,14 @@ module.exports = (app) => {
         const { content } = topic;
 
         // For all the content ids, remove pointers to this topic from the topic
-        // array (because it's going to be deleted).
+        // array in Content model (because topic is going to be deleted).
         Content.updateMany(
           { _id: { $in: content } },
           { $pull: { topics: topicId } },
-          (error, raw) => {
+          (error) => {
             if (error) {
               res.status(500).send(error);
             } else {
-              console.log(raw);
               // Now delete the topic
               Topic.findByIdAndDelete(topicId, (error) => {
                 if (error) {
