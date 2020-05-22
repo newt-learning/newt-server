@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
+const _ = require("lodash");
 const requireLogin = require("../middleware/requireLogin");
 const { getFormattedStatsByPeriod } = require("../helpers/routesHelpers");
 
 const LearningUpdate = mongoose.model("learning-updates");
 
-module.exports = app => {
+module.exports = (app) => {
   // GET request to fetch all of a user's learning updates
   app.get("/api/learning-updates/", requireLogin, async (req, res) => {
     const userId = req.user.uid;
@@ -20,45 +20,51 @@ module.exports = app => {
   });
 
   // GET request to fetch summary stats sentence for the current week
-  app.get("/api/summary-stats", requireLogin, async (req, res) => {
-    const userId = req.user.uid;
+  app.get(
+    "/api/summary-stats/:startDate.:endDate",
+    requireLogin,
+    async (req, res) => {
+      const { startDate, endDate } = req.params;
+      const userId = req.user.uid;
 
-    LearningUpdate.find({ _user: userId }, (error, learningUpdates) => {
-      if (error) {
-        res.status(500).send(error);
-      } else {
-        // Going to create the following example sentence that summarizes learning activity for the week:
-        // "109 pages read across 2 books this week"
-        let totalPagesRead = 0;
-        let numUniqueBooks = 0;
-        let contentIdVal = "";
-        const currentWeek = moment().week();
+      LearningUpdate.find(
+        {
+          _user: userId, // Query timestamp field for greater than start date and less than end date
+          timestamp: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+        (error, learningUpdates) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            // First map over the learning updates and return just the contentIds,
+            // then reduce it to only the unique ids
+            const numUniqueBooks = _.uniq(
+              _.map(learningUpdates, (update) => String(update.contentId))
+            ).length;
+            // For each learning update, increment the sum (initialized as 0 in the
+            // third argument) with the numPagesRead field to get the total pages read
+            const totalPagesRead = _.reduce(
+              learningUpdates,
+              function (sum, value) {
+                return sum + value.numPagesRead;
+              },
+              0
+            );
 
-        learningUpdates.forEach(update => {
-          // If the week number of the learning update's timestamp is the same as the week number
-          // of the current week, then add the number of pages read to the total, and also calculate the
-          // number of unique books read
-          if (moment(update.timestamp).week() === currentWeek) {
-            totalPagesRead += update.numPagesRead;
+            // Sentence summarizing book stats for the week
+            const summarySentence = `${totalPagesRead} pages read across ${numUniqueBooks} ${
+              numUniqueBooks > 1 ? "books" : "book"
+            } this week.`;
 
-            // Calculating numbere of unique books: If the contentId is not the same as the one in the
-            // previous learning update, then increment numUniqueBooks by 1.
-            if (String(update.contentId) !== contentIdVal) {
-              numUniqueBooks += 1;
-              contentIdVal = String(update.contentId);
-            }
+            res.send({ books: summarySentence });
           }
-        });
-
-        // Sentence summarizing book stats for the week
-        const summarySentence = `${totalPagesRead} pages read across ${numUniqueBooks} ${
-          numUniqueBooks > 1 ? "books" : "book"
-        } this week.`;
-
-        res.send({ books: summarySentence });
-      }
-    });
-  });
+        }
+      );
+    }
+  );
 
   // POST request to create a learning update
   app.post("/api/learning-updates/create", requireLogin, async (req, res) => {
@@ -92,8 +98,8 @@ module.exports = app => {
           // Query timestamp field for greater than start date and less than end date
           timestamp: {
             $gte: startDate,
-            $lte: endDate
-          }
+            $lte: endDate,
+          },
         },
         (error, learningUpdates) => {
           if (error) {

@@ -8,18 +8,24 @@ const contentSchema = new Schema({
   thumbnailUrl: String,
   type: {
     type: String,
-    enum: ["book"]
+    enum: ["book"],
   },
   shelf: {
     type: String,
-    enum: ["Currently Learning", "Want to Learn", "Finished Learning"]
+    enum: ["Currently Learning", "Want to Learn", "Finished Learning"],
   },
+  topics: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Topic",
+    },
+  ],
   dateAdded: Date,
   dateCompleted: Date,
   lastUpdated: Date,
   _user: {
     type: String,
-    ref: "User"
+    ref: "User",
   },
   // Data from Book API and book-related data
   bookInfo: {
@@ -34,20 +40,20 @@ const contentSchema = new Schema({
       small: String,
       medium: String,
       large: String,
-      extraLarge: String
+      extraLarge: String,
     },
     industryIdentifiers: {
       ISBN_10: String,
-      ISBN_13: String
+      ISBN_13: String,
     },
     pageCount: Number,
     pagesRead: {
       type: Number,
-      default: 0
+      default: 0,
     },
     publisher: String,
-    datePublished: String
-  }
+    datePublished: String,
+  },
 });
 
 mongoose.model("content", contentSchema);

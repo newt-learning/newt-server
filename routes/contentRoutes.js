@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
 const Content = mongoose.model("content");
+const Topic = mongoose.model("topics");
 
-module.exports = app => {
+module.exports = (app) => {
   // GET request to fetch all of a user's content
   app.get("/api/content", requireLogin, async (req, res) => {
     const userId = req.user.uid;
@@ -97,15 +98,38 @@ module.exports = app => {
     );
   });
 
-  // DELETE request to delete content
+  // DELETE request to delete content and remove all pointers to the content that
+  // were there in particular Topics
   app.delete("/api/content/:contentId", requireLogin, (req, res) => {
     const { contentId } = req.params;
 
-    Content.findByIdAndDelete(contentId, error => {
+    Content.findById(contentId, (error, content) => {
       if (error) {
         res.status(500).send(error);
       } else {
-        res.sendStatus(200);
+        // Get all the topic ids that were saved in this content item
+        const { topics } = content;
+
+        // For all the topic ids, remove pointers to this content from the content
+        // array in the Topic model (because content is going to be deleted).
+        Topic.updateMany(
+          { _id: { $in: topics } },
+          { $pull: { content: contentId } },
+          (error) => {
+            if (error) {
+              res.status(500).send(error);
+            } else {
+              // Now delete the content
+              Content.findByIdAndDelete(contentId, (error) => {
+                if (error) {
+                  res.status(500).send(error);
+                } else {
+                  res.sendStatus(200);
+                }
+              });
+            }
+          }
+        );
       }
     });
   });
