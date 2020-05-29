@@ -11,7 +11,10 @@ const challengeSchema = new Schema({
     enum: ["reading"],
   },
   totalItems: Number,
-  numItemsFinished: Number,
+  numItemsFinished: {
+    type: Number,
+    default: 0,
+  },
   itemsFinished: [
     {
       type: Schema.Types.ObjectId,
@@ -19,7 +22,7 @@ const challengeSchema = new Schema({
     },
   ],
   contentTypes: {
-    type: String,
+    type: [String],
     enum: ["book"],
   },
   startDate: Date,
