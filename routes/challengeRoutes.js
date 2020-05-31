@@ -101,6 +101,36 @@ module.exports = (app) => {
     }
   );
 
+  // PUT request to add a finished book to the reading challenge
+  app.put("/api/challenges/add-content", requireLogin, (req, res) => {
+    const userId = req.user.uid;
+    const { contentId } = req.body;
+
+    Challenge.findOne(
+      { _user: userId, challengeType: "reading" },
+      async (error, challenge) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          // If no challenge exists, return all okay. Add finished books will be
+          // done when the challenge is created
+          if (!challenge) {
+            res.sendStatus(200);
+          } else {
+            // Update challenge: add contentId to finished items, increment
+            // num finished by 1, and set lastUpdated to now
+            challenge.itemsFinished.push(contentId);
+            challenge.numItemsFinished += 1;
+            challenge.lastUpdated = Date.now();
+            await challenge.save();
+
+            res.sendStatus(200);
+          }
+        }
+      }
+    );
+  });
+
   // DELETE request to delete a challenge
   app.delete("/api/challenges/:challengeId", requireLogin, (req, res) => {
     const { challengeId } = req.params;
