@@ -27,6 +27,7 @@ const challengeSchema = new Schema({
   },
   startDate: Date,
   endDate: Date,
+  lastUpdated: Date,
   year: String,
 });
 

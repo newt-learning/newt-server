@@ -67,4 +67,26 @@ module.exports = (app) => {
       res.status(500).send(error);
     }
   });
+
+  // PUT request to update the number of books in the challenge
+  app.put(
+    "/api/challenges/:challengeId/update",
+    requireLogin,
+    async (req, res) => {
+      const { challengeId } = req.params;
+      const data = req.body;
+      // Set lastUpdated field to now
+      data.lastUpdated = Date.now();
+
+      console.log(data);
+
+      Challenge.findByIdAndUpdate(challengeId, data, (error) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }
+  );
 };
