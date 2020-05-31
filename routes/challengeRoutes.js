@@ -100,4 +100,17 @@ module.exports = (app) => {
       });
     }
   );
+
+  // DELETE request to delete a challenge
+  app.delete("/api/challenges/:challengeId", requireLogin, (req, res) => {
+    const { challengeId } = req.params;
+
+    Challenge.findByIdAndDelete(challengeId, (error) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.sendStatus(200);
+      }
+    });
+  });
 };
