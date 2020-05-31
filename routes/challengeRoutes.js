@@ -19,6 +19,19 @@ module.exports = (app) => {
     });
   });
 
+  // GET request to fetch individual challenge by id
+  app.get("/api/challenges/:challengeId", requireLogin, (req, res) => {
+    const { challengeId } = req.params;
+
+    Challenge.findById(challengeId, (error, challenge) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(challenge);
+      }
+    });
+  });
+
   // POST request to create a challenge
   app.post("/api/challenges/create", requireLogin, async (req, res) => {
     try {
@@ -77,8 +90,6 @@ module.exports = (app) => {
       const data = req.body;
       // Set lastUpdated field to now
       data.lastUpdated = Date.now();
-
-      console.log(data);
 
       Challenge.findByIdAndUpdate(challengeId, data, (error) => {
         if (error) {
