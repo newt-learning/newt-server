@@ -21,6 +21,7 @@ const contentSchema = new Schema({
     },
   ],
   dateAdded: Date,
+  dateStarted: Date,
   dateCompleted: Date,
   lastUpdated: Date,
   _user: {
