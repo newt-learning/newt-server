@@ -21,8 +21,8 @@ const contentSchema = new Schema({
     },
   ],
   dateAdded: Date,
-  dateStarted: Date,
-  dateCompleted: Date,
+  dateStarted: [Date],
+  dateCompleted: [Date],
   lastUpdated: Date,
   _user: {
     type: String,
