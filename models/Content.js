@@ -1,6 +1,20 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const startFinishDatesSchema = new Schema(
+  {
+    dateStarted: {
+      type: Date,
+      default: null,
+    },
+    dateCompleted: {
+      type: Date,
+      default: null,
+    },
+  },
+  { _id: false }
+);
+
 const contentSchema = new Schema({
   name: String,
   description: String,
@@ -21,8 +35,7 @@ const contentSchema = new Schema({
     },
   ],
   dateAdded: Date,
-  dateStarted: [Date],
-  dateCompleted: [Date],
+  startFinishDates: [startFinishDatesSchema],
   lastUpdated: Date,
   _user: {
     type: String,
