@@ -55,7 +55,7 @@ module.exports = (app) => {
         {
           _user: userId,
           shelf: "Finished Learning",
-          dateCompleted: {
+          "startFinishDates.dateCompleted": {
             $gte: startOfYear,
             $lte: endOfYear,
           },
