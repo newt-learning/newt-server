@@ -36,6 +36,7 @@ const contentSchema = new Schema({
     },
   ],
   dateAdded: Date,
+  dateCompleted: Date, // For backwards compatibility
   startFinishDates: [startFinishDatesSchema],
   lastUpdated: Date,
   _user: {
