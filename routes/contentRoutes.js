@@ -47,6 +47,8 @@ module.exports = (app) => {
       data._user = req.user.uid;
       data.dateAdded = Date.now();
       data.lastUpdated = Date.now();
+      // Add schema version
+      data.schemaVersion = 2;
 
       // Create Content, save to database and send back to client
       const content = new Content(data);
