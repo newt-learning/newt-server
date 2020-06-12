@@ -16,7 +16,10 @@ const startFinishDatesSchema = new Schema(
 );
 
 const contentSchema = new Schema({
-  schemaVersion: Number,
+  schemaVersion: {
+    type: Number,
+    default: 1,
+  },
   name: String,
   description: String,
   authors: [String],
