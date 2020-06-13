@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const challengeSchema = new Schema({
+  schemaVersion: {
+    type: Number,
+    default: 1,
+  },
   _user: {
     type: String,
     ref: "User",
