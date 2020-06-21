@@ -26,7 +26,7 @@ const contentSchema = new Schema({
   thumbnailUrl: String,
   type: {
     type: String,
-    enum: ["book"],
+    enum: ["book", "video"],
   },
   shelf: {
     type: String,
@@ -72,6 +72,16 @@ const contentSchema = new Schema({
     },
     publisher: String,
     datePublished: String,
+  },
+  // Data from YouTube API and video-related data
+  videoInfo: {
+    source: String,
+    videoId: String,
+    title: String,
+    description: String,
+    channelId: String,
+    datePublished: String,
+    thumbnails: Object,
   },
 });
 
