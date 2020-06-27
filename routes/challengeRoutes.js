@@ -55,26 +55,26 @@ module.exports = (app) => {
         {
           _user: userId,
           shelf: "Finished Learning",
-          dateCompleted: {
+          "startFinishDates.dateCompleted": {
             $gte: startOfYear,
             $lte: endOfYear,
           },
         },
         // Only return _id field (called projection)
         "_id",
-        (error, content) => {
+        async (error, content) => {
           if (content.length > 0) {
             data.numItemsFinished = content.length;
             data.itemsFinished = content.map((item) => item._id);
           } else {
             data.numItemsFinished = 0;
           }
+          // Create and save the challenge
+          const challenge = new Challenge(data);
+          await challenge.save();
         }
       );
 
-      // Create and save the challenge
-      const challenge = new Challenge(data);
-      await challenge.save();
       res.sendStatus(200);
     } catch (error) {
       res.status(500).send(error);

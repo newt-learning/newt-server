@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const topicSchema = new Schema({
+  schemaVersion: {
+    type: Number,
+    default: 1,
+  },
   name: String,
   content: [
     {

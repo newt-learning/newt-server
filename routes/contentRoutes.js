@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
+const _ = require("lodash");
 
 const Content = mongoose.model("content");
 const Topic = mongoose.model("topics");
@@ -41,20 +42,36 @@ module.exports = (app) => {
 
   // POST request to add content to database
   app.post("/api/content/create", requireLogin, async (req, res) => {
-    try {
-      const data = req.body;
-      // Add user id and dates to data object
-      data._user = req.user.uid;
-      data.dateAdded = Date.now();
-      data.lastUpdated = Date.now();
+    const data = req.body;
+    // Add user id and dates to data object
+    data._user = req.user.uid;
+    data.dateAdded = Date.now();
+    data.lastUpdated = Date.now();
+    // Add schema version
+    data.schemaVersion = 2;
 
-      // Create Content, save to database and send back to client
-      const content = new Content(data);
-      await content.save();
-      res.send(content);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+    // Create Content, save to database and send back to client
+    Content.create(data, (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        // If there are topics, add the content to each of those topics
+        if (!_.isEmpty(content.topics)) {
+          // First argument matches _ids in the topicIds array, second argument pushes
+          // the contentId to those matched topics
+          Topic.updateMany(
+            { _id: { $in: content.topics } },
+            { $push: { content: content._id } },
+            (error) => {
+              if (error) {
+                res.status(500).send(error);
+              }
+            }
+          );
+        }
+        res.send(content);
+      }
+    });
   });
 
   // PUT request to update content information

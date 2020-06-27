@@ -1,14 +1,32 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const startFinishDatesSchema = new Schema(
+  {
+    dateStarted: {
+      type: Date,
+      default: null,
+    },
+    dateCompleted: {
+      type: Date,
+      default: null,
+    },
+  },
+  { _id: false }
+);
+
 const contentSchema = new Schema({
+  schemaVersion: {
+    type: Number,
+    default: 1,
+  },
   name: String,
   description: String,
   authors: [String],
   thumbnailUrl: String,
   type: {
     type: String,
-    enum: ["book"],
+    enum: ["book", "video"],
   },
   shelf: {
     type: String,
@@ -21,7 +39,8 @@ const contentSchema = new Schema({
     },
   ],
   dateAdded: Date,
-  dateCompleted: Date,
+  dateCompleted: Date, // For backwards compatibility
+  startFinishDates: [startFinishDatesSchema],
   lastUpdated: Date,
   _user: {
     type: String,
@@ -53,6 +72,16 @@ const contentSchema = new Schema({
     },
     publisher: String,
     datePublished: String,
+  },
+  // Data from YouTube API and video-related data
+  videoInfo: {
+    source: String,
+    videoId: String,
+    title: String,
+    description: String,
+    channelId: String,
+    datePublished: String,
+    thumbnails: Object,
   },
 });
 
