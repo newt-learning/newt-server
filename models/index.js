@@ -4,5 +4,6 @@ module.exports = Object.assign(
   require("./Content"),
   require("./LearningUpdate"),
   require("./Topic"),
-  require("./Challenge")
+  require("./Challenge"),
+  require("./Series")
 );

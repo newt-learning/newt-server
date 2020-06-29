@@ -32,6 +32,10 @@ const contentSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  seriesId: {
+    type: Schema.Types.ObjectId,
+    ref: "Series",
+  },
   shelf: {
     type: String,
     enum: ["Currently Learning", "Want to Learn", "Finished Learning"],
