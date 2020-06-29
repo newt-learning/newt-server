@@ -22,6 +22,10 @@ const seriesSchema = new Schema({
   ],
   dateAdded: Date,
   lastUpdated: Date,
+  _user: {
+    type: String,
+    ref: "User",
+  },
   seriesInfo: {
     source: String,
     playlistId: String,

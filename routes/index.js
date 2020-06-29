@@ -5,5 +5,6 @@ module.exports = (app) =>
     require("./contentRoutes")(app),
     require("./learningUpdateRoutes")(app),
     require("./topicRoutes")(app),
-    require("./challengeRoutes")(app)
+    require("./challengeRoutes")(app),
+    require("./seriesRoutes")(app)
   );

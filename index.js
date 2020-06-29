@@ -12,7 +12,8 @@ require("./models");
 // Initialize app
 const app = express();
 
-app.use(bodyParser.json());
+// Higher limit for adding series
+app.use(bodyParser.json({ limit: "5mb" }));
 
 // Require routes
 require("./routes")(app);
