@@ -28,6 +28,10 @@ const contentSchema = new Schema({
     type: String,
     enum: ["book", "video"],
   },
+  partOfSeries: {
+    type: Boolean,
+    default: false,
+  },
   shelf: {
     type: String,
     enum: ["Currently Learning", "Want to Learn", "Finished Learning"],
@@ -77,6 +81,8 @@ const contentSchema = new Schema({
   videoInfo: {
     source: String,
     videoId: String,
+    playlistId: String,
+    playlistPosition: Number,
     title: String,
     description: String,
     channelId: String,
