@@ -22,6 +22,15 @@ const seriesSchema = new Schema({
   ],
   dateAdded: Date,
   lastUpdated: Date,
+  seriesInfo: {
+    source: String,
+    playlistId: String,
+    title: String,
+    description: String,
+    channelId: String,
+    datePublished: Date,
+    thumbnails: Object,
+  },
 });
 
 mongoose.model("series", seriesSchema);
