@@ -10,6 +10,10 @@ const seriesSchema = new Schema({
   description: String,
   authors: [String],
   thumbnailUrl: String,
+  type: {
+    type: String,
+    enum: ["series"],
+  },
   contentType: {
     type: String,
     enum: ["video"],
@@ -20,6 +24,7 @@ const seriesSchema = new Schema({
       ref: "Content",
     },
   ],
+  shelf: String,
   dateAdded: Date,
   lastUpdated: Date,
   _user: {
