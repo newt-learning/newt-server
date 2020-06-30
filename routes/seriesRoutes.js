@@ -6,6 +6,19 @@ const Series = mongoose.model("series");
 const Content = mongoose.model("content");
 
 module.exports = (app) => {
+  // GET request to fetch user's series'
+  app.get("/api/series", requireLogin, (req, res) => {
+    const userId = req.user.uid;
+
+    Series.find({ _user: userId }, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(series);
+      }
+    });
+  });
+
   // POST request to add a series to DB
   app.post("/api/series/create", requireLogin, (req, res) => {
     const data = req.body;
