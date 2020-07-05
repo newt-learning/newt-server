@@ -12,6 +12,8 @@ app.use(bodyParser.json({ limit: "5mb" }));
 
 // Connect to user database
 require("./connections/usersDbConn");
+// Connect to Newt Content database
+require("./connections/newtContentDbConn");
 
 // Require routes
 require("./routes")(app);
