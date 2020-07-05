@@ -21,4 +21,4 @@ const topicSchema = new Schema({
   lastUpdated: Date,
 });
 
-mongoose.model("topics", topicSchema);
+module.exports = topicSchema;

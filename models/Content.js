@@ -95,4 +95,4 @@ const contentSchema = new Schema({
   },
 });
 
-mongoose.model("content", contentSchema);
+module.exports = contentSchema;

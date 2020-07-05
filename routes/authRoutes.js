@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const userDbConn = require("../connections/usersDbConn");
 
-const User = mongoose.model("users");
+const User = userDbConn.model("users");
 
 module.exports = (app) => {
   // GET request to fetch user through user id

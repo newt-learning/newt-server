@@ -42,4 +42,4 @@ const seriesSchema = new Schema({
   },
 });
 
-mongoose.model("series", seriesSchema);
+module.exports = seriesSchema;

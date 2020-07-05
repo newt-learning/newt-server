@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const userDbConn = require("../connections/usersDbConn");
 const requireLogin = require("../middleware/requireLogin");
 const _ = require("lodash");
 
-const Series = mongoose.model("series");
-const Content = mongoose.model("content");
+const Series = userDbConn.model("series");
+const Content = userDbConn.model("content");
 
 module.exports = (app) => {
   // GET request to fetch user's series'

@@ -27,4 +27,4 @@ const learningUpdateSchema = new Schema({
   dateAdded: Date,
 });
 
-mongoose.model("learning-updates", learningUpdateSchema);
+module.exports = learningUpdateSchema;
