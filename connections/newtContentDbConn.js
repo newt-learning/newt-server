@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const keys = require("../config/keys");
+const {
+  newtContentSchema,
+  newtSeriesSchema,
+  newtContentCreatorSchema,
+  newtSourceSchema,
+} = require("newt-content-models");
 
 const conn = mongoose.createConnection(keys.newtContentMongoURI, {
   useNewUrlParser: true,
@@ -14,5 +20,11 @@ mongoose.connections[2].on("connected", () => {
 mongoose.connections[2].on("error", (error) => {
   console.error("Error connecting to Newt Content Mongo", error);
 });
+
+// Add Newt Content models
+conn.model("newt-content", newtContentSchema);
+conn.model("newt-series", newtSeriesSchema);
+conn.model("newt-content-creators", newtContentCreatorSchema);
+conn.model("newt-sources", newtSourceSchema);
 
 module.exports = conn;
