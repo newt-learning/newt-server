@@ -7,6 +7,7 @@ const learningUpdateSchema = require("../models/LearningUpdate");
 const topicSchema = require("../models/Topic");
 const challengeSchema = require("../models/Challenge");
 const seriesSchema = require("../models/Series");
+const quizSchema = require("../models/Quiz");
 
 // Create connection to user database
 const conn = mongoose.createConnection(keys.mongoURI, {
@@ -31,6 +32,7 @@ conn.model("learning-updates", learningUpdateSchema);
 conn.model("topics", topicSchema);
 conn.model("challenges", challengeSchema);
 conn.model("series", seriesSchema);
+conn.model("quizzes", quizSchema);
 
 // Export connection
 module.exports = conn;
