@@ -14,10 +14,10 @@ const conn = mongoose.createConnection(keys.newtContentMongoURI, {
   useFindAndModify: false,
 });
 
-mongoose.connections[2].on("connected", () => {
+mongoose.connections[1].on("connected", () => {
   console.log("Connected to Newt Content Mongo instance");
 });
-mongoose.connections[2].on("error", (error) => {
+mongoose.connections[1].on("error", (error) => {
   console.error("Error connecting to Newt Content Mongo", error);
 });
 

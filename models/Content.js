@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const newtContentDbConn = require("../connections/newtContentDbConn");
+
+// Newt Content models
+const NewtContent = newtContentDbConn.model("newt-content");
+const NewtContentCreator = newtContentDbConn.model("newt-content-creators");
+const NewtSeries = newtContentDbConn.model("newt-series");
 
 const startFinishDatesSchema = new Schema(
   {
@@ -53,6 +59,20 @@ const contentSchema = new Schema({
   _user: {
     type: String,
     ref: "User",
+  },
+  // Newt Content fields
+  isOnNewtContentDatabase: Boolean,
+  newtContentId: {
+    type: Schema.Types.ObjectId,
+    ref: NewtContent,
+  },
+  newtContentCreatorId: {
+    type: Schema.Types.ObjectId,
+    ref: NewtContentCreator,
+  },
+  newtSeriesId: {
+    type: Schema.Types.ObjectId,
+    ref: NewtSeries,
   },
   // Data from Book API and book-related data
   bookInfo: {
