@@ -6,6 +6,7 @@ const newtContentDbConn = require("../connections/newtContentDbConn");
 const NewtContent = newtContentDbConn.model("newt-content");
 const NewtContentCreator = newtContentDbConn.model("newt-content-creators");
 const NewtSeries = newtContentDbConn.model("newt-series");
+const NewtQuiz = newtContentDbConn.model("newt-quizzes");
 
 const startFinishDatesSchema = new Schema(
   {
@@ -61,11 +62,11 @@ const contentSchema = new Schema({
     ref: "User",
   },
   // Newt Content fields
+  isOnNewtContentDatabase: {
+    type: Boolean,
+    default: false,
+  },
   newtContentInfo: {
-    isOnNewtContentDatabase: {
-      type: Boolean,
-      default: false,
-    },
     newtContentId: {
       type: Schema.Types.ObjectId,
       ref: NewtContent,
@@ -77,6 +78,10 @@ const contentSchema = new Schema({
     newtSeriesId: {
       type: Schema.Types.ObjectId,
       ref: NewtSeries,
+    },
+    newtQuizId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtQuiz,
     },
   },
   // Quiz info
