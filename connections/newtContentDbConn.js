@@ -6,6 +6,7 @@ const {
   newtContentCreatorSchema,
   newtSourceSchema,
   newtQuizSchema,
+  newtQuizQuestionSchema,
 } = require("newt-content-models");
 
 const conn = mongoose.createConnection(keys.newtContentMongoURI, {
@@ -28,5 +29,6 @@ conn.model("newt-series", newtSeriesSchema);
 conn.model("newt-content-creators", newtContentCreatorSchema);
 conn.model("newt-sources", newtSourceSchema);
 conn.model("newt-quizzes", newtQuizSchema);
+conn.model("newt-quiz-questions", newtQuizQuestionSchema);
 
 module.exports = conn;

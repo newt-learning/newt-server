@@ -3,12 +3,13 @@ const { Schema } = mongoose;
 const newtContentDbConn = require("../connections/newtContentDbConn");
 
 const NewtQuiz = newtContentDbConn.model("newt-quizzes");
+const NewtQuizQuestion = newtContentDbConn.model("newt-quiz-questions");
 const NewtContent = newtContentDbConn.model("newt-content");
 
 const resultSchema = new Schema({
   questionId: {
     type: Schema.Types.ObjectId,
-    ref: NewtQuiz.questions,
+    ref: NewtQuizQuestion,
   },
   // Denormalize question, options and topics
   question: String,
