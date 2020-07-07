@@ -61,19 +61,35 @@ const contentSchema = new Schema({
     ref: "User",
   },
   // Newt Content fields
-  isOnNewtContentDatabase: Boolean,
-  newtContentId: {
-    type: Schema.Types.ObjectId,
-    ref: NewtContent,
+  newtContentInfo: {
+    isOnNewtContentDatabase: {
+      type: Boolean,
+      default: false,
+    },
+    newtContentId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtContent,
+    },
+    newtContentCreatorId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtContentCreator,
+    },
+    newtSeriesId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtSeries,
+    },
   },
-  newtContentCreatorId: {
-    type: Schema.Types.ObjectId,
-    ref: NewtContentCreator,
-  },
-  newtSeriesId: {
-    type: Schema.Types.ObjectId,
-    ref: NewtSeries,
-  },
+  // Quiz info
+  quizInfo: [
+    {
+      dateCreated: Date,
+      dateCompleted: Date,
+      quizId: {
+        type: Schema.Types.ObjectId,
+        ref: "Quiz",
+      },
+    },
+  ],
   // Data from Book API and book-related data
   bookInfo: {
     bookId: String,
