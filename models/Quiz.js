@@ -7,7 +7,7 @@ const NewtQuizQuestion = newtContentDbConn.model("newt-quiz-questions");
 const NewtContent = newtContentDbConn.model("newt-content");
 
 const resultSchema = new Schema({
-  questionId: {
+  newtQuestionId: {
     type: Schema.Types.ObjectId,
     ref: NewtQuizQuestion,
   },
