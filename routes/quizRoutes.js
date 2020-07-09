@@ -22,6 +22,11 @@ module.exports = (app) => {
           console.log(error);
           res.status(500).send(error);
         } else {
+          // If nothing found send back 404 status
+          if (_.isEmpty(newtQuiz)) {
+            res.sendStatus(404);
+          }
+
           // Change the _id field from Newt Quiz to newtQuestionId field that's
           // used in the user's Quiz model
           const userQuizResultsTemplate = _.map(
