@@ -9,6 +9,23 @@ const NewtQuiz = newtContentDbConn.model("newt-quizzes");
 const QuizQuestion = newtContentDbConn.model("newt-quiz-questions");
 
 module.exports = (app) => {
+  // GET request to fetch an individual user quiz
+  app.get("/api/quizzes/:quizId", requireLogin, (req, res) => {
+    const { quizId } = req.params;
+
+    Quiz.findById(quizId, (error, quiz) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        if (_.isEmpty(quiz)) {
+          res.sendStatus(404);
+        } else {
+          res.send(quiz);
+        }
+      }
+    });
+  });
+
   // POST request to create a quiz for the user from the Newt Content quiz questions
   app.post("/api/quizzes/create", requireLogin, (req, res) => {
     const userId = req.user.uid;

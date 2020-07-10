@@ -87,6 +87,7 @@ const contentSchema = new Schema({
   // Quiz info
   quizInfo: [
     {
+      _id: false,
       dateCreated: Date,
       dateCompleted: Date,
       quizId: {
