@@ -7,7 +7,7 @@ if (environment === "development") {
   // Otherwise, return staging/production keys from server config vars
   module.exports = {
     mongoURI: process.env.MONGO_URI,
-    newtContentMongoURI: process.env.NEWT_ENV_MONGO_URI,
+    newtContentMongoURI: process.env.NEWT_CONTENT_MONGO_URI,
     googleBooksApiKey: process.env.GOOGLE_BOOKS_API_KEY,
   };
 }
