@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const userDbConn = require("../connections/usersDbConn");
 const _ = require("lodash");
 const requireLogin = require("../middleware/requireLogin");
 const { getFormattedStatsByPeriod } = require("../helpers/routesHelpers");
 
-const LearningUpdate = mongoose.model("learning-updates");
+const LearningUpdate = userDbConn.model("learning-updates");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's learning updates

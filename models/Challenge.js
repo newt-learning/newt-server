@@ -35,4 +35,4 @@ const challengeSchema = new Schema({
   year: String,
 });
 
-mongoose.model("challenges", challengeSchema);
+module.exports = challengeSchema;

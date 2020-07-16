@@ -15,4 +15,4 @@ const userSchema = new Schema({
   lastUpdated: Date,
 });
 
-mongoose.model("users", userSchema);
+module.exports = userSchema;
