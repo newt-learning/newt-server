@@ -74,4 +74,18 @@ module.exports = (app) => {
         }
       });
   });
+
+  // PUT request to update a user's quiz info
+  app.put("/api/quizzes/:quizId/update", requireLogin, (req, res) => {
+    const { quizId } = req.params;
+    const data = req.body;
+
+    Quiz.findByIdAndUpdate(quizId, data, { new: true }, (error, quiz) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(quiz);
+      }
+    });
+  });
 };
