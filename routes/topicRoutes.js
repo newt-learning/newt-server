@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+const userDbConn = require("../connections/usersDbConn");
 const requireLogin = require("../middleware/requireLogin");
 
-const Topic = mongoose.model("topics");
-const Content = mongoose.model("content");
+const Topic = userDbConn.model("topics");
+const Content = userDbConn.model("content");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's topics

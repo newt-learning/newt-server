@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const userDbConn = require("../connections/usersDbConn");
 const moment = require("moment");
 const requireLogin = require("../middleware/requireLogin");
 
-const Challenge = mongoose.model("challenges");
-const Content = mongoose.model("content");
+const Challenge = userDbConn.model("challenges");
+const Content = userDbConn.model("content");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's challenges

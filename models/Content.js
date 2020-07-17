@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const newtContentDbConn = require("../connections/newtContentDbConn");
+
+// Newt Content models
+const NewtContent = newtContentDbConn.model("newt-content");
+const NewtContentCreator = newtContentDbConn.model("newt-content-creators");
+const NewtSeries = newtContentDbConn.model("newt-series");
+const NewtQuiz = newtContentDbConn.model("newt-quizzes");
 
 const startFinishDatesSchema = new Schema(
   {
@@ -28,6 +35,14 @@ const contentSchema = new Schema({
     type: String,
     enum: ["book", "video"],
   },
+  partOfSeries: {
+    type: Boolean,
+    default: false,
+  },
+  seriesId: {
+    type: Schema.Types.ObjectId,
+    ref: "Series",
+  },
   shelf: {
     type: String,
     enum: ["Currently Learning", "Want to Learn", "Finished Learning"],
@@ -46,6 +61,41 @@ const contentSchema = new Schema({
     type: String,
     ref: "User",
   },
+  // Newt Content fields
+  isOnNewtContentDatabase: {
+    type: Boolean,
+    default: false,
+  },
+  newtContentInfo: {
+    newtContentId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtContent,
+    },
+    newtContentCreatorId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtContentCreator,
+    },
+    newtSeriesId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtSeries,
+    },
+    newtQuizId: {
+      type: Schema.Types.ObjectId,
+      ref: NewtQuiz,
+    },
+  },
+  // Quiz info
+  quizInfo: [
+    {
+      _id: false,
+      dateCreated: Date,
+      dateCompleted: Date,
+      quizId: {
+        type: Schema.Types.ObjectId,
+        ref: "Quiz",
+      },
+    },
+  ],
   // Data from Book API and book-related data
   bookInfo: {
     bookId: String,
@@ -77,6 +127,8 @@ const contentSchema = new Schema({
   videoInfo: {
     source: String,
     videoId: String,
+    playlistId: String,
+    playlistPosition: Number,
     title: String,
     description: String,
     channelId: String,
@@ -85,4 +137,4 @@ const contentSchema = new Schema({
   },
 });
 
-mongoose.model("content", contentSchema);
+module.exports = contentSchema;

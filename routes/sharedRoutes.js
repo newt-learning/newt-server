@@ -1,8 +1,6 @@
-const express = require("express");
-const mongoose = require("mongoose");
 const keys = require("../config/keys");
 
-module.exports = app => {
+module.exports = (app) => {
   // Get book info through Google Books API
   app.get("/api/book-search/:searchString", async (req, res) => {
     const { searchString } = req.params;

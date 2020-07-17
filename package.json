@@ -20,6 +20,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongoose": "^5.8.1",
+    "newt-content-models": "github:newt-learning/newt-content-models",
     "nodemon": "^2.0.2"
   }
 }

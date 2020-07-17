@@ -1,9 +1,10 @@
-const mongoose = require("mongoose");
+const userDbConn = require("../connections/usersDbConn");
 const requireLogin = require("../middleware/requireLogin");
 const _ = require("lodash");
 
-const Content = mongoose.model("content");
-const Topic = mongoose.model("topics");
+const Content = userDbConn.model("content");
+const Topic = userDbConn.model("topics");
+const Quiz = userDbConn.model("quizzes");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's content
@@ -103,7 +104,7 @@ module.exports = (app) => {
 
     Content.findByIdAndUpdate(
       contentId,
-      { $set: { "bookInfo.pagesRead": pagesRead } },
+      { $set: { "bookInfo.pagesRead": pagesRead, lastUpdated: Date.now() } },
       { new: true },
       (error, content) => {
         if (error) {
@@ -125,17 +126,25 @@ module.exports = (app) => {
         res.status(500).send(error);
       } else {
         // Get all the topic ids that were saved in this content item
-        const { topics } = content;
+        const { topics, quizInfo } = content;
+        console.log("quizInfo:", quizInfo);
+        const quizId = _.isEmpty(quizInfo) ? null : quizInfo[0].quizId;
+
+        console.log(quizId);
 
         // For all the topic ids, remove pointers to this content from the content
         // array in the Topic model (because content is going to be deleted).
         Topic.updateMany(
           { _id: { $in: topics } },
           { $pull: { content: contentId } },
-          (error) => {
+          async (error) => {
             if (error) {
               res.status(500).send(error);
             } else {
+              // If there's a quiz associated, delete that as well
+              if (quizId) {
+                await Quiz.findByIdAndDelete(quizId);
+              }
               // Now delete the content
               Content.findByIdAndDelete(contentId, (error) => {
                 if (error) {
