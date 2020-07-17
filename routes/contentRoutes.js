@@ -104,7 +104,7 @@ module.exports = (app) => {
 
     Content.findByIdAndUpdate(
       contentId,
-      { $set: { "bookInfo.pagesRead": pagesRead } },
+      { $set: { "bookInfo.pagesRead": pagesRead, lastUpdated: Date.now() } },
       { new: true },
       (error, content) => {
         if (error) {
