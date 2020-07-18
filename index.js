@@ -18,9 +18,17 @@ require("./connections/newtContentDbConn");
 // Require routes
 require("./routes")(app);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to Newt!");
-});
+if (process.env.NODE_ENV === "production") {
+  // Express will serve up production assets created after build process like
+  // main.js and main.css
+  app.use(express.static("client/build"));
+
+  // Express will serve up index.html if it does not recognize route
+  const path = require("path");
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
 
 const PORT = process.env.PORT || 9000;
 
