@@ -8,6 +8,7 @@ import styles from "./Landing.module.css";
 
 const LandingPage = () => {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const { addToast } = useToasts();
@@ -18,16 +19,20 @@ const LandingPage = () => {
 
   const handleFormSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-
     if (formRef && formRef.current) {
+      // Set state to show loading spinner onn buttonn
+      setIsSubmitting(true);
+
       // Send form data to url to add email field to Google Sheets
       const data = new FormData(formRef.current);
       fetch(keys.connectToGoogleSheetsUrl, { method: "POST", body: data })
         .then((res) => {
           setEmail("");
+          setIsSubmitting(false);
           addToast("We've added you to the list!", { appearance: "success" });
         })
         .catch((error) => {
+          setIsSubmitting(false);
           addToast("Sorry, looks like there was an error. Please try again.", {
             appearance: "error",
           });
@@ -58,7 +63,12 @@ const LandingPage = () => {
               value={email}
               onChange={handleInputChange}
             />
-            <Button type="submit" category="primary" style={styles.btn}>
+            <Button
+              type="submit"
+              category="primary"
+              isLoading={isSubmitting}
+              style={styles.btn}
+            >
               Get early access
             </Button>
           </form>
