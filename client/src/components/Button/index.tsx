@@ -5,8 +5,8 @@ export declare type ButtonCategory = "primary" | "secondary" | undefined;
 
 interface ButtonProps {
   children: React.ReactNode;
-  type: "button";
-  onClick: () => void;
+  type: "button" | "submit";
+  onClick?: () => void;
   category?: ButtonCategory;
   style?: string;
 }
