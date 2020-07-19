@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactComponent as PhoneGraphic } from "./assets/phone-graphic.svg";
 import styles from "./App.module.css";
 
 function App() {
+  const [email, setEmail] = useState("");
+
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    setEmail(e.currentTarget.value);
+  };
+
   return (
     <section className={styles.App}>
       <nav className={styles.nav}>
@@ -12,7 +18,13 @@ function App() {
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
           <h5 className={styles.subtitle}>Sign up for early access</h5>
-          <input type="email" placeholder="Email" className={styles.input} />
+          <input
+            type="email"
+            placeholder="Email"
+            className={styles.input}
+            value={email}
+            onChange={handleInputChange}
+          />
         </div>
 
         <div className={styles.phoneGraphicContainer}>
