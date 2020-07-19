@@ -8,8 +8,11 @@
     "npm": "6.13.4"
   },
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "cd client && npm run start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Nehal Udyavar",
   "license": "ISC",
@@ -20,7 +23,10 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongoose": "^5.8.1",
-    "newt-content-models": "github:newt-learning/newt-content-models",
-    "nodemon": "^2.0.2"
+    "newt-content-models": "github:newt-learning/newt-content-models"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
   }
 }
