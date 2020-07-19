@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Righteous");
 
+* {
+  font-family: "avenir", "Muli", sans-serif;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: "Avenir", "Muli", sans-serif, -apple-system, BlinkMacSystemFont;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 code {

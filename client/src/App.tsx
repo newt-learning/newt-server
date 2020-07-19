@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ReactComponent as PhoneGraphic } from "./assets/phone-graphic.svg";
+// Components
+import { Button } from "./components";
 import styles from "./App.module.css";
 
 function App() {
@@ -25,6 +27,9 @@ function App() {
             value={email}
             onChange={handleInputChange}
           />
+          <Button category="primary" style={styles.btn}>
+            Get early access
+          </Button>
         </div>
 
         <div className={styles.phoneGraphicContainer}>
