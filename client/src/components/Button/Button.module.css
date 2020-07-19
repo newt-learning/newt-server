@@ -1,0 +1,26 @@
+.btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn:hover {
+  transition: 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.primaryBtn {
+  background-color: #008bb8;
+  border: 1px solid #00779f;
+  color: white;
+  font-weight: 500;
+}
+
+.primaryBtn:hover {
+  background-color: #b0ecff;
+  color: #00779f;
+}
