@@ -27,7 +27,11 @@ function App() {
             value={email}
             onChange={handleInputChange}
           />
-          <Button category="primary" style={styles.btn}>
+          <Button
+            category="primary"
+            style={styles.btn}
+            onClick={() => console.log(email)}
+          >
             Get early access
           </Button>
         </div>

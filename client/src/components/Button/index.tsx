@@ -6,11 +6,12 @@ export declare type ButtonCategory = "primary" | "secondary" | undefined;
 interface ButtonProps {
   children: React.ReactNode;
   type: "button";
+  onClick: () => void;
   category?: ButtonCategory;
   style?: string;
 }
 
-const Button = ({ children, type, category, style }: ButtonProps) => {
+const Button = ({ children, type, onClick, category, style }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
     switch (category) {
       case "primary":
@@ -23,6 +24,7 @@ const Button = ({ children, type, category, style }: ButtonProps) => {
   return (
     <button
       type={type}
+      onClick={onClick}
       className={`${styles.btn} ${selectClassFromCategory(category)} ${style}`}
     >
       {children}
