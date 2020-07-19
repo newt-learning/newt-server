@@ -1,17 +1,26 @@
 import React from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import styles from "./Button.module.css";
 
 export declare type ButtonCategory = "primary" | "secondary" | undefined;
 
 interface ButtonProps {
   children: React.ReactNode;
-  type: "button";
-  onClick: () => void;
+  type: "button" | "submit";
+  onClick?: () => void;
   category?: ButtonCategory;
+  isLoading?: boolean;
   style?: string;
 }
 
-const Button = ({ children, type, onClick, category, style }: ButtonProps) => {
+const Button = ({
+  children,
+  type,
+  onClick,
+  category,
+  isLoading,
+  style,
+}: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
     switch (category) {
       case "primary":
@@ -27,13 +36,20 @@ const Button = ({ children, type, onClick, category, style }: ButtonProps) => {
       onClick={onClick}
       className={`${styles.btn} ${selectClassFromCategory(category)} ${style}`}
     >
-      {children}
+      {isLoading ? (
+        <div className={styles.spinnerContainer}>
+          <ClipLoader color="#003e53" size="0.9rem" loading={isLoading} />
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 };
 
 Button.defaultProps = {
   type: "button",
+  isLoading: false,
 };
 
 export default Button;

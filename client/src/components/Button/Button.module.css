@@ -24,3 +24,8 @@
   background-color: #b0ecff;
   color: #00779f;
 }
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+}
