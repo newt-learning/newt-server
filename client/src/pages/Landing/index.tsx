@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
-import { ReactComponent as PhoneGraphic } from "../../assets/phone-graphic.svg";
 import { useToasts } from "react-toast-notifications";
 import keys from "../../config/keys";
 // Components
 import { Button } from "../../components";
+import PhoneGraphic from "./PhoneGraphic";
 import styles from "./Landing.module.css";
 
 const LandingPage = () => {
