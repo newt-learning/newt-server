@@ -83,16 +83,18 @@
 
   .mainContainer {
     display: flex;
+    box-sizing: border-box;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row;
-    padding: 0 0 0 4rem;
+    padding: 0 0 4rem 4rem;
   }
 
   .phoneGraphicContainer {
-    display: flex;
-    justify-content: flex-end;
     margin-top: 2rem;
+    margin-right: 1rem;
+    display: flex;
+    width: 50%;
   }
 
   .logo {
@@ -127,13 +129,5 @@
   .btn {
     width: 250px;
     align-self: center;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .phoneGraphicContainer {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
   }
 }

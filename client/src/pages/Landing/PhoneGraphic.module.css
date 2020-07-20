@@ -1,0 +1,33 @@
+.svgContainer {
+  position: relative;
+}
+
+.mockPhone {
+  position: absolute;
+  height: 482px;
+  width: 240px;
+  background: #ffffff;
+  border-radius: 36px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.25),
+    inset 1px 1px 8px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.mockPhone#phone1 {
+  left: 88px;
+  top: 92px;
+}
+
+.mockPhone#phone2 {
+  top: -10px;
+  left: 344px;
+}
+
+.screenshot {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 462px;
+  width: 220px;
+}
