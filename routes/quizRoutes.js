@@ -36,7 +36,6 @@ module.exports = (app) => {
       .populate({ path: "questions", model: QuizQuestion })
       .exec((error, newtQuiz) => {
         if (error) {
-          console.log(error);
           res.status(500).send(error);
         } else {
           // If nothing found send back 404 status

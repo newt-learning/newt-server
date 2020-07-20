@@ -127,10 +127,7 @@ module.exports = (app) => {
       } else {
         // Get all the topic ids that were saved in this content item
         const { topics, quizInfo } = content;
-        console.log("quizInfo:", quizInfo);
         const quizId = _.isEmpty(quizInfo) ? null : quizInfo[0].quizId;
-
-        console.log(quizId);
 
         // For all the topic ids, remove pointers to this content from the content
         // array in the Topic model (because content is going to be deleted).
