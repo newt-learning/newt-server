@@ -41,11 +41,11 @@ const LandingPage = () => {
   };
 
   return (
-    <section className={styles.App}>
+    <div className={styles.App}>
       <nav className={styles.nav}>
         <h2 className={styles.logo}>newt</h2>
       </nav>
-      <div className={styles.mainContainer}>
+      <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
           <h5 className={styles.subtitle}>Sign up for early access</h5>
@@ -73,12 +73,29 @@ const LandingPage = () => {
             </Button>
           </form>
         </div>
-
         <div className={styles.phoneGraphicContainer}>
           <PhoneGraphic />
         </div>
-      </div>
-    </section>
+      </section>
+      <section className={styles.newtFlowContainer}>
+        <img
+          src={require("../../assets/newt-flow-diagram.svg")}
+          className={styles.newtFlowDiagram}
+          alt="Newt data flow graphic"
+        />
+        <div className={styles.flowEndpointContainer}>
+          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint1}`}>
+            <h3>Discover</h3>
+          </div>
+          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint2}`}>
+            <h3>Track</h3>
+          </div>
+          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
+            <h3>Learn</h3>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
