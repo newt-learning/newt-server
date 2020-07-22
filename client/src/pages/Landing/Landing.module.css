@@ -5,6 +5,7 @@
 }
 
 .mainContainer {
+  height: 100vh;
   box-sizing: border-box;
   display: flex;
   flex: 1;
@@ -135,6 +136,7 @@
 
   .mainContainer {
     display: flex;
+    height: auto;
     box-sizing: border-box;
     justify-content: flex-start;
     align-items: flex-start;
