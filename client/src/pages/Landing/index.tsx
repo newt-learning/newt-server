@@ -85,13 +85,34 @@ const LandingPage = () => {
         />
         <div className={styles.flowEndpointContainer}>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint1}`}>
-            <h3 className={styles.flowEndpointTitle1}>Discover</h3>
+            <h3
+              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle1}`}
+            >
+              Discover
+            </h3>
+            <p className={styles.flowEndpointText}>
+              Get personalized recommendations across all kinds of media.
+            </p>
           </div>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint2}`}>
-            <h3 className={styles.flowEndpointTitle2}>Track</h3>
+            <h3
+              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle2}`}
+            >
+              Track
+            </h3>
+            <p className={styles.flowEndpointText}>
+              See your reading and watching stats and follow your progress.
+            </p>
           </div>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
-            <h3 className={styles.flowEndpointTitle3}>Learn</h3>
+            <h3
+              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle3}`}
+            >
+              Learn
+            </h3>
+            <p className={styles.flowEndpointText}>
+              Take quizzes with spaced repetition and increase your retention.
+            </p>
           </div>
         </div>
       </section>

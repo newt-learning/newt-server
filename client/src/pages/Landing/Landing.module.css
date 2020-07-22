@@ -106,6 +106,10 @@
   background-color: #f0fbf3;
 }
 
+.flowEndpointTitle {
+  font-size: 1.25rem;
+}
+
 .flowEndpointTitle1 {
   color: #7575ff;
 }
@@ -116,6 +120,12 @@
 
 .flowEndpointTitle3 {
   color: #62d97e;
+}
+
+.flowEndpointText {
+  margin-top: 0.2rem;
+  font-size: 1rem;
+  color: #828282;
 }
 
 @media screen and (min-width: 640px) {
@@ -225,6 +235,10 @@
   .flowEndpoint3 {
     border-left: 3px solid #62d97e;
   }
+
+  .flowEndpointText {
+    font-size: 0.8rem;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -234,7 +248,14 @@
   }
 
   .flowEndpoint {
-    height: 25%;
+    height: 27.5%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .flowEndpointText {
+    font-size: 1rem;
+    margin-top: 0.3rem;
   }
 }
 
