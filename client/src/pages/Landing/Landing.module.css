@@ -78,8 +78,44 @@
   width: 67%;
 }
 
+.newtFlowContainer {
+  padding: 8rem 2rem 4rem 2rem;
+}
+
 .newtFlowDiagram {
   display: none;
+}
+
+.flowEndpoint {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.flowEndpoint1 {
+  border-left: 3px solid #7575ff;
+  background-color: #ebebff;
+}
+
+.flowEndpoint2 {
+  border-left: 3px solid #ff7397;
+  background-color: #ffeff3;
+}
+
+.flowEndpoint3 {
+  border-left: 3px solid #62d97e;
+  background-color: #f0fbf3;
+}
+
+.flowEndpointTitle1 {
+  color: #7575ff;
+}
+
+.flowEndpointTitle2 {
+  color: #ff7397;
+}
+
+.flowEndpointTitle3 {
+  color: #62d97e;
 }
 
 @media screen and (min-width: 640px) {
@@ -138,7 +174,7 @@
   }
 
   .newtFlowContainer {
-    padding: 10rem 5rem 4rem 5rem;
+    padding: 10rem 4rem 4rem 4rem;
     display: flex;
   }
 
@@ -152,6 +188,10 @@
 }
 
 @media screen and (min-width: 768px) {
+  .newtFlowContainer {
+    padding: 10rem 5rem 4rem 5rem;
+  }
+
   .newtFlowDiagram {
     display: flex;
     max-width: 75%;
@@ -167,13 +207,15 @@
 
   .flowEndpoint {
     display: flex;
-    padding: 0.5rem 1rem;
+    flex-direction: column;
+    box-sizing: border-box;
     width: 100%;
-    height: 25%;
+    height: 30%;
   }
 
   .flowEndpoint1 {
     border-left: 3px solid #7575ff;
+    background-color: #ebebff;
   }
 
   .flowEndpoint2 {
@@ -182,6 +224,17 @@
 
   .flowEndpoint3 {
     border-left: 3px solid #62d97e;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .newtFlowContainer {
+    padding: 10rem 7rem 4rem 7rem;
+    display: flex;
+  }
+
+  .flowEndpoint {
+    height: 25%;
   }
 }
 

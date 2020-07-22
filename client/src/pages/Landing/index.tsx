@@ -85,13 +85,13 @@ const LandingPage = () => {
         />
         <div className={styles.flowEndpointContainer}>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint1}`}>
-            <h3>Discover</h3>
+            <h3 className={styles.flowEndpointTitle1}>Discover</h3>
           </div>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint2}`}>
-            <h3>Track</h3>
+            <h3 className={styles.flowEndpointTitle2}>Track</h3>
           </div>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
-            <h3>Learn</h3>
+            <h3 className={styles.flowEndpointTitle3}>Learn</h3>
           </div>
         </div>
       </section>
