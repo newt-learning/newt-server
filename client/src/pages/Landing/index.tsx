@@ -3,6 +3,7 @@ import { useToasts } from "react-toast-notifications";
 import keys from "../../config/keys";
 // Sections
 import EnvironmentSection from "./EnvironmentSection";
+import FeaturesSection from "./FeaturesSection";
 // Components
 import { Button } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
@@ -80,6 +81,7 @@ const LandingPage = () => {
         </div>
       </section>
       <EnvironmentSection />
+      <FeaturesSection />
     </div>
   );
 };

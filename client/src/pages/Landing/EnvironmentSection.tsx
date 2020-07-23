@@ -9,12 +9,13 @@ const EnvironmentSection = () => {
         <p className={styles.text}>
           The Internet has changed the way we learn. We read books and articles,
           watch videos, listen to podcasts, and play games, created and shared
-          by millions of incredble creators around the world. And that’s
+          by millions of incredible creators around the world. And that’s
           awesome. But the immense scale introduces some challenges:
         </p>
         <ul className={`${styles.text} ${styles.textList}`}>
           <li>
-            it is difficult to <strong>organize</strong> <i>across</i> media
+            it is difficult to <strong>organize</strong> content <i>across</i>{" "}
+            media
           </li>
           <li>
             it is time-consuming and tricky to <strong>find</strong> the right
@@ -24,7 +25,7 @@ const EnvironmentSection = () => {
             it takes extra effort to <strong>retain</strong> what you’ve learned
           </li>
         </ul>
-        <p className={styles.Text}>
+        <p className={styles.text}>
           What if your learning flow could look something like this?
         </p>
       </div>
@@ -52,7 +53,8 @@ const EnvironmentSection = () => {
               Track
             </h3>
             <p className={styles.flowEndpointText}>
-              See your reading and watching stats and follow your progress.
+              See your reading, watching, and listening stats and follow your
+              progress.
             </p>
           </div>
           <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
