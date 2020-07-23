@@ -23,16 +23,16 @@
   margin-bottom: 2rem;
 }
 
-.mockPhoneContainer1 {
+.mockPhoneContainer#organize {
   background-image: url("../../assets/blobs/blob_1.svg");
 }
-.mockPhoneContainer2 {
+.mockPhoneContainer#track {
   background-image: url("../../assets/blobs/blob_2.svg");
 }
-.mockPhoneContainer3 {
+.mockPhoneContainer#learn {
   background-image: url("../../assets/blobs/blob_3.svg");
 }
-.mockPhoneContainer4 {
+.mockPhoneContainer#discover {
   background-image: url("../../assets/blobs/blob_4.svg");
 }
 
@@ -58,19 +58,23 @@
   height: 250px;
 }
 
-.organizeHeader {
+.descriptionHeader {
+  font-size: 1.8rem;
+}
+
+.descriptionHeader#organize {
   color: #11c4ff;
 }
 
-.trackHeader {
+.descriptionHeader#track {
   color: #ff386b;
 }
 
-.learnHeader {
+.descriptionHeader#learn {
   color: #62d97e;
 }
 
-.discoverHeader {
+.descriptionHeader#discover {
   color: #7575ff;
 }
 

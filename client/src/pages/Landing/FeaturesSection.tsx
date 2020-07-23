@@ -3,13 +3,14 @@ import { MockPhone } from "./PhoneGraphic";
 import styles from "./FeaturesSection.module.css";
 
 interface FeatureProps {
+  id: string;
   title: string;
   Graphic: React.ReactNode;
-  headerStyle: string;
 }
 
 const features = [
   {
+    id: "organize",
     title: "Organize",
     isPhoneMockup: true,
     graphic: {
@@ -17,9 +18,9 @@ const features = [
       imageUrl: require("../../assets/my_library_screenshot.png"),
       altText: "Screenshot of My Library screen on Newt app",
     },
-    headerStyle: styles.organizeHeader,
   },
   {
+    id: "track",
     title: "Track",
     isPhoneMockup: true,
     graphic: {
@@ -27,9 +28,9 @@ const features = [
       imageUrl: require("../../assets/stats_screenshot.png"),
       altText: "Screenshot of Stats screen on Newt app",
     },
-    headerStyle: styles.trackHeader,
   },
   {
+    id: "learn",
     title: "Learn",
     isPhoneMockup: true,
     graphic: {
@@ -37,9 +38,9 @@ const features = [
       imageUrl: require("../../assets/quiz_screenshot.png"),
       altText: "Screenshot of Quiz screen on Newt app",
     },
-    headerStyle: styles.learnHeader,
   },
   {
+    id: "discover",
     title: "Discover",
     isPhoneMockup: false,
     graphic: {
@@ -48,31 +49,17 @@ const features = [
       altText:
         "Pictures of YouTube thumbnail, podcast thumbnail, and book cover",
     },
-    headerStyle: styles.discoverHeader,
   },
 ];
 
-const Feature = ({ title, Graphic, headerStyle }: FeatureProps) => {
-  const mockPhoneContainerStyle = (title: string) => {
-    switch (title) {
-      case "Organize":
-        return `${styles.mockPhoneContainer} ${styles.mockPhoneContainer1}`;
-      case "Track":
-        return `${styles.mockPhoneContainer} ${styles.mockPhoneContainer2}`;
-      case "Learn":
-        return `${styles.mockPhoneContainer} ${styles.mockPhoneContainer3}`;
-      case "Discover":
-        return `${styles.mockPhoneContainer} ${styles.mockPhoneContainer4}`;
-      default:
-        return styles.mockPhoneContainer;
-    }
-  };
-
+const Feature = ({ id, title, Graphic }: FeatureProps) => {
   return (
     <div className={styles.feature}>
-      <div className={mockPhoneContainerStyle(title)}>{Graphic}</div>
+      <div id={styles[id]} className={styles.mockPhoneContainer}>
+        {Graphic}
+      </div>
       <div className={styles.descriptionContainer}>
-        <h2 className={`${styles.descriptionHeader} ${headerStyle}`}>
+        <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
           {title}
         </h2>
       </div>
@@ -85,6 +72,7 @@ const FeaturesSection = () => {
     <section className={styles.container}>
       {features.map((feature) => (
         <Feature
+          id={feature.id}
           title={feature.title}
           Graphic={
             feature.isPhoneMockup ? (
@@ -101,7 +89,6 @@ const FeaturesSection = () => {
               />
             )
           }
-          headerStyle={feature.headerStyle}
         />
       ))}
     </section>
