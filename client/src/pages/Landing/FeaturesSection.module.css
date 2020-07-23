@@ -1,4 +1,129 @@
 .container {
-  padding: 0 2rem 4rem 2rem;
+  padding: 4rem 2rem;
   background-color: #e9f9ff;
+}
+
+/* No margin below last feature */
+.container div:last-child {
+  margin-bottom: 0;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6rem;
+}
+
+.mockPhoneContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.mockPhone {
+  position: relative;
+  height: 300px;
+  width: 149px;
+}
+
+.screenshot {
+  height: 280px;
+  width: 129px;
+  border-radius: 16px;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.discoverImage {
+  height: 250px;
+}
+
+.organizeHeader {
+  color: #11c4ff;
+}
+
+.trackHeader {
+  color: #ff7397;
+}
+
+.learnHeader {
+  color: #62d97e;
+}
+
+.discoverHeader {
+  color: #7575ff;
+}
+
+@media screen and (min-width: 640px) {
+  .container {
+    padding: 4rem;
+  }
+
+  .feature {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8rem;
+  }
+
+  .mockPhoneContainer {
+    justify-content: flex-start;
+    width: 50%;
+    margin-bottom: 0;
+  }
+
+  .descriptionContainer {
+    width: 50%;
+    padding-left: 2rem;
+    align-items: flex-start;
+  }
+
+  .discoverImage {
+    height: 250px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 4rem 7rem;
+  }
+
+  .mockPhoneContainer {
+    justify-content: center;
+  }
+
+  .mockPhone {
+    height: 400px;
+    width: 199px;
+  }
+
+  .screenshot {
+    height: 380px;
+    width: 181px;
+  }
+
+  .discoverImage {
+    height: 300px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 4rem 10rem;
+  }
+
+  .descriptionContainer {
+    padding-left: 3rem;
+  }
+
+  .descriptionHeader {
+    font-size: 2.2rem;
+  }
+
+  .discoverImage {
+    height: 400px;
+  }
 }
