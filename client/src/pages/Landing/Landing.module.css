@@ -5,7 +5,7 @@
 }
 
 .mainContainer {
-  height: 700px;
+  height: 779px;
   box-sizing: border-box;
   display: flex;
   flex: 1;
@@ -16,6 +16,14 @@
   flex-direction: column;
   justify-content: space-around;
   overflow: hidden;
+}
+
+/* Small mobile phones */
+@media screen and (max-height: 680px) {
+  .mainContainer {
+    justify-content: flex-start;
+    margin-top: 4rem;
+  }
 }
 
 .titleContainer {
@@ -80,7 +88,7 @@
 }
 
 .environmentContainer {
-  padding: 8rem 2rem 4rem 2rem;
+  padding: 0 2rem 4rem 2rem;
 }
 
 .environmentTitle {
@@ -259,15 +267,12 @@
 
 @media screen and (min-width: 1024px) {
   .environmentContainer {
-    padding: 10rem 7rem 4rem 7rem;
+    padding: 12rem 7rem 4rem 7rem;
   }
   .environmentTitle {
     font-size: 3rem;
     margin-bottom: 3rem;
   }
-  /* .newtFlowContainer {
-    display: flex;
-  } */
 
   .flowEndpoint {
     height: 27.5%;
