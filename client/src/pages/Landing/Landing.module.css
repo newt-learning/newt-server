@@ -88,6 +88,9 @@
 }
 
 .environmentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 2rem 4rem 2rem;
 }
 
@@ -95,6 +98,22 @@
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
+}
+
+.environmentTextContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.environmentText {
+  max-width: 800px;
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.environmentTextList {
+  padding-left: 3rem;
 }
 
 .newtFlowContainer {
@@ -209,7 +228,6 @@
 
   .environmentTitle {
     font-size: 2.4rem;
-    margin-bottom: 2.4rem;
   }
 
   .flowEndpointContainer {
@@ -271,7 +289,6 @@
   }
   .environmentTitle {
     font-size: 3rem;
-    margin-bottom: 3rem;
   }
 
   .flowEndpoint {
@@ -283,6 +300,10 @@
   .flowEndpointText {
     font-size: 1rem;
     margin-top: 0.3rem;
+  }
+
+  .environmentText {
+    font-size: 1.1em;
   }
 }
 
