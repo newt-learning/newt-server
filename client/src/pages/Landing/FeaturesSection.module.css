@@ -15,9 +15,25 @@
 }
 
 .mockPhoneContainer {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 340px;
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+}
+
+.mockPhoneContainer1 {
+  background-image: url("../../assets/blobs/blob_1.svg");
+}
+.mockPhoneContainer2 {
+  background-image: url("../../assets/blobs/blob_2.svg");
+}
+.mockPhoneContainer3 {
+  background-image: url("../../assets/blobs/blob_3.svg");
+}
+.mockPhoneContainer4 {
+  background-image: url("../../assets/blobs/blob_4.svg");
 }
 
 .mockPhone {
@@ -47,7 +63,7 @@
 }
 
 .trackHeader {
-  color: #ff7397;
+  color: #ff386b;
 }
 
 .learnHeader {
@@ -70,6 +86,8 @@
   }
 
   .mockPhoneContainer {
+    background-size: 250px;
+    background-position: left;
     justify-content: flex-start;
     width: 50%;
     margin-bottom: 0;
@@ -92,6 +110,8 @@
   }
 
   .mockPhoneContainer {
+    background-size: 300px;
+    background-position: center;
     justify-content: center;
   }
 
@@ -113,6 +133,10 @@
 @media screen and (min-width: 1024px) {
   .container {
     padding: 4rem 10rem;
+  }
+
+  .mockPhoneContainer {
+    background-size: 350px;
   }
 
   .descriptionContainer {
