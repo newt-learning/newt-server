@@ -77,42 +77,45 @@ const LandingPage = () => {
           <PhoneGraphic />
         </div>
       </section>
-      <section className={styles.newtFlowContainer}>
-        <img
-          src={require("../../assets/newt-flow-diagram.svg")}
-          className={styles.newtFlowDiagram}
-          alt="Newt data flow graphic"
-        />
-        <div className={styles.flowEndpointContainer}>
-          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint1}`}>
-            <h3
-              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle1}`}
-            >
-              Discover
-            </h3>
-            <p className={styles.flowEndpointText}>
-              Get personalized recommendations across all kinds of media.
-            </p>
-          </div>
-          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint2}`}>
-            <h3
-              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle2}`}
-            >
-              Track
-            </h3>
-            <p className={styles.flowEndpointText}>
-              See your reading and watching stats and follow your progress.
-            </p>
-          </div>
-          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
-            <h3
-              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle3}`}
-            >
-              Learn
-            </h3>
-            <p className={styles.flowEndpointText}>
-              Take quizzes with spaced repetition and increase your retention.
-            </p>
+      <section className={styles.environmentContainer}>
+        <h2 className={styles.environmentTitle}>One unified environment</h2>
+        <div className={styles.newtFlowContainer}>
+          <img
+            src={require("../../assets/newt-flow-diagram.svg")}
+            className={styles.newtFlowDiagram}
+            alt="Newt data flow graphic"
+          />
+          <div className={styles.flowEndpointContainer}>
+            <div className={`${styles.flowEndpoint} ${styles.flowEndpoint1}`}>
+              <h3
+                className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle1}`}
+              >
+                Discover
+              </h3>
+              <p className={styles.flowEndpointText}>
+                Get personalized recommendations across all kinds of media.
+              </p>
+            </div>
+            <div className={`${styles.flowEndpoint} ${styles.flowEndpoint2}`}>
+              <h3
+                className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle2}`}
+              >
+                Track
+              </h3>
+              <p className={styles.flowEndpointText}>
+                See your reading and watching stats and follow your progress.
+              </p>
+            </div>
+            <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
+              <h3
+                className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle3}`}
+              >
+                Learn
+              </h3>
+              <p className={styles.flowEndpointText}>
+                Take quizzes with spaced repetition and increase your retention.
+              </p>
+            </div>
           </div>
         </div>
       </section>
