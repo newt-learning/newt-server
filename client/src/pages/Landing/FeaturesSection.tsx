@@ -92,8 +92,10 @@ const Feature = ({ id, title, description, Graphic }: FeatureProps) => {
         <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
           {title}
         </h2>
-        {description.map((para) => (
-          <p className={styles.descriptionText}>{para}</p>
+        {description.map((para, index) => (
+          <p className={styles.descriptionText} key={`${id}-${para}-${index}`}>
+            {para}
+          </p>
         ))}
       </div>
     </div>
@@ -108,6 +110,7 @@ const FeaturesSection = () => {
           id={feature.id}
           title={feature.title}
           description={feature.description}
+          key={feature.id}
           Graphic={
             feature.isPhoneMockup ? (
               <MockPhone
