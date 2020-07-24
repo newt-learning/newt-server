@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import { useToasts } from "react-toast-notifications";
 import keys from "../../config/keys";
+// Sections
+import EnvironmentSection from "./EnvironmentSection";
+import FeaturesSection from "./FeaturesSection";
 // Components
 import { Button } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
@@ -41,11 +44,11 @@ const LandingPage = () => {
   };
 
   return (
-    <section className={styles.App}>
+    <div className={styles.App}>
       <nav className={styles.nav}>
         <h2 className={styles.logo}>newt</h2>
       </nav>
-      <div className={styles.mainContainer}>
+      <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
           <h5 className={styles.subtitle}>Sign up for early access</h5>
@@ -73,12 +76,13 @@ const LandingPage = () => {
             </Button>
           </form>
         </div>
-
         <div className={styles.phoneGraphicContainer}>
           <PhoneGraphic />
         </div>
-      </div>
-    </section>
+      </section>
+      <EnvironmentSection />
+      <FeaturesSection />
+    </div>
   );
 };
 

@@ -1,0 +1,182 @@
+.container {
+  padding: 4rem 2rem;
+  background-color: #e9f9ff;
+}
+
+/* No margin below last feature */
+.container div:last-child {
+  margin-bottom: 0;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6rem;
+}
+
+.mockPhoneContainer {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 340px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.mockPhoneContainer#organize {
+  background-image: url("../../assets/blobs/blob_1.svg");
+}
+.mockPhoneContainer#track {
+  background-image: url("../../assets/blobs/blob_2.svg");
+}
+.mockPhoneContainer#learn {
+  background-image: url("../../assets/blobs/blob_3.svg");
+}
+.mockPhoneContainer#discover {
+  background-image: url("../../assets/blobs/blob_4.svg");
+}
+
+.mockPhone {
+  position: relative;
+  height: 300px;
+  width: 149px;
+}
+
+.screenshot {
+  height: 280px;
+  width: 129px;
+  border-radius: 16px;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.discoverImage {
+  height: 250px;
+}
+
+.descriptionHeader {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.descriptionText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.75rem;
+}
+
+.descriptionHeader#organize {
+  color: #11c4ff;
+}
+
+.descriptionHeader#track {
+  color: #ff386b;
+}
+
+.descriptionHeader#learn {
+  color: #62d97e;
+}
+
+.descriptionHeader#discover {
+  color: #7575ff;
+}
+
+@media screen and (min-width: 640px) {
+  .container {
+    padding: 4rem;
+  }
+
+  .feature {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8rem;
+  }
+
+  .mockPhoneContainer {
+    background-size: 250px;
+    background-position: left;
+    justify-content: flex-start;
+    width: 50%;
+    margin-bottom: 0;
+  }
+
+  .descriptionContainer {
+    width: 50%;
+    padding-left: 2rem;
+    align-items: flex-start;
+  }
+
+  .discoverImage {
+    height: 250px;
+  }
+
+  .descriptionText {
+    font-size: 1rem;
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 4rem 7rem;
+  }
+
+  .mockPhoneContainer {
+    background-size: 300px;
+    background-position: center;
+    justify-content: center;
+  }
+
+  .mockPhone {
+    height: 400px;
+    width: 199px;
+  }
+
+  .screenshot {
+    height: 380px;
+    width: 181px;
+  }
+
+  .discoverImage {
+    height: 300px;
+  }
+
+  .descriptionHeader {
+    margin-bottom: 1rem;
+  }
+
+  .descriptionText {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 5rem 10rem;
+  }
+
+  .mockPhoneContainer {
+    background-size: 350px;
+  }
+
+  .descriptionContainer {
+    padding-left: 3rem;
+  }
+
+  .descriptionHeader {
+    font-size: 2.2rem;
+  }
+
+  .descriptionText {
+    font-size: 1.2rem;
+  }
+
+  .discoverImage {
+    height: 400px;
+  }
+}
