@@ -5,7 +5,7 @@ import keys from "../../config/keys";
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
 // Components
-import { Button, Header } from "../../components";
+import { Button, Header, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
 import styles from "./Landing.module.css";
 
@@ -80,6 +80,7 @@ const LandingPage = () => {
       </section>
       <EnvironmentSection />
       <FeaturesSection />
+      <Footer />
     </div>
   );
 };
