@@ -36,23 +36,6 @@
   display: none;
 }
 
-.nav {
-  display: flex;
-  width: 100vw;
-  box-sizing: border-box;
-  height: 75px;
-  padding: 0 2rem;
-  align-items: center;
-}
-
-.logo {
-  font-family: "Righteous";
-  font-size: 32px;
-  color: #fff;
-  letter-spacing: 0.1rem;
-  line-height: 60px;
-}
-
 .title {
   font-family: "Avenir";
   font-size: 36px;
@@ -88,10 +71,6 @@
 }
 
 @media screen and (min-width: 640px) {
-  .nav {
-    padding: 0 4rem;
-  }
-
   .mainContainer {
     display: flex;
     height: auto;
@@ -107,10 +86,6 @@
     margin-right: 1rem;
     display: flex;
     width: 50%;
-  }
-
-  .logo {
-    font-size: 40px;
   }
 
   .titleContainer {
@@ -154,8 +129,5 @@
 
   .mainContainer {
     flex: 0;
-  }
-  .nav {
-    max-width: 1600px;
   }
 }

@@ -5,7 +5,7 @@ import keys from "../../config/keys";
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
 // Components
-import { Button } from "../../components";
+import { Button, Header } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
 import styles from "./Landing.module.css";
 
@@ -45,9 +45,7 @@ const LandingPage = () => {
 
   return (
     <div className={styles.App}>
-      <nav className={styles.nav}>
-        <h2 className={styles.logo}>newt</h2>
-      </nav>
+      <Header />
       <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
