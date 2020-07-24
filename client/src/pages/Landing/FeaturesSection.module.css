@@ -60,6 +60,14 @@
 
 .descriptionHeader {
   font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.descriptionText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.75rem;
 }
 
 .descriptionHeader#organize {
@@ -106,6 +114,11 @@
   .discoverImage {
     height: 250px;
   }
+
+  .descriptionText {
+    font-size: 1rem;
+    text-align: left;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -132,11 +145,19 @@
   .discoverImage {
     height: 300px;
   }
+
+  .descriptionHeader {
+    margin-bottom: 1rem;
+  }
+
+  .descriptionText {
+    font-size: 1.1rem;
+  }
 }
 
 @media screen and (min-width: 1024px) {
   .container {
-    padding: 4rem 10rem;
+    padding: 5rem 10rem;
   }
 
   .mockPhoneContainer {
@@ -149,6 +170,10 @@
 
   .descriptionHeader {
     font-size: 2.2rem;
+  }
+
+  .descriptionText {
+    font-size: 1.2rem;
   }
 
   .discoverImage {
