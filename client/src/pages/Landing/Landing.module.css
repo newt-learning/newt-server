@@ -44,8 +44,8 @@
   text-align: center;
 }
 
-.subtitle {
-  font-size: 14px;
+.label {
+  font-size: 1rem;
   font-family: "Avenir";
   color: #fff;
 }
@@ -103,8 +103,9 @@
     margin-bottom: 3rem;
   }
 
-  .subtitle {
-    font-size: 18px;
+  .label {
+    align-self: flex-start;
+    font-size: 1.2rem;
   }
 
   .input {
