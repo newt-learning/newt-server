@@ -5,7 +5,7 @@ const LastCallToActionSection = () => {
   return (
     <section className={styles.container}>
       <div className={styles.card}>
-        <text className={styles.label}>Sign up for early access</text>
+        <div className={styles.label}>Sign up for early access</div>
       </div>
     </section>
   );

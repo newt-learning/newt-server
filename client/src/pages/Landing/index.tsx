@@ -6,7 +6,7 @@ import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
 import LastCallToActionSection from "./LastCallToActionSection";
 // Components
-import { Button, Header, Footer } from "../../components";
+import { Button, Header, Footer, Input } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
 import styles from "./Landing.module.css";
 
@@ -57,11 +57,11 @@ const LandingPage = () => {
             onSubmit={handleFormSubmit}
           >
             <label className={styles.label}>Sign up for early access</label>
-            <input
+            <Input
               type="email"
               name="email"
               placeholder="Email"
-              className={styles.input}
+              style={styles.input}
               value={email}
               onChange={handleInputChange}
             />
