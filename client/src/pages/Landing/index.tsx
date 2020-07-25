@@ -5,7 +5,7 @@ import keys from "../../config/keys";
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
 // Components
-import { Button } from "../../components";
+import { Button, Header, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
 import styles from "./Landing.module.css";
 
@@ -45,19 +45,17 @@ const LandingPage = () => {
 
   return (
     <div className={styles.App}>
-      <nav className={styles.nav}>
-        <h2 className={styles.logo}>newt</h2>
-      </nav>
+      <Header />
       <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
-          <h5 className={styles.subtitle}>Sign up for early access</h5>
           <form
             name="submit-to-google-sheets"
             className={styles.form}
             ref={formRef}
             onSubmit={handleFormSubmit}
           >
+            <label className={styles.label}>Sign up for early access</label>
             <input
               type="email"
               name="email"
@@ -82,6 +80,7 @@ const LandingPage = () => {
       </section>
       <EnvironmentSection />
       <FeaturesSection />
+      <Footer />
     </div>
   );
 };

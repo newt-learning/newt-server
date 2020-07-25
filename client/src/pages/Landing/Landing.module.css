@@ -36,23 +36,6 @@
   display: none;
 }
 
-.nav {
-  display: flex;
-  width: 100vw;
-  box-sizing: border-box;
-  height: 75px;
-  padding: 0 2rem;
-  align-items: center;
-}
-
-.logo {
-  font-family: "Righteous";
-  font-size: 32px;
-  color: #fff;
-  letter-spacing: 0.1rem;
-  line-height: 60px;
-}
-
 .title {
   font-family: "Avenir";
   font-size: 36px;
@@ -61,8 +44,8 @@
   text-align: center;
 }
 
-.subtitle {
-  font-size: 14px;
+.label {
+  font-size: 1rem;
   font-family: "Avenir";
   color: #fff;
 }
@@ -88,10 +71,6 @@
 }
 
 @media screen and (min-width: 640px) {
-  .nav {
-    padding: 0 4rem;
-  }
-
   .mainContainer {
     display: flex;
     height: auto;
@@ -109,10 +88,6 @@
     width: 50%;
   }
 
-  .logo {
-    font-size: 40px;
-  }
-
   .titleContainer {
     margin-top: 200px;
     width: 50%;
@@ -128,8 +103,9 @@
     margin-bottom: 3rem;
   }
 
-  .subtitle {
-    font-size: 18px;
+  .label {
+    align-self: flex-start;
+    font-size: 1.2rem;
   }
 
   .input {
@@ -154,8 +130,5 @@
 
   .mainContainer {
     flex: 0;
-  }
-  .nav {
-    max-width: 1600px;
   }
 }

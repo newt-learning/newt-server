@@ -17,11 +17,16 @@ export const MockPhone = ({
   screenshotStyle,
 }: MockPhoneProps) => {
   return (
-    <div className={`${styles.mockPhone} ${phoneStyle}`} id={id}>
+    <div
+      className={`${styles.mockPhone} ${phoneStyle ? phoneStyle : ""}`}
+      id={id}
+    >
       <img
         src={imageUrl}
         alt={altText ? altText : "Screenshot on Newt mobile app"}
-        className={`${styles.screenshot} ${screenshotStyle}`}
+        className={`${styles.screenshot} ${
+          screenshotStyle ? screenshotStyle : ""
+        }`}
       />
     </div>
   );
