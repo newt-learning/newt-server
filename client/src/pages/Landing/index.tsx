@@ -4,6 +4,7 @@ import keys from "../../config/keys";
 // Sections
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
+import LastCallToActionSection from "./LastCallToActionSection";
 // Components
 import { Button, Header, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
@@ -80,6 +81,7 @@ const LandingPage = () => {
       </section>
       <EnvironmentSection />
       <FeaturesSection />
+      <LastCallToActionSection />
       <Footer />
     </div>
   );
