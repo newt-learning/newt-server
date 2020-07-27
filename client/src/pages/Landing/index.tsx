@@ -5,14 +5,14 @@ import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
 import LastCallToActionSection from "./LastCallToActionSection";
 // Components
-import { Header, Footer } from "../../components";
+import { Navbar, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
 import styles from "./Landing.module.css";
 
 const LandingPage = () => {
   return (
     <div className={styles.App}>
-      <Header />
+      <Navbar />
       <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
