@@ -1,11 +1,12 @@
 import React from "react";
+import LandingForm from "./LandingForm";
 import styles from "./LastCallToActionSection.module.css";
 
 const LastCallToActionSection = () => {
   return (
     <section className={styles.container}>
       <div className={styles.card}>
-        <div className={styles.label}>Sign up for early access</div>
+        <LandingForm labelStyle={styles.label} />
       </div>
     </section>
   );
