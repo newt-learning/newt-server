@@ -2,7 +2,7 @@
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: var(--FS-s);
   line-height: 1.25;
   border-radius: 0.5rem;
   transition: all 0.15s ease-in-out;

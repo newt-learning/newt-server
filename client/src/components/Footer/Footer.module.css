@@ -16,7 +16,7 @@ a {
   height: 24px;
   margin-left: 0.75rem;
   color: white;
-  font-size: 0.9rem;
+  font-size: var(--FS-s);
 }
 
 .text:hover {
@@ -36,7 +36,7 @@ a {
   }
 
   .text {
-    font-size: 1rem;
+    font-size: var(--FS-base);
     margin-left: 1rem;
   }
 }

@@ -6,7 +6,7 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: var(--FS-3xl);
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -56,7 +56,7 @@
 }
 
 .flowEndpointTitle {
-  font-size: 1.25rem;
+  font-size: var(--FS-xl);
 }
 
 .flowEndpointTitle1 {
@@ -73,7 +73,7 @@
 
 .flowEndpointText {
   margin-top: 0.2rem;
-  font-size: 1rem;
+  font-size: var(--FS-base);
   color: #828282;
 }
 
@@ -83,7 +83,7 @@
   }
 
   .title {
-    font-size: 2.4rem;
+    font-size: var(--FS-4xl);
   }
 
   .flowEndpointContainer {
@@ -135,7 +135,7 @@
   }
 
   .flowEndpointText {
-    font-size: 0.8rem;
+    font-size: var(--FS-xs);
   }
 }
 
@@ -144,7 +144,7 @@
     padding: 12rem 7rem 4rem 7rem;
   }
   .title {
-    font-size: 3rem;
+    font-size: var(--FS-5xl);
   }
 
   .flowEndpoint {
@@ -158,11 +158,11 @@
   }
 
   .flowEndpointText {
-    font-size: 1rem;
+    font-size: var(--FS-base);
     margin-top: 0.3rem;
   }
 
   .text {
-    font-size: 1.1em;
+    font-size: var(--FS-lg);
   }
 }

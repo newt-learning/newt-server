@@ -38,14 +38,14 @@
 
 .title {
   font-family: "Avenir";
-  font-size: 36px;
+  font-size: var(--FS-3xl);
   color: #fff;
   margin-bottom: 2rem;
   text-align: center;
 }
 
 .label {
-  font-size: 1rem;
+  font-size: var(--FS-base);
   font-family: "Avenir";
   color: #fff;
 }
@@ -95,14 +95,14 @@
   }
 
   .title {
-    font-size: 48px;
+    font-size: var(--FS-5xl);
     text-align: start;
     margin-bottom: 3rem;
   }
 
   .label {
     align-self: flex-start;
-    font-size: 1.2rem;
+    font-size: var(--FS-lg);
   }
 
   .input {

@@ -59,13 +59,13 @@
 }
 
 .descriptionHeader {
-  font-size: 1.8rem;
+  font-size: var(--FS-3xl);
   margin-bottom: 0.5rem;
 }
 
 .descriptionText {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: var(--FS-base);
   color: #666;
   margin-top: 0.75rem;
 }
@@ -116,7 +116,6 @@
   }
 
   .descriptionText {
-    font-size: 1rem;
     text-align: left;
   }
 }
@@ -151,7 +150,7 @@
   }
 
   .descriptionText {
-    font-size: 1.1rem;
+    font-size: var(--FS-lg);
   }
 }
 
@@ -169,11 +168,7 @@
   }
 
   .descriptionHeader {
-    font-size: 2.2rem;
-  }
-
-  .descriptionText {
-    font-size: 1.2rem;
+    font-size: var(--FS-4xl);
   }
 
   .discoverImage {
