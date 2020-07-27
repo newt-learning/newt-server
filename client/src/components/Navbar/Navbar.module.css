@@ -6,6 +6,7 @@
   height: 75px;
   padding: 0 2rem;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
@@ -13,15 +14,32 @@
   font-size: var(--FS-3xl);
   color: white;
   line-height: 60px;
+  min-width: 50%;
+}
+
+.navLink {
+  color: white;
+  font-size: var(--FS-lg);
+}
+
+.activeNavLink,
+.navLink:hover {
+  font-weight: 600;
+  border-bottom: 2px solid white;
 }
 
 @media screen and (min-width: 640px) {
   .nav {
     padding: 0 4rem;
+    justify-content: flex-start;
   }
 
   .logo {
     font-size: var(--FS-5xl);
     letter-spacing: 0.1rem;
+  }
+
+  .navLink {
+    font-size: var(--FS-xl);
   }
 }
