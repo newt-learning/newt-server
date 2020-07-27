@@ -5,7 +5,7 @@
   height: 75px;
   box-sizing: border-box;
   padding: 0 4rem;
-  background: linear-gradient(125deg, #38ceff 40%, #3c96ff 100%);
+  background: linear-gradient(125deg, var(--newtBlue-500) 40%, #3c96ff 100%);
 }
 
 a {

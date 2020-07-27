@@ -1,6 +1,6 @@
 .container {
   padding: 4rem 2rem;
-  background-color: #e9f9ff;
+  background-color: var(--newtBlue-50);
 }
 
 /* No margin below last feature */
@@ -66,24 +66,24 @@
 .descriptionText {
   text-align: center;
   font-size: var(--FS-base);
-  color: #666;
+  color: var(--gray-600);
   margin-top: 0.75rem;
 }
 
 .descriptionHeader#organize {
-  color: #11c4ff;
+  color: var(--newtBlue-600);
 }
 
 .descriptionHeader#track {
-  color: #ff386b;
+  color: var(--hotPink-500);
 }
 
 .descriptionHeader#learn {
-  color: #62d97e;
+  color: var(--lightGreen-500);
 }
 
 .descriptionHeader#discover {
-  color: #7575ff;
+  color: var(--indigo-400);
 }
 
 @media screen and (min-width: 640px) {

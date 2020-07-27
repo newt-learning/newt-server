@@ -1,6 +1,6 @@
 .btn {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: white;
+  border: 1px solid var(--gray-300);
   padding: 0.5rem 0.75rem;
   font-size: var(--FS-s);
   line-height: 1.25;
@@ -14,15 +14,15 @@
 }
 
 .primaryBtn {
-  background-color: #008bb8;
-  border: 1px solid #00779f;
+  background-color: var(--newtBlue-800);
+  border: 1px solid var(--newtBlue-900);
   color: white;
   font-weight: 500;
 }
 
 .primaryBtn:hover {
-  background-color: #b0ecff;
-  color: #00779f;
+  background-color: var(--newtBlue-200);
+  color: var(--newtBlue-800);
 }
 
 .spinnerContainer {

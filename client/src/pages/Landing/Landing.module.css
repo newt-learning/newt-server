@@ -39,7 +39,7 @@
 .title {
   font-family: "Avenir";
   font-size: var(--FS-3xl);
-  color: #fff;
+  color: white;
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -47,7 +47,7 @@
 .label {
   font-size: var(--FS-base);
   font-family: "Avenir";
-  color: #fff;
+  color: white;
 }
 
 .form {
