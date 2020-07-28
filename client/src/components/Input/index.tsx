@@ -18,7 +18,6 @@ const Input = ({
   placeholder,
   style,
 }: InputProps) => {
-  console.log(styles.input);
   return (
     <input
       type={type}
