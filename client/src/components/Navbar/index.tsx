@@ -1,6 +1,9 @@
 import React from "react";
+import classNames from "classnames/bind";
 import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
+
+let cx = classNames.bind(styles);
 
 interface NavbarProps {
   variant: "landing" | "default";
@@ -9,14 +12,18 @@ interface NavbarProps {
 const Navbar = ({ variant }: NavbarProps) => {
   return (
     <nav
-      className={`${styles.nav} ${variant === "landing" && styles.landingNav}`}
+      className={cx({
+        nav: true,
+        landingNav: variant === "landing",
+      })}
     >
       <div className={styles.logoContainer}>
         <NavLink
           to="/"
-          className={`${styles.logo} ${
-            variant === "landing" && styles.landingLogo
-          }`}
+          className={cx({
+            logo: true,
+            landingLogo: variant === "landing",
+          })}
         >
           newt
         </NavLink>
@@ -24,12 +31,14 @@ const Navbar = ({ variant }: NavbarProps) => {
       <div className={styles.navLinkGroup}>
         <NavLink
           to="/discover"
-          className={`${styles.navLink} ${
-            variant === "landing" && styles.landingNavLink
-          }`}
-          activeClassName={`${styles.activeNavLink} ${
-            variant === "landing" && styles.activeLandingNavLink
-          }`}
+          className={cx({
+            navLink: true,
+            landingNavLink: variant === "landing",
+          })}
+          activeClassName={cx({
+            activeNavLink: true,
+            landingActiveNavLink: variant === "landing",
+          })}
         >
           Discover
         </NavLink>
