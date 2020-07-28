@@ -12,7 +12,7 @@ import styles from "./Landing.module.css";
 const LandingPage = () => {
   return (
     <div className={styles.App}>
-      <Navbar />
+      <Navbar variant="landing" />
       <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>

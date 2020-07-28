@@ -3,28 +3,52 @@
   width: 100vw;
   max-width: 1600px;
   box-sizing: border-box;
-  height: 75px;
+  height: 65px;
   padding: 0 2rem;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.landingNav {
+  height: 75px;
+  background-color: inherit;
+  border-bottom: 0px;
+}
+
+.logoContainer {
+  min-width: 50%;
 }
 
 .logo {
   font-family: "Righteous";
+  font-size: var(--FS-2xl);
+  color: var(--newtBlue-500);
+  line-height: 60px;
+}
+
+.landingLogo {
   font-size: var(--FS-3xl);
   color: white;
-  line-height: 60px;
-  min-width: 50%;
 }
 
 .navLink {
-  color: white;
+  color: var(--gray-700);
   font-size: var(--FS-lg);
+}
+
+.landingNavLink {
+  color: white;
 }
 
 .activeNavLink,
 .navLink:hover {
   font-weight: 600;
+  border-bottom: 2px solid var(--gray-700);
+}
+
+.activeLandingNavLink,
+.landingNavLink:hover {
   border-bottom: 2px solid white;
 }
 
@@ -35,8 +59,12 @@
   }
 
   .logo {
-    font-size: var(--FS-5xl);
+    font-size: var(--FS-3xl);
     letter-spacing: 0.1rem;
+  }
+
+  .landingLogo {
+    font-size: var(--FS-5xl);
   }
 
   .navLink {

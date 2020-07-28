@@ -1,7 +1,12 @@
 import React from "react";
+import { Navbar } from "../../components";
 
 const DiscoverPage = () => {
-  return <h1>Discover</h1>;
+  return (
+    <section>
+      <Navbar />
+    </section>
+  );
 };
 
 export default DiscoverPage;
