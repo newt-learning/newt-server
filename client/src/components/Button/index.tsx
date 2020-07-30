@@ -2,7 +2,11 @@ import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import styles from "./Button.module.css";
 
-export declare type ButtonCategory = "primary" | "secondary" | undefined;
+export declare type ButtonCategory =
+  | "primary"
+  | "secondary"
+  | "landing"
+  | undefined;
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -23,6 +27,8 @@ const Button = ({
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
     switch (category) {
+      case "landing":
+        return styles.landingBtn;
       case "primary":
         return styles.primaryBtn;
       default:

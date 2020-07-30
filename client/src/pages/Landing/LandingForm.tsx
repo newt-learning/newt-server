@@ -64,7 +64,7 @@ const LandingForm = ({ labelStyle }: LandingFormProps) => {
       />
       <Button
         type="submit"
-        category="primary"
+        category="landing"
         isLoading={isSubmitting}
         style={styles.btn}
       >
