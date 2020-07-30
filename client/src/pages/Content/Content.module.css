@@ -8,14 +8,6 @@
   padding-left: 1rem;
 }
 
-.contentInfo {
-  border: 1px solid var(--gray-400);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  height: fit-content;
-  color: var(--gray-700);
-}
-
 @media screen and (min-with: 1024px) {
   .contentInfo {
     padding: 1.5rem;
@@ -31,5 +23,6 @@
   .contentInfoContainer {
     width: 100%;
     padding: 0;
+    margin-bottom: 2.5rem;
   }
 }

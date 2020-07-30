@@ -4,6 +4,7 @@ import { Navbar, MainContainer } from "../../components";
 import { useFetchIndividualNewtContent } from "../../api/newtContent";
 // Sections
 import ContentFlow from "./ContentFlow";
+import ContentInfo from "./ContentInfo";
 // Styling
 import styles from "./Content.module.css";
 
@@ -39,7 +40,11 @@ const ContentPage = ({ location }: ContentPageProps) => {
               />
             </div>
             <div className={styles.contentInfoContainer}>
-              <div className={styles.contentInfo}></div>
+              <ContentInfo
+                creator={data.contentCreator?.name}
+                partOfSeries={data.partOfSeries}
+                seriesName={data.series?.name}
+              />
             </div>
           </>
         )}
