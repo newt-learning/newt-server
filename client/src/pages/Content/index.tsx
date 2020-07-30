@@ -16,6 +16,8 @@ const ContentPage = ({ location }: ContentPageProps) => {
 
   const { data, status, error } = useFetchIndividualNewtContent(contentId);
 
+  console.log(data);
+
   return (
     <section>
       <Navbar />
@@ -27,7 +29,12 @@ const ContentPage = ({ location }: ContentPageProps) => {
         ) : (
           <>
             <div className={styles.contentFlowContainer}>
-              <ContentFlow />
+              <ContentFlow
+                title={data.name}
+                type={data.type}
+                source={data.source.name}
+                mediaId={data.source.mediaId}
+              />
             </div>
             <div className={styles.contentInfoContainer}>
               <div className={styles.contentInfo}></div>
