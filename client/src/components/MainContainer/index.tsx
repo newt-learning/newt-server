@@ -4,10 +4,15 @@ import styles from "./MainContainer.module.css";
 
 interface MainContainerProps {
   children: React.ReactNode;
+  style?: string;
 }
 
-const MainContainer = ({ children }: MainContainerProps) => {
-  return <section className={styles.container}>{children}</section>;
+const MainContainer = ({ children, style }: MainContainerProps) => {
+  return (
+    <section className={`${styles.container} ${style ? style : ""}`}>
+      {children}
+    </section>
+  );
 };
 
 export default MainContainer;

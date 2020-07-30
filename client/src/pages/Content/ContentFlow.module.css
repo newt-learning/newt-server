@@ -1,0 +1,27 @@
+.container {
+  margin-bottom: 1rem;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gray-400);
+}
+
+.title {
+  color: var(--gray-800);
+}
+
+@media screen and (min-width: 640px) {
+  .container {
+    border: 1px solid var(--gray-400);
+    border-radius: 0.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+      0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    min-height: 500px;
+    min-width: 400px;
+    margin-bottom: 1rem;
+  }
+}
