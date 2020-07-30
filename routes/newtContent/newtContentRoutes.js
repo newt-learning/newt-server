@@ -13,4 +13,17 @@ module.exports = (app) => {
       }
     });
   });
+
+  // Get individual content from Newt DB
+  app.get("/api/newt-content/:id", async (req, res) => {
+    const { id } = req.params;
+
+    NewtContent.findById(id, (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(content);
+      }
+    });
+  });
 };

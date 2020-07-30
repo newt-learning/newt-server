@@ -6,14 +6,20 @@ import styles from "./ContentCard.module.css";
 import { slugify } from "../../helpers/textHelpers";
 
 export interface ContentCardProps {
+  id: string;
   name: string;
   thumbnailUrl: string;
   creator: string;
 }
 
-const ContentCard = ({ name, thumbnailUrl, creator }: ContentCardProps) => {
+const ContentCard = ({ id, name, thumbnailUrl, creator }: ContentCardProps) => {
   return (
-    <Link to={`/${slugify(creator)}/content/${slugify(name)}`}>
+    <Link
+      to={{
+        pathname: `/${slugify(creator)}/content/${slugify(name)}`,
+        state: { contentId: id },
+      }}
+    >
       <div className={styles.card}>
         <img
           src={thumbnailUrl}

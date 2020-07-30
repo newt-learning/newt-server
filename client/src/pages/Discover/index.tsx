@@ -46,6 +46,7 @@ const DiscoverPage = () => {
                   }: DataProps) => (
                     <ContentCard
                       key={id}
+                      id={id}
                       name={name}
                       thumbnailUrl={thumbnailUrl}
                       creator={contentCreator.name}
