@@ -2,7 +2,7 @@ import React from "react";
 // API
 import { useFetchNewtContent } from "../../api/newtContent";
 // Components
-import { Navbar, ContentCard } from "../../components";
+import { MainContainer, Navbar, ContentCard } from "../../components";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -23,7 +23,7 @@ const DiscoverPage = () => {
   return (
     <section>
       <Navbar />
-      <div className={styles.container}>
+      <MainContainer>
         <aside className={styles.sidebar}>
           <h2 className={styles.sidebarTitle}>Categories</h2>
         </aside>
@@ -54,7 +54,7 @@ const DiscoverPage = () => {
                 )}
           </div>
         </div>
-      </div>
+      </MainContainer>
     </section>
   );
 };

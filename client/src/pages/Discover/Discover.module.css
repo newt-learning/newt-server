@@ -1,16 +1,5 @@
-.container {
-  width: 100vw;
-  max-width: 1600px;
-  box-sizing: border-box;
-  padding: 0 2rem;
-}
-
 .sidebar {
   display: none;
-}
-
-.mainContent {
-  padding: 2rem 0;
 }
 
 .title {
@@ -34,38 +23,25 @@
 }
 
 @media screen and (min-width: 768px) {
-  .container {
-    display: flex;
-    padding: 0 3rem;
-  }
-
   .sidebar {
     display: block;
     width: 25%;
-    padding: 5rem 1rem;
+    padding: 3rem 1rem 3rem 0;
   }
 
   .mainContent {
     width: 75%;
-    padding: 2rem 1rem;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .container {
-    padding: 0 4rem;
-  }
-
   .sidebar {
     width: 20%;
-    padding: 5rem 2rem;
-  }
-
-  .mainContent {
-    padding: 2rem;
+    padding: 3rem 2rem 3rem 0;
   }
 
   .mainContent {
     width: 80%;
+    padding-left: 2rem;
   }
 }
