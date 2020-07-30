@@ -32,8 +32,10 @@ const ContentPage = ({ location }: ContentPageProps) => {
               <ContentFlow
                 title={data.name}
                 type={data.type}
-                source={data.source.name}
-                mediaId={data.source.mediaId}
+                source={data.source?.name}
+                mediaId={data.source?.mediaId}
+                description={data.description}
+                hasQuiz={data.quizId ? true : false}
               />
             </div>
             <div className={styles.contentInfoContainer}>

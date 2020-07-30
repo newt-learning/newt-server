@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../../components";
 import styles from "./ContentFlow.module.css";
 
 interface ContentFlowProps {
@@ -6,9 +7,18 @@ interface ContentFlowProps {
   type: string;
   source?: string;
   mediaId?: string;
+  description?: string;
+  hasQuiz?: boolean;
 }
 
-const ContentFlow = ({ title, type, source, mediaId }: ContentFlowProps) => {
+const ContentFlow = ({
+  title,
+  type,
+  source,
+  mediaId,
+  description,
+  hasQuiz,
+}: ContentFlowProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -30,6 +40,22 @@ const ContentFlow = ({ title, type, source, mediaId }: ContentFlowProps) => {
               allowFullScreen
             />
           </div>
+        ) : null}
+        {description ? (
+          <>
+            <h4 className={styles.subheading}>Description</h4>
+            <p className={styles.description}>{description}</p>
+          </>
+        ) : null}
+        {hasQuiz ? (
+          <>
+            <h4 className={styles.instruction}>2. Check your understanding</h4>
+            <div className={styles.btnContainer}>
+              <Button category="primary" style={styles.quizBtn}>
+                Take the quiz
+              </Button>
+            </div>
+          </>
         ) : null}
       </div>
     </div>
