@@ -8,6 +8,7 @@
 body {
   margin: 0;
   box-sizing: border-box;
+  font-family: "avenir", "Inter", "Muli", sans-serif;
 }
 
 code {
@@ -20,10 +21,38 @@ h2,
 h3,
 h4,
 h5,
-h6,
+h6 {
+  font-weight: 700;
+}
+
 p,
 ul {
   margin: 0;
+}
+
+h1 {
+  font-size: var(--FS-3xl);
+}
+h2 {
+  font-size: var(--FS-2xl);
+}
+h3 {
+  font-size: var(--FS-xl);
+}
+h4 {
+  font-size: var(--FS-lg);
+}
+h5 {
+  font-size: var(--FS-base);
+}
+h6 {
+  font-size: var(--FS-s);
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: white;
 }
 
 input,

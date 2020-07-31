@@ -9,6 +9,7 @@ interface ContentFlowProps {
   mediaId?: string;
   description?: string;
   hasQuiz?: boolean;
+  onTakeQuiz?: () => void;
 }
 
 const ContentFlow = ({
@@ -18,6 +19,7 @@ const ContentFlow = ({
   mediaId,
   description,
   hasQuiz,
+  onTakeQuiz,
 }: ContentFlowProps) => {
   return (
     <div className={styles.container}>
@@ -51,7 +53,11 @@ const ContentFlow = ({
           <>
             <h4 className={styles.instruction}>2. Check your understanding</h4>
             <div className={styles.btnContainer}>
-              <Button category="primary" style={styles.quizBtn}>
+              <Button
+                category="primary"
+                style={styles.quizBtn}
+                onClick={onTakeQuiz}
+              >
                 Take the quiz
               </Button>
             </div>
