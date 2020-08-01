@@ -7,26 +7,21 @@ import Button from "../Button";
 
 interface QuizModalProps {
   showModal: boolean;
-  quizId: string;
+  quiz: object | null;
   quizName: string;
   onCloseModal: () => void;
 }
 
 const QuizModal = ({
   showModal,
-  quizId,
   quizName,
+  quiz,
   onCloseModal,
 }: QuizModalProps) => {
-  const { status, data } = useFetchNewtQuiz(quizId);
-
-  console.log("status: ", status);
-  console.log("data: ", data);
-
   return (
     <Modal show={showModal} size="lg" backdrop="static" animation={false}>
       <Modal.Header>{quizName}</Modal.Header>
-      <Modal.Body>Body</Modal.Body>
+      <Modal.Body>{JSON.stringify(quiz)}</Modal.Body>
       <Modal.Footer>
         <Button category="secondary" onClick={onCloseModal}>
           Close

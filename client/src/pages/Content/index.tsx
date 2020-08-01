@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, MainContainer } from "../../components";
 // API
-import { useFetchIndividualNewtContent } from "../../api/newtContent";
+import {
+  useFetchIndividualNewtContent,
+  useFetchNewtQuiz,
+} from "../../api/newtContent";
 // Components
 import { QuizModal } from "../../components";
 // Sections
@@ -18,10 +21,20 @@ const ContentPage = ({ location }: ContentPageProps) => {
   const { contentId } = location.state;
 
   const [showQuizModal, setShowQuizModal] = useState(false);
+  const [quiz, setQuiz] = useState(null);
 
   const { data, status, error } = useFetchIndividualNewtContent(contentId);
+  const {
+    data: quizData,
+    status: quizStatus,
+    error: quizError,
+  } = useFetchNewtQuiz(data?.quizId);
 
-  console.log(data);
+  useEffect(() => {
+    if (quizData) {
+      setQuiz(quizData);
+    }
+  }, [quizData]);
 
   const handleTakeQuiz = () => {
     setShowQuizModal(true);
@@ -60,7 +73,7 @@ const ContentPage = ({ location }: ContentPageProps) => {
       </MainContainer>
       <QuizModal
         showModal={showQuizModal}
-        quizId={data ? data.quizId : undefined}
+        quiz={quiz}
         quizName={data ? `Quiz for ${data.name}` : "Quiz"}
         onCloseModal={() => setShowQuizModal(false)}
       />
