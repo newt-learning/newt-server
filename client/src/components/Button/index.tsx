@@ -31,6 +31,8 @@ const Button = ({
         return styles.landingBtn;
       case "primary":
         return styles.primaryBtn;
+      case "secondary":
+        return styles.secondaryBtn;
       default:
         return "";
     }

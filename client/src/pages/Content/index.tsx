@@ -58,7 +58,11 @@ const ContentPage = ({ location }: ContentPageProps) => {
           </>
         )}
       </MainContainer>
-      <QuizModal showModal={showQuizModal} />
+      <QuizModal
+        showModal={showQuizModal}
+        quizName={data ? `Quiz for ${data.name}` : "Quiz"}
+        onCloseModal={() => setShowQuizModal(false)}
+      />
     </section>
   );
 };

@@ -25,6 +25,16 @@
   color: var(--newtBlue-800);
 }
 
+.secondaryBtn {
+  background-color: var(--gray-400);
+  border: 1px solid var(--gray-400);
+  color: var(--gray-800);
+}
+
+.secondaryBtn:hover {
+  background-color: var(--gray-200);
+}
+
 .landingBtn {
   background-color: var(--newtBlue-800);
   border: 1px solid var(--newtBlue-900);
