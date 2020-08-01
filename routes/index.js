@@ -9,5 +9,6 @@ module.exports = (app) =>
     require("./seriesRoutes")(app),
     require("./quizRoutes")(app),
     // Newt Content DB stuff
-    require("./newtContent/newtContentRoutes")(app)
+    require("./newtContent/newtContentRoutes")(app),
+    require("./newtContent/newtQuizRoutes")(app)
   );

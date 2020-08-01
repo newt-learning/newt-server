@@ -12,6 +12,11 @@ const fetchIndividualNewtContent = async (queryKey: any, contentId: string) => {
   return data;
 };
 
+const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
+  const { data } = await newtApi.get(`/newt-quiz/${newtQuizId}`);
+  return data;
+};
+
 // React-query bindings
 export function useFetchNewtContent() {
   return useQuery("newt-content", fetchNewtContent);
@@ -21,4 +26,8 @@ export function useFetchIndividualNewtContent(contentId: string) {
     ["individual-newt-content", contentId],
     fetchIndividualNewtContent
   );
+}
+
+export function useFetchNewtQuiz(newtQuizId: string) {
+  return useQuery(["newt-quiz", newtQuizId], fetchNewtQuiz);
 }

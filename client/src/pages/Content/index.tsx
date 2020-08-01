@@ -60,6 +60,7 @@ const ContentPage = ({ location }: ContentPageProps) => {
       </MainContainer>
       <QuizModal
         showModal={showQuizModal}
+        quizId={data ? data.quizId : undefined}
         quizName={data ? `Quiz for ${data.name}` : "Quiz"}
         onCloseModal={() => setShowQuizModal(false)}
       />
