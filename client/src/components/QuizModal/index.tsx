@@ -1,9 +1,7 @@
-import React from "react";
-// API
-import { useFetchNewtQuiz } from "../../api/newtContent";
+import React, { useState } from "react";
 // Components
 import Modal from "react-bootstrap/Modal";
-import Button from "../Button";
+import QuizModalContent from "./QuizModalContent";
 
 interface QuizModalProps {
   showModal: boolean;
@@ -12,21 +10,23 @@ interface QuizModalProps {
   onCloseModal: () => void;
 }
 
+type CurrentSection = "intro" | "questions" | "outro";
+
 const QuizModal = ({
   showModal,
   quizName,
   quiz,
   onCloseModal,
 }: QuizModalProps) => {
+  const [currentSection, setCurrentSection] = useState<CurrentSection>("intro");
+
   return (
     <Modal show={showModal} size="lg" backdrop="static" animation={false}>
-      <Modal.Header>{quizName}</Modal.Header>
-      <Modal.Body>{JSON.stringify(quiz)}</Modal.Body>
-      <Modal.Footer>
-        <Button category="secondary" onClick={onCloseModal}>
-          Close
-        </Button>
-      </Modal.Footer>
+      <QuizModalContent
+        currentSection={currentSection}
+        quizName={quizName}
+        onCloseModal={onCloseModal}
+      />
     </Modal>
   );
 };
