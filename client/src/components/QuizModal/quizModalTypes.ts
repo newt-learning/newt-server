@@ -37,6 +37,8 @@ export interface QuizModalContentProps {
   currentQuestion: number;
   onClickBegin: () => void;
   onClickOption: OptionClick;
+  onClickNext: () => void;
+  onClickBack: () => void;
   onCloseModal: () => void;
 }
 
@@ -51,4 +53,6 @@ export interface QuizQuestionProps {
   numQuestions: number;
   questionInfo: QuizQuestionType;
   onClickOption: OptionClick;
+  onClickNext: () => void;
+  onClickBack: () => void;
 }

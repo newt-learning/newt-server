@@ -36,6 +36,14 @@ const QuizModal = ({
     setCurrentQuestion(1);
   };
 
+  const handleGoNext = () => {
+    setCurrentQuestion(currentQuestion + 1);
+  };
+  const handleGoBack = () => {
+    setCurrentQuestion(currentQuestion - 1);
+  };
+
+  // Function to update quiz results - record option picked and check if it's right.
   const handleOptionClick = (event: React.MouseEvent<HTMLLIElement>) => {
     // event.preventDefault();
     const newResults = quizQuestions ? [...quizQuestions] : null;
@@ -72,6 +80,8 @@ const QuizModal = ({
         currentQuestion={currentQuestion}
         onClickBegin={handleBeginQuiz}
         onClickOption={handleOptionClick}
+        onClickNext={handleGoNext}
+        onClickBack={handleGoBack}
         onCloseModal={onCloseModal}
       />
     </Modal>

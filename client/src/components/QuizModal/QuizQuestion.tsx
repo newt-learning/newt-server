@@ -1,5 +1,8 @@
 import React from "react";
+// Types
 import { QuizQuestionProps } from "./quizModalTypes";
+// Components
+import Button from "../Button";
 import styles from "./QuizModal.module.css";
 // Helpers
 import { setOptionClass } from "./helpers";
@@ -15,6 +18,8 @@ const QuizQuestion = ({
     isChoiceCorrect,
   },
   onClickOption,
+  onClickNext,
+  onClickBack,
 }: QuizQuestionProps) => {
   return (
     <div className={styles.quizBody}>
@@ -46,6 +51,38 @@ const QuizQuestion = ({
           </div>
         ))}
       </ol>
+      <div className={styles.actionButtonGroup}>
+        {/* Don't show back button if it's the first question */}
+        {currentQuestion !== 1 && (
+          <Button
+            category="secondary"
+            style={styles.actionButton}
+            onClick={onClickBack}
+          >
+            Back
+          </Button>
+        )}
+        {/* If it's the last question, render Show Summary button, otherwise
+          Next button */}
+        {currentQuestion !== numQuestions ? (
+          <Button
+            category="primary"
+            style={styles.actionButton}
+            onClick={onClickNext}
+          >
+            Next
+          </Button>
+        ) : (
+          <Button
+            category="primary"
+            style={styles.actionButton}
+            // onClick={onClickSummary}
+            // disabled={!isQuizComplete}
+          >
+            Show Summary
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
