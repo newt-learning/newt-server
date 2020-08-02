@@ -1,4 +1,6 @@
 import React from "react";
+// Types
+import { QuizQuestionType, CurrentSection } from "./quizModalTypes";
 // Sections
 import QuizIntro from "./QuizIntro";
 import QuizQuestion from "./QuizQuestion";
@@ -6,11 +8,10 @@ import QuizQuestion from "./QuizQuestion";
 import Modal from "react-bootstrap/Modal";
 import Button from "../Button";
 
-type CurrentSection = "intro" | "questions" | "outro";
-
 interface QuizModalContentProps {
   currentSection: CurrentSection;
   quizName: string;
+  quizQuestions: QuizQuestionType[] | null;
   numQuestions: number;
   currentQuestion: number;
   onClickBegin: () => void;
@@ -20,6 +21,7 @@ interface QuizModalContentProps {
 const QuizModalContent = ({
   currentSection,
   quizName,
+  quizQuestions,
   numQuestions,
   currentQuestion,
   onClickBegin,
@@ -32,10 +34,14 @@ const QuizModalContent = ({
           <QuizIntro numQuestions={numQuestions} onClickBegin={onClickBegin} />
         );
       case "questions":
+        const questionInfo = quizQuestions
+          ? quizQuestions[currentQuestion - 1]
+          : null;
         return (
           <QuizQuestion
             currentQuestion={currentQuestion}
             numQuestions={numQuestions}
+            questionInfo={questionInfo}
           />
         );
       case "outro":
