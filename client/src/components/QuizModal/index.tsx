@@ -49,6 +49,7 @@ const QuizModal = ({
         currentSection={currentSection}
         quizName={quizName}
         numQuestions={numQuestions}
+        currentQuestion={currentQuestion}
         onClickBegin={handleBeginQuiz}
         onCloseModal={onCloseModal}
       />
