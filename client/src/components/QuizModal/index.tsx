@@ -24,16 +24,24 @@ const QuizModal = ({
   quiz,
   onCloseModal,
 }: QuizModalProps) => {
+  const [quizResults, setQuizResults] = useState(quiz?.questions);
   const [currentSection, setCurrentSection] = useState<CurrentSection>("intro");
   const [numQuestions, setNumQuestions] = useState(
     quiz?.questions?.length ?? 0
   );
+  const [currentQuestion, setCurrentQuestion] = useState(0);
 
   useEffect(() => {
     if (quiz) {
       setNumQuestions(quiz.questions.length);
+      setQuizResults(quiz.questions);
     }
   }, [quiz]);
+
+  const handleBeginQuiz = () => {
+    setCurrentSection("questions");
+    setCurrentQuestion(1);
+  };
 
   return (
     <Modal show={showModal} size="lg" backdrop="static" animation={false}>
@@ -41,6 +49,7 @@ const QuizModal = ({
         currentSection={currentSection}
         quizName={quizName}
         numQuestions={numQuestions}
+        onClickBegin={handleBeginQuiz}
         onCloseModal={onCloseModal}
       />
     </Modal>

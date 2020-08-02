@@ -11,6 +11,7 @@ interface QuizModalContentProps {
   currentSection: CurrentSection;
   quizName: string;
   numQuestions: number;
+  onClickBegin: () => void;
   onCloseModal: () => void;
 }
 
@@ -18,12 +19,15 @@ const QuizModalContent = ({
   currentSection,
   quizName,
   numQuestions,
+  onClickBegin,
   onCloseModal,
 }: QuizModalContentProps) => {
   const renderQuizBody = (currentSection: CurrentSection) => {
     switch (currentSection) {
       case "intro":
-        return <QuizIntro numQuestions={numQuestions} />;
+        return (
+          <QuizIntro numQuestions={numQuestions} onClickBegin={onClickBegin} />
+        );
       case "questions":
         return "Questions";
       case "outro":

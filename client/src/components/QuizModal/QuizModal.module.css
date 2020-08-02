@@ -11,3 +11,8 @@
 .light {
   color: var(--gray-500);
 }
+
+.beginButton {
+  margin-top: 2rem;
+  width: 35%;
+}
