@@ -1,12 +1,7 @@
 import React from "react";
+import { QuizIntroProps } from "./quizModalTypes";
 import styles from "./QuizModal.module.css";
 import Button from "../Button";
-
-interface QuizIntroProps {
-  message: string;
-  numQuestions: number;
-  onClickBegin: () => void;
-}
 
 const QuizIntro = ({ message, numQuestions, onClickBegin }: QuizIntroProps) => {
   return (

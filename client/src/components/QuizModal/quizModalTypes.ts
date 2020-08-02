@@ -19,3 +19,33 @@ export type Quiz = {
 } | null;
 
 export type CurrentSection = "intro" | "questions" | "outro";
+
+// Component Prop types
+export interface QuizModalProps {
+  showModal: boolean;
+  quiz: Quiz;
+  quizName: string;
+  onCloseModal: () => void;
+}
+
+export interface QuizModalContentProps {
+  currentSection: CurrentSection;
+  quizName: string;
+  quizQuestions: QuizQuestionType[];
+  numQuestions: number;
+  currentQuestion: number;
+  onClickBegin: () => void;
+  onCloseModal: () => void;
+}
+
+export interface QuizIntroProps {
+  message: string;
+  numQuestions: number;
+  onClickBegin: () => void;
+}
+
+export interface QuizQuestionProps {
+  currentQuestion: number;
+  numQuestions: number;
+  questionInfo: QuizQuestionType;
+}

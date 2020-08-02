@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 // Types
-import { Quiz, CurrentSection, QuizQuestionType } from "./quizModalTypes";
+import {
+  QuizModalProps,
+  CurrentSection,
+  QuizQuestionType,
+} from "./quizModalTypes";
 // Components
 import Modal from "react-bootstrap/Modal";
 import QuizModalContent from "./QuizModalContent";
-
-interface QuizModalProps {
-  showModal: boolean;
-  quiz: Quiz;
-  quizName: string;
-  onCloseModal: () => void;
-}
 
 const QuizModal = ({
   showModal,

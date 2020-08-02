@@ -1,14 +1,8 @@
 import React from "react";
-import { QuizQuestionType } from "./quizModalTypes";
+import { QuizQuestionProps } from "./quizModalTypes";
 import styles from "./QuizModal.module.css";
 // Helpers
 import { setOptionClass } from "./helpers";
-
-interface QuizQuestionProps {
-  currentQuestion: number;
-  numQuestions: number;
-  questionInfo: QuizQuestionType;
-}
 
 const QuizQuestion = ({
   currentQuestion,

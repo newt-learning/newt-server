@@ -1,22 +1,12 @@
 import React from "react";
 // Types
-import { QuizQuestionType, CurrentSection } from "./quizModalTypes";
+import { QuizModalContentProps, CurrentSection } from "./quizModalTypes";
 // Sections
 import QuizIntro from "./QuizIntro";
 import QuizQuestion from "./QuizQuestion";
 // Components
 import Modal from "react-bootstrap/Modal";
 import Button from "../Button";
-
-interface QuizModalContentProps {
-  currentSection: CurrentSection;
-  quizName: string;
-  quizQuestions: QuizQuestionType[];
-  numQuestions: number;
-  currentQuestion: number;
-  onClickBegin: () => void;
-  onCloseModal: () => void;
-}
 
 const QuizModalContent = ({
   currentSection,
