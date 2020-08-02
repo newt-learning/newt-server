@@ -41,6 +41,7 @@ export interface QuizModalContentProps {
   onClickBack: () => void;
   onClickSummary: () => void;
   isQuizComplete: boolean;
+  showReview: boolean;
   onCloseModal: () => void;
 }
 

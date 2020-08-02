@@ -24,6 +24,7 @@ const QuizModal = ({
     quiz?.questions ? quiz["questions"].length : 0
   );
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showReview, setShowReview] = useState(false);
 
   useEffect(() => {
     if (quiz) {
@@ -103,6 +104,7 @@ const QuizModal = ({
         onClickBack={handleGoBack}
         onClickSummary={handleShowOutro}
         isQuizComplete={isQuizComplete(quizQuestions)}
+        showReview={showReview}
         onCloseModal={onCloseModal}
       />
     </Modal>
