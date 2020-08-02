@@ -40,6 +40,8 @@ const ContentPage = ({ location }: ContentPageProps) => {
     setShowQuizModal(true);
   };
 
+  console.log(quiz);
+
   return (
     <section>
       <Navbar />

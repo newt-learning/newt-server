@@ -1,0 +1,13 @@
+.quizBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quizBody li {
+  list-style-type: upper-alpha;
+}
+
+.light {
+  color: var(--gray-500);
+}
