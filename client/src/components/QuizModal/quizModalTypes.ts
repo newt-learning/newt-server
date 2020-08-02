@@ -1,4 +1,4 @@
-export type QuizQuestionType = {
+export interface QuizQuestionType {
   _id: string;
   question: string;
   options: [
@@ -8,12 +8,14 @@ export type QuizQuestionType = {
     }
   ];
   correctAnswer: string;
-};
+  optionChosen?: string;
+  isChoiceCorrect?: boolean;
+}
 
 export type Quiz = {
   _id: string;
   contentId: string;
-  questions: QuizQuestionType[] | null;
+  questions: QuizQuestionType[] | undefined;
 } | null;
 
 export type CurrentSection = "intro" | "questions" | "outro";

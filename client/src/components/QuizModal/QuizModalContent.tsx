@@ -11,7 +11,7 @@ import Button from "../Button";
 interface QuizModalContentProps {
   currentSection: CurrentSection;
   quizName: string;
-  quizQuestions: QuizQuestionType[] | null;
+  quizQuestions: QuizQuestionType[];
   numQuestions: number;
   currentQuestion: number;
   onClickBegin: () => void;
@@ -34,9 +34,7 @@ const QuizModalContent = ({
           <QuizIntro numQuestions={numQuestions} onClickBegin={onClickBegin} />
         );
       case "questions":
-        const questionInfo = quizQuestions
-          ? quizQuestions[currentQuestion - 1]
-          : null;
+        const questionInfo = quizQuestions[currentQuestion - 1];
         return (
           <QuizQuestion
             currentQuestion={currentQuestion}
