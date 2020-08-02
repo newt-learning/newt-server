@@ -19,6 +19,7 @@ export type Quiz = {
 } | null;
 
 export type CurrentSection = "intro" | "questions" | "outro";
+export type OptionClick = (event: React.MouseEvent<HTMLLIElement>) => void;
 
 // Component Prop types
 export interface QuizModalProps {
@@ -35,6 +36,7 @@ export interface QuizModalContentProps {
   numQuestions: number;
   currentQuestion: number;
   onClickBegin: () => void;
+  onClickOption: OptionClick;
   onCloseModal: () => void;
 }
 
@@ -48,4 +50,5 @@ export interface QuizQuestionProps {
   currentQuestion: number;
   numQuestions: number;
   questionInfo: QuizQuestionType;
+  onClickOption: OptionClick;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // Types
 import {
   QuizModalProps,
@@ -36,6 +36,28 @@ const QuizModal = ({
     setCurrentQuestion(1);
   };
 
+  const handleOptionClick = (event: React.MouseEvent<HTMLLIElement>) => {
+    // event.preventDefault();
+    const newResults = quizQuestions ? [...quizQuestions] : null;
+
+    // Get value of the text of the option selected
+    // @ts-ignore
+    const optionChosen = event.target.innerText;
+
+    // Check if it's the same as the correct answer
+    const isChoiceCorrect = newResults
+      ? optionChosen === newResults[currentQuestion - 1].correctAnswer
+      : undefined;
+
+    // Add the two data points to the result object
+    if (newResults) {
+      newResults[currentQuestion - 1].optionChosen = optionChosen;
+      newResults[currentQuestion - 1].isChoiceCorrect = isChoiceCorrect;
+    }
+
+    setQuizQuestions(newResults);
+  };
+
   if (!quizQuestions) {
     return null;
   }
@@ -49,6 +71,7 @@ const QuizModal = ({
         numQuestions={numQuestions}
         currentQuestion={currentQuestion}
         onClickBegin={handleBeginQuiz}
+        onClickOption={handleOptionClick}
         onCloseModal={onCloseModal}
       />
     </Modal>

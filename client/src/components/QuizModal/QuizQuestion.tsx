@@ -14,6 +14,7 @@ const QuizQuestion = ({
     optionChosen,
     isChoiceCorrect,
   },
+  onClickOption,
 }: QuizQuestionProps) => {
   return (
     <div className={styles.quizBody}>
@@ -33,7 +34,7 @@ const QuizQuestion = ({
                 correctAnswer,
                 isChoiceCorrect
               )}
-              onClick={() => console.log("option clicked")}
+              onClick={(e) => (optionChosen ? null : onClickOption(e))}
             >
               {option.option}
             </li>

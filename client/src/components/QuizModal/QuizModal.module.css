@@ -71,33 +71,33 @@
 }
 
 .correctOption {
-  /* border-color: var(--lightGreen-btn-border);
-  background-color: var(--lightGreen-btn-hover); */
+  border-color: var(--lightGreen-600);
+  background-color: var(--lightGreen-200);
 }
 
 .correctOption:hover {
-  /* background-color: var(--lightGreen-btn-hover); */
+  background-color: var(--lightGreen-200);
 }
 
 .wrongOption {
-  /* border-color: var(--red-btn-border);
-  background-color: var(--red-btn-hover); */
+  border-color: var(--hotPink-600);
+  background-color: var(--hotPink-200);
 }
 
 .wrongOption:hover {
-  /* background-color: var(--red-btn-hover); */
+  background-color: var(--hotPink-200);
 }
 
 /* .correctOption = CSS for correct option selected
    .correctAnswer = CSS for option that is correct if option selected by user
                     was wrong. */
 .correctAnswer {
-  /* border-color: var(--lightGreen-btn-border);
-  background-color: rgba(93, 216, 121, 0.3); */
+  border-color: var(--lightGreen-600);
+  background-color: var(--lightGreen-200);
 }
 
 .correctAnswer:hover {
-  /* background-color: rgba(93, 216, 121, 0.3); */
+  background-color: var(--lightGreen-200);
 }
 
 .explanation {
