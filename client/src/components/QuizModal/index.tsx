@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import _ from "lodash";
 // Types
 import {
   QuizModalProps,
@@ -70,6 +71,24 @@ const QuizModal = ({
     return null;
   }
 
+  const handleShowOutro = () => {
+    setCurrentSection("outro");
+  };
+
+  // Function to check if the quiz has been completed (all the questions
+  // answered) - used to disable Finish button until complete
+  const isQuizComplete = (results: QuizQuestionType[]) => {
+    // Returns only questions that have been answered (by checking if the object
+    // has an `optionChosen` field)
+    const isComplete = results.filter((result) =>
+      _.has(result, "optionChosen")
+    );
+
+    // Checks if the filtered list is the same as the number of questions and
+    // returns boolean
+    return isComplete.length === numQuestions;
+  };
+
   return (
     <Modal show={showModal} size="lg" backdrop="static" animation={false}>
       <QuizModalContent
@@ -82,6 +101,8 @@ const QuizModal = ({
         onClickOption={handleOptionClick}
         onClickNext={handleGoNext}
         onClickBack={handleGoBack}
+        onClickSummary={handleShowOutro}
+        isQuizComplete={isQuizComplete(quizQuestions)}
         onCloseModal={onCloseModal}
       />
     </Modal>

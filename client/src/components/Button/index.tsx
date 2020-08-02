@@ -14,6 +14,7 @@ interface ButtonProps {
   onClick?: () => void;
   category?: ButtonCategory;
   isLoading?: boolean;
+  isDisabled?: boolean;
   style?: string;
 }
 
@@ -23,6 +24,7 @@ const Button = ({
   onClick,
   category,
   isLoading,
+  isDisabled,
   style,
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
@@ -41,8 +43,10 @@ const Button = ({
   return (
     <button
       type={type}
-      onClick={onClick}
-      className={`${styles.btn} ${selectClassFromCategory(category)} ${style}`}
+      onClick={isDisabled ? () => {} : onClick}
+      className={`${styles.btn} ${selectClassFromCategory(category)} ${style} ${
+        isDisabled ? styles.disabledBtn : ""
+      }`}
     >
       {isLoading ? (
         <div className={styles.spinnerContainer}>

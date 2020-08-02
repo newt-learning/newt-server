@@ -18,6 +18,8 @@ const QuizModalContent = ({
   onClickOption,
   onClickNext,
   onClickBack,
+  onClickSummary,
+  isQuizComplete,
   onCloseModal,
 }: QuizModalContentProps) => {
   const renderQuizBody = (currentSection: CurrentSection) => {
@@ -36,6 +38,8 @@ const QuizModalContent = ({
             onClickOption={onClickOption}
             onClickNext={onClickNext}
             onClickBack={onClickBack}
+            onClickSummary={onClickSummary}
+            isQuizComplete={isQuizComplete}
           />
         );
       case "outro":

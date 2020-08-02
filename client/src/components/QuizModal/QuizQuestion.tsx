@@ -20,6 +20,8 @@ const QuizQuestion = ({
   onClickOption,
   onClickNext,
   onClickBack,
+  onClickSummary,
+  isQuizComplete,
 }: QuizQuestionProps) => {
   return (
     <div className={styles.quizBody}>
@@ -76,8 +78,8 @@ const QuizQuestion = ({
           <Button
             category="primary"
             style={styles.actionButton}
-            // onClick={onClickSummary}
-            // disabled={!isQuizComplete}
+            onClick={onClickSummary}
+            isDisabled={!isQuizComplete}
           >
             Show Summary
           </Button>
