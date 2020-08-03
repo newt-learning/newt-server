@@ -1,0 +1,19 @@
+.container {
+  width: 100vw;
+  max-width: 1600px;
+  box-sizing: border-box;
+  padding: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    display: flex;
+    padding: 2rem 4rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 2rem 6rem;
+  }
+}

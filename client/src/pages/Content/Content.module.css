@@ -1,0 +1,28 @@
+.contentFlowContainer {
+  width: 66.67%;
+  padding-right: 1rem;
+}
+
+.contentInfoContainer {
+  width: 33.33%;
+  padding-left: 1rem;
+}
+
+@media screen and (min-with: 1024px) {
+  .contentInfo {
+    padding: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .contentFlowContainer,
+  .contentInfoContainer {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 2.5rem;
+  }
+}

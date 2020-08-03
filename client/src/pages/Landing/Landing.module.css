@@ -38,36 +38,10 @@
 
 .title {
   font-family: "Avenir";
-  font-size: 36px;
-  color: #fff;
+  font-size: var(--FS-3xl);
+  color: white;
   margin-bottom: 2rem;
   text-align: center;
-}
-
-.label {
-  font-size: 1rem;
-  font-family: "Avenir";
-  color: #fff;
-}
-
-.form {
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-}
-
-.input {
-  width: 100%;
-  font-size: 14px;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.btn {
-  width: 67%;
 }
 
 @media screen and (min-width: 640px) {
@@ -98,25 +72,9 @@
   }
 
   .title {
-    font-size: 48px;
+    font-size: var(--FS-5xl);
     text-align: start;
     margin-bottom: 3rem;
-  }
-
-  .label {
-    align-self: flex-start;
-    font-size: 1.2rem;
-  }
-
-  .input {
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 2rem;
-  }
-
-  .btn {
-    width: 250px;
-    align-self: center;
   }
 }
 

@@ -6,7 +6,7 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: var(--FS-3xl);
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -20,7 +20,7 @@
 .text {
   max-width: 800px;
   margin-bottom: 1.5rem;
-  color: #666;
+  color: var(--gray-700);
 }
 
 .textList {
@@ -41,40 +41,40 @@
 }
 
 .flowEndpoint1 {
-  border-left: 3px solid #7575ff;
-  background-color: #ebebff;
+  border-left: 3px solid var(--indigo-400);
+  background-color: var(--indigo-100);
 }
 
 .flowEndpoint2 {
-  border-left: 3px solid #ff7397;
-  background-color: #ffeff3;
+  border-left: 3px solid var(--hotPink-400);
+  background-color: var(--hotPink-100);
 }
 
 .flowEndpoint3 {
-  border-left: 3px solid #62d97e;
-  background-color: #f0fff4;
+  border-left: 3px solid var(--lightGreen-500);
+  background-color: var(--lightGreen-100);
 }
 
 .flowEndpointTitle {
-  font-size: 1.25rem;
+  font-size: var(--FS-xl);
 }
 
 .flowEndpointTitle1 {
-  color: #7575ff;
+  color: var(--indigo-400);
 }
 
 .flowEndpointTitle2 {
-  color: #ff7397;
+  color: var(--hotPink-400);
 }
 
 .flowEndpointTitle3 {
-  color: #62d97e;
+  color: var(--lightGreen-500);
 }
 
 .flowEndpointText {
   margin-top: 0.2rem;
-  font-size: 1rem;
-  color: #828282;
+  font-size: var(--FS-base);
+  color: var(--gray-600);
 }
 
 @media screen and (min-width: 640px) {
@@ -83,7 +83,7 @@
   }
 
   .title {
-    font-size: 2.4rem;
+    font-size: var(--FS-4xl);
   }
 
   .flowEndpointContainer {
@@ -122,20 +122,19 @@
   }
 
   .flowEndpoint1 {
-    border-left: 3px solid #7575ff;
-    background-color: #ebebff;
+    border-left: 3px solid var(--indigo-400);
   }
 
   .flowEndpoint2 {
-    border-left: 3px solid #ff7397;
+    border-left: 3px solid var(--hotPink-400);
   }
 
   .flowEndpoint3 {
-    border-left: 3px solid #62d97e;
+    border-left: 3px solid var(--lightGreen-500);
   }
 
   .flowEndpointText {
-    font-size: 0.8rem;
+    font-size: var(--FS-xs);
   }
 }
 
@@ -144,7 +143,7 @@
     padding: 12rem 7rem 4rem 7rem;
   }
   .title {
-    font-size: 3rem;
+    font-size: var(--FS-5xl);
   }
 
   .flowEndpoint {
@@ -158,11 +157,11 @@
   }
 
   .flowEndpointText {
-    font-size: 1rem;
+    font-size: var(--FS-base);
     margin-top: 0.3rem;
   }
 
   .text {
-    font-size: 1.1em;
+    font-size: var(--FS-lg);
   }
 }

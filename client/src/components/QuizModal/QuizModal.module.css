@@ -1,0 +1,134 @@
+.quizBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quizBody li {
+  list-style-type: upper-alpha;
+}
+
+.light {
+  color: var(--gray-500);
+}
+
+.beginButton {
+  margin-top: 2rem;
+  width: 35%;
+}
+
+.question {
+  text-align: center;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.optionsGroup {
+  width: 100%;
+  max-width: 500px;
+}
+
+.actionButtonGroup {
+  display: flex;
+}
+
+.actionButtonGroup button:first-child {
+  margin-right: 0.5rem;
+}
+
+.actionButton {
+  margin-top: 2rem;
+  width: 150px;
+}
+
+.listGroup {
+  margin-bottom: 0.75rem;
+}
+
+.option {
+  border: 1px solid var(--gray-400);
+  border-radius: 2rem;
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+}
+
+.option:last-child {
+  margin-bottom: 0;
+}
+
+.option:hover {
+  background-color: var(--gray-300);
+}
+
+.disabledOption {
+  cursor: not-allowed;
+}
+
+.disabledOption:hover {
+  background-color: white;
+}
+
+.disabledButton {
+  cursor: not-allowed;
+}
+
+.correctOption {
+  border-color: var(--lightGreen-600);
+  background-color: var(--lightGreen-200);
+}
+
+.correctOption:hover {
+  background-color: var(--lightGreen-200);
+}
+
+.wrongOption {
+  border-color: var(--hotPink-600);
+  background-color: var(--hotPink-200);
+}
+
+.wrongOption:hover {
+  background-color: var(--hotPink-200);
+}
+
+/* .correctOption = CSS for correct option selected
+   .correctAnswer = CSS for option that is correct if option selected by user
+                    was wrong. */
+.correctAnswer {
+  border-color: var(--lightGreen-600);
+  background-color: var(--lightGreen-200);
+}
+
+.correctAnswer:hover {
+  background-color: var(--lightGreen-200);
+}
+
+.explanation {
+  color: var(--gray-700);
+  font-size: 0.9rem;
+  padding-left: 1.25rem;
+  margin-top: 0.25rem;
+  max-width: 500px;
+}
+
+.finishSection {
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.finishSection h4 {
+  margin-bottom: 1.5rem;
+}
+
+.finishSection img {
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+}
+
+.finishButton {
+  width: 100px;
+}

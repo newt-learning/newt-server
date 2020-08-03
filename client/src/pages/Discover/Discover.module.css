@@ -1,0 +1,53 @@
+.sidebar {
+  display: none;
+}
+
+.title {
+  font-size: var(--FS-3xl);
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.sidebarTitle {
+  font-size: var(--FS-lg);
+  color: var(--gray-700);
+}
+
+.description {
+  font-size: var(--FS-base);
+  color: var(--gray-600);
+}
+
+.disclaimer {
+  margin-top: 0.25rem;
+  font-size: var(--FS-xs);
+  color: var(--gray-600);
+}
+
+.contentContainer {
+  padding-top: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar {
+    display: block;
+    width: 25%;
+    padding: 3rem 1rem 3rem 0;
+  }
+
+  .mainContent {
+    width: 75%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .sidebar {
+    width: 20%;
+    padding: 3rem 2rem 3rem 0;
+  }
+
+  .mainContent {
+    width: 80%;
+    padding-left: 2rem;
+  }
+}
