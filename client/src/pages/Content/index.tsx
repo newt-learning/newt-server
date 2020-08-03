@@ -12,6 +12,7 @@ import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
 // Styling
 import styles from "./Content.module.css";
+import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
 
 interface ContentPageProps {
   location?: any;
@@ -45,8 +46,10 @@ const ContentPage = ({ location }: ContentPageProps) => {
     setQuizStarted(true);
   };
 
-  const handleCompleteQuiz = () => {
+  const handleCompleteQuiz = (results: QuizQuestionType[]) => {
     setShowReview(true);
+    // @ts-ignore
+    setQuiz({ ...quiz, questions: results });
   };
 
   console.log(quiz);
@@ -70,7 +73,13 @@ const ContentPage = ({ location }: ContentPageProps) => {
                 description={data.description}
                 hasQuiz={data.quizId ? true : false}
                 onTakeQuiz={handleTakeQuiz}
-                buttonText={quizStarted ? "Continue quiz" : "Take the quiz"}
+                buttonText={
+                  showReview
+                    ? "See results"
+                    : quizStarted
+                    ? "Continue quiz"
+                    : "Take the quiz"
+                }
               />
             </div>
             <div className={styles.contentInfoContainer}>

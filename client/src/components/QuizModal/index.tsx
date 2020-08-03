@@ -80,7 +80,7 @@ const QuizModal = ({
   const handleFinishQuiz = () => {
     setCurrentSection("intro");
     onCloseModal();
-    onComplete();
+    onComplete(quizQuestions);
   };
 
   // Function to check if the quiz has been completed (all the questions

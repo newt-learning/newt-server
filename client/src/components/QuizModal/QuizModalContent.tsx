@@ -31,7 +31,11 @@ const QuizModalContent = ({
     switch (currentSection) {
       case "intro":
         return (
-          <QuizIntro numQuestions={numQuestions} onClickBegin={onClickBegin} />
+          <QuizIntro
+            numQuestions={numQuestions}
+            showReview={showReview}
+            onClickBegin={onClickBegin}
+          />
         );
       case "questions":
         const questionInfo = quizQuestions[currentQuestion - 1];
