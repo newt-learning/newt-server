@@ -31,8 +31,8 @@ const ContentPage = ({ location }: ContentPageProps) => {
   const { data, status, error } = useFetchIndividualNewtContent(contentId);
   const {
     data: quizData,
-    status: quizStatus,
-    error: quizError,
+    isLoading: isQuizLoading,
+    isError: isQuizError,
   } = useFetchNewtQuiz(data?.quizId);
 
   useEffect(() => {
@@ -92,6 +92,8 @@ const ContentPage = ({ location }: ContentPageProps) => {
       </MainContainer>
       <QuizModal
         showModal={showQuizModal}
+        isLoading={isQuizLoading}
+        hasError={isQuizError}
         quiz={quiz}
         quizName={data ? `Quiz for ${data.name}` : "Quiz"}
         onCloseModal={() => setShowQuizModal(false)}

@@ -9,9 +9,13 @@ import {
 // Components
 import Modal from "react-bootstrap/Modal";
 import QuizModalContent from "./QuizModalContent";
+// Styling
+import styles from "./QuizModal.module.css";
 
 const QuizModal = ({
   showModal,
+  isLoading,
+  hasError,
   quizName,
   quiz,
   onCloseModal,
@@ -99,24 +103,47 @@ const QuizModal = ({
 
   return (
     <Modal show={showModal} size="lg" backdrop="static" animation={false}>
-      <QuizModalContent
-        currentSection={currentSection}
-        quizName={quizName}
-        quizQuestions={quizQuestions}
-        numQuestions={numQuestions}
-        currentQuestion={currentQuestion}
-        onClickBegin={handleBeginQuiz}
-        onClickOption={handleOptionClick}
-        onClickNext={handleGoNext}
-        onClickBack={handleGoBack}
-        onClickSummary={handleShowOutro}
-        onClickFinish={handleFinishQuiz}
-        isQuizComplete={isQuizComplete(quizQuestions)}
-        showReview={showReview}
-        onCloseModal={onCloseModal}
-      />
+      {isLoading ? (
+        <QuizLoadingOrHasError type="loading" />
+      ) : hasError ? (
+        <QuizLoadingOrHasError type="error" />
+      ) : (
+        <QuizModalContent
+          currentSection={currentSection}
+          quizName={quizName}
+          quizQuestions={quizQuestions}
+          numQuestions={numQuestions}
+          currentQuestion={currentQuestion}
+          onClickBegin={handleBeginQuiz}
+          onClickOption={handleOptionClick}
+          onClickNext={handleGoNext}
+          onClickBack={handleGoBack}
+          onClickSummary={handleShowOutro}
+          onClickFinish={handleFinishQuiz}
+          isQuizComplete={isQuizComplete(quizQuestions)}
+          showReview={showReview}
+          onCloseModal={onCloseModal}
+        />
+      )}
     </Modal>
   );
 };
+
+interface QuizLoadingOrHasErrorProps {
+  type: "loading" | "error";
+}
+
+const QuizLoadingOrHasError = ({ type }: QuizLoadingOrHasErrorProps) => (
+  <>
+    <Modal.Header closeButton></Modal.Header>
+    <Modal.Body>
+      <div className={styles.quizBody}>
+        {type === "error"
+          ? "Sorry, there was an error creating this quiz"
+          : "Generating quiz..."}
+      </div>
+    </Modal.Body>
+  </>
+);
 
 export default QuizModal;

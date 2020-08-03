@@ -24,6 +24,8 @@ export type OptionClick = (event: React.MouseEvent<HTMLLIElement>) => void;
 // Component Prop types
 export interface QuizModalProps {
   showModal: boolean;
+  isLoading: boolean;
+  hasError: boolean;
   quiz: Quiz;
   quizName: string;
   onCloseModal: () => void;
