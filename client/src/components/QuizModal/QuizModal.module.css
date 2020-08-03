@@ -24,6 +24,7 @@
 
 .optionsGroup {
   width: 100%;
+  max-width: 500px;
 }
 
 .actionButtonGroup {
@@ -111,6 +112,7 @@
 .finishSection {
   margin: 2rem 0;
   width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   text-align: center;
