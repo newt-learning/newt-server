@@ -10,6 +10,7 @@ interface ContentFlowProps {
   description?: string;
   hasQuiz?: boolean;
   onTakeQuiz?: () => void;
+  buttonText?: string;
 }
 
 const ContentFlow = ({
@@ -20,6 +21,7 @@ const ContentFlow = ({
   description,
   hasQuiz,
   onTakeQuiz,
+  buttonText,
 }: ContentFlowProps) => {
   return (
     <div className={styles.container}>
@@ -58,7 +60,7 @@ const ContentFlow = ({
                 style={styles.quizBtn}
                 onClick={onTakeQuiz}
               >
-                Take the quiz
+                {buttonText}
               </Button>
             </div>
           </>
@@ -66,6 +68,10 @@ const ContentFlow = ({
       </div>
     </div>
   );
+};
+
+ContentFlow.defaultProps = {
+  buttonText: "Take the quiz",
 };
 
 export default ContentFlow;

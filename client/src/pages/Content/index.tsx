@@ -22,6 +22,9 @@ const ContentPage = ({ location }: ContentPageProps) => {
 
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [quiz, setQuiz] = useState(null);
+  // Used to determine what text to show on the button: if false, say "Take quiz",
+  // otherwise "Continue quiz".
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const { data, status, error } = useFetchIndividualNewtContent(contentId);
   const {
@@ -38,6 +41,7 @@ const ContentPage = ({ location }: ContentPageProps) => {
 
   const handleTakeQuiz = () => {
     setShowQuizModal(true);
+    setQuizStarted(true);
   };
 
   console.log(quiz);
@@ -61,6 +65,7 @@ const ContentPage = ({ location }: ContentPageProps) => {
                 description={data.description}
                 hasQuiz={data.quizId ? true : false}
                 onTakeQuiz={handleTakeQuiz}
+                buttonText={quizStarted ? "Continue quiz" : "Take the quiz"}
               />
             </div>
             <div className={styles.contentInfoContainer}>
