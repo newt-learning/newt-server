@@ -24,14 +24,17 @@ const DiscoverPage = () => {
     <section>
       <Navbar />
       <MainContainer>
-        <aside className={styles.sidebar}>
-          <h2 className={styles.sidebarTitle}>Categories</h2>
-        </aside>
+        <aside className={styles.sidebar}></aside>
         <div className={styles.mainContent}>
           <div>
             <h1 className={styles.title}>Discover</h1>
             <p className={styles.description}>
-              Find the next thing you want to learn from our curated library.
+              Find the next thing you want to learn from our curated library*.
+            </p>
+            <p className={styles.disclaimer}>
+              * (This is an experimental section, which is why there's only one
+              item right now. Click on the link below for a sneak peek into what
+              we're trying to build).
             </p>
           </div>
           <div className={styles.contentContainer}>

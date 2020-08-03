@@ -15,16 +15,19 @@ const QuizIntro = ({
 
   return (
     <div className={styles.quizBody}>
-      <p
-        style={{
-          maxWidth: "600px",
-          marginBottom: "1rem",
-          textAlign: "center",
-        }}
-      >
-        Welcome to the demo for quizzing. The goal is to show you what the
-        learning flow we're designing here. Your answers are not saved.
-      </p>
+      {showReview ? null : (
+        <p
+          style={{
+            maxWidth: "600px",
+            marginBottom: "1rem",
+            textAlign: "center",
+          }}
+        >
+          Welcome to the demo for quizzing. The goal is to show you the learning
+          flow we're designing here: watch/read/listen to something, then easily
+          check your retention.
+        </p>
+      )}
       <p>{showReview ? reviewMessage : defaultMessage}</p>
       <p className={styles.light}>{`Total Questions: ${numQuestions}`}</p>
       <Button
