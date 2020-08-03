@@ -1,10 +1,11 @@
 .App {
-  background-color: #38ceff;
   min-height: 100vh;
+  background: url("../../assets/background.svg");
+  background-repeat: repeat-x; /* TO DO: only x-scale background svg */
 }
 
 .mainContainer {
-  min-height: calc(100vh - 75px);
+  height: 779px;
   box-sizing: border-box;
   display: flex;
   flex: 1;
@@ -17,6 +18,14 @@
   overflow: hidden;
 }
 
+/* Small mobile phones */
+@media screen and (max-height: 680px) {
+  .mainContainer {
+    justify-content: flex-start;
+    margin-top: 4rem;
+  }
+}
+
 .titleContainer {
   display: flex;
   flex-direction: column;
@@ -27,64 +36,18 @@
   display: none;
 }
 
-.nav {
-  display: flex;
-  width: 100vw;
-  box-sizing: border-box;
-  height: 75px;
-  padding: 0 2rem;
-  align-items: center;
-}
-
-.logo {
-  font-family: "Righteous";
-  font-size: 32px;
-  color: #fff;
-  letter-spacing: 0.1rem;
-  line-height: 60px;
-}
-
 .title {
   font-family: "Avenir";
-  font-size: 36px;
-  color: #fff;
+  font-size: var(--FS-3xl);
+  color: white;
   margin-bottom: 2rem;
   text-align: center;
 }
 
-.subtitle {
-  font-size: 14px;
-  font-family: "Avenir";
-  color: #fff;
-}
-
-.form {
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-}
-
-.input {
-  width: 100%;
-  font-size: 14px;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.btn {
-  width: 67%;
-}
-
 @media screen and (min-width: 640px) {
-  .nav {
-    padding: 0 4rem;
-  }
-
   .mainContainer {
     display: flex;
+    height: auto;
     box-sizing: border-box;
     justify-content: flex-start;
     align-items: flex-start;
@@ -99,10 +62,6 @@
     width: 50%;
   }
 
-  .logo {
-    font-size: 40px;
-  }
-
   .titleContainer {
     margin-top: 200px;
     width: 50%;
@@ -113,24 +72,9 @@
   }
 
   .title {
-    font-size: 48px;
+    font-size: var(--FS-5xl);
     text-align: start;
     margin-bottom: 3rem;
-  }
-
-  .subtitle {
-    font-size: 18px;
-  }
-
-  .input {
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 2rem;
-  }
-
-  .btn {
-    width: 250px;
-    align-self: center;
   }
 }
 
@@ -139,9 +83,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-self: flex-start;
   }
-  .nav {
-    max-width: 1600px;
+
+  .mainContainer {
+    flex: 0;
   }
 }

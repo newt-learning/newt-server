@@ -1,8 +1,9 @@
 .btn {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: white;
+  border: 1px solid var(--gray-300);
   padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: var(--FS-s);
+  font-weight: 500;
   line-height: 1.25;
   border-radius: 0.5rem;
   transition: all 0.15s ease-in-out;
@@ -14,15 +15,48 @@
 }
 
 .primaryBtn {
-  background-color: #008bb8;
-  border: 1px solid #00779f;
+  background-color: var(--newtBlue-600);
+  border: 1px solid var(--newtBlue-700);
   color: white;
-  font-weight: 500;
 }
 
 .primaryBtn:hover {
-  background-color: #b0ecff;
-  color: #00779f;
+  background-color: var(--newtBlue-200);
+  color: var(--newtBlue-800);
+}
+
+.secondaryBtn {
+  background-color: var(--gray-400);
+  border: 1px solid var(--gray-400);
+  color: var(--gray-800);
+}
+
+.secondaryBtn:hover {
+  background-color: var(--gray-200);
+}
+
+.landingBtn {
+  background-color: var(--newtBlue-800);
+  border: 1px solid var(--newtBlue-900);
+  color: white;
+}
+
+.landingBtn:hover {
+  background-color: var(--newtBlue-200);
+  color: var(--newtBlue-800);
+}
+
+.disabledBtn {
+  background-color: var(--gray-300);
+  border: 1px solid var(--gray-300);
+  color: var(--gray-500);
+}
+
+.disabledBtn:hover {
+  background-color: var(--gray-300);
+  border: 1px solid var(--gray-300);
+  color: var(--gray-500);
+  cursor: not-allowed;
 }
 
 .spinnerContainer {

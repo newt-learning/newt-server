@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  box-sizing: border-box;
+  padding: 0 4rem;
+  background: linear-gradient(125deg, var(--newtBlue-500) 40%, #3c96ff 100%);
+}
+
+a {
+  text-decoration: none;
+}
+
+.text {
+  height: 24px;
+  margin-left: 0.75rem;
+  color: white;
+  font-size: var(--FS-s);
+}
+
+.text:hover {
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 1px solid white;
+}
+
+.icon:hover {
+  cursor: pointer;
+  fill: #333;
+}
+
+@media screen and (min-width: 640px) {
+  .container {
+    padding: 0 5rem;
+  }
+
+  .text {
+    font-size: var(--FS-base);
+    margin-left: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 0 7rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 0 10rem;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .container {
+    width: 1694px; /* TO-DO: not absolute value - this one is width of Feature section */
+  }
+}
