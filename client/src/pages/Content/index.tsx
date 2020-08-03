@@ -52,8 +52,6 @@ const ContentPage = ({ location }: ContentPageProps) => {
     setQuiz({ ...quiz, questions: results });
   };
 
-  console.log(quiz);
-
   return (
     <section>
       <Navbar />
