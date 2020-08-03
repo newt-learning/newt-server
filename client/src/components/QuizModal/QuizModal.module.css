@@ -125,6 +125,8 @@
 .finishSection img {
   align-items: center;
   margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
 }
 
 .finishButton {
