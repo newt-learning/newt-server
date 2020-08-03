@@ -27,6 +27,8 @@ export interface QuizModalProps {
   quiz: Quiz;
   quizName: string;
   onCloseModal: () => void;
+  showReview: boolean;
+  onComplete: () => void;
 }
 
 export interface QuizModalContentProps {
@@ -40,6 +42,7 @@ export interface QuizModalContentProps {
   onClickNext: () => void;
   onClickBack: () => void;
   onClickSummary: () => void;
+  onClickFinish: () => void;
   isQuizComplete: boolean;
   showReview: boolean;
   onCloseModal: () => void;

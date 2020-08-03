@@ -15,6 +15,8 @@ const QuizModal = ({
   quizName,
   quiz,
   onCloseModal,
+  showReview,
+  onComplete,
 }: QuizModalProps) => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestionType[] | null>(
     quiz?.questions ?? null
@@ -24,7 +26,6 @@ const QuizModal = ({
     quiz?.questions ? quiz["questions"].length : 0
   );
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [showReview, setShowReview] = useState(false);
 
   useEffect(() => {
     if (quiz) {
@@ -76,6 +77,12 @@ const QuizModal = ({
     setCurrentSection("outro");
   };
 
+  const handleFinishQuiz = () => {
+    setCurrentSection("intro");
+    onCloseModal();
+    onComplete();
+  };
+
   // Function to check if the quiz has been completed (all the questions
   // answered) - used to disable Finish button until complete
   const isQuizComplete = (results: QuizQuestionType[]) => {
@@ -103,6 +110,7 @@ const QuizModal = ({
         onClickNext={handleGoNext}
         onClickBack={handleGoBack}
         onClickSummary={handleShowOutro}
+        onClickFinish={handleFinishQuiz}
         isQuizComplete={isQuizComplete(quizQuestions)}
         showReview={showReview}
         onCloseModal={onCloseModal}

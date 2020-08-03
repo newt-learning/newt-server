@@ -22,6 +22,7 @@ const QuizModalContent = ({
   onClickNext,
   onClickBack,
   onClickSummary,
+  onClickFinish,
   isQuizComplete,
   showReview,
   onCloseModal,
@@ -72,7 +73,7 @@ const QuizModalContent = ({
                 ? styles.finishButton
                 : `${styles.finishButton} ${styles.disabledButton}`
             }
-            onClick={onCloseModal}
+            onClick={onClickFinish}
             isDisabled={!isQuizComplete}
           >
             Finish
