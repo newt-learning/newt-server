@@ -14,7 +14,9 @@ interface DataProps {
     contentCreatorId: string;
     name: string;
     url: string;
+    slug: string;
   };
+  slug: string;
 }
 
 const DiscoverPage = () => {
@@ -46,6 +48,7 @@ const DiscoverPage = () => {
                     name,
                     thumbnailUrl,
                     contentCreator,
+                    slug,
                   }: DataProps) => (
                     <ContentCard
                       key={id}
@@ -53,6 +56,8 @@ const DiscoverPage = () => {
                       name={name}
                       thumbnailUrl={thumbnailUrl}
                       creator={contentCreator.name}
+                      contentNameSlug={slug}
+                      contentCreatorSlug={contentCreator.slug}
                     />
                   )
                 )}

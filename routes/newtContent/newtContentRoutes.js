@@ -26,4 +26,17 @@ module.exports = (app) => {
       }
     });
   });
+
+  // Get individual content by slug (from URL parameter)
+  app.get("/api/newt-content/by-slug/:slug", (req, res) => {
+    const { slug } = req.params;
+
+    NewtContent.findOne({ slug }, (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(content);
+      }
+    });
+  });
 };

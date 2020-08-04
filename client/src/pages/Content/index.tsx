@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, MainContainer } from "../../components";
+import { useParams } from "react-router-dom";
 // API
 import {
-  useFetchIndividualNewtContent,
+  useFetchIndividualNewtContentBySlug,
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
-import { QuizModal } from "../../components";
+import { Navbar, MainContainer, QuizModal } from "../../components";
 // Sections
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
@@ -14,12 +14,9 @@ import ContentInfo from "./ContentInfo";
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
 
-interface ContentPageProps {
-  location?: any;
-}
-
-const ContentPage = ({ location }: ContentPageProps) => {
-  const { contentId } = location.state;
+const ContentPage = () => {
+  // Get content name slug from URL parameters
+  const { contentNameSlug } = useParams();
 
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [quiz, setQuiz] = useState(null);
@@ -28,7 +25,10 @@ const ContentPage = ({ location }: ContentPageProps) => {
   const [quizStarted, setQuizStarted] = useState(false);
   const [showReview, setShowReview] = useState(false);
 
-  const { data, status, error } = useFetchIndividualNewtContent(contentId);
+  // Fetch content data from slug
+  const { data, status, error } = useFetchIndividualNewtContentBySlug(
+    contentNameSlug
+  );
   const {
     data: quizData,
     isLoading: isQuizLoading,
