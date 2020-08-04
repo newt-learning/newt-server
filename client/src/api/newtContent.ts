@@ -12,6 +12,14 @@ const fetchIndividualNewtContent = async (queryKey: any, contentId: string) => {
   return data;
 };
 
+const fetchIndividualNewtContentBySlug = async (
+  queryKey: any,
+  slug: string
+) => {
+  const { data } = await newtApi.get(`/newt-content/by-slug/${slug}`);
+  return data;
+};
+
 const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
   const { data } = await newtApi.get(`/newt-quiz/${newtQuizId}`);
   return data;
@@ -25,6 +33,12 @@ export function useFetchIndividualNewtContent(contentId: string) {
   return useQuery(
     ["individual-newt-content", contentId],
     fetchIndividualNewtContent
+  );
+}
+export function useFetchIndividualNewtContentBySlug(slug: string) {
+  return useQuery(
+    ["individual-newt-content-by-slug", slug],
+    fetchIndividualNewtContentBySlug
   );
 }
 
