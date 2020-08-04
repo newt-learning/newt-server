@@ -14,11 +14,7 @@ import ContentInfo from "./ContentInfo";
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
 
-interface ContentPageProps {
-  location?: any;
-}
-
-const ContentPage = ({ location }: ContentPageProps) => {
+const ContentPage = () => {
   // Get content name slug from URL parameters
   const { contentNameSlug } = useParams();
 
@@ -38,8 +34,6 @@ const ContentPage = ({ location }: ContentPageProps) => {
     isLoading: isQuizLoading,
     isError: isQuizError,
   } = useFetchNewtQuiz(data?.quizId);
-
-  console.log(data);
 
   useEffect(() => {
     if (quizData) {

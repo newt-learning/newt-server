@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 // Styling
 import styles from "./ContentCard.module.css";
-// Helpers
-import { slugify } from "../../helpers/textHelpers";
 
 export interface ContentCardProps {
   id: string;
@@ -11,6 +9,7 @@ export interface ContentCardProps {
   thumbnailUrl: string;
   creator: string;
   contentNameSlug: string;
+  contentCreatorSlug: string;
 }
 
 const ContentCard = ({
@@ -19,12 +18,12 @@ const ContentCard = ({
   thumbnailUrl,
   creator,
   contentNameSlug,
+  contentCreatorSlug,
 }: ContentCardProps) => {
   return (
     <Link
       to={{
-        pathname: `/${slugify(creator)}/content/${contentNameSlug}`,
-        state: { contentId: id },
+        pathname: `/${contentCreatorSlug}/content/${contentNameSlug}`,
       }}
     >
       <div className={styles.card}>

@@ -14,6 +14,7 @@ interface DataProps {
     contentCreatorId: string;
     name: string;
     url: string;
+    slug: string;
   };
   slug: string;
 }
@@ -56,6 +57,7 @@ const DiscoverPage = () => {
                       thumbnailUrl={thumbnailUrl}
                       creator={contentCreator.name}
                       contentNameSlug={slug}
+                      contentCreatorSlug={contentCreator.slug}
                     />
                   )
                 )}
