@@ -50,6 +50,19 @@ const QuizModal = ({
     setCurrentQuestion(currentQuestion - 1);
   };
 
+  // Handle closing the modal.
+  const handleClose = () => {
+    // If on 'show review' and on the 'outro' section , go back to first (intro)
+    // section after closing (so the user doesn't get stuck in the final
+    // section). Otherwise continue wherever the user left.
+    if (showReview && currentSection === "outro") {
+      setCurrentSection("intro");
+      onCloseModal();
+    } else {
+      onCloseModal();
+    }
+  };
+
   // Function to update quiz results - record option picked and check if it's right.
   const handleOptionClick = (event: React.MouseEvent<HTMLLIElement>) => {
     // event.preventDefault();
@@ -122,7 +135,7 @@ const QuizModal = ({
           onClickFinish={handleFinishQuiz}
           isQuizComplete={isQuizComplete(quizQuestions)}
           showReview={showReview}
-          onCloseModal={onCloseModal}
+          onCloseModal={handleClose}
         />
       )}
     </Modal>
