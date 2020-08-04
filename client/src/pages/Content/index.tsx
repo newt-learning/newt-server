@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, MainContainer } from "../../components";
+import { useParams } from "react-router-dom";
 // API
 import {
   useFetchIndividualNewtContent,
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
-import { QuizModal } from "../../components";
+import { Navbar, MainContainer, QuizModal } from "../../components";
 // Sections
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
@@ -19,6 +19,8 @@ interface ContentPageProps {
 }
 
 const ContentPage = ({ location }: ContentPageProps) => {
+  // Get content name slug from URL parameters
+  const { contentNameSlug } = useParams();
   const { contentId } = location.state;
 
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -34,6 +36,8 @@ const ContentPage = ({ location }: ContentPageProps) => {
     isLoading: isQuizLoading,
     isError: isQuizError,
   } = useFetchNewtQuiz(data?.quizId);
+
+  console.log(data);
 
   useEffect(() => {
     if (quizData) {

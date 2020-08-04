@@ -10,13 +10,20 @@ export interface ContentCardProps {
   name: string;
   thumbnailUrl: string;
   creator: string;
+  contentNameSlug: string;
 }
 
-const ContentCard = ({ id, name, thumbnailUrl, creator }: ContentCardProps) => {
+const ContentCard = ({
+  id,
+  name,
+  thumbnailUrl,
+  creator,
+  contentNameSlug,
+}: ContentCardProps) => {
   return (
     <Link
       to={{
-        pathname: `/${slugify(creator)}/content/${slugify(name)}`,
+        pathname: `/${slugify(creator)}/content/${contentNameSlug}`,
         state: { contentId: id },
       }}
     >

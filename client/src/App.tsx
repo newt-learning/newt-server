@@ -10,7 +10,10 @@ function App() {
       <ToastProvider autoDismiss={true} placement="bottom-center">
         <Switch>
           <Route path="/discover" component={DiscoverPage} />
-          <Route path="/:creator/content/:title" component={ContentPage} />
+          <Route
+            path="/:creator/content/:contentNameSlug"
+            component={ContentPage}
+          />
           <Route path="/" component={LandingPage} />
         </Switch>
       </ToastProvider>
