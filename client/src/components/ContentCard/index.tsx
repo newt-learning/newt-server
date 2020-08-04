@@ -2,22 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 // Styling
 import styles from "./ContentCard.module.css";
-// Helpers
-import { slugify } from "../../helpers/textHelpers";
 
 export interface ContentCardProps {
   id: string;
   name: string;
   thumbnailUrl: string;
   creator: string;
+  contentNameSlug: string;
+  contentCreatorSlug: string;
 }
 
-const ContentCard = ({ id, name, thumbnailUrl, creator }: ContentCardProps) => {
+const ContentCard = ({
+  id,
+  name,
+  thumbnailUrl,
+  creator,
+  contentNameSlug,
+  contentCreatorSlug,
+}: ContentCardProps) => {
   return (
     <Link
       to={{
-        pathname: `/${slugify(creator)}/content/${slugify(name)}`,
-        state: { contentId: id },
+        pathname: `/${contentCreatorSlug}/content/${contentNameSlug}`,
       }}
     >
       <div className={styles.card}>
