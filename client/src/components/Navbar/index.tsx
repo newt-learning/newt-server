@@ -1,6 +1,9 @@
 import React from "react";
 import classNames from "classnames/bind";
+// Componeents
+import Button from "../Button";
 import { NavLink } from "react-router-dom";
+// Styling
 import styles from "./Navbar.module.css";
 
 let cx = classNames.bind(styles);
@@ -29,18 +32,30 @@ const Navbar = ({ variant }: NavbarProps) => {
         </NavLink>
       </div>
       <div className={styles.navLinkGroup}>
-        <NavLink
-          to="/discover"
-          className={cx({
-            navLink: true,
-            landingNavLink: variant === "landing",
-          })}
-          activeClassName={cx({
-            activeNavLink: true,
-            landingActiveNavLink: variant === "landing",
-          })}
-        >
-          Discover
+        <div>
+          <NavLink
+            to="/discover"
+            className={cx({
+              navLink: true,
+              landingNavLink: variant === "landing",
+            })}
+            activeClassName={cx({
+              activeNavLink: true,
+              landingActiveNavLink: variant === "landing",
+            })}
+          >
+            Discover
+          </NavLink>
+        </div>
+        <NavLink to="/login">
+          <Button
+            style={cx({
+              signInBtn: true,
+              landingSignInBtn: variant === "landing",
+            })}
+          >
+            Sign in
+          </Button>
         </NavLink>
       </div>
     </nav>

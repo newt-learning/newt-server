@@ -17,7 +17,8 @@
 }
 
 .logoContainer {
-  min-width: 50%;
+  width: 40%;
+  min-width: 100px;
 }
 
 .logo {
@@ -38,6 +39,13 @@
 
 .landingLogo:hover {
   color: white;
+}
+
+.navLinkGroup {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navLink {
@@ -62,10 +70,39 @@
   color: white;
 }
 
+.signInBtn {
+  background-color: white;
+  color: var(--gray-700);
+  font-size: var(--FS-base);
+  border: 2px solid var(--gray-600);
+}
+
+.signInBtn:hover {
+  background-color: var(--gray-600);
+  color: white;
+}
+
+.landingSignInBtn {
+  background-color: var(--newtBlue-500);
+  color: white;
+  font-size: var(--FS-base);
+  font-weight: 500;
+  border: 2px solid white;
+}
+
+.landingSignInBtn:hover {
+  background-color: white;
+  color: var(--newtBlue-500);
+}
+
 @media screen and (min-width: 640px) {
   .nav {
     padding: 0 4rem;
     justify-content: flex-start;
+  }
+
+  .logoContainer {
+    width: 50%;
   }
 
   .logo {
