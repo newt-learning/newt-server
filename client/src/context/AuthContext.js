@@ -48,14 +48,14 @@ const removeAuthedUser = () => {
 };
 
 // Function to authenticate with Google
-export const authenticateWithGoogle = (history) => (dispatch) => {
+export const authenticateWithGoogle = (dispatch) => (history) => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider();
   authenticateWithProvider(provider, history, dispatch);
 };
 
 // Function to authenticate with Google
-export const authenticateWithGithub = (history) => (dispatch) => {
+export const authenticateWithGithub = (dispatch) => (history) => {
   // Get GitHub Provider
   const provider = new firebase.auth.GithubAuthProvider();
   authenticateWithProvider(provider, history, dispatch);
@@ -88,8 +88,7 @@ async function authenticateWithProvider(provider, history, dispatch) {
       dispatch(setAuthedUser(res.data));
 
       // Redirect to dashboard
-      // history.push("/dashboard");
-      console.log(res.data);
+      history.push("/dashboard");
     })
     .catch((error) => {
       dispatch(removeAuthedUser());

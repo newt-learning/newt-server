@@ -11,7 +11,6 @@ import {
 import { LandingPage, LoginPage, DiscoverPage, ContentPage } from "./pages";
 
 const App = () => {
-  console.log(AuthContext);
   const {
     state: { isFetching, exists },
     tryLocalSignIn,

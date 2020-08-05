@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+// Context
+import { useData as useAuthData } from "../../context/AuthContext";
 // Components
 import { Navbar, Button } from "../../components";
 // Styling
@@ -7,6 +10,9 @@ import googleLogo from "../../assets/logos/googleLoginLogo";
 import githubLogo from "../../assets/logos/GitHubLoginLogo.png";
 
 const LoginPage = () => {
+  const { authenticateWithGoogle } = useAuthData();
+  const history = useHistory();
+
   return (
     <section>
       <Navbar />
@@ -18,7 +24,7 @@ const LoginPage = () => {
               <li className={styles.providerBtn}>
                 <Button
                   style={`${styles.loginBtn} ${styles.googleBtn}`}
-                  // onClick={() => authenticateWithGoogle(history)}
+                  onClick={() => authenticateWithGoogle(history)}
                 >
                   <div className={styles.btnContent}>
                     {googleLogo}
