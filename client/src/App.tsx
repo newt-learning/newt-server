@@ -6,6 +6,8 @@ import {
   Provider as AuthProvider,
   useData as useAuthData,
 } from "./context/AuthContext";
+// Components
+import { PrivateRoute } from "./components";
 // Pages
 import {
   LandingPage,
@@ -25,9 +27,17 @@ const App = () => {
     tryLocalSignIn();
   }, []);
 
+  if (isFetching) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Switch>
-      <Route path="/dashboard" component={Dashboard} />
+      <PrivateRoute
+        Component={Dashboard}
+        authExists={exists}
+        path="/dashboard"
+      />
       <Route path="/login" component={LoginPage} />
       <Route path="/discover" component={DiscoverPage} />
       <Route
