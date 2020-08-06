@@ -4,11 +4,16 @@ import { ToastProvider } from "react-toast-notifications";
 // Context
 import {
   Provider as AuthProvider,
-  Context as AuthContext,
   useData as useAuthData,
 } from "./context/AuthContext";
 // Pages
-import { LandingPage, LoginPage, DiscoverPage, ContentPage } from "./pages";
+import {
+  LandingPage,
+  LoginPage,
+  DiscoverPage,
+  ContentPage,
+  Dashboard,
+} from "./pages";
 
 const App = () => {
   const {
@@ -22,6 +27,7 @@ const App = () => {
 
   return (
     <Switch>
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/login" component={LoginPage} />
       <Route path="/discover" component={DiscoverPage} />
       <Route
