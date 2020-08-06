@@ -17,15 +17,11 @@ import {
   Dashboard,
 } from "./pages";
 
-const App = () => {
+// Routes in app that require authentication
+const AuthRequiredSection = () => {
   const {
     state: { isFetching, exists },
-    tryLocalSignIn,
   } = useAuthData();
-
-  useEffect(() => {
-    tryLocalSignIn();
-  }, []);
 
   if (isFetching) {
     return <div>Loading...</div>;
@@ -38,6 +34,14 @@ const App = () => {
         authExists={exists}
         path="/dashboard"
       />
+    </Switch>
+  );
+};
+
+// Routes in app that don't require authentication
+const NoAuthRequiredSection = () => {
+  return (
+    <Switch>
       <Route path="/login" component={LoginPage} />
       <Route path="/discover" component={DiscoverPage} />
       <Route
@@ -45,6 +49,25 @@ const App = () => {
         component={ContentPage}
       />
       <Route path="/" component={LandingPage} />
+    </Switch>
+  );
+};
+
+const App = () => {
+  const { tryLocalSignIn } = useAuthData();
+
+  // Check if signed in already
+  useEffect(() => {
+    tryLocalSignIn();
+  }, []);
+
+  return (
+    <Switch>
+      <Route path={["/dashboard"]} component={AuthRequiredSection} />
+      <Route
+        path={["/", "/login", "/discover", "/:creator"]}
+        component={NoAuthRequiredSection}
+      />
     </Switch>
   );
 };
