@@ -95,6 +95,11 @@
   color: var(--newtBlue-500);
 }
 
+.toDash {
+  margin-right: 0.5rem;
+  font-size: var(--FS-base);
+}
+
 @media screen and (min-width: 640px) {
   .nav {
     padding: 0 4rem;
@@ -116,5 +121,10 @@
 
   .navLink {
     font-size: var(--FS-xl);
+  }
+
+  .toDash {
+    margin-right: 1rem;
+    font-size: var(--FS-base);
   }
 }

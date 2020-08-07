@@ -1,6 +1,8 @@
 import React from "react";
 import classNames from "classnames/bind";
-// Componeents
+// Context
+import { useData } from "../../context/AuthContext";
+// Components
 import Button from "../Button";
 import { NavLink } from "react-router-dom";
 // Styling
@@ -13,6 +15,11 @@ interface NavbarProps {
 }
 
 const Navbar = ({ variant }: NavbarProps) => {
+  const {
+    state: { exists: isAuthenticated },
+    signOut,
+  } = useData();
+
   return (
     <nav
       className={cx({
@@ -47,16 +54,44 @@ const Navbar = ({ variant }: NavbarProps) => {
             Discover
           </NavLink>
         </div>
-        <NavLink to="/login">
-          <Button
-            style={cx({
-              signInBtn: true,
-              landingSignInBtn: variant === "landing",
-            })}
-          >
-            Sign in
-          </Button>
-        </NavLink>
+        {isAuthenticated ? (
+          <div>
+            <NavLink
+              to="/dashboard"
+              className={cx({
+                navLink: true,
+                landingNavLink: variant === "landing",
+                toDash: true,
+              })}
+              activeClassName={cx({
+                activeNavLink: true,
+                landingActiveNavLink: variant === "landing",
+              })}
+            >
+              Go to Dashboard
+            </NavLink>
+            <Button
+              style={cx({
+                signInBtn: true,
+                landingSignInBtn: variant === "landing",
+              })}
+              onClick={signOut}
+            >
+              Log out
+            </Button>
+          </div>
+        ) : (
+          <NavLink to="/login">
+            <Button
+              style={cx({
+                signInBtn: true,
+                landingSignInBtn: variant === "landing",
+              })}
+            >
+              Sign in
+            </Button>
+          </NavLink>
+        )}
       </div>
     </nav>
   );
