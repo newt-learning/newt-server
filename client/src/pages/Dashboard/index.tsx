@@ -1,10 +1,11 @@
 import React from "react";
 // Components
-import { Sidebar } from "../../components";
+import { Sidebar, AppNavbar } from "../../components";
 
 const Dashboard = () => {
   return (
     <section>
+      <AppNavbar />
       <Sidebar />
     </section>
   );

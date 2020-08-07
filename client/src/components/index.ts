@@ -1,3 +1,4 @@
+export { default as AppNavbar } from "./AppNavbar";
 export { default as Button } from "./Button";
 export { default as ContentCard } from "./ContentCard";
 export { default as Footer } from "./Footer";

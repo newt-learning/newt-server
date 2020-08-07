@@ -1,0 +1,20 @@
+.container {
+  width: 100%;
+  background-color: var(--gray-300);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.navbarBtns {
+  display: flex;
+  align-items: center;
+}
+
+.userIcon {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  cursor: pointer;
+}
