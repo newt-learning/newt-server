@@ -92,6 +92,10 @@
 }
 
 @media screen and (min-width: 640px) {
+  .nav {
+    padding: 0 4rem;
+  }
+
   .logo {
     font-size: var(--FS-3xl);
     letter-spacing: 0.1rem;
