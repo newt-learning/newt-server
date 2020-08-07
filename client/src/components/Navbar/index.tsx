@@ -5,6 +5,8 @@ import { useData } from "../../context/AuthContext";
 // Components
 import Button from "../Button";
 import { NavLink } from "react-router-dom";
+import { default as BootstrapNavbar } from "react-bootstrap/Navbar";
+import { default as BootstrapNav } from "react-bootstrap/Nav";
 // Styling
 import styles from "./Navbar.module.css";
 
@@ -21,13 +23,14 @@ const Navbar = ({ variant }: NavbarProps) => {
   } = useData();
 
   return (
-    <nav
+    <BootstrapNavbar
+      expand="sm"
       className={cx({
         nav: true,
         landingNav: variant === "landing",
       })}
     >
-      <div className={styles.logoContainer}>
+      <BootstrapNavbar.Brand className={styles.logoContainer}>
         <NavLink
           to="/"
           className={cx({
@@ -37,23 +40,29 @@ const Navbar = ({ variant }: NavbarProps) => {
         >
           newt
         </NavLink>
-      </div>
-      <div className={styles.navLinkGroup}>
-        <div>
-          <NavLink
-            to="/discover"
-            className={cx({
-              navLink: true,
-              landingNavLink: variant === "landing",
-            })}
-            activeClassName={cx({
-              activeNavLink: true,
-              landingActiveNavLink: variant === "landing",
-            })}
-          >
-            Discover
-          </NavLink>
-        </div>
+      </BootstrapNavbar.Brand>
+      <BootstrapNavbar.Toggle aria-controls="navbar-nav" />
+      <BootstrapNavbar.Collapse
+        id="navbar-nav"
+        className={styles.collapsedNavbar}
+      >
+        <BootstrapNav className="mx-auto">
+          <BootstrapNav.Link>
+            <NavLink
+              to="/discover"
+              className={cx({
+                navLink: true,
+                landingNavLink: variant === "landing",
+              })}
+              activeClassName={cx({
+                activeNavLink: true,
+                landingActiveNavLink: variant === "landing",
+              })}
+            >
+              Discover
+            </NavLink>
+          </BootstrapNav.Link>
+        </BootstrapNav>
         {isAuthenticated ? (
           <div>
             <NavLink
@@ -92,8 +101,8 @@ const Navbar = ({ variant }: NavbarProps) => {
             </Button>
           </NavLink>
         )}
-      </div>
-    </nav>
+      </BootstrapNavbar.Collapse>
+    </BootstrapNavbar>
   );
 };
 
