@@ -1,7 +1,11 @@
 import React from "react";
+// API
+import { useFetchAllTopics } from "../../api/topics";
 
 const TopicsPage = () => {
-  return <section>Topics</section>;
+  const { data, isFetching } = useFetchAllTopics();
+
+  return <section>{JSON.stringify(data)}</section>;
 };
 
 export default TopicsPage;

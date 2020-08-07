@@ -6,16 +6,11 @@ import {
   Provider as AuthProvider,
   useData as useAuthData,
 } from "./context/AuthContext";
+import { Provider as SidebarProvider } from "./context/SidebarContext";
 // Section
 import NewtWebApp from "./NewtWebApp";
 // Pages
-import {
-  LandingPage,
-  LoginPage,
-  DiscoverPage,
-  ContentPage,
-  Dashboard,
-} from "./pages";
+import { LandingPage, LoginPage, DiscoverPage, ContentPage } from "./pages";
 
 // Routes in app that don't require authentication
 const NoAuthRequiredSection = () => {
@@ -59,7 +54,9 @@ export default () => {
     <Router>
       <ToastProvider autoDismiss={true} placement="bottom-center">
         <AuthProvider>
-          <App />
+          <SidebarProvider>
+            <App />
+          </SidebarProvider>
         </AuthProvider>
       </ToastProvider>
     </Router>

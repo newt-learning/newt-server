@@ -2,10 +2,19 @@
   display: flex;
   overflow: hidden;
   height: 100vh;
+  max-width: 100vw;
 }
 
 .pageContainer {
   display: flex;
-  flex: 1;
   flex-direction: column;
+  transition: width 0.5s;
+}
+
+.expanded {
+  width: calc(100% - 220px);
+}
+
+.collapsed {
+  width: calc(100% - 68px);
 }

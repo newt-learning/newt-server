@@ -4,6 +4,7 @@ import React from "react";
 import { Switch } from "react-router-dom";
 // Context
 import { useData as useAuthData } from "./context/AuthContext";
+import { useData as useSidebar } from "./context/SidebarContext";
 // Components
 import { PrivateRoute, Sidebar, AppNavbar } from "./components";
 // Pages
@@ -16,6 +17,10 @@ const NewtWebApp = () => {
     state: { isFetching, exists },
   } = useAuthData();
 
+  const {
+    state: { isCollapsed },
+  } = useSidebar();
+
   if (isFetching) {
     return <div>Loading...</div>;
   }
@@ -23,7 +28,13 @@ const NewtWebApp = () => {
   return (
     <section className={styles.appContainer}>
       <Sidebar />
-      <section className={styles.pageContainer}>
+      <section
+        className={
+          isCollapsed
+            ? `${styles.pageContainer} ${styles.collapsed}`
+            : `${styles.pageContainer} ${styles.expanded}`
+        }
+      >
         <AppNavbar />
         <Switch>
           <PrivateRoute

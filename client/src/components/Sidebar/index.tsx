@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React from "react";
 import sidebarFields from "./sidebarFields";
+// Context
+import { useData as useSidebar } from "../../context/SidebarContext";
+// Components
+import { Link, NavLink } from "react-router-dom";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 // Styling
@@ -8,11 +11,10 @@ import styles from "./Sidebar.module.css";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
+  const {
+    state: { isCollapsed },
+    toggleSidebar,
+  } = useSidebar();
 
   return (
     <aside
