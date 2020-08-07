@@ -25,7 +25,7 @@ const Sidebar = () => {
       <div>
         <div className={styles.logo}>
           <Link to="/">
-            <h4>n</h4>
+            <h5>{isCollapsed ? "n" : "newt"}</h5>
           </Link>
         </div>
         <div className={styles.sidebarNavlinks}>

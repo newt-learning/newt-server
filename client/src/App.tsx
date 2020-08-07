@@ -6,8 +6,8 @@ import {
   Provider as AuthProvider,
   useData as useAuthData,
 } from "./context/AuthContext";
-// Components
-import { PrivateRoute } from "./components";
+// Section
+import NewtWebApp from "./NewtWebApp";
 // Pages
 import {
   LandingPage,
@@ -16,27 +16,6 @@ import {
   ContentPage,
   Dashboard,
 } from "./pages";
-
-// Routes in app that require authentication
-const AuthRequiredSection = () => {
-  const {
-    state: { isFetching, exists },
-  } = useAuthData();
-
-  if (isFetching) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <Switch>
-      <PrivateRoute
-        Component={Dashboard}
-        authExists={exists}
-        path="/dashboard"
-      />
-    </Switch>
-  );
-};
 
 // Routes in app that don't require authentication
 const NoAuthRequiredSection = () => {
@@ -63,7 +42,7 @@ const App = () => {
 
   return (
     <Switch>
-      <Route path={["/dashboard"]} component={AuthRequiredSection} />
+      <Route path={["/dashboard"]} component={NewtWebApp} />
       <Route
         path={["/", "/login", "/discover", "/:creator"]}
         component={NoAuthRequiredSection}

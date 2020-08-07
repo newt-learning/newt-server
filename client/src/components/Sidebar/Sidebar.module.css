@@ -21,12 +21,14 @@
   justify-content: center;
   align-items: center;
   height: 56px; /* 56px is height of navbar */
-  font-family: "Righteous", cursive;
 }
 
-.logo h4 {
+.logo h5 {
+  font-family: "Righteous", cursive;
+  font-weight: 400;
   color: white;
-  font-size: 36px;
+  font-size: var(--FS-2xl);
+  letter-spacing: 0.1rem;
 }
 
 ul {
