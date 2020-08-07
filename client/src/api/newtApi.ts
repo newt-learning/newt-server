@@ -1,6 +1,5 @@
 import axios from "axios";
 import firebase from "../config/firebase";
-import keys from "../config/keys";
 
 const instance = axios.create({
   baseURL: "/api",

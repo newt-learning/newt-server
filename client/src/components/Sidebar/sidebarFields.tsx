@@ -1,6 +1,6 @@
 import React from "react";
 import { FiBook, FiMap, FiTrello } from "react-icons/fi";
-import { FaBrain } from "react-icons/fa";
+// import { FaBrain } from "react-icons/fa";
 import styles from "./Sidebar.module.css";
 
 export default [

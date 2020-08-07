@@ -1,0 +1,18 @@
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  width: 200px;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--hotPink-200);
+  color: var(--hotPink-600);
+  box-shadow: 0px 10px 40px -10px rgba(0, 64, 128, 0.2);
+}
+
+.card:hover {
+  background-color: var(--hotPink-500);
+  color: var(--hotPink-100);
+  cursor: pointer;
+}

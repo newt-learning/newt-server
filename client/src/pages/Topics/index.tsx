@@ -7,6 +7,14 @@ import {
   AppHeaderContainer,
   AppContentContainer,
 } from "../../components";
+import TopicCard from "./TopicCard";
+// Styling
+import styles from "./Topics.module.css";
+
+interface TopicData {
+  _id: string;
+  name: string;
+}
 
 const TopicsPage = () => {
   const { data, status } = useFetchAllTopics();
@@ -16,10 +24,12 @@ const TopicsPage = () => {
       <AppHeaderContainer>
         <h2>Topics</h2>
       </AppHeaderContainer>
-      <AppContentContainer>
+      <AppContentContainer className={styles.container}>
         {status === "loading"
           ? "Loading..."
-          : data.map(({ name }: { name: string }) => <div>{name}</div>)}
+          : data.map(({ _id, name }: TopicData) => (
+              <TopicCard key={_id} name={name} />
+            ))}
       </AppContentContainer>
     </AppMainContainer>
   );
