@@ -7,7 +7,7 @@ import { useData as useAuthData } from "./context/AuthContext";
 // Components
 import { PrivateRoute, Sidebar, AppNavbar } from "./components";
 // Pages
-import { Dashboard } from "./pages";
+import { Dashboard, ProfilePage, TopicsPage } from "./pages";
 // Styling
 import styles from "./NewtWebApp.module.css";
 
@@ -30,6 +30,16 @@ const NewtWebApp = () => {
             Component={Dashboard}
             authExists={exists}
             path="/dashboard"
+          />
+          <PrivateRoute
+            Component={TopicsPage}
+            authExists={exists}
+            path="/topics"
+          />
+          <PrivateRoute
+            Component={ProfilePage}
+            authExists={exists}
+            path="/profile"
           />
         </Switch>
       </section>

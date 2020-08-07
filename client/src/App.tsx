@@ -42,7 +42,10 @@ const App = () => {
 
   return (
     <Switch>
-      <Route path={["/dashboard"]} component={NewtWebApp} />
+      <Route
+        path={["/dashboard", "/topics", "/profile"]}
+        component={NewtWebApp}
+      />
       <Route
         path={["/", "/login", "/discover", "/:creator"]}
         component={NoAuthRequiredSection}
