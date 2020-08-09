@@ -50,7 +50,7 @@ const NewtWebApp = () => {
           <PrivateRoute
             Component={IndividualTopicPage}
             authExists={exists}
-            path="/topics/:id"
+            path="/topics/:topicId"
           />
           <PrivateRoute
             Component={TopicsPage}
