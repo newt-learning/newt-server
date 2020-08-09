@@ -1,4 +1,4 @@
-.listCard {
+.card {
   display: flex;
   word-wrap: break-word;
   padding: 2rem 1rem;
@@ -7,6 +7,12 @@
   color: var(--gray-700);
 }
 
-.listCard:hover {
+.card:hover {
   background-color: var(--gray-200);
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--gray-200);
+  font-weight: 500;
 }

@@ -10,9 +10,8 @@ import {
   AppContentContainer,
   AppContentList,
   AppContentDetails,
+  AppContentListCard,
 } from "../../components";
-// Styling
-import styles from "./IndividualTopicPage.module.css";
 
 interface TopicContentData {
   _id: string;
@@ -42,13 +41,12 @@ const IndividualTopicPage = () => {
         <AppContentList>
           {data?.content.map(
             ({ _id, name }: TopicContentData, index: number) => (
-              <div
-                key={_id}
-                className={styles.listCard}
+              <AppContentListCard
+                name={name}
                 onClick={() => setCurrentContent(data.content[index])}
-              >
-                {name}
-              </div>
+                isActive={_id === currentContent?._id}
+                key={_id}
+              />
             )
           )}
         </AppContentList>

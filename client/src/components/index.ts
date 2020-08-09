@@ -5,6 +5,7 @@ export {
   AppContentList,
   AppContentDetails,
 } from "./AppContainers";
+export { default as AppContentListCard } from "./AppContentListCard";
 export { default as AppNavbar } from "./AppNavbar";
 export { default as Button } from "./Button";
 export { default as ContentCard } from "./ContentCard";
