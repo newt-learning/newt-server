@@ -8,6 +8,8 @@ import {
   AppHeaderContainer,
   AppContentContainer,
 } from "../../components";
+// Styling
+import styles from "./IndividualTopicPage.module.css";
 
 const IndividualTopicPage = () => {
   const { topicId } = useParams();
@@ -17,11 +19,18 @@ const IndividualTopicPage = () => {
   console.log(isLoading, data);
 
   return (
-    <AppMainContainer>
+    <AppMainContainer className={styles.mainContainer}>
       <AppHeaderContainer>
-        <h2>{data ? data.name : null}</h2>
+        <h2>{data ? data.name : "..."}</h2>
       </AppHeaderContainer>
-      <AppContentContainer></AppContentContainer>
+      <AppContentContainer className={styles.contentContainer}>
+        <div className={styles.contentList}>
+          {data?.content.map((item: string) => (
+            <div className={styles.listCard}>{item}</div>
+          ))}
+        </div>
+        <div className={styles.contentDetails}></div>
+      </AppContentContainer>
     </AppMainContainer>
   );
 };

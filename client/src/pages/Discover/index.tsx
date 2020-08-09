@@ -22,6 +22,8 @@ interface DataProps {
 const DiscoverPage = () => {
   const { data, status } = useFetchNewtContent();
 
+  console.log(data);
+
   return (
     <section>
       <Navbar />

@@ -1,0 +1,35 @@
+.mainContainer {
+  padding: 0;
+  flex: 1;
+}
+
+.contentContainer {
+  padding: 0;
+  height: 100%;
+}
+
+.contentList {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--gray-400);
+  width: 33.33%;
+}
+
+.contentDetails {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--gray-400);
+  width: 66.67%;
+  overflow: auto;
+}
+
+.listCard {
+  display: flex;
+  word-wrap: break-word;
+  padding: 2rem 1rem;
+  border-top: 1px solid var(--gray-400);
+}
+
+.listCard:last-child {
+  border-bottom: 1px solid var(--gray-400);
+}

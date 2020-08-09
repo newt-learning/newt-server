@@ -3,10 +3,19 @@ import styles from "./AppMainContainer.module.css";
 
 interface AppMainContainerProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
-const AppMainContainer = ({ children }: AppMainContainerProps) => {
-  return <section className={styles.container}>{children}</section>;
+const AppMainContainer = ({ children, className }: AppMainContainerProps) => {
+  return (
+    <section
+      className={
+        className ? `${styles.container} ${className}` : styles.container
+      }
+    >
+      {children}
+    </section>
+  );
 };
 
 export default AppMainContainer;

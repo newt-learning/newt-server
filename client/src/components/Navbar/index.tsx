@@ -47,21 +47,19 @@ const Navbar = ({ variant }: NavbarProps) => {
         className={styles.collapsedNavbar}
       >
         <BootstrapNav className="mx-auto">
-          <BootstrapNav.Link>
-            <NavLink
-              to="/discover"
-              className={cx({
-                navLink: true,
-                landingNavLink: variant === "landing",
-              })}
-              activeClassName={cx({
-                activeNavLink: true,
-                landingActiveNavLink: variant === "landing",
-              })}
-            >
-              Discover
-            </NavLink>
-          </BootstrapNav.Link>
+          <NavLink
+            to="/discover"
+            className={cx({
+              navLink: true,
+              landingNavLink: variant === "landing",
+            })}
+            activeClassName={cx({
+              activeNavLink: true,
+              landingActiveNavLink: variant === "landing",
+            })}
+          >
+            Discover
+          </NavLink>
         </BootstrapNav>
         {isAuthenticated ? (
           <div>
