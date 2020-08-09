@@ -8,7 +8,12 @@ import { useData as useSidebar } from "./context/SidebarContext";
 // Components
 import { PrivateRoute, Sidebar, AppNavbar } from "./components";
 // Pages
-import { Dashboard, ProfilePage, TopicsPage } from "./pages";
+import {
+  Dashboard,
+  ProfilePage,
+  TopicsPage,
+  IndividualTopicPage,
+} from "./pages";
 // Styling
 import styles from "./NewtWebApp.module.css";
 
@@ -41,6 +46,11 @@ const NewtWebApp = () => {
             Component={Dashboard}
             authExists={exists}
             path="/dashboard"
+          />
+          <PrivateRoute
+            Component={IndividualTopicPage}
+            authExists={exists}
+            path="/topics/:id"
           />
           <PrivateRoute
             Component={TopicsPage}

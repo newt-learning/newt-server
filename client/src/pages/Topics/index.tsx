@@ -17,7 +17,7 @@ interface TopicData {
 }
 
 const TopicsPage = () => {
-  const { data, status } = useFetchAllTopics();
+  const { data, status, error } = useFetchAllTopics();
 
   return (
     <AppMainContainer>
@@ -27,8 +27,10 @@ const TopicsPage = () => {
       <AppContentContainer className={styles.container}>
         {status === "loading"
           ? "Loading..."
+          : error
+          ? "Error"
           : data.map(({ _id, name }: TopicData) => (
-              <TopicCard key={_id} name={name} />
+              <TopicCard key={_id} id={_id} name={name} />
             ))}
       </AppContentContainer>
     </AppMainContainer>
