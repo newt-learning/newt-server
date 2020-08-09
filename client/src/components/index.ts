@@ -2,6 +2,8 @@ export {
   AppMainContainer,
   AppHeaderContainer,
   AppContentContainer,
+  AppContentList,
+  AppContentDetails,
 } from "./AppContainers";
 export { default as AppNavbar } from "./AppNavbar";
 export { default as Button } from "./Button";

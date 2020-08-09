@@ -3,3 +3,8 @@
   overflow: auto;
   min-height: calc(100vh - 54px); /* Fill the page (54px is height of Navbar) */
 }
+
+.inboxContainer {
+  padding: 0;
+  flex: 1;
+}

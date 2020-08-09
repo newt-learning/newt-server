@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--gray-400);
+  width: 33.33%;
+}
+
+.container div:last-child {
+  border-bottom: 1px solid var(--gray-400);
+}

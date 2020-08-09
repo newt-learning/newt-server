@@ -8,6 +8,8 @@ import {
   AppMainContainer,
   AppHeaderContainer,
   AppContentContainer,
+  AppContentList,
+  AppContentDetails,
 } from "../../components";
 // Styling
 import styles from "./IndividualTopicPage.module.css";
@@ -32,12 +34,12 @@ const IndividualTopicPage = () => {
   console.log(currentContent?.name);
 
   return (
-    <AppMainContainer className={styles.mainContainer}>
+    <AppMainContainer variant="inbox">
       <AppHeaderContainer>
         <h2>{data ? data.name : "..."}</h2>
       </AppHeaderContainer>
-      <AppContentContainer className={styles.contentContainer}>
-        <div className={styles.contentList}>
+      <AppContentContainer variant="inbox">
+        <AppContentList>
           {data?.content.map(
             ({ _id, name }: TopicContentData, index: number) => (
               <div
@@ -49,8 +51,8 @@ const IndividualTopicPage = () => {
               </div>
             )
           )}
-        </div>
-        <div className={styles.contentDetails}>{currentContent?.name}</div>
+        </AppContentList>
+        <AppContentDetails>{currentContent?.name}</AppContentDetails>
       </AppContentContainer>
     </AppMainContainer>
   );
