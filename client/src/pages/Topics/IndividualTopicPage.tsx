@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 // API
 import { useFetchTopic } from "../../api/topics";
 // Components
@@ -12,6 +12,7 @@ import {
   AppContentDetails,
   AppContentListCard,
 } from "../../components";
+import ContentFlow from "../Content/ContentFlow";
 
 interface TopicContentData {
   _id: string;
@@ -29,8 +30,6 @@ const IndividualTopicPage = () => {
       setCurrentContent(data.content[0]);
     }
   }, [data]);
-
-  console.log(currentContent?.name);
 
   return (
     <AppMainContainer variant="inbox">
@@ -50,7 +49,16 @@ const IndividualTopicPage = () => {
             )
           )}
         </AppContentList>
-        <AppContentDetails>{currentContent?.name}</AppContentDetails>
+        <AppContentDetails>
+          <ContentFlow
+            title={currentContent?.name}
+            type={currentContent?.type}
+            source={currentContent?.videoInfo?.source}
+            mediaId={currentContent?.videoInfo?.videoId}
+            description={currentContent?.description}
+            variant="inbox"
+          />
+        </AppContentDetails>
       </AppContentContainer>
     </AppMainContainer>
   );

@@ -74,6 +74,15 @@
     margin-bottom: 1rem;
   }
 
+  .inbox {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+    min-width: inherit;
+    min-height: inherit;
+  }
+
   .quizBtn {
     width: 50%;
   }

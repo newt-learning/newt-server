@@ -1,6 +1,9 @@
 import React from "react";
+import classnames from "classnames/bind";
 import { Button } from "../../components";
 import styles from "./ContentFlow.module.css";
+
+let cx = classnames.bind(styles);
 
 interface ContentFlowProps {
   title: string;
@@ -11,6 +14,7 @@ interface ContentFlowProps {
   hasQuiz?: boolean;
   onTakeQuiz?: () => void;
   buttonText?: string;
+  variant: "default" | "inbox"; // No container styling for inbox
 }
 
 const ContentFlow = ({
@@ -22,12 +26,22 @@ const ContentFlow = ({
   hasQuiz,
   onTakeQuiz,
   buttonText,
+  variant,
 }: ContentFlowProps) => {
+  console.log(title);
+
   return (
-    <div className={styles.container}>
-      <div className={styles.titleContainer}>
-        <h2 className={styles.title}>{title}</h2>
-      </div>
+    <div
+      className={cx({
+        container: true,
+        inbox: variant === "inbox",
+      })}
+    >
+      {title ? (
+        <div className={styles.titleContainer}>
+          <h2 className={styles.title}>{title}</h2>
+        </div>
+      ) : null}
       <div className={styles.flowContainer}>
         {type === "video" ? (
           <h4 className={styles.instruction}>1. Watch the video</h4>
@@ -72,6 +86,7 @@ const ContentFlow = ({
 
 ContentFlow.defaultProps = {
   buttonText: "Take the quiz",
+  variant: "default",
 };
 
 export default ContentFlow;
