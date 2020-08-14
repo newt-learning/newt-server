@@ -51,12 +51,14 @@ const IndividualTopicPage = () => {
         </AppContentList>
         <AppContentDetails>
           <ContentFlow
+            variant="inbox"
             title={currentContent?.name}
             type={currentContent?.type}
             source={currentContent?.videoInfo?.source}
             mediaId={currentContent?.videoInfo?.videoId}
             description={currentContent?.description}
-            variant="inbox"
+            // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}
+            hasQuiz={false} // Don't show for now
           />
         </AppContentDetails>
       </AppContentContainer>

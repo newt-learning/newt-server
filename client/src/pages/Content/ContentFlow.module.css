@@ -75,10 +75,11 @@
   }
 
   .inbox {
+    box-sizing: border-box;
     border: none;
     border-radius: 0;
     box-shadow: none;
-    margin-bottom: 0;
+    margin-bottom: 2.5rem;
     min-width: inherit;
     min-height: inherit;
   }

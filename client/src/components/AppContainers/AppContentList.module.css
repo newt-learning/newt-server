@@ -3,6 +3,9 @@
   flex-direction: column;
   border-right: 1px solid var(--gray-400);
   width: 33.33%;
+  overflow: scroll;
+  box-sizing: border-box;
+  padding-bottom: 100px;
 }
 
 .container div:last-child {
