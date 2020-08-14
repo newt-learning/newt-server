@@ -28,7 +28,19 @@ const ContentFlow = ({
   buttonText,
   variant,
 }: ContentFlowProps) => {
-  console.log(title);
+  // Render a new iframe each time because if I just change src, it affects browser
+  // history (clicking the back button cycles through previous iframes)
+  const IFrame = ({ title, src }: any) => (
+    <iframe
+      id="ytplayer"
+      title={title}
+      width="640"
+      height="360"
+      src={src}
+      frameBorder="0"
+      allowFullScreen
+    />
+  );
 
   return (
     <div
@@ -48,14 +60,9 @@ const ContentFlow = ({
         ) : null}
         {type === "video" && source?.toLowerCase() === "youtube" ? (
           <div className={styles.videoContainer}>
-            <iframe
-              id="ytplayer"
+            <IFrame
               title={title}
-              width="640"
-              height="360"
               src={`https://www.youtube.com/embed/${mediaId}`}
-              frameBorder="0"
-              allowFullScreen
             />
           </div>
         ) : null}

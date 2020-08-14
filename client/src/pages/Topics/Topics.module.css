@@ -3,3 +3,13 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
+
+.backBtn {
+  color: var(--gray-600);
+  margin-right: 1rem;
+}
+
+.backBtn:hover {
+  color: var(--gray-700);
+  cursor: pointer;
+}

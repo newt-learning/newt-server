@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useParams, useHistory } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 // API
 import { useFetchTopic } from "../../api/topics";
 // Components
@@ -13,6 +14,8 @@ import {
   AppContentListCard,
 } from "../../components";
 import ContentFlow from "../Content/ContentFlow";
+// Styling
+import styles from "./Topics.module.css";
 
 interface TopicContentData {
   _id: string;
@@ -21,6 +24,8 @@ interface TopicContentData {
 
 const IndividualTopicPage = () => {
   const { topicId } = useParams();
+  const history = useHistory();
+
   const [currentContent, setCurrentContent] = useState<any | null>(null);
 
   const { isLoading, data, isError } = useFetchTopic(topicId);
@@ -34,7 +39,12 @@ const IndividualTopicPage = () => {
   return (
     <AppMainContainer variant="inbox">
       <AppHeaderContainer>
-        <h2>{data ? data.name : "..."}</h2>
+        <>
+          <div onClick={() => history.goBack()}>
+            <FiArrowLeft size={24} className={styles.backBtn} />
+          </div>
+          <h2>{data ? data.name : "..."}</h2>
+        </>
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
         <AppContentList>
