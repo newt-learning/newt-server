@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.bookInfo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+  width: 100%;
+}
+
+.authors {
+  font-size: var(--FS-lg);
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.pageCount {
+  font-size: var(--FS-s);
+  color: var(--gray-600);
+}

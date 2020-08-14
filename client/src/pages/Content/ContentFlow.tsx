@@ -1,6 +1,8 @@
 import React from "react";
 import classnames from "classnames/bind";
+// Components
 import { Button } from "../../components";
+import BookSection from "./BookSection";
 import styles from "./ContentFlow.module.css";
 
 let cx = classnames.bind(styles);
@@ -8,9 +10,15 @@ let cx = classnames.bind(styles);
 interface ContentFlowProps {
   title: string;
   type: string;
+  authors?: string[];
   source?: string;
   mediaId?: string;
+  thumbnailUrl?: string;
   description?: string;
+  bookInfo?: {
+    pageCount: number | undefined;
+    pagesRead: number | undefined;
+  };
   hasQuiz?: boolean;
   onTakeQuiz?: () => void;
   buttonText?: string;
@@ -19,10 +27,13 @@ interface ContentFlowProps {
 
 const ContentFlow = ({
   title,
+  authors,
   type,
   source,
   mediaId,
+  thumbnailUrl,
   description,
+  bookInfo,
   hasQuiz,
   onTakeQuiz,
   buttonText,
@@ -55,9 +66,11 @@ const ContentFlow = ({
         </div>
       ) : null}
       <div className={styles.flowContainer}>
+        {/* If video, display Watch video instruction */}
         {type === "video" ? (
           <h4 className={styles.instruction}>1. Watch the video</h4>
         ) : null}
+        {/* If video and from youtube, embed video */}
         {type === "video" && source?.toLowerCase() === "youtube" ? (
           <div className={styles.videoContainer}>
             <IFrame
@@ -65,13 +78,24 @@ const ContentFlow = ({
               src={`https://www.youtube.com/embed/${mediaId}`}
             />
           </div>
+        ) : // Otherwise, if it's a book, show Book Section
+        type === "book" ? (
+          <BookSection
+            title={title}
+            thumbnailUrl={thumbnailUrl}
+            authors={authors}
+            pageCount={bookInfo?.pageCount}
+            pagesRead={bookInfo?.pagesRead}
+          />
         ) : null}
+        {/* Display description if it's there */}
         {description ? (
           <>
             <h4 className={styles.subheading}>Description</h4>
             <p className={styles.description}>{description}</p>
           </>
         ) : null}
+        {/* If there's a quiz available, show button to take/view it */}
         {hasQuiz ? (
           <>
             <h4 className={styles.instruction}>2. Check your understanding</h4>

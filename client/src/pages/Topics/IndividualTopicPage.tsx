@@ -36,6 +36,8 @@ const IndividualTopicPage = () => {
 
   const [currentContent, setCurrentContent] = useState<any | null>(null);
 
+  console.log(currentContent);
+
   const { isLoading, data, isError } = useFetchTopic(topicId);
 
   useEffect(() => {
@@ -73,9 +75,15 @@ const IndividualTopicPage = () => {
             variant="inbox"
             title={currentContent?.name}
             type={currentContent?.type}
+            authors={currentContent?.authors}
             source={currentContent?.videoInfo?.source}
             mediaId={currentContent?.videoInfo?.videoId}
+            thumbnailUrl={currentContent?.thumbnailUrl}
             description={currentContent?.description}
+            bookInfo={{
+              pageCount: currentContent?.bookInfo?.pageCount,
+              pagesRead: currentContent?.bookInfo?.pagesRead,
+            }}
             // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}
             hasQuiz={false} // Don't show for now
           />
