@@ -9,7 +9,7 @@ interface TopicCardProps {
 
 const TopicCard = ({ id, name }: TopicCardProps) => {
   return (
-    <Link to={`/topics/${id}`}>
+    <Link to={{ pathname: `/topics/${id}`, state: { name } }}>
       <div className={styles.card}>
         <h4>{name}</h4>
       </div>

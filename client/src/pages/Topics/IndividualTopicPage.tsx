@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 // API
 import { useFetchTopic } from "../../api/topics";
@@ -24,6 +24,14 @@ interface TopicContentData {
 
 const IndividualTopicPage = () => {
   const { topicId } = useParams();
+  const location = useLocation();
+
+  // React router state type stuff was annoying. Couldn't access .name so ¯\_(ツ)_/¯
+  const state: any = location.state;
+
+  // If topic name is passed through location state, use it
+  const [topicName] = useState(state ? state.name : null);
+
   const history = useHistory();
 
   const [currentContent, setCurrentContent] = useState<any | null>(null);
@@ -43,7 +51,8 @@ const IndividualTopicPage = () => {
           <div onClick={() => history.goBack()}>
             <FiArrowLeft size={24} className={styles.backBtn} />
           </div>
-          <h2>{data ? data.name : "..."}</h2>
+          {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
+          <h2>{topicName ? topicName : data ? data.name : "..."}</h2>
         </>
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
