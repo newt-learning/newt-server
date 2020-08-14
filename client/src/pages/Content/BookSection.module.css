@@ -6,6 +6,7 @@
 .bookInfo {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding-left: 2rem;
   width: 100%;
 }
@@ -19,4 +20,21 @@
 .pageCount {
   font-size: var(--FS-s);
   color: var(--gray-600);
+}
+
+.progressBarContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+}
+
+.updateBtn {
+  max-width: 300px;
+  align-self: flex-end;
+  background-color: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.updateBtn:hover {
+  background-color: var(--gray-300);
 }

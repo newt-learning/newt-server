@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  border: 1px solid var(--indigo-600);
+  border-radius: 0.32rem;
+  height: 25px;
+  box-sizing: border-box;
+  margin-bottom: 0.75rem;
+}
+
+.progressBar {
+  position: relative;
+  left: 0;
+  border-radius: 0.25rem;
+  background-color: var(--indigo-500);
+  height: 23px;
+}
+
+.progressLabel {
+  font-size: 0.8rem;
+  padding-left: 0.5rem;
+}
+
+.whiteLabel {
+  color: white;
+}
+
+.blackLabel {
+  color: black;
+}

@@ -14,5 +14,6 @@ export { default as Input } from "./Input";
 export { default as MainContainer } from "./MainContainer";
 export { default as Navbar } from "./Navbar";
 export { default as PrivateRoute } from "./PrivateRoute";
+export { default as ProgressBar } from "./ProgressBar";
 export { default as QuizModal } from "./QuizModal";
 export { default as Sidebar } from "./Sidebar";
