@@ -29,9 +29,21 @@ const ShelvesPage = () => {
           "Loading..."
         ) : (
           <>
-            <Shelf name="Currently Learning" data={currentlyLearningItems} />
-            <Shelf name="Want to Learn" data={wantToLearnItems} />
-            <Shelf name="Finished Learning" data={finishedLearningItems} />
+            <Shelf
+              id="currently-learning"
+              name="Currently Learning"
+              data={currentlyLearningItems}
+            />
+            <Shelf
+              id="want-to-learn"
+              name="Want to Learn"
+              data={wantToLearnItems}
+            />
+            <Shelf
+              id="finished-learning"
+              name="Finished Learning"
+              data={finishedLearningItems}
+            />
           </>
         )}
       </AppContentContainer>

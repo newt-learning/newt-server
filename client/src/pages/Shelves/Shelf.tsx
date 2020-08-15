@@ -4,20 +4,19 @@ import ShelfContentCard from "./ShelfContentCard";
 import styles from "./Shelf.module.css";
 
 interface ShelfProps {
+  id: "currently-learning" | "want-to-learn" | "finished-learning";
   name: string;
   data?: any;
 }
 
-const Shelf = ({ name, data }: ShelfProps) => {
-  const divId = name.toLowerCase().split(" ").join("-");
-
+const Shelf = ({ id, name, data }: ShelfProps) => {
   return (
-    <div className={styles.container} id={styles[divId]}>
+    <div className={styles.container} id={styles[id]}>
       <div className={styles.nameContainer}>
         <Link
-          to={(location) => `${location.pathname}/${divId}`}
+          to={(location) => `${location.pathname}/${id}`}
           className={styles.name}
-          id={styles[divId]}
+          id={styles[id]}
         >
           {name}
         </Link>
@@ -31,6 +30,7 @@ const Shelf = ({ name, data }: ShelfProps) => {
                 key={item._id}
                 name={item.name}
                 thumbnailUrl={item.thumbnailUrl}
+                shelfId={id}
               />
             ))
         : null}
