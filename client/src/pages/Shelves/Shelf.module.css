@@ -21,26 +21,32 @@
 }
 
 .nameContainer {
-  width: 250px;
-  min-width: 120px;
+  width: 260px;
+  min-width: 155px;
 }
 
 .name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: var(--gray-800);
   font-size: var(--FS-2xl);
   font-weight: 600;
   margin-right: 1rem;
 }
 
-.name#currently-learning {
+.name#currently-learning,
+.icon#currently-learning {
   color: var(--yellow-900);
 }
 
-.name#want-to-learn {
+.name#want-to-learn,
+.icon#want-to-learn {
   color: var(--newtBlue-900);
 }
 
-.name#finished-learning {
+.name#finished-learning,
+.icon#finished-learning {
   color: var(--lightGreen-900);
 }
 

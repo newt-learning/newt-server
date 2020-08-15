@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ShelfContentCard from "./ShelfContentCard";
 import styles from "./Shelf.module.css";
+import { FiChevronRight } from "react-icons/fi";
 
 interface ShelfProps {
   id: "currently-learning" | "want-to-learn" | "finished-learning";
@@ -19,6 +20,7 @@ const Shelf = ({ id, name, data }: ShelfProps) => {
           id={styles[id]}
         >
           {name}
+          <FiChevronRight size={26} className={styles.icon} />
         </Link>
       </div>
       {/* Display first 3 items in the shelf */}
