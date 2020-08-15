@@ -2,6 +2,10 @@
   margin-bottom: 1rem;
 }
 
+.inbox {
+  padding: 1.5rem;
+}
+
 .titleContainer {
   display: flex;
   justify-content: space-between;

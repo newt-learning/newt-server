@@ -10,6 +10,6 @@
 }
 
 .backBtn:hover {
-  color: var(--gray-700);
+  color: var(--hotPink-300);
   cursor: pointer;
 }
