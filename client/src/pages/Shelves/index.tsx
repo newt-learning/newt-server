@@ -1,12 +1,33 @@
 import React from "react";
-import { AppMainContainer, AppHeaderContainer } from "../../components";
+// API
+import { useFetchAllContent } from "../../api/content";
+// Components
+import { AppMainContainer, AppContentContainer } from "../../components";
+import Shelf from "./Shelf";
+// Helpers
+import { filterAndOrderContentByShelf } from "./helpers";
 
 const ShelvesPage = () => {
+  const { data, isLoading } = useFetchAllContent();
+
+  const currentlyLearningItems = filterAndOrderContentByShelf(
+    "Currently Learning",
+    data
+  );
+
   return (
     <AppMainContainer>
-      <AppHeaderContainer>
-        <h2>Shelves</h2>
-      </AppHeaderContainer>
+      <AppContentContainer>
+        {isLoading ? (
+          "Loading..."
+        ) : (
+          <>
+            <Shelf name="Currently Learning" data={currentlyLearningItems} />
+            {/* <Shelf />
+            <Shelf /> */}
+          </>
+        )}
+      </AppContentContainer>
     </AppMainContainer>
   );
 };
