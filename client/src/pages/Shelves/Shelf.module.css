@@ -20,6 +20,8 @@
 
 .name {
   color: var(--gray-800);
+  font-size: var(--FS-2xl);
+  font-weight: 600;
 }
 
 .name#currently-learning {
@@ -32,4 +34,10 @@
 
 .name#finished-learning {
   color: var(--lightGreen-900);
+}
+
+.name#currently-learning:hover,
+.name#want-to-learn:hover,
+.name#finished-learning:hover {
+  color: var(--gray-900);
 }
