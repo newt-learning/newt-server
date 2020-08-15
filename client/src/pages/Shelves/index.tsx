@@ -6,6 +6,8 @@ import { AppMainContainer, AppContentContainer } from "../../components";
 import Shelf from "./Shelf";
 // Helpers
 import { filterAndOrderContentByShelf } from "./helpers";
+// Styling
+import styles from "./Shelves.module.css";
 
 const ShelvesPage = () => {
   const { data, isLoading } = useFetchAllContent();
@@ -16,15 +18,15 @@ const ShelvesPage = () => {
   );
 
   return (
-    <AppMainContainer>
-      <AppContentContainer>
+    <AppMainContainer className={styles.container}>
+      <AppContentContainer className={styles.contentContainer}>
         {isLoading ? (
           "Loading..."
         ) : (
           <>
             <Shelf name="Currently Learning" data={currentlyLearningItems} />
-            {/* <Shelf />
-            <Shelf /> */}
+            <Shelf name="Want to Learn" />
+            <Shelf name="Finished Learning" />
           </>
         )}
       </AppContentContainer>

@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  height: 166px;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.container#currently-learning {
+  background-color: var(--yellow-100);
+}
+
+.container#want-to-learn {
+  background-color: var(--newtBlue-50);
+}
+
+.container#finished-learning {
+  background-color: var(--lightGreen-100);
+}
+
+.name {
+  color: var(--gray-800);
+}
+
+.name#currently-learning {
+  color: var(--yellow-900);
+}
+
+.name#want-to-learn {
+  color: var(--newtBlue-900);
+}
+
+.name#finished-learning {
+  color: var(--lightGreen-900);
+}

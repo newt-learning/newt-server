@@ -142,4 +142,14 @@ textarea {
   --lightGreen-700: #1f8035;
   --lightGreen-800: #176128;
   --lightGreen-900: #10411b;
+  /* Yellos */
+  --yellow-100: #fff9e9;
+  --yellow-200: #ffefc1;
+  --yellow-300: #ffe69a;
+  --yellow-400: #ffdc73;
+  --yellow-500: #ffcd38;
+  --yellow-600: #ffc311;
+  --yellow-700: #d59f00;
+  --yellow-800: #9a7300;
+  --yellow-900: #735600;
 }
