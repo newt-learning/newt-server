@@ -16,6 +16,11 @@ const ShelvesPage = () => {
     "Currently Learning",
     data
   );
+  const wantToLearnItems = filterAndOrderContentByShelf("Want to Learn", data);
+  const finishedLearningItems = filterAndOrderContentByShelf(
+    "Finished Learning",
+    data
+  );
 
   return (
     <AppMainContainer className={styles.container}>
@@ -25,8 +30,8 @@ const ShelvesPage = () => {
         ) : (
           <>
             <Shelf name="Currently Learning" data={currentlyLearningItems} />
-            <Shelf name="Want to Learn" />
-            <Shelf name="Finished Learning" />
+            <Shelf name="Want to Learn" data={wantToLearnItems} />
+            <Shelf name="Finished Learning" data={finishedLearningItems} />
           </>
         )}
       </AppContentContainer>

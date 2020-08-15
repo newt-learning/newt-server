@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "./Shelf.module.css";
 import { Link } from "react-router-dom";
+import ShelfContentCard from "./ShelfContentCard";
+import styles from "./Shelf.module.css";
 
 interface ShelfProps {
   name: string;
@@ -12,15 +13,27 @@ const Shelf = ({ name, data }: ShelfProps) => {
 
   return (
     <div className={styles.container} id={styles[divId]}>
-      <Link
-        to={(location) => `${location.pathname}/${divId}`}
-        className={styles.name}
-        id={styles[divId]}
-      >
-        {/* <h2 className={styles.name} id={styles[divId]}> */}
-        {name}
-        {/* </h2> */}
-      </Link>
+      <div className={styles.nameContainer}>
+        <Link
+          to={(location) => `${location.pathname}/${divId}`}
+          className={styles.name}
+          id={styles[divId]}
+        >
+          {name}
+        </Link>
+      </div>
+      {/* Display first 3 items in the shelf */}
+      {data
+        ? data
+            .slice(0, 3)
+            .map((item: any) => (
+              <ShelfContentCard
+                key={item._id}
+                name={item.name}
+                thumbnailUrl={item.thumbnailUrl}
+              />
+            ))
+        : null}
     </div>
   );
 };
