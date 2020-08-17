@@ -22,6 +22,8 @@ const ShelvesPage = () => {
     data
   );
 
+  console.log(wantToLearnItems);
+
   return (
     <AppMainContainer className={styles.container}>
       <AppContentContainer className={styles.contentContainer}>
