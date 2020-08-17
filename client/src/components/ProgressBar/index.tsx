@@ -12,13 +12,7 @@ const ProgressBar = ({ percentComplete }: ProgressBarProps) => {
         className={styles.progressBar}
         style={{ width: `${percentComplete}%` }}
       >
-        <span
-          className={
-            percentComplete > 10
-              ? `${styles.progressLabel} ${styles.whiteLabel}`
-              : `${styles.progressLabel} ${styles.blackLabel}`
-          }
-        >{`${percentComplete}%`}</span>
+        <span className={styles.label}>{`${percentComplete}%`}</span>
       </div>
     </div>
   );

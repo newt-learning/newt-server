@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  border: 1px solid var(--indigo-600);
+  background-color: var(--gray-200);
   border-radius: 0.32rem;
   height: 25px;
   box-sizing: border-box;
@@ -8,22 +8,21 @@
 }
 
 .progressBar {
+  display: flex;
   position: relative;
   left: 0;
   border-radius: 0.25rem;
-  background-color: var(--indigo-500);
-  height: 23px;
+  background-color: var(--lightGreen-300);
+  height: 25px;
 }
 
-.progressLabel {
-  font-size: 0.8rem;
+.label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  font-size: var(--FS-xs);
+  font-weight: 500;
   padding-left: 0.5rem;
-}
-
-.whiteLabel {
-  color: white;
-}
-
-.blackLabel {
-  color: black;
+  color: var(--gray-900s);
 }
