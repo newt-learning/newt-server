@@ -1,0 +1,40 @@
+.optionsContainer {
+  padding: 2.5rem 0;
+  width: 20%;
+  min-height: 500px;
+  min-width: 125px;
+}
+
+.option {
+  padding: 0.4rem;
+  color: var(--darkGrey);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.option:hover {
+  background-color: var(--gray-200);
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--salmon-400);
+  color: white;
+}
+
+.active:hover {
+  background-color: var(--salmon-400);
+  color: white;
+}
+
+.detailsContainer {
+  width: 80%;
+  min-height: 500px;
+  margin-left: 2rem;
+  padding: 2.5rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}

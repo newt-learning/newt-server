@@ -152,4 +152,14 @@ textarea {
   --yellow-700: #d59f00;
   --yellow-800: #9a7300;
   --yellow-900: #735600;
+  /* Salmon */
+  --salmon-100: #ffe8e1;
+  --salmon-200: #ffcab9;
+  --salmon-300: #ffad92;
+  --salmon-400: #ff8f6b;
+  --salmon-500: #ff6230;
+  --salmon-600: #f43b00;
+  --salmon-700: #cd3200;
+  --salmon-800: #a62800;
+  --salmon-200: #6b1a00;
 }
