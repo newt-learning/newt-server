@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 // API
-import { useFetchTopic, useUpdateTopic } from "../../api/topics";
+import {
+  useFetchTopic,
+  useUpdateTopic,
+  useDeleteTopic,
+} from "../../api/topics";
 // Components
 import { ContentInbox, DeleteItemModal } from "../../components";
 // Types
@@ -11,14 +15,10 @@ import styles from "./Topics.module.css";
 import Modal from "react-bootstrap/esm/Modal";
 import TopicForm, { TopicFormValues } from "./TopicForm";
 
-interface TopicContentData {
-  _id: string;
-  name: string;
-}
-
 const IndividualTopicPage = () => {
   const { topicId } = useParams();
-  const location = useLocation();
+  // const location = useLocation();
+  const history = useHistory();
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -31,6 +31,7 @@ const IndividualTopicPage = () => {
 
   const { isLoading, data, isError } = useFetchTopic(topicId);
   const [updateTopic, { error: updateTopicError }] = useUpdateTopic();
+  const [deleteTopic, { error: deleteTopicError }] = useDeleteTopic();
 
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
@@ -53,11 +54,18 @@ const IndividualTopicPage = () => {
     setShowEditModal(false);
   };
   const handleDeleteTopic = () => {
-    alert("delete");
+    deleteTopic(topicId);
+    // Close modal
+    setShowDeleteModal(false);
+    // Go back to Topics page
+    history.goBack();
   };
 
   if (updateTopicError) {
     console.log(updateTopicError);
+  }
+  if (deleteTopicError) {
+    console.error(deleteTopicError);
   }
 
   return (

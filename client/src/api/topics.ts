@@ -23,7 +23,11 @@ const createTopic = async (data: TopicData) => {
   await newtApi.post("/topics/create", data);
 };
 const updateTopic = async ({ topicId, data }: UpdateTopicParams) => {
-  await newtApi.put(`topics/${topicId}/update`, data);
+  await newtApi.put(`/topics/${topicId}/update`, data);
+};
+// Deletes topic and associated content
+const deleteTopic = async (topicId: string) => {
+  await newtApi.delete(`/topics/${topicId}`);
 };
 
 // React-query bindings
@@ -41,5 +45,10 @@ export function useCreateTopic() {
 export function useUpdateTopic() {
   return useMutation(updateTopic, {
     onSettled: () => queryCache.invalidateQueries("topic"),
+  });
+}
+export function useDeleteTopic() {
+  return useMutation(deleteTopic, {
+    onSettled: () => queryCache.invalidateQueries("topics"),
   });
 }
