@@ -41,10 +41,7 @@ const TopicsPage = () => {
     <AppMainContainer>
       <AppHeaderContainer>
         <h2>Topics</h2>
-        <Button
-          onClick={() => setShowCreateModal(true)}
-          style={styles.createBtn}
-        >
+        <Button category="success" onClick={() => setShowCreateModal(true)}>
           Create topic
         </Button>
       </AppHeaderContainer>
@@ -98,7 +95,7 @@ const TopicsPage = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <div className={styles.buttonContainer}>
-                  <Button category="primary" type="submit">
+                  <Button category="success" type="submit">
                     Create
                   </Button>
                 </div>

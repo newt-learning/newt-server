@@ -4,15 +4,6 @@
   gap: 1rem;
 }
 
-.createBtn {
-  background-color: var(--lightGreen-200);
-  color: var(--lightGreen-900);
-}
-
-.createBtn:hover {
-  background-color: var(--lightGreen-300);
-}
-
 .backBtn:hover {
   color: var(--hotPink-300);
   cursor: pointer;

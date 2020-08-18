@@ -46,6 +46,15 @@
   color: var(--newtBlue-800);
 }
 
+.successBtn {
+  background-color: var(--lightGreen-200);
+  color: var(--lightGreen-900);
+}
+
+.successBtn:hover {
+  background-color: var(--lightGreen-300);
+}
+
 .disabledBtn {
   background-color: var(--gray-300);
   border: 1px solid var(--gray-300);
