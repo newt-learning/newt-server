@@ -28,6 +28,7 @@ const IndividualTopicPage = () => {
     <ContentInbox
       title={topicName ? topicName : data ? data.name : "..."}
       contentData={data?.content}
+      showOptions={true}
       backButtonStyle={styles.backBtn}
     />
   );

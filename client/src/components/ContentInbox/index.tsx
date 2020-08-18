@@ -5,7 +5,7 @@ import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import classnames from "classnames/bind";
 // Components
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiMoreVertical } from "react-icons/fi";
 import {
   AppMainContainer,
   AppHeaderContainer,
@@ -15,6 +15,7 @@ import {
 } from "../AppContainers";
 import AppContentListCard from "../AppContentListCard";
 import ContentFlow from "../../pages/Content/ContentFlow";
+import Dropdown from "react-bootstrap/Dropdown";
 // Styling
 import styles from "./ContentInbox.module.css";
 
@@ -23,6 +24,7 @@ interface ContentInboxProps {
   isLoading?: boolean;
   isError?: boolean;
   contentData?: any;
+  showOptions?: boolean;
   backButtonStyle?: string;
 }
 
@@ -38,6 +40,7 @@ const ContentInbox = ({
   isLoading,
   isError,
   contentData,
+  showOptions = false,
   backButtonStyle,
 }: // currentContent,
 ContentInboxProps) => {
@@ -64,6 +67,29 @@ ContentInboxProps) => {
           {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
           <h2>{title}</h2>
         </div>
+        {/* Show 3-dot options menu with dropdown for additional options */}
+        {showOptions ? (
+          <div className={styles.optionsDropdown}>
+            <Dropdown alignRight={true} drop="down">
+              <Dropdown.Toggle
+                id={`${title}-page-more-dropdown`}
+                className={styles.dropdownToggle}
+                as="div"
+              >
+                <FiMoreVertical size={24} />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => console.log("edit")}>
+                  Edit
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={() => console.log("delete")}>
+                  Delete
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        ) : null}
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
         <AppContentList>
