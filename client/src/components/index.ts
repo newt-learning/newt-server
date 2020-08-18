@@ -13,6 +13,7 @@ export { default as ContentInbox } from "./ContentInbox";
 export { default as Footer } from "./Footer";
 export { default as Input } from "./Input";
 export { default as MainContainer } from "./MainContainer";
+export { DeleteItemModal } from "./Modals";
 export { default as Navbar } from "./Navbar";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProgressBar } from "./ProgressBar";

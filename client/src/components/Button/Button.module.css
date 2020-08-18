@@ -55,6 +55,15 @@
   background-color: var(--lightGreen-300);
 }
 
+.dangerBtn {
+  background-color: var(--red-500);
+  color: white;
+}
+
+.dangerBtn:hover {
+  background-color: var(--red-600);
+}
+
 .disabledBtn {
   background-color: var(--gray-300);
   border: 1px solid var(--gray-300);

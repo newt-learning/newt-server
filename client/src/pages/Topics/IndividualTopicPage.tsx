@@ -4,7 +4,7 @@ import { useParams, useLocation } from "react-router-dom";
 // API
 import { useFetchTopic, useUpdateTopic } from "../../api/topics";
 // Components
-import { ContentInbox } from "../../components";
+import { ContentInbox, DeleteItemModal } from "../../components";
 // Types
 import { OptionsDropdownItemType } from "../../components/ContentInbox";
 import styles from "./Topics.module.css";
@@ -21,6 +21,7 @@ const IndividualTopicPage = () => {
   const location = useLocation();
 
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // React router state type stuff was annoying. Couldn't access .name so ¯\_(ツ)_/¯
   // const state: any = location.state;
@@ -37,11 +38,22 @@ const IndividualTopicPage = () => {
       title: "Edit",
       onClick: () => setShowEditModal(true),
     },
+    {
+      type: "divider",
+    },
+    {
+      type: "item",
+      title: "Delete",
+      onClick: () => setShowDeleteModal(true),
+    },
   ];
 
   const handleEditTopic = (values: TopicFormValues) => {
     updateTopic({ topicId, data: values });
     setShowEditModal(false);
+  };
+  const handleDeleteTopic = () => {
+    alert("delete");
   };
 
   if (updateTopicError) {
@@ -76,6 +88,12 @@ const IndividualTopicPage = () => {
           />
         </Modal.Body>
       </Modal>
+      <DeleteItemModal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        itemToDelete="topic"
+        onDelete={handleDeleteTopic}
+      />
     </>
   );
 };

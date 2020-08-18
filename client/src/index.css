@@ -162,4 +162,14 @@ textarea {
   --salmon-700: #cd3200;
   --salmon-800: #a62800;
   --salmon-200: #6b1a00;
+  /* Reds */
+  --red-100: #ffeaea;
+  --red-200: #ffc3c3;
+  --red-300: #ff9b9b;
+  --red-400: #ff7474;
+  --red-500: #ff4d4d;
+  --red-600: #ff2626;
+  --red-700: #ea0000;
+  --red-800: #af0000;
+  --red-900: #740000;
 }
