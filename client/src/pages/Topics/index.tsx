@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Formik } from "formik";
-import * as yup from "yup";
 // API
 import { useFetchAllTopics, useCreateTopic } from "../../api/topics";
 // Components
@@ -11,8 +9,8 @@ import {
   Button,
 } from "../../components";
 import TopicCard from "./TopicCard";
+import TopicForm from "./TopicForm";
 import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 // Styling
 import styles from "./Topics.module.css";
 
@@ -30,12 +28,9 @@ const TopicsPage = () => {
   const { data, status, error } = useFetchAllTopics();
   const [createTopic, { error: createTopicError }] = useCreateTopic();
 
-  const createTopicSchema = yup.object({
-    name: yup.string().required("A topic name is required."),
-  });
-
   const handleCreateTopic = (values: CreateTopicValues) => {
     createTopic(values);
+    setShowCreateModal(false);
   };
 
   if (createTopicError) {
@@ -70,44 +65,7 @@ const TopicsPage = () => {
           <Modal.Title>Create Topic</Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
-          <Formik
-            validationSchema={createTopicSchema}
-            initialValues={{ name: "" }}
-            onSubmit={(values) => handleCreateTopic(values)}
-          >
-            {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
-              <Form
-                noValidate
-                onSubmit={(event) => {
-                  // Prevent default of adding params to url
-                  event.preventDefault();
-                  handleSubmit();
-                  setShowCreateModal(false);
-                }}
-                className={styles.form}
-              >
-                <Form.Group controlId="topicName">
-                  <Form.Label>Topic name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={!!errors.name}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.name}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <div className={styles.buttonContainer}>
-                  <Button category="success" type="submit">
-                    Create
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+          <TopicForm onSubmit={handleCreateTopic} />
         </Modal.Body>
       </Modal>
     </AppMainContainer>
