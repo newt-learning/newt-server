@@ -4,7 +4,33 @@
   gap: 1rem;
 }
 
+.createBtn {
+  background-color: var(--lightGreen-200);
+  color: var(--lightGreen-900);
+}
+
+.createBtn:hover {
+  background-color: var(--lightGreen-300);
+}
+
 .backBtn:hover {
   color: var(--hotPink-300);
   cursor: pointer;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  margin: 1rem 0;
+  width: 70%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
 }

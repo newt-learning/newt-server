@@ -54,7 +54,7 @@ ContentInboxProps) => {
   return (
     <AppMainContainer variant="inbox">
       <AppHeaderContainer>
-        <>
+        <div style={{ display: "flex" }}>
           <div onClick={() => history.goBack()}>
             <FiArrowLeft
               size={24}
@@ -63,7 +63,7 @@ ContentInboxProps) => {
           </div>
           {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
           <h2>{title}</h2>
-        </>
+        </div>
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
         <AppContentList>
