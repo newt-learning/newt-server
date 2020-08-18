@@ -19,12 +19,19 @@ import Dropdown from "react-bootstrap/Dropdown";
 // Styling
 import styles from "./ContentInbox.module.css";
 
+interface OptionsDropdownItem {
+  type: "item" | "divider";
+  title?: string;
+  onClick?: () => void;
+}
+
 interface ContentInboxProps {
   title: string;
   isLoading?: boolean;
   isError?: boolean;
   contentData?: any;
-  showOptions?: boolean;
+  showOptionsDropdown?: boolean;
+  optionsDropdownMenu?: OptionsDropdownItem[];
   backButtonStyle?: string;
 }
 
@@ -34,13 +41,29 @@ interface ContentData {
 }
 
 const cx = classnames.bind(styles);
+const defaultDropdownMenu: OptionsDropdownItem[] = [
+  {
+    type: "item",
+    title: "Edit",
+    onClick: () => console.log("edit"),
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "item",
+    title: "Delete",
+    onClick: () => console.log("delete"),
+  },
+];
 
 const ContentInbox = ({
   title,
   isLoading,
   isError,
   contentData,
-  showOptions = false,
+  showOptionsDropdown = false,
+  optionsDropdownMenu = defaultDropdownMenu,
   backButtonStyle,
 }: // currentContent,
 ContentInboxProps) => {
@@ -68,7 +91,7 @@ ContentInboxProps) => {
           <h2>{title}</h2>
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}
-        {showOptions ? (
+        {showOptionsDropdown ? (
           <div className={styles.optionsDropdown}>
             <Dropdown alignRight={true} drop="down">
               <Dropdown.Toggle
@@ -79,13 +102,18 @@ ContentInboxProps) => {
                 <FiMoreVertical size={24} />
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => console.log("edit")}>
-                  Edit
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={() => console.log("delete")}>
-                  Delete
-                </Dropdown.Item>
+                {/* Create dropdown menu by mapping through passed items. Allows for custom menus. */}
+                {optionsDropdownMenu.map((item, index) => {
+                  if (item.type === "divider") {
+                    return <Dropdown.Divider key={index} />;
+                  } else {
+                    return (
+                      <Dropdown.Item key={index} onClick={item.onClick}>
+                        {item.title}
+                      </Dropdown.Item>
+                    );
+                  }
+                })}
               </Dropdown.Menu>
             </Dropdown>
           </div>
