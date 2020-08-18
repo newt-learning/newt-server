@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
+import * as yup from "yup";
 // API
 import { useFetchAllTopics } from "../../api/topics";
 // Components
@@ -27,6 +28,10 @@ interface CreateTopicValues {
 const TopicsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const { data, status, error } = useFetchAllTopics();
+
+  const createTopicSchema = yup.object({
+    name: yup.string().required("A topic name is required."),
+  });
 
   const handleCreateTopic = (values: CreateTopicValues) => {
     console.log(values);
@@ -64,7 +69,7 @@ const TopicsPage = () => {
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           <Formik
-            // validationSchema={courseFormSchema}
+            validationSchema={createTopicSchema}
             initialValues={{ name: "" }}
             onSubmit={(values) => handleCreateTopic(values)}
           >
