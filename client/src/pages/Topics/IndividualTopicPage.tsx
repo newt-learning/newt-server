@@ -9,6 +9,7 @@ import { ContentInbox } from "../../components";
 import { OptionsDropdownItemType } from "../../components/ContentInbox";
 import styles from "./Topics.module.css";
 import Modal from "react-bootstrap/esm/Modal";
+import TopicForm, { TopicFormValues } from "./TopicForm";
 
 interface TopicContentData {
   _id: string;
@@ -37,6 +38,10 @@ const IndividualTopicPage = () => {
     },
   ];
 
+  const handleEditTopic = (values: TopicFormValues) => {
+    console.log(values);
+  };
+
   return (
     <>
       <ContentInbox
@@ -54,6 +59,16 @@ const IndividualTopicPage = () => {
         animation={false}
       >
         <Modal.Header closeButton>Edit Topic</Modal.Header>
+        <Modal.Body className={styles.modalBody}>
+          <TopicForm
+            initialValues={{
+              name: topicName ? topicName : data ? data.name : "",
+            }}
+            onSubmit={handleEditTopic}
+            buttonTitle="Edit"
+            buttonCategory="secondary"
+          />
+        </Modal.Body>
       </Modal>
     </>
   );

@@ -4,21 +4,27 @@ import * as yup from "yup";
 // Components
 import { Button } from "../../components";
 import Form from "react-bootstrap/Form";
+// Types
+import { ButtonCategory } from "../../components/Button";
 // Styling
 import styles from "./Topics.module.css";
 
-type FormValues = {
+export type TopicFormValues = {
   name: string;
 };
 
 interface TopicFormProps {
   initialValues?: { name: string };
-  onSubmit: (values: FormValues) => void;
+  onSubmit: (values: TopicFormValues) => void;
+  buttonTitle?: string;
+  buttonCategory?: ButtonCategory;
 }
 
 const TopicForm = ({
   initialValues = { name: "" },
   onSubmit,
+  buttonTitle = "Create",
+  buttonCategory = "success",
 }: TopicFormProps) => {
   const createTopicSchema = yup.object({
     name: yup.string().required("A topic name is required."),
@@ -55,8 +61,8 @@ const TopicForm = ({
             </Form.Control.Feedback>
           </Form.Group>
           <div className={styles.buttonContainer}>
-            <Button category="success" type="submit">
-              Create
+            <Button category={buttonCategory} type="submit">
+              {buttonTitle}
             </Button>
           </div>
         </Form>
