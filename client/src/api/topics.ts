@@ -5,6 +5,11 @@ interface TopicData {
   name: string;
 }
 
+interface UpdateTopicParams {
+  topicId: string;
+  data: TopicData;
+}
+
 // API calls
 const fetchAllTopics = async () => {
   const { data } = await newtApi.get("/topics");
@@ -17,6 +22,9 @@ const fetchTopic = async (queryKey: any, topicId: string) => {
 const createTopic = async (data: TopicData) => {
   await newtApi.post("/topics/create", data);
 };
+const updateTopic = async ({ topicId, data }: UpdateTopicParams) => {
+  await newtApi.put(`topics/${topicId}/update`, data);
+};
 
 // React-query bindings
 export function useFetchAllTopics() {
@@ -28,5 +36,10 @@ export function useFetchTopic(topicId: string) {
 export function useCreateTopic() {
   return useMutation(createTopic, {
     onSettled: () => queryCache.invalidateQueries("topics"),
+  });
+}
+export function useUpdateTopic() {
+  return useMutation(updateTopic, {
+    onSettled: () => queryCache.invalidateQueries("topic"),
   });
 }

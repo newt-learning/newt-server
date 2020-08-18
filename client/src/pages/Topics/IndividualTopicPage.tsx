@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { useParams, useLocation } from "react-router-dom";
 // API
-import { useFetchTopic } from "../../api/topics";
+import { useFetchTopic, useUpdateTopic } from "../../api/topics";
 // Components
 import { ContentInbox } from "../../components";
 // Types
@@ -23,12 +23,13 @@ const IndividualTopicPage = () => {
   const [showEditModal, setShowEditModal] = useState(false);
 
   // React router state type stuff was annoying. Couldn't access .name so ¯\_(ツ)_/¯
-  const state: any = location.state;
+  // const state: any = location.state;
 
   // If topic name is passed through location state, use it
-  const [topicName] = useState(state ? state.name : null);
+  // const [topicName] = useState(state ? state.name : null);
 
   const { isLoading, data, isError } = useFetchTopic(topicId);
+  const [updateTopic, { error: updateTopicError }] = useUpdateTopic();
 
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
@@ -39,13 +40,18 @@ const IndividualTopicPage = () => {
   ];
 
   const handleEditTopic = (values: TopicFormValues) => {
-    console.log(values);
+    updateTopic({ topicId, data: values });
+    setShowEditModal(false);
   };
+
+  if (updateTopicError) {
+    console.log(updateTopicError);
+  }
 
   return (
     <>
       <ContentInbox
-        title={topicName ? topicName : data ? data.name : "..."}
+        title={data ? data.name : "..."}
         contentData={data?.content}
         showOptionsDropdown={true}
         optionsDropdownMenu={dropdownMenu}
@@ -62,7 +68,7 @@ const IndividualTopicPage = () => {
         <Modal.Body className={styles.modalBody}>
           <TopicForm
             initialValues={{
-              name: topicName ? topicName : data ? data.name : "",
+              name: data ? data.name : "",
             }}
             onSubmit={handleEditTopic}
             buttonTitle="Edit"
