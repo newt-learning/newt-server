@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 // API
-import { useFetchAllTopics } from "../../api/topics";
+import { useFetchAllTopics, useCreateTopic } from "../../api/topics";
 // Components
 import {
   AppMainContainer,
@@ -28,14 +28,19 @@ interface CreateTopicValues {
 const TopicsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const { data, status, error } = useFetchAllTopics();
+  const [createTopic, { error: createTopicError }] = useCreateTopic();
 
   const createTopicSchema = yup.object({
     name: yup.string().required("A topic name is required."),
   });
 
   const handleCreateTopic = (values: CreateTopicValues) => {
-    console.log(values);
+    createTopic(values);
   };
+
+  if (createTopicError) {
+    console.log(createTopicError);
+  }
 
   return (
     <AppMainContainer>
@@ -77,6 +82,7 @@ const TopicsPage = () => {
                   // Prevent default of adding params to url
                   event.preventDefault();
                   handleSubmit();
+                  setShowCreateModal(false);
                 }}
                 className={styles.form}
               >
