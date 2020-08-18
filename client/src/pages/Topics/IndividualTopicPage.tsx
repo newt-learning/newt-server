@@ -5,7 +5,10 @@ import { useParams, useLocation } from "react-router-dom";
 import { useFetchTopic } from "../../api/topics";
 // Components
 import { ContentInbox } from "../../components";
+// Types
+import { OptionsDropdownItemType } from "../../components/ContentInbox";
 import styles from "./Topics.module.css";
+import Modal from "react-bootstrap/esm/Modal";
 
 interface TopicContentData {
   _id: string;
@@ -16,6 +19,8 @@ const IndividualTopicPage = () => {
   const { topicId } = useParams();
   const location = useLocation();
 
+  const [showEditModal, setShowEditModal] = useState(false);
+
   // React router state type stuff was annoying. Couldn't access .name so ¯\_(ツ)_/¯
   const state: any = location.state;
 
@@ -24,13 +29,33 @@ const IndividualTopicPage = () => {
 
   const { isLoading, data, isError } = useFetchTopic(topicId);
 
+  const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: "Edit",
+      onClick: () => setShowEditModal(true),
+    },
+  ];
+
   return (
-    <ContentInbox
-      title={topicName ? topicName : data ? data.name : "..."}
-      contentData={data?.content}
-      showOptionsDropdown={true}
-      backButtonStyle={styles.backBtn}
-    />
+    <>
+      <ContentInbox
+        title={topicName ? topicName : data ? data.name : "..."}
+        contentData={data?.content}
+        showOptionsDropdown={true}
+        optionsDropdownMenu={dropdownMenu}
+        backButtonStyle={styles.backBtn}
+      />
+      <Modal
+        size="lg"
+        show={showEditModal}
+        onHide={() => setShowEditModal(false)}
+        backdrop="static"
+        animation={false}
+      >
+        <Modal.Header closeButton>Edit Topic</Modal.Header>
+      </Modal>
+    </>
   );
 };
 

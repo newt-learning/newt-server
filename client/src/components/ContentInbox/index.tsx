@@ -19,7 +19,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 // Styling
 import styles from "./ContentInbox.module.css";
 
-interface OptionsDropdownItem {
+export interface OptionsDropdownItemType {
   type: "item" | "divider";
   title?: string;
   onClick?: () => void;
@@ -31,7 +31,7 @@ interface ContentInboxProps {
   isError?: boolean;
   contentData?: any;
   showOptionsDropdown?: boolean;
-  optionsDropdownMenu?: OptionsDropdownItem[];
+  optionsDropdownMenu?: OptionsDropdownItemType[];
   backButtonStyle?: string;
 }
 
@@ -41,7 +41,7 @@ interface ContentData {
 }
 
 const cx = classnames.bind(styles);
-const defaultDropdownMenu: OptionsDropdownItem[] = [
+const defaultDropdownMenu: OptionsDropdownItemType[] = [
   {
     type: "item",
     title: "Edit",
