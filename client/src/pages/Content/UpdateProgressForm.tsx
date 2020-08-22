@@ -6,7 +6,7 @@ import { Button } from "../../components";
 import Form from "react-bootstrap/Form";
 
 export type UpdateProgressFormValues = {
-  pagesRead: number | undefined;
+  pagesRead: number;
 };
 
 interface UpdateProgressFormProps {
@@ -21,8 +21,6 @@ const UpdateProgressForm = ({
   onSubmit,
 }: UpdateProgressFormProps) => {
   const emDash = String.fromCharCode(8212);
-
-  console.log(totalPages);
 
   const updateProgressValidationSchema = yup.object({
     pagesRead: yup

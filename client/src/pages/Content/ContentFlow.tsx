@@ -8,6 +8,7 @@ import styles from "./ContentFlow.module.css";
 let cx = classnames.bind(styles);
 
 interface ContentFlowProps {
+  id: string;
   title: string;
   type: string;
   authors?: string[];
@@ -26,6 +27,7 @@ interface ContentFlowProps {
 }
 
 const ContentFlow = ({
+  id,
   title,
   authors,
   type,
@@ -81,11 +83,12 @@ const ContentFlow = ({
         ) : // Otherwise, if it's a book, show Book Section
         type === "book" ? (
           <BookSection
+            id={id}
             title={title}
             thumbnailUrl={thumbnailUrl}
             authors={authors}
             pageCount={bookInfo?.pageCount}
-            pagesRead={bookInfo?.pagesRead}
+            pagesRead={bookInfo?.pagesRead || 0}
           />
         ) : null}
         {/* Display description if it's there */}

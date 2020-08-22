@@ -1,27 +1,36 @@
 import React, { useState } from "react";
+// API
+import { useUpdateBookProgress } from "../../api/content";
+import { useCreateLearningUpdate } from "../../api/learningUpdates";
+// Components
 import { Button, ProgressBar } from "../../components";
 import Modal from "react-bootstrap/Modal";
 import UpdateProgressForm, {
   UpdateProgressFormValues,
 } from "./UpdateProgressForm";
+// Styling
 import styles from "./BookSection.module.css";
 
 interface BookSectionProps {
+  id: string;
   title: string;
   authors?: string[];
   thumbnailUrl?: string;
   pageCount?: number;
-  pagesRead?: number;
+  pagesRead: number;
 }
 
 const BookSection = ({
+  id,
   title,
   thumbnailUrl,
   authors,
   pageCount,
-  pagesRead,
+  pagesRead = 0,
 }: BookSectionProps) => {
   const [showUpdateProgressModal, setShowUpdateProgressModal] = useState(false);
+  const [updateBookProgress] = useUpdateBookProgress();
+  const [createLearningUpdate] = useCreateLearningUpdate();
 
   const calculatePercentComplete = (
     pagesRead: number | undefined,
@@ -33,7 +42,17 @@ const BookSection = ({
   };
 
   const handleUpdateProgress = (values: UpdateProgressFormValues) => {
-    alert(JSON.stringify(values));
+    const learningUpdateData = {
+      contentId: id,
+      previousPagesRead: pagesRead,
+      updatedPagesRead: values.pagesRead,
+      numPagesRead: values.pagesRead - pagesRead,
+      contentType: "book",
+    };
+
+    updateBookProgress({ contentId: id, data: values });
+    createLearningUpdate(learningUpdateData);
+    setShowUpdateProgressModal(false);
   };
 
   return (
@@ -76,7 +95,7 @@ const BookSection = ({
           }}
         >
           <UpdateProgressForm
-            initialValues={{ pagesRead }}
+            initialValues={pagesRead ? { pagesRead } : { pagesRead: 0 }}
             totalPages={pageCount ? pageCount : 1000000000} // Max is a billion pages if not specified. Hack to ensure page validation
             onSubmit={handleUpdateProgress}
           />

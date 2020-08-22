@@ -133,6 +133,7 @@ ContentInboxProps) => {
         <AppContentDetails>
           <ContentFlow
             variant="inbox"
+            id={currentContent?._id}
             title={currentContent?.name}
             type={currentContent?.type}
             authors={currentContent?.authors}
