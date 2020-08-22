@@ -38,6 +38,7 @@ const UpdateProgressForm = ({
         values,
         errors,
         touched,
+        isValid,
       }) => (
         <Form
           noValidate
@@ -63,7 +64,7 @@ const UpdateProgressForm = ({
             </Form.Control.Feedback>
           </Form.Group>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button category="success" type="submit">
+            <Button category="success" isDisabled={!isValid} type="submit">
               Update
             </Button>
           </div>
