@@ -77,6 +77,7 @@ const BookSection = ({
         >
           <UpdateProgressForm
             initialValues={{ pagesRead }}
+            totalPages={pageCount ? pageCount : 1000000000} // Max is a billion pages if not specified. Hack to ensure page validation
             onSubmit={handleUpdateProgress}
           />
         </Modal.Body>

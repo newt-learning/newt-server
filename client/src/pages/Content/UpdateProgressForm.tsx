@@ -11,20 +11,34 @@ export type UpdateProgressFormValues = {
 
 interface UpdateProgressFormProps {
   initialValues: UpdateProgressFormValues;
+  totalPages: number;
   onSubmit: (values: UpdateProgressFormValues) => void;
 }
 
-const updateProgressValidationSchema = yup.object({
-  pagesRead: yup
-    .number()
-    .integer("Must be an integer")
-    .required("Can't be blank, a number is required."),
-});
-
 const UpdateProgressForm = ({
   initialValues = { pagesRead: 0 },
+  totalPages,
   onSubmit,
 }: UpdateProgressFormProps) => {
+  const emDash = String.fromCharCode(8212);
+
+  console.log(totalPages);
+
+  const updateProgressValidationSchema = yup.object({
+    pagesRead: yup
+      .number()
+      .integer("Must be an integer")
+      .min(
+        0,
+        "Not sure how you've managed to read negative pages. The number needs to be positive."
+      )
+      .lessThan(
+        totalPages,
+        `The number of pages you've read can't be more than the total number of pages in the book ${emDash} obviously.`
+      )
+      .required("Can't be blank, a number is required."),
+  });
+
   return (
     <Formik
       validationSchema={updateProgressValidationSchema}
