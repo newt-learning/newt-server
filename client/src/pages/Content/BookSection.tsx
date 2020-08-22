@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, ProgressBar } from "../../components";
+import Modal from "react-bootstrap/Modal";
+import UpdateProgressForm, {
+  UpdateProgressFormValues,
+} from "./UpdateProgressForm";
 import styles from "./BookSection.module.css";
 
 interface BookSectionProps {
@@ -17,6 +21,8 @@ const BookSection = ({
   pageCount,
   pagesRead,
 }: BookSectionProps) => {
+  const [showUpdateProgressModal, setShowUpdateProgressModal] = useState(false);
+
   const calculatePercentComplete = (
     pagesRead: number | undefined,
     totalPages: number | undefined
@@ -24,6 +30,10 @@ const BookSection = ({
     return pagesRead && totalPages
       ? Math.round((pagesRead / totalPages) * 100)
       : 0;
+  };
+
+  const handleUpdateProgress = (values: UpdateProgressFormValues) => {
+    alert(JSON.stringify(values));
   };
 
   return (
@@ -44,12 +54,33 @@ const BookSection = ({
           />
           <Button
             style={styles.updateBtn}
-            onClick={() => console.log("update")}
+            onClick={() => setShowUpdateProgressModal(true)}
           >
             Update Progress
           </Button>
         </div>
       </div>
+      <Modal
+        show={showUpdateProgressModal}
+        onHide={() => setShowUpdateProgressModal(false)}
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>Update Progress</Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <UpdateProgressForm
+            initialValues={{ pagesRead }}
+            onSubmit={handleUpdateProgress}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
