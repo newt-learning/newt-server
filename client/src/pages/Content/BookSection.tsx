@@ -72,6 +72,7 @@ const BookSection = ({
             percentComplete={calculatePercentComplete(pagesRead, pageCount)}
           />
           <Button
+            category="secondary"
             style={styles.updateBtn}
             onClick={() => setShowUpdateProgressModal(true)}
           >

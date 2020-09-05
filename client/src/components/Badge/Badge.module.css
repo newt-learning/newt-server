@@ -1,13 +1,22 @@
 .badge {
-  padding: 0.25rem 0.5rem;
-  font-size: var(--FS-xs);
-  border-radius: 0.5rem;
   vertical-align: middle;
-  max-width: 300px;
   justify-content: center;
   align-items: center;
   align-self: center;
   font-weight: 500;
+}
+
+.small {
+  max-width: 300px;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--FS-xs);
+}
+
+.large {
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--FS-base);
 }
 
 .defaultBadge {

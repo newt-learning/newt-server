@@ -11,7 +11,7 @@ interface ContentFlowProps {
   id: string;
   title: string;
   type: string;
-  shelf: string;
+  shelf: "Currently Learning" | "Want to Learn" | "Finished Learning";
   authors?: string[];
   source?: string;
   mediaId?: string;
@@ -70,19 +70,7 @@ const ContentFlow = ({
             {title}{" "}
             {/* Do this a better way where there's type-checking AND I can just pass data.
               Might have to set types for all the data */}
-            <Badge
-              variant={
-                shelf === "Currently Learning"
-                  ? "currently-learning"
-                  : shelf === "Want to Learn"
-                  ? "want-to-learn"
-                  : shelf === "Finished Learning"
-                  ? "finished-learning"
-                  : "default"
-              }
-            >
-              {shelf}
-            </Badge>
+            <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
           </h2>
         </div>
       ) : null}
@@ -110,6 +98,17 @@ const ContentFlow = ({
             pagesRead={bookInfo?.pagesRead || 0}
           />
         ) : null}
+        {/* Shelf info */}
+        <div>
+          <h4 className={styles.subheading}>Shelf</h4>
+          <div className={styles.shelfContainer}>
+            <Badge variant={shelf ? shelf : "default"} size="large">
+              {shelf}
+            </Badge>
+            <Button category="secondary">Change Shelf</Button>
+          </div>
+          <p></p>
+        </div>
         {/* Display description if it's there */}
         {description ? (
           <>

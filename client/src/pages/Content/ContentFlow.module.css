@@ -49,6 +49,13 @@
   margin-bottom: 0.75rem;
 }
 
+.shelfContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
 .subheading {
   color: var(--gray-700);
   margin-bottom: 0.5rem;

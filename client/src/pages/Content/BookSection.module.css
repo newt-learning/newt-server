@@ -31,10 +31,4 @@
 .updateBtn {
   max-width: 300px;
   align-self: flex-end;
-  background-color: var(--gray-200);
-  color: var(--gray-700);
-}
-
-.updateBtn:hover {
-  background-color: var(--gray-300);
 }
