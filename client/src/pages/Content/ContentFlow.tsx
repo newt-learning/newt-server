@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import classnames from "classnames/bind";
 // Components
 import { Button, Badge } from "../../components";
 import BookSection from "./BookSection";
+import ChangeShelfForm from "./ChangeShelfForm";
+import Modal from "react-bootstrap/Modal";
+// Styling
 import styles from "./ContentFlow.module.css";
 
 let cx = classnames.bind(styles);
@@ -43,6 +46,8 @@ const ContentFlow = ({
   buttonText,
   variant,
 }: ContentFlowProps) => {
+  const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
+
   // Render a new iframe each time because if I just change src, it affects browser
   // history (clicking the back button cycles through previous iframes)
   const IFrame = ({ title, src }: any) => (
@@ -105,7 +110,12 @@ const ContentFlow = ({
             <Badge variant={shelf ? shelf : "default"} size="large">
               {shelf}
             </Badge>
-            <Button category="secondary">Change Shelf</Button>
+            <Button
+              category="secondary"
+              onClick={() => setShowChangeShelfModal(true)}
+            >
+              Change Shelf
+            </Button>
           </div>
           <p></p>
         </div>
@@ -132,6 +142,27 @@ const ContentFlow = ({
           </>
         ) : null}
       </div>
+      <Modal
+        show={showChangeShelfModal}
+        onHide={() => setShowChangeShelfModal(false)}
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>Update Progress</Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ChangeShelfForm
+            initialValues={{ shelf }}
+            onSubmit={(values) => console.log(values)}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
