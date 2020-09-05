@@ -136,6 +136,7 @@ ContentInboxProps) => {
             id={currentContent?._id}
             title={currentContent?.name}
             type={currentContent?.type}
+            shelf={currentContent?.shelf}
             authors={currentContent?.authors}
             source={currentContent?.videoInfo?.source}
             mediaId={currentContent?.videoInfo?.videoId}

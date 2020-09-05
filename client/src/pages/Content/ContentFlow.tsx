@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames/bind";
 // Components
-import { Button } from "../../components";
+import { Button, Badge } from "../../components";
 import BookSection from "./BookSection";
 import styles from "./ContentFlow.module.css";
 
@@ -11,6 +11,7 @@ interface ContentFlowProps {
   id: string;
   title: string;
   type: string;
+  shelf: string;
   authors?: string[];
   source?: string;
   mediaId?: string;
@@ -31,6 +32,7 @@ const ContentFlow = ({
   title,
   authors,
   type,
+  shelf,
   source,
   mediaId,
   thumbnailUrl,
@@ -64,7 +66,24 @@ const ContentFlow = ({
     >
       {title ? (
         <div className={styles.titleContainer}>
-          <h2 className={styles.title}>{title}</h2>
+          <h2 className={styles.title}>
+            {title}{" "}
+            {/* Do this a better way where there's type-checking AND I can just pass data.
+              Might have to set types for all the data */}
+            <Badge
+              variant={
+                shelf === "Currently Learning"
+                  ? "currently-learning"
+                  : shelf === "Want to Learn"
+                  ? "want-to-learn"
+                  : shelf === "Finished Learning"
+                  ? "finished-learning"
+                  : "default"
+              }
+            >
+              {shelf}
+            </Badge>
+          </h2>
         </div>
       ) : null}
       <div className={styles.flowContainer}>

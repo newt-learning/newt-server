@@ -8,13 +8,16 @@
 
 .titleContainer {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--gray-400);
 }
 
 .title {
   color: var(--gray-800);
+  display: inline-block;
+  align-items: center;
+  margin-bottom: 0;
 }
 
 .flowContainer {
