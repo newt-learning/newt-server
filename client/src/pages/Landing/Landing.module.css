@@ -37,7 +37,6 @@
 }
 
 .title {
-  font-family: "Avenir";
   font-size: var(--FS-3xl);
   color: white;
   margin-bottom: 2rem;
