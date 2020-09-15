@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-import * as yup from "yup";
 // Components
 import { Button } from "../../components";
 import Form from "react-bootstrap/Form";

@@ -1,7 +1,39 @@
 import React from "react";
+import _ from "lodash";
+// API
+import { useFetchAllContent } from "../../api/content";
+// Components
+import {
+  AppMainContainer,
+  AppHeaderContainer,
+  AppContentContainer,
+} from "../../components";
+import InProgressCard from "./InProgressCard";
 
 const Dashboard = () => {
-  return <section>Dashboard</section>;
+  const { data, isLoading } = useFetchAllContent();
+
+  // Filter out content in progress (currently learning) + order by last updated
+  const inProgressContent = _.chain(data)
+    .filter((item) => item.shelf === "Currently Learning")
+    .orderBy("lastUpdated", "desc")
+    .value();
+  // console.table(inProgressContent);
+
+  return (
+    <AppMainContainer>
+      <AppHeaderContainer>
+        <h2>In Progress</h2>
+      </AppHeaderContainer>
+      <AppContentContainer>
+        {isLoading
+          ? "Loading..."
+          : _.map(inProgressContent, (item) => (
+              <InProgressCard key={item._id} />
+            ))}
+      </AppContentContainer>
+    </AppMainContainer>
+  );
 };
 
 export default Dashboard;
