@@ -9,6 +9,8 @@ import {
   AppContentContainer,
 } from "../../components";
 import InProgressCard from "./InProgressCard";
+// Styling
+import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
   const { data, isLoading } = useFetchAllContent();
@@ -18,18 +20,22 @@ const Dashboard = () => {
     .filter((item) => item.shelf === "Currently Learning")
     .orderBy("lastUpdated", "desc")
     .value();
-  // console.table(inProgressContent);
 
   return (
     <AppMainContainer>
       <AppHeaderContainer>
         <h2>In Progress</h2>
       </AppHeaderContainer>
-      <AppContentContainer>
+      <AppContentContainer className={styles.container}>
         {isLoading
           ? "Loading..."
           : _.map(inProgressContent, (item) => (
-              <InProgressCard key={item._id} />
+              <InProgressCard
+                key={item._id}
+                title={item.name}
+                authors={item.authors}
+                description={item.description}
+              />
             ))}
       </AppContentContainer>
     </AppMainContainer>

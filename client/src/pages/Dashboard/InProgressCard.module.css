@@ -1,0 +1,45 @@
+.card {
+  display: flex;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+  min-height: 90px;
+  margin: 0.375rem 0;
+  max-width: 800px;
+}
+
+.cardVisual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border-right: 1px solid var(--gray-200);
+  background-color: var(--gray-200);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  color: var(--darkGrey);
+  width: 85%;
+  padding: 0.5rem 0.75rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.title {
+  font-size: var(--FS-base);
+  margin-bottom: 0.15rem;
+}
+
+.authors {
+  font-size: var(--FS-s);
+  margin-bottom: 0.5rem;
+  color: var(--gray-600);
+}
+
+.description {
+  font-size: var(--FS-s);
+  color: var(--gray-700);
+}
