@@ -8,17 +8,27 @@ interface InProgressCardProps {
   title: string;
   authors: string[];
   description?: string;
+  thumbnailUrl?: string;
 }
 
 const InProgressCard = ({
   title,
   authors,
   description,
+  thumbnailUrl,
 }: InProgressCardProps) => {
   return (
     <div className={styles.card}>
       <div className={styles.cardVisual}>
-        <FiBook size={24} color="black" />
+        {thumbnailUrl ? (
+          <img
+            src={thumbnailUrl}
+            alt={`Thumbnail for ${title}`}
+            className={styles.thumbnail}
+          />
+        ) : (
+          <FiBook size={24} color="black" />
+        )}
       </div>
       <div className={styles.cardBody}>
         <h5 className={styles.title}>{title}</h5>

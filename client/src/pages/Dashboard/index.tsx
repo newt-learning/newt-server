@@ -35,6 +35,7 @@ const Dashboard = () => {
                 title={item.name}
                 authors={item.authors}
                 description={item.description}
+                thumbnailUrl={item.thumbnailUrl}
               />
             ))}
       </AppContentContainer>
