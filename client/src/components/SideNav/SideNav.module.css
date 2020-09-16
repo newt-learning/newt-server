@@ -1,0 +1,24 @@
+.navItem {
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.navItem:hover {
+  background-color: var(--salmon-100);
+  color: var(--gray-800);
+  cursor: pointer;
+  /* color: white; Don't know why this works */
+}
+
+.navItem a[aria-selected="true"] {
+  background-color: var(--salmon-400);
+  color: white;
+}
+
+.navLink {
+  display: block;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  color: var(--darkGrey);
+}
