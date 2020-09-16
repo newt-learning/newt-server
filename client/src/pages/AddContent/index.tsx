@@ -22,12 +22,13 @@ const AddContentPage = () => {
         <h2>Add Content</h2>
       </AppHeaderContainer>
       <AppContentContainer className={styles.contentForms}>
-        <TabContainer id="add-content-tabs" defaultActiveKey="youtube">
+        <TabContainer
+          id="add-content-tabs"
+          defaultActiveKey="youtube"
+          transition={false}
+        >
           <Row>
             <Col lg={3} style={{ marginTop: "1rem" }}>
-              <h5 style={{ color: "#666", marginBottom: "1rem" }}>
-                Content Type
-              </h5>
               <Nav variant="pills" className="flex-column">
                 <Nav.Item as={SideNavItem}>
                   <Nav.Link as={SideNavLink} eventKey="youtube">
