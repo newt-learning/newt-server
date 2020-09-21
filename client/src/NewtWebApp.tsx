@@ -16,6 +16,7 @@ import {
   ShelvesPage,
   IndividualShelfPage,
   AddContentPage,
+  StatsPage,
 } from "./pages";
 // Styling
 import styles from "./NewtWebApp.module.css";
@@ -74,6 +75,11 @@ const NewtWebApp = () => {
             Component={TopicsPage}
             authExists={exists}
             path="/topics"
+          />
+          <PrivateRoute
+            Component={StatsPage}
+            authExists={exists}
+            path="/stats"
           />
           <PrivateRoute
             Component={ProfilePage}

@@ -38,7 +38,14 @@ const App = () => {
   return (
     <Switch>
       <Route
-        path={["/dashboard", "/add-content", "/shelves", "/topics", "/profile"]}
+        path={[
+          "/dashboard",
+          "/add-content",
+          "/shelves",
+          "/topics",
+          "/stats",
+          "/profile",
+        ]}
         component={NewtWebApp}
       />
       <Route

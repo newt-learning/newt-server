@@ -10,3 +10,4 @@ export { default as ShelvesPage } from "./Shelves";
 export { default as IndividualShelfPage } from "./Shelves/IndividualShelfPage";
 export { default as TopicsPage } from "./Topics";
 export { default as IndividualTopicPage } from "./Topics/IndividualTopicPage";
+export { default as StatsPage } from "./Stats";

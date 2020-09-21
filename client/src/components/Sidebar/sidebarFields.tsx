@@ -1,6 +1,11 @@
 import React from "react";
-import { FiPlus, FiArchive, FiTrello, FiFolder } from "react-icons/fi";
-// import { FaBrain } from "react-icons/fa";
+import {
+  FiPlus,
+  FiArchive,
+  FiTrello,
+  FiFolder,
+  FiBarChart,
+} from "react-icons/fi";
 import styles from "./Sidebar.module.css";
 
 export default [
@@ -23,5 +28,10 @@ export default [
     name: "Topics",
     route: "/topics",
     icon: () => <FiArchive size={20} className={styles.icon} />,
+  },
+  {
+    name: "Stats",
+    route: "/stats",
+    icon: () => <FiBarChart size={20} className={styles.icon} />,
   },
 ];
