@@ -8,20 +8,22 @@ import Form from "react-bootstrap/Form";
 import styles from "./AddContent.module.css";
 
 export type YoutubeFormValues = {
-  url: string;
+  videoUrl: string;
+  playlistUrl: string;
 };
 
 interface YoutubeFormProps {
-  initialValues?: { url: string };
+  initialValues?: YoutubeFormValues;
   onSubmit: (values: YoutubeFormValues) => void;
 }
 
 const youtubeFormSchema = yup.object({
-  url: yup.string().required(),
+  videoUrl: yup.string(),
+  playlistUrl: yup.string(),
 });
 
 const YoutubeForm = ({
-  initialValues = { url: "" },
+  initialValues = { videoUrl: "", playlistUrl: "" },
   onSubmit,
 }: YoutubeFormProps) => {
   return (
@@ -40,18 +42,33 @@ const YoutubeForm = ({
           }}
           className={styles.form}
         >
-          <Form.Group controlId="url">
+          <Form.Group controlId="videoUrl">
             <Form.Label>Video URL</Form.Label>
             <Form.Control
               type="text"
-              name="url"
-              value={values.url}
+              name="videoUrl"
+              value={values.videoUrl}
               onChange={handleChange}
               onBlur={handleBlur}
-              isInvalid={!!errors.url}
+              isInvalid={!!errors.videoUrl}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.url}
+              {errors.videoUrl}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <div className={styles.or}>OR</div>
+          <Form.Group controlId="playlistUrl">
+            <Form.Label>Playlist URL</Form.Label>
+            <Form.Control
+              type="text"
+              name="playlistUrl"
+              value={values.playlistUrl}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isInvalid={!!errors.playlistUrl}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.playlistUrl}
             </Form.Control.Feedback>
           </Form.Group>
           <div className={styles.buttonContainer}>
