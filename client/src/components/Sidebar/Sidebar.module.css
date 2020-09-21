@@ -57,7 +57,8 @@ ul {
   background-color: var(--newtBlue-300);
 }
 
-.activeNav {
+.activeNav > div {
+  background-color: var(--newtBlue-300);
   font-weight: bold;
 }
 
