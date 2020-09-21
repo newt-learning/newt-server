@@ -6,7 +6,7 @@ let cx = classnames.bind(styles);
 
 interface AppContentContainerProps {
   children?: React.ReactNode;
-  variant?: "default" | "inbox";
+  variant?: "default" | "inbox" | "tab-pane";
   className?: string;
 }
 
@@ -20,6 +20,7 @@ const AppContentContainer = ({
       {
         container: true,
         inboxContainer: variant === "inbox",
+        tabPaneContainer: variant === "tab-pane",
       },
       className
     )}
