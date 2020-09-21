@@ -112,6 +112,8 @@ textarea {
   --newtBlue-700: #0092c1;
   --newtBlue-800: #006586;
   --newtBlue-900: #00394c;
+  /* Blue */
+  --blue-500: "#1089ff";
   /* Hot pinks */
   --hotPink-100: #ffeff3;
   --hotPink-200: #ffc1d1;
