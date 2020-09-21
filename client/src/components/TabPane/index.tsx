@@ -14,7 +14,7 @@ import styles from "./TabPane.module.css";
 export type TabPaneField = {
   id: string;
   name: string;
-  TabPaneContent: React.ReactType; // What to display in tab pane
+  renderTabPane: () => React.ReactNode;
 };
 
 interface TabPaneProps {
@@ -38,7 +38,7 @@ const TabPane = ({ id, fields }: TabPaneProps) => {
           <Nav variant="pills" className="flex-column">
             {/* Map the pills on the side (or top if smaller screen) */}
             {fields.map((field) => (
-              <Nav.Item as={SideNavItem}>
+              <Nav.Item key={field.id} as={SideNavItem}>
                 <Nav.Link as={SideNavLink} eventKey={field.id}>
                   {field.name}
                 </Nav.Link>
@@ -49,9 +49,9 @@ const TabPane = ({ id, fields }: TabPaneProps) => {
         <Col lg={9} className={styles.tabPane}>
           <TabContent>
             {/* Map the Pane content */}
-            {fields.map(({ id, TabPaneContent }) => (
-              <BSTabPane eventKey={id}>
-                <TabPaneContent />
+            {fields.map(({ id, renderTabPane }) => (
+              <BSTabPane key={id} eventKey={id}>
+                {renderTabPane()}
               </BSTabPane>
             ))}
           </TabContent>

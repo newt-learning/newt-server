@@ -14,7 +14,7 @@ const StatsPage = () => {
     {
       id: "books",
       name: "Books",
-      TabPaneContent: BooksPane,
+      renderTabPane: () => <BooksPane />,
     },
   ];
 
