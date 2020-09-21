@@ -34,7 +34,7 @@ const TabPane = ({ id, fields }: TabPaneProps) => {
       transition={false}
     >
       <Row>
-        <Col lg={3} style={{ marginTop: "1rem" }}>
+        <Col lg={3} className={styles.tabOptions}>
           <Nav variant="pills" className="flex-column">
             {/* Map the pills on the side (or top if smaller screen) */}
             {fields.map((field) => (
