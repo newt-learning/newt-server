@@ -12,10 +12,11 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
 import { TabPaneField } from "../../components/TabPane";
 import { useStatsByPeriod, StatsPeriodType } from "../../api/stats";
+import styles from "./Stats.module.css";
 
 const BooksPane = () => {
   const [period, setPeriod] = useState<StatsPeriodType>("week");
-  const { isLoading, data: allStatsData } = useStatsByPeriod(period);
+  const { isLoading, isError, data: allStatsData } = useStatsByPeriod(period);
 
   const data = allStatsData ? allStatsData[period] : null;
 
@@ -42,11 +43,14 @@ const BooksPane = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Row>
-      {/* <Row> */}
       {isLoading ? (
         <div>Loading...</div>
+      ) : isError ? (
+        <div>Error</div>
       ) : period === "day" ? (
-        <div>{JSON.stringify(data)}</div>
+        <div
+          className={styles.chartContainer}
+        >{`${data[0].value} ${data[0].unit} today.`}</div>
       ) : (
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={data} margin={{ top: 50, bottom: 5 }}>

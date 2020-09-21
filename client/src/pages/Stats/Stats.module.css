@@ -1,0 +1,6 @@
+.chartContainer {
+  display: flex;
+  margin-top: 3rem;
+  font-size: var(--FS-lg);
+  color: var(--gray-700);
+}
