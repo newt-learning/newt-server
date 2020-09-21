@@ -12,6 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import TabContainer from "react-bootstrap/TabContainer";
 import TabContent from "react-bootstrap/TabContent";
 import TabPane from "react-bootstrap/TabPane";
+import YoutubeForm from "./YoutubeForm";
 // Styling
 import styles from "./AddContent.module.css";
 
@@ -45,7 +46,7 @@ const AddContentPage = () => {
             <Col lg={9} className={styles.tabPane}>
               <TabContent>
                 <TabPane eventKey="youtube">
-                  <h2>Youtube form</h2>
+                  <YoutubeForm onSubmit={(values) => console.log(values)} />
                 </TabPane>
                 <TabPane eventKey="book">
                   <h2>Book search</h2>
