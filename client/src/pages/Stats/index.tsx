@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import { BarChart, Bar, XAxis, YAxis } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
 import { TabPaneField } from "../../components/TabPane";
 import { useStatsByPeriod, StatsPeriodType } from "../../api/stats";
 
@@ -48,20 +48,14 @@ const BooksPane = () => {
       ) : period === "day" ? (
         <div>{JSON.stringify(data)}</div>
       ) : (
-        <div>
-          <BarChart
-            width={500}
-            height={400}
-            data={data}
-            margin={{ top: 50, bottom: 5 }}
-          >
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={data} margin={{ top: 50, bottom: 5 }}>
             <YAxis />
             <XAxis dataKey="x" />
             <Bar dataKey="y" fill="#1089ff" radius={[5, 5, 0, 0]} />
           </BarChart>
-        </div>
+        </ResponsiveContainer>
       )}
-      {/* </Row> */}
     </Container>
   );
 };
