@@ -1,13 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppMainContainer,
   AppHeaderContainer,
   AppContentContainer,
   TabPane,
 } from "../../components";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import ToggleButton from "react-bootstrap/ToggleButton";
 import { TabPaneField } from "../../components/TabPane";
+import { useStatsByPeriod, StatsPeriodType } from "../../api/stats";
 
-const BooksPane = () => <h3>Books</h3>;
+const BooksPane = () => {
+  const [period, setPeriod] = useState<StatsPeriodType>("week");
+  const { isLoading, data: allStatsData } = useStatsByPeriod(period);
+
+  const data = allStatsData ? allStatsData[period] : null;
+
+  return (
+    <Container>
+      <Row style={{ justifyContent: "center" }}>
+        <ToggleButtonGroup
+          type="radio"
+          name="periods"
+          value={period}
+          onChange={setPeriod}
+        >
+          <ToggleButton variant="light" value="day">
+            Day
+          </ToggleButton>
+          <ToggleButton variant="light" value="week">
+            Week
+          </ToggleButton>
+          <ToggleButton variant="light" value="month">
+            Month
+          </ToggleButton>
+          <ToggleButton variant="light" value="year">
+            Year
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Row>
+      <Row>{isLoading ? <div>Loading...</div> : JSON.stringify(data)}</Row>
+    </Container>
+  );
+};
 
 const StatsPage = () => {
   const tabFields: TabPaneField[] = [
