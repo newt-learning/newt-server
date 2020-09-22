@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { useFetchChallenges } from "../../api/challenges";
+import InProgressCard from "../Dashboard/InProgressCard";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import styles from "./Stats.module.css";
@@ -49,9 +50,16 @@ const ReadingChallengeTab = () => {
           />
         </div>
       </div>
+      {/* Show finished boooks */}
       <div className={styles.finishedItems}>
         {!_.isEmpty(itemsFinished)
-          ? itemsFinished.map((itemId: string) => <p key={itemId}>{itemId}</p>)
+          ? itemsFinished.map((item: any) => (
+              <InProgressCard
+                title={item.name}
+                authors={item.authors}
+                thumbnailUrl={item.thumbnailUrl}
+              />
+            ))
           : null}
       </div>
     </>

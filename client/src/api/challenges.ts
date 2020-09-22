@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 // API calls
 const fetchChallenges = async () => {
-  const { data } = await newtApi.get("/challenges");
+  const { data } = await newtApi.get("v2/challenges");
   return data;
 };
 const fetchIndividualChallenge = async (queryKey: any, challengeId: string) => {
