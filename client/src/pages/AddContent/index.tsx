@@ -14,6 +14,7 @@ const AddContentPage = () => {
     {
       id: "youtube",
       name: "YouTube",
+      type: "nav",
       renderTabPane: () => (
         <YoutubeForm onSubmit={(values) => console.log(values)} />
       ),
@@ -21,6 +22,7 @@ const AddContentPage = () => {
     {
       id: "books",
       name: "Books",
+      type: "nav",
       renderTabPane: () => <h3>Books</h3>,
     },
   ];

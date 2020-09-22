@@ -27,6 +27,7 @@ const ProfilePage = () => {
     {
       id: "account",
       name: "Account",
+      type: "nav",
       renderTabPane: () => <AccountTabPane userInfo={userInfo} />,
     },
   ];

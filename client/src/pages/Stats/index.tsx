@@ -69,7 +69,19 @@ const StatsPage = () => {
     {
       id: "books",
       name: "Books",
+      type: "nav",
       renderTabPane: () => <BooksPane />,
+    },
+    {
+      id: "challengesHeader",
+      name: "Challenges",
+      type: "subheader",
+    },
+    {
+      id: "reading-challenge",
+      name: "Reading Challenge",
+      type: "nav",
+      renderTabPane: () => <h3>Reading challenge</h3>,
     },
   ];
 

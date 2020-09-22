@@ -10,3 +10,8 @@
 .tabOptions {
   margin-top: 1rem;
 }
+
+.subheader {
+  color: var(--gray-700);
+  margin-top: 1rem;
+}
