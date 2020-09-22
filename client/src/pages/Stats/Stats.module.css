@@ -4,3 +4,8 @@
   font-size: var(--FS-lg);
   color: var(--gray-700);
 }
+
+.challengeProgressContainer {
+  display: flex;
+  justify-content: center;
+}
