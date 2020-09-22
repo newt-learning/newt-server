@@ -22,28 +22,39 @@ const ReadingChallengeTab = () => {
     return <div>No reading challenges</div>;
   }
 
-  const { numItemsFinished, totalItems } = readingChallengeData[0];
+  const {
+    numItemsFinished,
+    totalItems,
+    itemsFinished,
+  } = readingChallengeData[0];
   const progress = numItemsFinished / totalItems;
   const finishedFraction = `${numItemsFinished} / ${totalItems}`;
 
   return (
-    <div className={styles.challengeProgressContainer}>
-      <div style={{ width: 225, height: 225 }}>
-        <CircularProgressbar
-          value={progress}
-          maxValue={1}
-          text={finishedFraction}
-          styles={{
-            path: {
-              stroke: "#1089ff",
-              transition: "stroke-dashoffset 0.5s ease 0s",
-            },
-            trail: { stroke: "#e2e8f0" },
-            text: { fill: "#1089ff", fontSize: "12px" },
-          }}
-        />
+    <>
+      <div className={styles.challengeProgressContainer}>
+        <div style={{ width: 225, height: 225 }}>
+          <CircularProgressbar
+            value={progress}
+            maxValue={1}
+            text={finishedFraction}
+            styles={{
+              path: {
+                stroke: "#1089ff",
+                transition: "stroke-dashoffset 0.5s ease 0s",
+              },
+              trail: { stroke: "#e2e8f0" },
+              text: { fill: "#1089ff", fontSize: "12px" },
+            }}
+          />
+        </div>
       </div>
-    </div>
+      <div className={styles.finishedItems}>
+        {!_.isEmpty(itemsFinished)
+          ? itemsFinished.map((itemId: string) => <p key={itemId}>{itemId}</p>)
+          : null}
+      </div>
+    </>
   );
 };
 
