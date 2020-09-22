@@ -5,12 +5,14 @@ import {
   AppContentContainer,
   TabPane,
 } from "../../components";
+import ReadingChallengeTab from "./ReadingChallengeTab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
 import { TabPaneField } from "../../components/TabPane";
+// API
 import { useStatsByPeriod, StatsPeriodType } from "../../api/stats";
 import styles from "./Stats.module.css";
 
@@ -81,7 +83,7 @@ const StatsPage = () => {
       id: "reading-challenge",
       name: "Reading Challenge",
       type: "nav",
-      renderTabPane: () => <h3>Reading challenge</h3>,
+      renderTabPane: () => <ReadingChallengeTab />,
     },
   ];
 
