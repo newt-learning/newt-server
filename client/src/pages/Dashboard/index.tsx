@@ -7,8 +7,8 @@ import {
   AppMainContainer,
   AppHeaderContainer,
   AppContentContainer,
+  ContentCard,
 } from "../../components";
-import InProgressCard from "./InProgressCard";
 // Styling
 import styles from "./Dashboard.module.css";
 
@@ -30,7 +30,7 @@ const Dashboard = () => {
         {isLoading
           ? "Loading..."
           : _.map(inProgressContent, (item) => (
-              <InProgressCard
+              <ContentCard
                 key={item._id}
                 title={item.name}
                 authors={item.authors}
