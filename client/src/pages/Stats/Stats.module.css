@@ -10,9 +10,18 @@
   justify-content: center;
 }
 
+.finishedItemsContainer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  color: var(--gray-700);
+}
+
 .finishedItems {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  margin-top: 2rem;
 }

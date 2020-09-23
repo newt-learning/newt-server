@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import classnames from "classnames/bind";
 import styles from "./ContentCard.module.css";
 import { FiBook } from "react-icons/fi";
@@ -13,6 +14,7 @@ interface ContentCardProps {
   authors: string[];
   description?: string;
   thumbnailUrl?: string;
+  dateCompleted?: string;
 }
 
 const ContentCard = ({
@@ -21,6 +23,7 @@ const ContentCard = ({
   authors,
   description,
   thumbnailUrl,
+  dateCompleted,
 }: ContentCardProps) => {
   return (
     <div className={styles.card}>
@@ -49,6 +52,11 @@ const ContentCard = ({
         >{`by ${authors.join(", ")}`}</p>
         {description ? (
           <p className={styles.description}>{shortenText(description, 150)}</p>
+        ) : null}
+        {dateCompleted ? (
+          <p className={cx({ authors: true, smallAuthors: size === "small" })}>
+            {`Completed ${moment(dateCompleted).format("DD MMM")}`}
+          </p>
         ) : null}
       </div>
     </div>

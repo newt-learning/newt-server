@@ -28,7 +28,7 @@ module.exports = (app) => {
       .populate({
         path: "itemsFinished",
         model: Content,
-        select: "_id name authors thumbnailUrl dateCompleted",
+        select: "_id name authors thumbnailUrl startFinishDates dateCompleted",
       })
       .exec((error, challenges) => {
         if (error) {

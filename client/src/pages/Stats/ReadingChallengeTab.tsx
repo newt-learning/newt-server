@@ -51,18 +51,29 @@ const ReadingChallengeTab = () => {
         </div>
       </div>
       {/* Show finished boooks */}
-      <div className={styles.finishedItems}>
-        {!_.isEmpty(itemsFinished)
-          ? itemsFinished.map((item: any) => (
-              <ContentCard
-                key={item._id}
-                size="small"
-                title={item.name}
-                authors={item.authors}
-                thumbnailUrl={item.thumbnailUrl}
-              />
-            ))
-          : null}
+      <div className={styles.finishedItemsContainer}>
+        <h4 className={styles.header}>Completed books</h4>
+        <div className={styles.finishedItems}>
+          {!_.isEmpty(itemsFinished)
+            ? itemsFinished.map((item: any) => {
+                const { startFinishDates } = item;
+                const latestDateCompleted = !_.isEmpty(startFinishDates)
+                  ? startFinishDates[startFinishDates.length - 1].dateCompleted
+                  : null;
+
+                return (
+                  <ContentCard
+                    key={item._id}
+                    size="small"
+                    title={item.name}
+                    authors={item.authors}
+                    thumbnailUrl={item.thumbnailUrl}
+                    dateCompleted={latestDateCompleted}
+                  />
+                );
+              })
+            : null}
+        </div>
       </div>
     </>
   );
