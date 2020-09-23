@@ -115,21 +115,23 @@ const ContentFlow = ({
           />
         ) : null}
         {/* Shelf info */}
-        <div>
-          <h4 className={styles.subheading}>Shelf</h4>
-          <div className={styles.shelfContainer}>
-            <Badge variant={shelf ? shelf : "default"} size="large">
-              {shelf}
-            </Badge>
-            <Button
-              category="secondary"
-              onClick={() => setShowChangeShelfModal(true)}
-            >
-              Change Shelf
-            </Button>
+        {shelf ? (
+          <div>
+            <h4 className={styles.subheading}>Shelf</h4>
+            <div className={styles.shelfContainer}>
+              <Badge variant={shelf ? shelf : "default"} size="large">
+                {shelf}
+              </Badge>
+              <Button
+                category="secondary"
+                onClick={() => setShowChangeShelfModal(true)}
+              >
+                Change Shelf
+              </Button>
+            </div>
+            <p></p>
           </div>
-          <p></p>
-        </div>
+        ) : null}
         {/* Topics */}
         {!_.isEmpty(topics) ? (
           <>
