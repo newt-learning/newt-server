@@ -15,16 +15,19 @@ import { shortenText } from "../Shelves/helpers";
 
 let cx = classnames.bind(styles);
 
+type TopicType =
+  | {
+      _id: string;
+      name: string;
+    }
+  | string;
 interface ContentFlowProps {
   id: string;
   title: string;
   type: string;
   shelf: "Currently Learning" | "Want to Learn" | "Finished Learning";
   authors?: string[];
-  topics?: {
-    _id: string;
-    name: string;
-  }[];
+  topics?: TopicType[];
   source?: string;
   mediaId?: string;
   thumbnailUrl?: string;
@@ -133,18 +136,20 @@ const ContentFlow = ({
           </div>
         ) : null}
         {/* Topics */}
-        {!_.isEmpty(topics) ? (
+        {topics && typeof topics[0] !== "string" ? (
           <>
             <h4 className={styles.subheading}>Topics</h4>
             <div className={styles.topics}>
-              {_.map(topics, (topic) => (
-                <TopicCard
-                  key={topic._id}
-                  variant="pill"
-                  id={topic._id}
-                  name={topic.name}
-                />
-              ))}
+              {_.map(topics, (topic) => {
+                return typeof topic === "string" ? null : (
+                  <TopicCard
+                    key={topic._id}
+                    variant="pill"
+                    id={topic._id}
+                    name={topic.name}
+                  />
+                );
+              })}
             </div>
           </>
         ) : null}
