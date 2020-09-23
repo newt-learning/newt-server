@@ -4,9 +4,12 @@ import classnames from "classnames/bind";
 import { Button, Badge } from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
+import ShowMoreShowLess from "./ShowMoreShowLess";
 import Modal from "react-bootstrap/Modal";
 // Styling
 import styles from "./ContentFlow.module.css";
+// Helpers
+import { shortenText } from "../Shelves/helpers";
 
 let cx = classnames.bind(styles);
 
@@ -47,6 +50,7 @@ const ContentFlow = ({
   variant,
 }: ContentFlowProps) => {
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   // Render a new iframe each time because if I just change src, it affects browser
   // history (clicking the back button cycles through previous iframes)
@@ -123,7 +127,13 @@ const ContentFlow = ({
         {description ? (
           <>
             <h4 className={styles.subheading}>Description</h4>
-            <p className={styles.description}>{description}</p>
+            <p className={styles.description}>
+              {showMore ? description : shortenText(description, 400)}
+              <ShowMoreShowLess
+                showMore={showMore}
+                onClick={() => setShowMore(!showMore)}
+              />
+            </p>
           </>
         ) : null}
         {/* If there's a quiz available, show button to take/view it */}
