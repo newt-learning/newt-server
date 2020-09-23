@@ -138,6 +138,7 @@ ContentInboxProps) => {
             type={currentContent?.type}
             shelf={currentContent?.shelf}
             authors={currentContent?.authors}
+            topics={currentContent?.topics}
             source={currentContent?.videoInfo?.source}
             mediaId={currentContent?.videoInfo?.videoId}
             thumbnailUrl={currentContent?.thumbnailUrl}

@@ -61,6 +61,13 @@
   margin-bottom: 0.5rem;
 }
 
+.topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .description {
   font-size: var(--FS-s);
   color: var(--gray-800);

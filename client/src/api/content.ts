@@ -8,7 +8,7 @@ interface UpdateBookProgressData {
 
 // API calls
 const fetchAllContent = async () => {
-  const { data } = await newtApi.get("/content");
+  const { data } = await newtApi.get("/v2/content");
   return data;
 };
 const updateBookProgress = async ({

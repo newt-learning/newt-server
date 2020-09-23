@@ -20,6 +20,21 @@ module.exports = (app) => {
     });
   });
 
+  // v2 GET request to fetch all user's content (populates topics)
+  app.get("/api/v2/content", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+
+    Content.find({ _user: userId })
+      .populate({ path: "topics", model: Topic, select: "_id name" })
+      .exec((error, content) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(content);
+        }
+      });
+  });
+
   // GET request to check if a Google Book already exists in user's library
   app.get(
     "/api/content/check-book/:googleBookId",

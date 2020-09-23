@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import _ from "lodash";
 import classnames from "classnames/bind";
 // Components
 import { Button, Badge } from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
+import TopicCard from "../Topics/TopicCard";
 import Modal from "react-bootstrap/Modal";
 // Styling
 import styles from "./ContentFlow.module.css";
@@ -19,6 +21,10 @@ interface ContentFlowProps {
   type: string;
   shelf: "Currently Learning" | "Want to Learn" | "Finished Learning";
   authors?: string[];
+  topics?: {
+    _id: string;
+    name: string;
+  }[];
   source?: string;
   mediaId?: string;
   thumbnailUrl?: string;
@@ -39,6 +45,7 @@ const ContentFlow = ({
   authors,
   type,
   shelf,
+  topics,
   source,
   mediaId,
   thumbnailUrl,
@@ -123,6 +130,22 @@ const ContentFlow = ({
           </div>
           <p></p>
         </div>
+        {/* Topics */}
+        {!_.isEmpty(topics) ? (
+          <>
+            <h4 className={styles.subheading}>Topics</h4>
+            <div className={styles.topics}>
+              {_.map(topics, (topic) => (
+                <TopicCard
+                  key={topic._id}
+                  variant="pill"
+                  id={topic._id}
+                  name={topic.name}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
         {/* Display description if it's there */}
         {description ? (
           <>
