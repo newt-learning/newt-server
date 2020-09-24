@@ -17,17 +17,14 @@ import TopicForm, { TopicFormValues } from "./TopicForm";
 
 const IndividualTopicPage = () => {
   const { topicId } = useParams();
-  // const location = useLocation();
+  // Get name of topic from location state
+  const location: any = useLocation();
+  const { state: locationState } = location;
+
   const history = useHistory();
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  // React router state type stuff was annoying. Couldn't access .name so ¯\_(ツ)_/¯
-  // const state: any = location.state;
-
-  // If topic name is passed through location state, use it
-  // const [topicName] = useState(state ? state.name : null);
 
   const { isLoading, data, isError } = useFetchTopic(topicId);
   const [updateTopic, { error: updateTopicError }] = useUpdateTopic();
@@ -71,7 +68,9 @@ const IndividualTopicPage = () => {
   return (
     <>
       <ContentInbox
-        title={data ? data.name : "..."}
+        title={
+          locationState.name ? locationState.name : data ? data.name : "..."
+        }
         contentData={data?.content}
         showOptionsDropdown={true}
         optionsDropdownMenu={dropdownMenu}
