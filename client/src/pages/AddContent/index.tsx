@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _ from "lodash";
 // API
 import { getYoutubeVideoInfo } from "../../api/youtubeApi";
 // Components
@@ -28,9 +29,11 @@ const AddContentPage = () => {
     if (videoUrl) {
       const videoId = validateYoutubeVideoUrl(videoUrl);
       if (videoId) {
-        const youtubeInfo = await getYoutubeVideoInfo(videoId);
-        setOnConfirmationPage("video");
-        setYoutubeContent(youtubeInfo);
+        const videoResults = await getYoutubeVideoInfo(videoId);
+        if (!_.isEmpty(videoResults.items)) {
+          setYoutubeContent(videoResults.items[0]);
+          setOnConfirmationPage("video");
+        }
       } else {
         alert("not a youtube url");
       }

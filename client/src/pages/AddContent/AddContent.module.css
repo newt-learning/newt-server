@@ -14,3 +14,14 @@
   display: flex;
   justify-content: center;
 }
+
+.youtubeTitle {
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.youtubeText {
+  font-size: var(--FS-s);
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+}
