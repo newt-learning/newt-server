@@ -50,6 +50,7 @@ const AddContentPage = () => {
           <YoutubeConfirmation
             dataType={onConfirmationPage}
             data={youtubeContent}
+            onBack={() => setOnConfirmationPage(null)}
           />
         ) : (
           <YoutubeForm onNext={handleSubmit} />
