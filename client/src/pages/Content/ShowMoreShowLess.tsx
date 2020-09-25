@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiChevronUp, FiChevronDown } from "react-icons/fi";
 import styles from "./ShowMoreShowLess.module.css";
-import { boolean } from "yup";
 
 interface ShowMoreShowLessProps {
   showMore: boolean;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // API
 import { getYoutubeVideoInfo } from "../../api/youtubeApi";
 // Components
@@ -13,8 +13,15 @@ import YoutubeForm, { YoutubeFormValues } from "./YoutubeForm";
 import { TabPaneField } from "../../components/TabPane";
 // Helpers
 import { validateYoutubeVideoUrl } from "./helpers";
+import YoutubeConfirmation from "./YoutubeConfirmation";
+
+type OnConfirmationPageState = "video" | "playlist" | null;
 
 const AddContentPage = () => {
+  const [onConfirmationPage, setOnConfirmationPage] = useState<
+    OnConfirmationPageState
+  >(null);
+  const [youtubeContent, setYoutubeContent] = useState(null);
   const handleSubmit = async (values: YoutubeFormValues) => {
     const { videoUrl } = values;
 
@@ -22,7 +29,8 @@ const AddContentPage = () => {
       const videoId = validateYoutubeVideoUrl(videoUrl);
       if (videoId) {
         const youtubeInfo = await getYoutubeVideoInfo(videoId);
-        console.log(youtubeInfo);
+        setOnConfirmationPage("video");
+        setYoutubeContent(youtubeInfo);
       } else {
         alert("not a youtube url");
       }
@@ -34,7 +42,15 @@ const AddContentPage = () => {
       id: "youtube",
       name: "YouTube",
       type: "nav",
-      renderTabPane: () => <YoutubeForm onSubmit={handleSubmit} />,
+      renderTabPane: () =>
+        onConfirmationPage ? (
+          <YoutubeConfirmation
+            dataType={onConfirmationPage}
+            data={youtubeContent}
+          />
+        ) : (
+          <YoutubeForm onNext={handleSubmit} />
+        ),
     },
     {
       id: "books",

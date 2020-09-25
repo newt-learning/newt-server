@@ -14,7 +14,7 @@ export type YoutubeFormValues = {
 
 interface YoutubeFormProps {
   initialValues?: YoutubeFormValues;
-  onSubmit: (values: YoutubeFormValues) => void;
+  onNext: (values: YoutubeFormValues) => void;
 }
 
 const youtubeFormSchema = yup.object({
@@ -24,13 +24,13 @@ const youtubeFormSchema = yup.object({
 
 const YoutubeForm = ({
   initialValues = { videoUrl: "", playlistUrl: "" },
-  onSubmit,
+  onNext,
 }: YoutubeFormProps) => {
   return (
     <Formik
       validationSchema={youtubeFormSchema}
       initialValues={initialValues}
-      onSubmit={(values) => onSubmit(values)}
+      onSubmit={(values) => onNext(values)}
     >
       {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
         <Form
