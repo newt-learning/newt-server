@@ -23,7 +23,7 @@ const AddContentPage = () => {
     OnConfirmationPageState
   >(null);
   const [youtubeContent, setYoutubeContent] = useState(null);
-  const handleSubmit = async (values: YoutubeFormValues) => {
+  const handleGoToConfirmation = async (values: YoutubeFormValues) => {
     const { videoUrl } = values;
 
     if (videoUrl) {
@@ -40,6 +40,10 @@ const AddContentPage = () => {
     }
   };
 
+  const handleSubmit = (values: any) => {
+    console.log(values);
+  };
+
   const tabFields: TabPaneField[] = [
     {
       id: "youtube",
@@ -51,9 +55,10 @@ const AddContentPage = () => {
             dataType={onConfirmationPage}
             data={youtubeContent}
             onBack={() => setOnConfirmationPage(null)}
+            onSubmit={handleSubmit}
           />
         ) : (
-          <YoutubeForm onNext={handleSubmit} />
+          <YoutubeForm onNext={handleGoToConfirmation} />
         ),
     },
     {
