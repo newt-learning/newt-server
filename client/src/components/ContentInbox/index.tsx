@@ -65,8 +65,7 @@ const ContentInbox = ({
   showOptionsDropdown = false,
   optionsDropdownMenu = defaultDropdownMenu,
   backButtonStyle,
-}: // currentContent,
-ContentInboxProps) => {
+}: ContentInboxProps) => {
   const history = useHistory();
 
   const [currentContent, setCurrentContent] = useState<any>(null);
@@ -75,11 +74,13 @@ ContentInboxProps) => {
   // if I go to a different tab, or go off screen, or even open Inspector and close
   // it, but ONLY for Shelves, not for Topics. Must be something from changing data,
   // but can't seem to find it. Adding the second condition fixes it. :S
+  // Nevermind went back to old one bec data wouldn't update instantly after
+  // changes (does in Shelves, doesn't in Topics??)
   useEffect(() => {
-    if (!_.isEmpty(contentData) && _.isEmpty(currentContent)) {
+    if (!_.isEmpty(contentData)) {
       setCurrentContent(contentData[0]);
     }
-  }, [contentData, currentContent]);
+  }, [contentData]);
 
   return (
     <AppMainContainer variant="inbox">

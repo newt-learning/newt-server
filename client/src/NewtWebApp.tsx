@@ -1,4 +1,4 @@
-// This is the portion of the site that has to do with the web -- requires
+// This is the portion of the site that has to do with the web app -- requires
 // authentication (so not Landing page or other public parts of the site)
 import React from "react";
 import { Switch } from "react-router-dom";
