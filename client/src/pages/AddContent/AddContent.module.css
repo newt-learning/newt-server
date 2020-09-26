@@ -63,6 +63,13 @@
   color: var(--gray-900);
 }
 
+.videosContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 0.25rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
 .addBtn {
   width: 100%;
   max-width: 300px;

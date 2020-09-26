@@ -11,7 +11,7 @@ const cx = classnames.bind(styles);
 interface ContentCardProps {
   size: "small" | "large";
   title: string;
-  authors: string[];
+  authors?: string[];
   description?: string;
   thumbnailUrl?: string;
   dateCompleted?: string;
@@ -47,9 +47,11 @@ const ContentCard = ({
         <h5 className={cx({ title: true, smallTitle: size === "small" })}>
           {title}
         </h5>
-        <p
-          className={cx({ authors: true, smallAuthors: size === "small" })}
-        >{`by ${authors.join(", ")}`}</p>
+        {authors ? (
+          <p
+            className={cx({ authors: true, smallAuthors: size === "small" })}
+          >{`by ${authors.join(", ")}`}</p>
+        ) : null}
         {description ? (
           <p className={styles.description}>{shortenText(description, 150)}</p>
         ) : null}

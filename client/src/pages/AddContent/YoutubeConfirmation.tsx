@@ -1,10 +1,11 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
+import _ from "lodash";
 import DatePicker from "react-datepicker";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FiArrowLeft } from "react-icons/fi";
-import { Button } from "../../components";
+import { Button, ContentCard } from "../../components";
 import ShowMoreShowLess from "../Content/ShowMoreShowLess";
 // Styling
 import styles from "./AddContent.module.css";
@@ -147,6 +148,14 @@ const SeriesConfirmation = ({
     seriesInfo: { thumbnails },
   } = data;
 
+  const numOfVideos = videos.length;
+  const initialVideosToRender = numOfVideos > 2 ? 2 : numOfVideos;
+  // Toggle between seeing first 2 or all videos
+  const [showAllVideos, setShowAllVideos] = useState(false);
+  const displayVideos = showAllVideos
+    ? videos
+    : videos.slice(0, initialVideosToRender);
+
   const bestThumbnail = getBestThumbnail(thumbnails);
 
   return (
@@ -163,7 +172,7 @@ const SeriesConfirmation = ({
       <h3 className={styles.title}>{name}</h3>
       <p className={styles.creator}>{authors.join(", ")}</p>
       <p className={styles.creator}>
-        {videos ? `${videos.length} videos` : null}
+        {videos ? `${numOfVideos} videos` : null}
       </p>
       <h4 className={styles.subheader}>Description</h4>
       <p className={styles.youtubeText}>
@@ -173,6 +182,27 @@ const SeriesConfirmation = ({
           onClick={() => setShowMore(!showMore)}
         />
       </p>
+      <h4 className={styles.subheader}>Videos</h4>
+      {/* Show videos in Series */}
+      {!_.isEmpty(displayVideos) ? (
+        <div className={styles.videosContainer}>
+          {displayVideos.map((video: any) => {
+            const bestThumbnail = getBestThumbnail(video.snippet.thumbnails);
+
+            return (
+              <ContentCard
+                size="small"
+                title={video?.snippet?.title}
+                thumbnailUrl={bestThumbnail?.url}
+              />
+            );
+          })}
+          <ShowMoreShowLess
+            showMore={showAllVideos}
+            onClick={() => setShowAllVideos(!showAllVideos)}
+          />
+        </div>
+      ) : null}
       <Button
         style={styles.addBtn}
         category="success"
