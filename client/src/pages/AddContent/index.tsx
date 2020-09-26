@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 // API
 import { getYoutubeVideoInfo } from "../../api/youtubeApi";
+import { useCreateContent } from "../../api/content";
 // Components
 import {
   AppMainContainer,
@@ -13,7 +14,10 @@ import YoutubeForm, { YoutubeFormValues } from "./YoutubeForm";
 // Types
 import { TabPaneField } from "../../components/TabPane";
 // Helpers
-import { validateYoutubeVideoUrl } from "./helpers";
+import {
+  validateYoutubeVideoUrl,
+  extractAndAssembleVideoInfo,
+} from "./helpers";
 import YoutubeConfirmation from "./YoutubeConfirmation";
 
 type OnConfirmationPageState = "video" | "playlist" | null;
@@ -23,6 +27,9 @@ const AddContentPage = () => {
     OnConfirmationPageState
   >(null);
   const [youtubeContent, setYoutubeContent] = useState(null);
+
+  const [addContent, { error: addContentError }] = useCreateContent();
+
   const handleGoToConfirmation = async (values: YoutubeFormValues) => {
     const { videoUrl } = values;
 
@@ -41,8 +48,22 @@ const AddContentPage = () => {
   };
 
   const handleSubmit = (values: any) => {
-    console.log(values);
+    const { videoInfo, shelf, topics, startDate, finishDate } = values;
+    const contentInfo = extractAndAssembleVideoInfo(
+      videoInfo,
+      shelf,
+      topics,
+      startDate,
+      finishDate
+    );
+
+    addContent(contentInfo);
   };
+
+  if (addContentError) {
+    console.log(addContentError);
+    return <div>Error: {JSON.stringify(addContentError)}</div>;
+  }
 
   const tabFields: TabPaneField[] = [
     {

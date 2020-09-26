@@ -114,10 +114,11 @@ const VideoConfirmation = ({
         category="success"
         onClick={() =>
           onSubmit({
-            name: title,
-            authors: [channelTitle],
-            thumbnailUrl: bestThumbnail?.url,
+            videoInfo: data,
             shelf,
+            topics: [],
+            startDate,
+            finishDate,
           })
         }
       >
