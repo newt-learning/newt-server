@@ -132,8 +132,63 @@ const VideoConfirmation = ({
   );
 };
 
-const SeriesConfirmation = ({ data }: { data: any }) => {
-  return <div>series confirmation</div>;
+const SeriesConfirmation = ({
+  data,
+  onBack,
+  onSubmit,
+  isLoading,
+}: VideoConfirmationProps) => {
+  const [showMore, setShowMore] = useState(false);
+  const {
+    name,
+    authors,
+    description,
+    videos,
+    seriesInfo: { thumbnails },
+  } = data;
+
+  const bestThumbnail = getBestThumbnail(thumbnails);
+
+  return (
+    <>
+      <div className={styles.navContainer}>
+        <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
+        <h3>Confirm Series</h3>
+      </div>
+      <Image
+        src={bestThumbnail ? bestThumbnail.url : null}
+        className={styles.thumbnail}
+        fluid
+      />
+      <h3 className={styles.title}>{name}</h3>
+      <p className={styles.creator}>{authors.join(", ")}</p>
+      <p className={styles.creator}>
+        {videos ? `${videos.length} videos` : null}
+      </p>
+      <h4 className={styles.subheader}>Description</h4>
+      <p className={styles.youtubeText}>
+        {showMore ? description : shortenText(description, 300)}
+        <ShowMoreShowLess
+          showMore={showMore}
+          onClick={() => setShowMore(!showMore)}
+        />
+      </p>
+      <Button
+        style={styles.addBtn}
+        category="success"
+        isLoading={isLoading}
+        onClick={() =>
+          onSubmit({
+            series: data,
+            shelf: "Want to Learn",
+            topics: [],
+          })
+        }
+      >
+        Add to Library
+      </Button>
+    </>
+  );
 };
 
 const YoutubeConfirmation = ({
@@ -153,7 +208,12 @@ const YoutubeConfirmation = ({
           isLoading={isLoading}
         />
       ) : (
-        <SeriesConfirmation data={data} />
+        <SeriesConfirmation
+          data={data}
+          onBack={onBack}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+        />
       )}
     </div>
   );

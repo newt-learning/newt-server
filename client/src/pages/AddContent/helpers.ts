@@ -14,6 +14,18 @@ export function validateYoutubeVideoUrl(url: string) {
   return videoId;
 }
 
+// Youtube playlist URL parser
+// See: https://stackoverflow.com/questions/5288941/validating-youtube-playlist-url-using-regex
+export function validateYoutubePlaylistUrl(url: string) {
+  const regex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
+  const match = url.match(regex);
+
+  // Get playlistId from url if it exists
+  const playlistId = match && match[2] ? match[2] : null;
+
+  return playlistId;
+}
+
 // Function that returns the highest quality thumbnail from YouTube API response,
 // or null if it's empty
 export function getBestThumbnail(thumbnails: any) {

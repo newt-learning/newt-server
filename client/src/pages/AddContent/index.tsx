@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import _ from "lodash";
 // API
-import { getYoutubeVideoInfo } from "../../api/youtubeApi";
+import {
+  getYoutubeVideoInfo,
+  getYoutubePlaylistInfo,
+} from "../../api/youtubeApi";
 import { useCreateContent } from "../../api/content";
 // Components
 import {
@@ -16,6 +19,7 @@ import { TabPaneField } from "../../components/TabPane";
 // Helpers
 import {
   validateYoutubeVideoUrl,
+  validateYoutubePlaylistUrl,
   extractAndAssembleVideoInfo,
 } from "./helpers";
 import YoutubeConfirmation from "./YoutubeConfirmation";
@@ -26,7 +30,7 @@ const AddContentPage = () => {
   const [onConfirmationPage, setOnConfirmationPage] = useState<
     OnConfirmationPageState
   >(null);
-  const [youtubeContent, setYoutubeContent] = useState(null);
+  const [youtubeContent, setYoutubeContent] = useState<any>(null);
 
   const [
     addContent,
@@ -34,7 +38,7 @@ const AddContentPage = () => {
   ] = useCreateContent();
 
   const handleGoToConfirmation = async (values: YoutubeFormValues) => {
-    const { videoUrl } = values;
+    const { videoUrl, playlistUrl } = values;
 
     if (videoUrl) {
       const videoId = validateYoutubeVideoUrl(videoUrl);
@@ -46,6 +50,20 @@ const AddContentPage = () => {
         }
       } else {
         alert("not a youtube url");
+      }
+    }
+
+    if (playlistUrl) {
+      const playlistId = validateYoutubePlaylistUrl(playlistUrl);
+
+      if (playlistId) {
+        const seriesInfo = await getYoutubePlaylistInfo(playlistId);
+        if (!_.isEmpty(seriesInfo)) {
+          setYoutubeContent(seriesInfo);
+          setOnConfirmationPage("playlist");
+        }
+      } else {
+        alert("not a playlist url");
       }
     }
   };
