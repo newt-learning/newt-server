@@ -5,7 +5,7 @@ import {
   getYoutubeVideoInfo,
   getYoutubePlaylistInfo,
 } from "../../api/youtubeApi";
-import { useCreateContent } from "../../api/content";
+import { useCreateContent, useCreateSeries } from "../../api/content";
 // Components
 import {
   AppMainContainer,
@@ -21,6 +21,7 @@ import {
   validateYoutubeVideoUrl,
   validateYoutubePlaylistUrl,
   extractAndAssembleVideoInfo,
+  extractAndAssemblePlaylistInfo,
 } from "./helpers";
 import YoutubeConfirmation from "./YoutubeConfirmation";
 
@@ -36,6 +37,10 @@ const AddContentPage = () => {
     addContent,
     { isLoading, error: addContentError },
   ] = useCreateContent();
+  const [
+    createSeries,
+    { isLoading: isCreatingSeries, error: createSeriesError },
+  ] = useCreateSeries();
 
   const handleGoToConfirmation = async (values: YoutubeFormValues) => {
     const { videoUrl, playlistUrl } = values;
@@ -69,20 +74,32 @@ const AddContentPage = () => {
   };
 
   const handleSubmit = async (values: any) => {
-    const { videoInfo, shelf, topics, startDate, finishDate } = values;
-    const contentInfo = extractAndAssembleVideoInfo(
-      videoInfo,
-      shelf,
-      topics,
-      startDate,
-      finishDate
-    );
+    if (onConfirmationPage === "video") {
+      const { videoInfo, shelf, topics, startDate, finishDate } = values;
+      const contentInfo = extractAndAssembleVideoInfo(
+        videoInfo,
+        shelf,
+        topics,
+        startDate,
+        finishDate
+      );
 
-    await addContent(contentInfo);
+      await addContent(contentInfo);
 
-    // Go back to form
-    setOnConfirmationPage(null);
-    setYoutubeContent(null);
+      // Go back to form
+      setOnConfirmationPage(null);
+      setYoutubeContent(null);
+    }
+
+    if (onConfirmationPage === "playlist") {
+      const { seriesInfo } = values;
+      const formattedSeriesInfo = extractAndAssemblePlaylistInfo(seriesInfo);
+
+      await createSeries(formattedSeriesInfo);
+      // Go back to form
+      setOnConfirmationPage(null);
+      setYoutubeContent(null);
+    }
   };
 
   if (addContentError) {
@@ -102,7 +119,7 @@ const AddContentPage = () => {
             data={youtubeContent}
             onBack={() => setOnConfirmationPage(null)}
             onSubmit={handleSubmit}
-            isLoading={isLoading}
+            isLoading={isLoading || isCreatingSeries}
           />
         ) : (
           <YoutubeForm onNext={handleGoToConfirmation} />

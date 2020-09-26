@@ -191,6 +191,7 @@ const SeriesConfirmation = ({
 
             return (
               <ContentCard
+                key={video?.snippet?.title}
                 size="small"
                 title={video?.snippet?.title}
                 thumbnailUrl={bestThumbnail?.url}
@@ -209,9 +210,7 @@ const SeriesConfirmation = ({
         isLoading={isLoading}
         onClick={() =>
           onSubmit({
-            series: data,
-            shelf: "Want to Learn",
-            topics: [],
+            seriesInfo: data,
           })
         }
       >

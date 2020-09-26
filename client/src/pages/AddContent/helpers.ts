@@ -102,3 +102,68 @@ export function extractAndAssembleVideoInfo(
 
   return data;
 }
+
+// Extract only relevant playlist and video information from result of Youtube
+// API + add other content info like shelf
+export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
+  const { videos } = seriesInfo;
+  const seriesThumbnails = seriesInfo.seriesInfo.thumbnails;
+  const bestSeriesThumbnail = getBestThumbnail(seriesThumbnails);
+
+  let formattedSeriesInfo = { ...seriesInfo };
+
+  // Add best thumbnail for series
+  formattedSeriesInfo.thumbnailUrl = bestSeriesThumbnail
+    ? bestSeriesThumbnail.url
+    : null;
+  // Default shelf to "Want to Learn"
+  formattedSeriesInfo.shelf = "Want to Learn";
+
+  // Format the videos from YouTube's API response to content schema
+  if (!_.isEmpty(videos)) {
+    const formattedVideos = _.map(videos, (video) => {
+      const {
+        snippet: {
+          title,
+          description,
+          channelTitle,
+          channelId,
+          playlistId,
+          position,
+          publishedAt,
+          thumbnails,
+          resourceId: { videoId },
+        },
+      } = video;
+
+      const bestThumbnail = getBestThumbnail(thumbnails);
+
+      return {
+        name: _.isString(title) ? title : null,
+        description: _.isString(description) ? description : null,
+        authors: _.isString(channelTitle) ? [channelTitle] : null,
+        thumbnailUrl: bestThumbnail ? bestThumbnail.url : null,
+        type: "video",
+        partOfSeries: true, // It's part of a series
+        shelf: "Want to Learn", // Default all to "Want to Learn" for now
+        videoInfo: {
+          source: "youtube",
+          videoId: _.isString(videoId) ? videoId : null,
+          playlistId: _.isString(playlistId) ? playlistId : null,
+          playlistPosition: _.isNumber(position) ? position : null,
+          title: _.isString(title) ? title : null,
+          description: _.isString(description) ? description : null,
+          channelId: _.isString(channelId) ? channelId : null,
+          thumbnails: !_.isEmpty(thumbnails) ? thumbnails : null,
+          datePublished: _.isString(publishedAt) ? publishedAt : null,
+        },
+      };
+    });
+
+    // Replace videos field in seriesInfo object with the formatted videos
+    formattedSeriesInfo.videos = formattedVideos;
+    return formattedSeriesInfo;
+  } else {
+    return null;
+  }
+}
