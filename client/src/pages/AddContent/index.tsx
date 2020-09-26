@@ -28,7 +28,10 @@ const AddContentPage = () => {
   >(null);
   const [youtubeContent, setYoutubeContent] = useState(null);
 
-  const [addContent, { error: addContentError }] = useCreateContent();
+  const [
+    addContent,
+    { isLoading, error: addContentError },
+  ] = useCreateContent();
 
   const handleGoToConfirmation = async (values: YoutubeFormValues) => {
     const { videoUrl } = values;
@@ -47,7 +50,7 @@ const AddContentPage = () => {
     }
   };
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     const { videoInfo, shelf, topics, startDate, finishDate } = values;
     const contentInfo = extractAndAssembleVideoInfo(
       videoInfo,
@@ -57,7 +60,11 @@ const AddContentPage = () => {
       finishDate
     );
 
-    addContent(contentInfo);
+    await addContent(contentInfo);
+
+    // Go back to form
+    setOnConfirmationPage(null);
+    setYoutubeContent(null);
   };
 
   if (addContentError) {
@@ -77,6 +84,7 @@ const AddContentPage = () => {
             data={youtubeContent}
             onBack={() => setOnConfirmationPage(null)}
             onSubmit={handleSubmit}
+            isLoading={isLoading}
           />
         ) : (
           <YoutubeForm onNext={handleGoToConfirmation} />

@@ -18,17 +18,20 @@ interface YoutubeConfirmationProps {
   data: any;
   onBack: () => void;
   onSubmit: (values: any) => void;
+  isLoading?: boolean;
 }
 interface VideoConfirmationProps {
   data: any;
   onBack: () => void;
   onSubmit: (values: any) => void;
+  isLoading?: boolean;
 }
 
 const VideoConfirmation = ({
   data,
   onBack,
   onSubmit,
+  isLoading,
 }: VideoConfirmationProps) => {
   const [showMore, setShowMore] = useState(false);
   const [shelf, setShelf] = useState("Want to Learn");
@@ -112,6 +115,7 @@ const VideoConfirmation = ({
       <Button
         style={styles.addBtn}
         category="success"
+        isLoading={isLoading}
         onClick={() =>
           onSubmit({
             videoInfo: data,
@@ -137,11 +141,17 @@ const YoutubeConfirmation = ({
   data,
   onBack,
   onSubmit,
+  isLoading,
 }: YoutubeConfirmationProps) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {dataType === "video" ? (
-        <VideoConfirmation data={data} onBack={onBack} onSubmit={onSubmit} />
+        <VideoConfirmation
+          data={data}
+          onBack={onBack}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+        />
       ) : (
         <SeriesConfirmation data={data} />
       )}
