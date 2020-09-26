@@ -1,10 +1,15 @@
 import React, { useState, ChangeEvent } from "react";
+import DatePicker from "react-datepicker";
 import Image from "react-bootstrap/Image";
-import { FiArrowLeft } from "react-icons/fi";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import { FiArrowLeft } from "react-icons/fi";
 import { Button } from "../../components";
 import ShowMoreShowLess from "../Content/ShowMoreShowLess";
+// Styling
 import styles from "./AddContent.module.css";
+import "react-datepicker/dist/react-datepicker.css";
+// Helpers
 import { getBestThumbnail } from "./helpers";
 import { shortenText } from "../Shelves/helpers";
 
@@ -27,6 +32,8 @@ const VideoConfirmation = ({
 }: VideoConfirmationProps) => {
   const [showMore, setShowMore] = useState(false);
   const [shelf, setShelf] = useState("Want to Learn");
+  const [startDate, setStartDate] = useState<any>(new Date());
+  const [finishDate, setFinishDate] = useState<any>(new Date());
 
   const {
     snippet: { title, channelTitle, description, thumbnails },
@@ -53,13 +60,47 @@ const VideoConfirmation = ({
           as="select"
           name="shelf"
           defaultValue="Want to Learn"
-          onChange={(e: ChangeEvent) => setShelf(e.target.innerHTML)}
+          onChange={(e: any) => setShelf(e.target.value)}
         >
-          <option>Currently Learning</option>
-          <option>Want to Learn</option>
-          <option>Finished Learning</option>
+          <option value="Currently Learning">Currently Learning</option>
+          <option value="Want to Learn">Want to Learn</option>
+          <option value="Finished Learning">Finished Learning</option>
         </Form.Control>
       </Form.Group>
+      {/* Show start and finish date inputs if the Finished Learning shelf is selected */}
+      {shelf === "Finished Learning" ? (
+        <Form.Row>
+          <Col sm={12} md={6}>
+            <Form.Group>
+              <Form.Label
+                className={styles.subheader}
+                style={{ marginRight: "1rem" }}
+              >
+                Start Date
+              </Form.Label>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              />
+            </Form.Group>
+          </Col>
+          <Col sm={12} md={6}>
+            <Form.Group>
+              <Form.Label
+                className={styles.subheader}
+                style={{ marginRight: "1rem" }}
+              >
+                Finish Date
+              </Form.Label>
+              <DatePicker
+                selected={finishDate}
+                onChange={(date) => setFinishDate(date)}
+                minDate={startDate}
+              />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+      ) : null}
       <h4 className={styles.subheader}>Description</h4>
       <p className={styles.youtubeText}>
         {showMore ? description : shortenText(description, 300)}
