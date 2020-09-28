@@ -85,6 +85,9 @@
 .searchbar {
   border: none;
   border-radius: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
   border-bottom: 1px solid var(--gray-500);
   margin-bottom: 1rem;
+  background-color: var(--gray-200);
 }
