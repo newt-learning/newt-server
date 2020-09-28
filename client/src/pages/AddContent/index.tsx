@@ -24,6 +24,7 @@ import {
   validateYoutubePlaylistUrl,
   extractAndAssembleVideoInfo,
   extractAndAssemblePlaylistInfo,
+  extractAndAssembleBookInfo,
 } from "./helpers";
 
 type OnConfirmationPageState = "video" | "playlist" | null;
@@ -103,6 +104,19 @@ const AddContentPage = () => {
     }
   };
 
+  const handleSubmitBook = async (values: any) => {
+    const { bookInfo, shelf, topics, startDate, finishDate } = values;
+    const formattedBookInfo = extractAndAssembleBookInfo(
+      bookInfo,
+      shelf,
+      topics,
+      startDate,
+      finishDate
+    );
+
+    console.log(formattedBookInfo);
+  };
+
   if (addContentError) {
     console.log(addContentError);
     return <div>Error: {JSON.stringify(addContentError)}</div>;
@@ -130,7 +144,7 @@ const AddContentPage = () => {
       id: "books",
       name: "Books",
       type: "nav",
-      renderTabPane: () => <BookSearch />,
+      renderTabPane: () => <BookSearch onSubmit={handleSubmitBook} />,
     },
   ];
 

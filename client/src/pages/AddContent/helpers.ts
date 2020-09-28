@@ -1,6 +1,7 @@
 // Need to move as much of this as possible to server so it isn't repeated from
 // mobile app front-end
 import _ from "lodash";
+import moment from "moment";
 
 // Youtube URL parser which only does full and short links, among others.
 // See: https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
@@ -166,6 +167,86 @@ export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
   } else {
     return null;
   }
+}
+
+// Extract only relevant book information from result of Google Books API
+export function extractAndAssembleBookInfo(
+  bookObj: any,
+  shelf: string,
+  topics: any,
+  startDate: Date,
+  finishDate: Date
+) {
+  const { id } = bookObj;
+  const {
+    title,
+    subtitle,
+    authors,
+    description,
+    imageLinks,
+    pageCount,
+    industryIdentifiers,
+    publisher,
+    publishedDate,
+  } = bookObj.volumeInfo;
+
+  let isbns = {};
+  let formattedDate = "";
+
+  // Convert industry identifiers (ISBNS) from array of objects to object
+  if (!_.isEmpty(industryIdentifiers)) {
+    industryIdentifiers.forEach(
+      //@ts-ignore
+      ({ type, identifier }) => (isbns[type] = identifier)
+    );
+  }
+
+  // Check if the date passed is a string (some books had 101-01-01 as a date
+  // for some reason, like what is this Google Books API?)
+  if (_.isString(publishedDate) && publishedDate !== "101-01-01") {
+    // If it's just the year, return that, otherwise format it
+    formattedDate =
+      publishedDate.length === 4
+        ? publishedDate
+        : moment(publishedDate).format("DD MMM, YYYY");
+  }
+
+  // Match format of database content model
+  const data: any = {
+    name: _.isString(title) ? title : null,
+    description: _.isString(description) ? description : null,
+    authors: _.isArray(authors) ? authors : null,
+    thumbnailUrl: checkThumbnailExistence(bookObj.volumeInfo),
+    type: "book",
+    shelf,
+    topics,
+    bookInfo: {
+      bookId: id,
+      title: _.isString(title) ? title : null,
+      subtitle: _.isString(subtitle) ? subtitle : null,
+      authors: _.isArray(authors) ? authors : null,
+      description: _.isString(description) ? description : null,
+      imageLinks: !_.isEmpty(imageLinks) ? imageLinks : null,
+      pageCount: _.isNumber(pageCount) ? pageCount : null,
+      industryIdentifiers: !_.isEmpty(isbns) ? isbns : null,
+      publisher: _.isString(publisher) ? publisher : null,
+      datePublished: _.isString(formattedDate) ? formattedDate : null,
+    },
+  };
+
+  // If the selected shelf is Currently Learning, set first date started as now
+  if (shelf === "Currently Learning") {
+    data.startFinishDates = [{ dateStarted: Date.now() }];
+  }
+
+  // If the selected shelf is Finished, add the dateCompleted field
+  if (shelf === "Finished Learning") {
+    data.startFinishDates = [
+      { dateStarted: startDate, dateCompleted: finishDate },
+    ];
+  }
+
+  return data;
 }
 
 // Function to check if a thumbnail url or the image links object from Google Books API exists

@@ -15,7 +15,11 @@ import styles from "./AddContent.module.css";
 import { shortenText } from "../Shelves/helpers";
 import { checkThumbnailExistence } from "./helpers";
 
-const BookSearch = () => {
+interface BookSearchProps {
+  onSubmit: (values: any) => void;
+}
+
+const BookSearch = ({ onSubmit }: BookSearchProps) => {
   const [searchBarText, setSearchBarText] = useState("");
   const [bookResults, setBookResults] = useState<any>([]);
   const [totalBookResults, setTotalBookResults] = useState(null);
@@ -205,15 +209,15 @@ const BookSearch = () => {
             style={styles.addBtn}
             category="success"
             // isLoading={isLoading}
-            // onClick={() =>
-            //   onSubmit({
-            //     // videoInfo: data,
-            //     shelf,
-            //     topics: [],
-            //     startDate,
-            //     finishDate,
-            //   })
-            // }
+            onClick={() =>
+              onSubmit({
+                bookInfo: bookToAdd,
+                shelf,
+                topics: [],
+                startDate,
+                finishDate,
+              })
+            }
           >
             Add to Library
           </Button>

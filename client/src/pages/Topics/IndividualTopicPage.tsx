@@ -16,6 +16,7 @@ import Modal from "react-bootstrap/Modal";
 import TopicForm, { TopicFormValues } from "./TopicForm";
 
 const IndividualTopicPage = () => {
+  // @ts-ignore
   const { topicId } = useParams();
   // Get name of topic from location state
   const location: any = useLocation();
