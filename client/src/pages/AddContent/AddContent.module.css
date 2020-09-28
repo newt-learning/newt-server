@@ -70,6 +70,12 @@
   margin-bottom: 1.5rem;
 }
 
+.booksContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0.25rem 1rem;
+}
+
 .addBtn {
   width: 100%;
   max-width: 300px;
@@ -80,4 +86,5 @@
   border: none;
   border-radius: 0;
   border-bottom: 1px solid var(--gray-500);
+  margin-bottom: 1rem;
 }

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 // API
 import { getBookInfo } from "../../api/googleBooksApi";
+import { ContentCard } from "../../components";
 // Styling
 import styles from "./AddContent.module.css";
+import { checkThumbnailExistence } from "./helpers";
 
 const BookSearch = () => {
   const [searchBarText, setSearchBarText] = useState("");
@@ -51,7 +53,25 @@ const BookSearch = () => {
           autoFocus={true}
         />
       </Form>
-      <p>{JSON.stringify(bookResults)}</p>
+      {totalBookResults === 0 ? (
+        <p>No results found</p>
+      ) : bookResultsError ? (
+        <p>{bookResultsError}</p>
+      ) : (
+        <div className={styles.booksContainer}>
+          {bookResults.map((book: any) => {
+            return (
+              <ContentCard
+                key={`${book?.id}-${book?.etag}`}
+                size="small"
+                title={book?.volumeInfo?.title}
+                authors={book?.volumeInfo?.authors}
+                thumbnailUrl={checkThumbnailExistence(book?.volumeInfo)}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
