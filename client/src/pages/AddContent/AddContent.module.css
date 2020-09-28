@@ -75,3 +75,9 @@
   max-width: 300px;
   align-self: center;
 }
+
+.searchbar {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--gray-500);
+}

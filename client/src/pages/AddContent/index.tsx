@@ -14,6 +14,8 @@ import {
   TabPane,
 } from "../../components";
 import YoutubeForm, { YoutubeFormValues } from "./YoutubeForm";
+import YoutubeConfirmation from "./YoutubeConfirmation";
+import BookSearch from "./BookSearch";
 // Types
 import { TabPaneField } from "../../components/TabPane";
 // Helpers
@@ -23,7 +25,6 @@ import {
   extractAndAssembleVideoInfo,
   extractAndAssemblePlaylistInfo,
 } from "./helpers";
-import YoutubeConfirmation from "./YoutubeConfirmation";
 
 type OnConfirmationPageState = "video" | "playlist" | null;
 
@@ -129,7 +130,7 @@ const AddContentPage = () => {
       id: "books",
       name: "Books",
       type: "nav",
-      renderTabPane: () => <h3>Books</h3>,
+      renderTabPane: () => <BookSearch />,
     },
   ];
 
