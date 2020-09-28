@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import classnames from "classnames/bind";
 import styles from "./ContentCard.module.css";
-import { FiBook } from "react-icons/fi";
+import { FiBook, FiPlusSquare } from "react-icons/fi";
 // Helpers
 import { shortenText } from "../../pages/Shelves/helpers";
 
@@ -15,15 +15,19 @@ interface ContentCardProps {
   description?: string;
   thumbnailUrl?: string;
   dateCompleted?: string;
+  showAddToLibrary?: boolean;
+  onClickAddToLibrary?: () => void;
 }
 
 const ContentCard = ({
   size,
+  showAddToLibrary,
   title,
   authors,
   description,
   thumbnailUrl,
   dateCompleted,
+  onClickAddToLibrary,
 }: ContentCardProps) => {
   return (
     <div className={styles.card}>
@@ -44,9 +48,25 @@ const ContentCard = ({
         )}
       </div>
       <div className={cx({ cardBody: true, smallCardBody: size === "small" })}>
-        <h5 className={cx({ title: true, smallTitle: size === "small" })}>
-          {title}
-        </h5>
+        {/* If showAddToLibrary props is true, show icon to add content to library.
+            Otherwise just the title. */}
+        {showAddToLibrary ? (
+          <div className={styles.titleContainer}>
+            <h5 className={cx({ title: true, smallTitle: size === "small" })}>
+              {title}
+            </h5>
+            <FiPlusSquare
+              size={22}
+              className={styles.addIcon}
+              onClick={onClickAddToLibrary}
+            />
+          </div>
+        ) : (
+          <h5 className={cx({ title: true, smallTitle: size === "small" })}>
+            {title}
+          </h5>
+        )}
+
         {authors ? (
           <p
             className={cx({ authors: true, smallAuthors: size === "small" })}
@@ -67,6 +87,7 @@ const ContentCard = ({
 
 ContentCard.defaultProps = {
   size: "large",
+  showAddToLibrary: false,
 };
 
 export default ContentCard;

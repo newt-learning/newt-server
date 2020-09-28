@@ -97,6 +97,8 @@ const BookSearch = () => {
                 <ContentCard
                   key={`${book?.id}-${book?.etag}`}
                   size="small"
+                  showAddToLibrary={true}
+                  onClickAddToLibrary={() => console.log("add to lib")}
                   title={book?.volumeInfo?.title}
                   authors={book?.volumeInfo?.authors}
                   thumbnailUrl={checkThumbnailExistence(book?.volumeInfo)}
