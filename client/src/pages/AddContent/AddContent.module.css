@@ -91,3 +91,9 @@
   margin-bottom: 1rem;
   background-color: var(--gray-100);
 }
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 4rem;
+}

@@ -12,7 +12,7 @@ import { ContentInbox, DeleteItemModal } from "../../components";
 // Types
 import { OptionsDropdownItemType } from "../../components/ContentInbox";
 import styles from "./Topics.module.css";
-import Modal from "react-bootstrap/esm/Modal";
+import Modal from "react-bootstrap/Modal";
 import TopicForm, { TopicFormValues } from "./TopicForm";
 
 const IndividualTopicPage = () => {
