@@ -55,11 +55,13 @@ const ContentCard = ({
             <h5 className={cx({ title: true, smallTitle: size === "small" })}>
               {title}
             </h5>
-            <FiPlusSquare
-              size={22}
-              className={styles.addIcon}
-              onClick={onClickAddToLibrary}
-            />
+            <div className={styles.addIconContainer}>
+              <FiPlusSquare
+                size={22}
+                className={styles.addIcon}
+                onClick={onClickAddToLibrary}
+              />
+            </div>
           </div>
         ) : (
           <h5 className={cx({ title: true, smallTitle: size === "small" })}>
