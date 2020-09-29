@@ -18,6 +18,21 @@ module.exports = (app) => {
     });
   });
 
+  // GET request to fetch individual topic by id
+  app.get("/api/topics/:topicId", requireLogin, (req, res) => {
+    const { topicId } = req.params;
+
+    Topic.findById(topicId)
+      .populate({ path: "content", model: Content })
+      .exec((error, topic) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(topic);
+        }
+      });
+  });
+
   // POST request to create a topic
   app.post("/api/topics/create", requireLogin, async (req, res) => {
     try {

@@ -2,15 +2,22 @@
   margin-bottom: 1rem;
 }
 
+.inbox {
+  padding: 1.5rem;
+}
+
 .titleContainer {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--gray-400);
 }
 
 .title {
   color: var(--gray-800);
+  display: inline-block;
+  align-items: center;
+  margin-bottom: 0;
 }
 
 .flowContainer {
@@ -42,9 +49,23 @@
   margin-bottom: 0.75rem;
 }
 
+.shelfContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
 .subheading {
   color: var(--gray-700);
   margin-bottom: 0.5rem;
+}
+
+.topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .description {
@@ -72,6 +93,16 @@
     min-height: 500px;
     min-width: 400px;
     margin-bottom: 1rem;
+  }
+
+  .inbox {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 2.5rem;
+    min-width: inherit;
+    min-height: inherit;
   }
 
   .quizBtn {

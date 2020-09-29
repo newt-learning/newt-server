@@ -64,8 +64,10 @@ const ContentPage = () => {
           <>
             <div className={styles.contentFlowContainer}>
               <ContentFlow
+                id={data._id}
                 title={data.name}
                 type={data.type}
+                shelf={data.shelf}
                 source={data.source?.name}
                 mediaId={data.source?.mediaId}
                 description={data.description}

@@ -6,6 +6,8 @@ export declare type ButtonCategory =
   | "primary"
   | "secondary"
   | "landing"
+  | "success"
+  | "danger"
   | undefined;
 
 interface ButtonProps {
@@ -35,6 +37,10 @@ const Button = ({
         return styles.primaryBtn;
       case "secondary":
         return styles.secondaryBtn;
+      case "success":
+        return styles.successBtn;
+      case "danger":
+        return styles.dangerBtn;
       default:
         return "";
     }

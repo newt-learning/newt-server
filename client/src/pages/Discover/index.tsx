@@ -2,7 +2,8 @@ import React from "react";
 // API
 import { useFetchNewtContent } from "../../api/newtContent";
 // Components
-import { MainContainer, Navbar, ContentCard } from "../../components";
+import { MainContainer, Navbar } from "../../components";
+import DiscoverContentCard from "./DiscoverContentCard";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -21,6 +22,8 @@ interface DataProps {
 
 const DiscoverPage = () => {
   const { data, status } = useFetchNewtContent();
+
+  console.log(data);
 
   return (
     <section>
@@ -50,9 +53,8 @@ const DiscoverPage = () => {
                     contentCreator,
                     slug,
                   }: DataProps) => (
-                    <ContentCard
+                    <DiscoverContentCard
                       key={id}
-                      id={id}
                       name={name}
                       thumbnailUrl={thumbnailUrl}
                       creator={contentCreator.name}

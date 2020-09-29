@@ -1,0 +1,17 @@
+.card {
+  word-wrap: break-word;
+  padding: 2rem 1rem;
+  border-top: 1px solid var(--gray-400);
+  font-size: var(--FS-s);
+  color: var(--gray-700);
+}
+
+.card:hover {
+  background-color: var(--gray-200);
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--gray-200);
+  font-weight: 600;
+}
