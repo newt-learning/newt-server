@@ -5,6 +5,7 @@ const _ = require("lodash");
 const Content = userDbConn.model("content");
 const Topic = userDbConn.model("topics");
 const Quiz = userDbConn.model("quizzes");
+const Challenge = userDbConn.model("challenges");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's content
@@ -85,6 +86,67 @@ module.exports = (app) => {
             }
           );
         }
+        res.send(content);
+      }
+    });
+  });
+
+  // v2 POST request to add content to database (updates challenge directly here)
+  app.post("/api/v2/content/create", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+    const data = req.body;
+    // Add user id and dates to data object
+    data._user = userId;
+    data.dateAdded = Date.now();
+    data.lastUpdated = Date.now();
+    // Add schema version
+    data.schemaVersion = 2;
+
+    // Create Content, save to database and send back to client
+    Content.create(data, (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        // If there are topics, add the content to each of those topics
+        if (!_.isEmpty(content.topics)) {
+          // First argument matches _ids in the topicIds array, second argument pushes
+          // the contentId to those matched topics
+          Topic.updateMany(
+            { _id: { $in: content.topics } },
+            { $push: { content: content._id } },
+            (error) => {
+              if (error) {
+                res.status(500).send(error);
+              }
+            }
+          );
+        }
+
+        // Update the reading challenge by adding this book to the finished list
+        // if a challenge exists (if selected shelf is Finished).
+        if (content.shelf === "Finished Learning" && content.type === "book") {
+          Challenge.findOne(
+            { _user: userId, challengeType: "reading" },
+            async (error, challenge) => {
+              if (error) {
+                res.send(content);
+                res.status(500).send(error);
+              } else {
+                // If no challenge exists, return all okay. Add finished books will be
+                // done when the challenge is created
+                if (challenge) {
+                  // Update challenge: add contentId to finished items, increment
+                  // num finished by 1, and set lastUpdated to now
+                  challenge.itemsFinished.push(content._id);
+                  challenge.numItemsFinished += 1;
+                  challenge.lastUpdated = Date.now();
+                  await challenge.save();
+                }
+              }
+            }
+          );
+        }
+
         res.send(content);
       }
     });

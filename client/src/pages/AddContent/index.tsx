@@ -5,7 +5,11 @@ import {
   getYoutubeVideoInfo,
   getYoutubePlaylistInfo,
 } from "../../api/youtubeApi";
-import { useCreateContent, useCreateSeries } from "../../api/content";
+import {
+  useCreateContent,
+  useCreateContentV2,
+  useCreateSeries,
+} from "../../api/content";
 // Components
 import {
   AppMainContainer,
@@ -39,6 +43,7 @@ const AddContentPage = () => {
     addContent,
     { isLoading, error: addContentError },
   ] = useCreateContent();
+  const [addContentV2, { isLoading: isAddingBook }] = useCreateContentV2();
   const [
     createSeries,
     { isLoading: isCreatingSeries, error: createSeriesError },
@@ -114,7 +119,7 @@ const AddContentPage = () => {
       finishDate
     );
 
-    console.log(formattedBookInfo);
+    await addContentV2(formattedBookInfo);
   };
 
   if (addContentError) {
@@ -144,7 +149,9 @@ const AddContentPage = () => {
       id: "books",
       name: "Books",
       type: "nav",
-      renderTabPane: () => <BookSearch onSubmit={handleSubmitBook} />,
+      renderTabPane: () => (
+        <BookSearch onSubmit={handleSubmitBook} isLoading={isAddingBook} />
+      ),
     },
   ];
 

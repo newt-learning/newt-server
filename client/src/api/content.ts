@@ -18,6 +18,9 @@ const fetchAllSeries = async () => {
 const addContent = async (data: any) => {
   await newtApi.post("/content/create", data);
 };
+const addContentV2 = async (data: any) => {
+  await newtApi.post("/v2/content/create", data);
+};
 const createSeries = async (data: any) => {
   await newtApi.post("/series/create", data);
 };
@@ -37,6 +40,11 @@ export function useFetchAllSeries() {
 }
 export function useCreateContent() {
   return useMutation(addContent, {
+    onSettled: () => queryCache.invalidateQueries("contents"),
+  });
+}
+export function useCreateContentV2() {
+  return useMutation(addContentV2, {
     onSettled: () => queryCache.invalidateQueries("contents"),
   });
 }

@@ -17,9 +17,10 @@ import { checkThumbnailExistence } from "./helpers";
 
 interface BookSearchProps {
   onSubmit: (values: any) => void;
+  isLoading?: boolean;
 }
 
-const BookSearch = ({ onSubmit }: BookSearchProps) => {
+const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
   const [searchBarText, setSearchBarText] = useState("");
   const [bookResults, setBookResults] = useState<any>([]);
   const [totalBookResults, setTotalBookResults] = useState(null);
@@ -208,16 +209,19 @@ const BookSearch = ({ onSubmit }: BookSearchProps) => {
           <Button
             style={styles.addBtn}
             category="success"
-            // isLoading={isLoading}
-            onClick={() =>
-              onSubmit({
+            isLoading={isLoading}
+            onClick={async () => {
+              await onSubmit({
                 bookInfo: bookToAdd,
                 shelf,
                 topics: [],
                 startDate,
                 finishDate,
-              })
-            }
+              });
+
+              setShowAddBookModal(false);
+              setBookToAdd(null);
+            }}
           >
             Add to Library
           </Button>
