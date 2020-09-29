@@ -97,6 +97,8 @@ async function authenticateWithProvider(provider, history, dispatch) {
           "Account with the same email already exists with a different provider." +
             "\nSign in using the provider associated with this email address."
         );
+      } else {
+        alert(error);
       }
     });
 }
