@@ -1,5 +1,4 @@
 .card {
-  display: flex;
   word-wrap: break-word;
   padding: 2rem 1rem;
   border-top: 1px solid var(--gray-400);
