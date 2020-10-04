@@ -16,6 +16,7 @@ import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
 
 const ContentPage = () => {
   // Get content name slug from URL parameters
+  // @ts-ignore
   const { contentNameSlug } = useParams();
 
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -29,6 +30,9 @@ const ContentPage = () => {
   const { data, status, error } = useFetchIndividualNewtContentBySlug(
     contentNameSlug
   );
+
+  console.log(data);
+
   const {
     data: quizData,
     isLoading: isQuizLoading,
@@ -60,14 +64,14 @@ const ContentPage = () => {
           "Loading..."
         ) : error ? (
           "Sorry, there was an error"
-        ) : (
+        ) : data ? (
           <>
             <div className={styles.contentFlowContainer}>
               <ContentFlow
                 title={data.name}
                 type={data.type}
-                source={data.source?.name}
-                mediaId={data.source?.mediaId}
+                source={data.source}
+                mediaId={data.sourceId}
                 description={data.description}
                 hasQuiz={data.quizId ? true : false}
                 onTakeQuiz={handleTakeQuiz}
@@ -82,13 +86,13 @@ const ContentPage = () => {
             </div>
             <div className={styles.contentInfoContainer}>
               <ContentInfo
-                creator={data.contentCreator?.name}
+                creator={data.contentCreators[0].name}
                 partOfSeries={data.partOfSeries}
-                seriesName={data.series?.name}
+                seriesName={data.series[0].name}
               />
             </div>
           </>
-        )}
+        ) : null}
       </MainContainer>
       <QuizModal
         showModal={showQuizModal}
