@@ -25,7 +25,7 @@ const fetchIndividualNewtContentBySlug = async (
 };
 
 const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
-  const { data } = await newtApi.get(`/newt-quiz/${newtQuizId}`);
+  const { data } = await axios.get(`${baseUrl}/quizzes/${newtQuizId}`);
   return data;
 };
 

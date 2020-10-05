@@ -37,7 +37,9 @@ const ContentPage = () => {
     data: quizData,
     isLoading: isQuizLoading,
     isError: isQuizError,
-  } = useFetchNewtQuiz(data?.quizId);
+  } = useFetchNewtQuiz(data?.quiz?.id);
+
+  console.log(quizData);
 
   useEffect(() => {
     if (quizData) {
@@ -73,7 +75,7 @@ const ContentPage = () => {
                 source={data.source}
                 mediaId={data.sourceId}
                 description={data.description}
-                hasQuiz={data.quizId ? true : false}
+                hasQuiz={data.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}
                 buttonText={
                   showReview
