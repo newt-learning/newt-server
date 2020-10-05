@@ -1,4 +1,3 @@
-import newtApi from "./newtApi";
 import _ from "lodash";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -12,7 +11,7 @@ const fetchNewtContent = async () => {
 };
 
 const fetchIndividualNewtContent = async (queryKey: any, contentId: string) => {
-  const { data } = await newtApi.get(`/newt-content/${contentId}`);
+  const { data } = await axios.get(`${baseUrl}/newt-contents/${contentId}`);
   return data;
 };
 
