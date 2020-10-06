@@ -4,6 +4,8 @@
   border-top: 1px solid var(--gray-400);
   font-size: var(--FS-s);
   color: var(--gray-700);
+  min-width: 135px;
+  border-right: 1px solid var(--gray-400);
 }
 
 .card:hover {
@@ -14,4 +16,10 @@
 .active {
   background-color: var(--gray-200);
   font-weight: 600;
+}
+
+@media screen and (min-width: 400px) {
+  .card {
+    border-right: 0;
+  }
 }
