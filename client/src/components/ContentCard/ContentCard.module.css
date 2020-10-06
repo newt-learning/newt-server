@@ -32,18 +32,20 @@
 .creator {
   font-size: var(--FS-xs);
   color: var(--gray-700);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 @media screen and (min-width: 640px) {
+  .img {
+    height: 80px;
+  }
+
   .name {
     font-size: var(--FS-base);
   }
 
   .creator {
     font-size: var(--FS-s);
+    margin-top: 0.5rem;
   }
-}
-
-@media screen and (min-width: 768px) {
 }
