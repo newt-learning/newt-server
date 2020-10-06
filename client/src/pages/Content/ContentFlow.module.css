@@ -2,6 +2,10 @@
   margin-bottom: 1rem;
 }
 
+.inbox {
+  padding: 1.5rem;
+}
+
 .titleContainer {
   display: flex;
   justify-content: space-between;
@@ -72,6 +76,16 @@
     min-height: 500px;
     min-width: 400px;
     margin-bottom: 1rem;
+  }
+
+  .inbox {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 2.5rem;
+    min-width: inherit;
+    min-height: inherit;
   }
 
   .quizBtn {
