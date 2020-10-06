@@ -9,6 +9,7 @@
   box-shadow: 0 10px 40px -10px rgba(0, 64, 128, 0.35);
   border-radius: 1.5rem;
   padding: 1rem;
+  min-width: 200px;
 }
 
 .card:hover {

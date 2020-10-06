@@ -1,10 +1,15 @@
 import React from "react";
+import _ from "lodash";
 // API
-import { useFetchNewtContent } from "../../api/newtContent";
+import {
+  useFetchAllNewtSeries,
+  useFetchNewtContent,
+} from "../../api/newtContent";
 // Components
 import { MainContainer, Navbar, ContentCard } from "../../components";
 // Styling
 import styles from "./Discover.module.css";
+import SeriesCard from "../Series/SeriesCard";
 
 interface DataProps {
   _id: string;
@@ -22,7 +27,10 @@ interface DataProps {
 }
 
 const DiscoverPage = () => {
-  const { data, status } = useFetchNewtContent();
+  // const { data, status } = useFetchNewtContent();
+
+  const { data: seriesData, status: seriesStatus } = useFetchAllNewtSeries();
+  const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
 
   return (
     <section>
@@ -41,7 +49,7 @@ const DiscoverPage = () => {
               we're trying to build).
             </p>
           </div>
-          <div className={styles.contentContainer}>
+          {/* <div className={styles.contentContainer}>
             {status === "loading"
               ? "Loading..."
               : status === "error"
@@ -65,7 +73,21 @@ const DiscoverPage = () => {
                     />
                   )
                 )}
-          </div>
+          </div> */}
+          {seriesStatus === "loading" ? (
+            "Loading..."
+          ) : seriesStatus === "error" ? (
+            "Error"
+          ) : firstSeries ? (
+            <div style={{ marginTop: "2rem" }}>
+              <SeriesCard
+                name={firstSeries.name}
+                linkPath={`/${firstSeries.contentCreators[0].slug}/series/${firstSeries.slug}`}
+                creator={firstSeries.contentCreators[0].name}
+                data={firstSeries.content}
+              />
+            </div>
+          ) : null}
         </div>
       </MainContainer>
     </section>
