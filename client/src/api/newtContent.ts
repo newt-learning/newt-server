@@ -23,6 +23,11 @@ const fetchIndividualNewtContentBySlug = async (
   return !_.isEmpty(data) ? data[0] : null;
 };
 
+const fetchNewtSeriesBySlug = async (queryKey: string, slug: string) => {
+  const { data } = await axios.get(`${baseUrl}/newt-series?slug=${slug}`);
+  return !_.isEmpty(data) ? data[0] : null;
+};
+
 const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
   const { data } = await axios.get(`${baseUrl}/quizzes/${newtQuizId}`);
   return data;
@@ -43,6 +48,10 @@ export function useFetchIndividualNewtContentBySlug(slug: string) {
     ["individual-newt-content-by-slug", slug],
     fetchIndividualNewtContentBySlug
   );
+}
+
+export function useFetchNewtSeriesBySlug(slug: string) {
+  return useQuery(["newt-series-by-slug", slug], fetchNewtSeriesBySlug);
 }
 
 export function useFetchNewtQuiz(newtQuizId: string) {
