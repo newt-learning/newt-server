@@ -10,12 +10,14 @@ interface DataProps {
   _id: string;
   name: string;
   thumbnailUrl: string;
-  contentCreator: {
-    contentCreatorId: string;
-    name: string;
-    url: string;
-    slug: string;
-  };
+  contentCreators: [
+    {
+      _id: string;
+      name: string;
+      slug: string;
+      url: string;
+    }
+  ];
   slug: string;
 }
 
@@ -42,12 +44,14 @@ const DiscoverPage = () => {
           <div className={styles.contentContainer}>
             {status === "loading"
               ? "Loading..."
+              : status === "error"
+              ? "Error"
               : data.map(
                   ({
                     _id: id,
                     name,
                     thumbnailUrl,
-                    contentCreator,
+                    contentCreators,
                     slug,
                   }: DataProps) => (
                     <ContentCard
@@ -55,9 +59,9 @@ const DiscoverPage = () => {
                       id={id}
                       name={name}
                       thumbnailUrl={thumbnailUrl}
-                      creator={contentCreator.name}
+                      creator={contentCreators[0].name}
                       contentNameSlug={slug}
-                      contentCreatorSlug={contentCreator.slug}
+                      contentCreatorSlug={contentCreators[0].slug}
                     />
                   )
                 )}
