@@ -16,3 +16,10 @@
     padding: 2rem 6rem;
   }
 }
+
+@media screen and (min-width: 1440px) {
+  .container {
+    justify-self: center;
+    align-self: center;
+  }
+}

@@ -81,3 +81,10 @@
     font-size: var(--FS-xl);
   }
 }
+
+@media screen and (min-width: 1440px) {
+  .nav {
+    justify-self: center;
+    align-self: center;
+  }
+}

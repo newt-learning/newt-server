@@ -29,7 +29,7 @@ const DiscoverPage = () => {
   const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
 
   return (
-    <section>
+    <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <MainContainer>
         <aside className={styles.sidebar}></aside>
