@@ -58,4 +58,8 @@ const SeriesCard = ({
   );
 };
 
+SeriesCard.defaultProps = {
+  isLoading: true,
+};
+
 export default SeriesCard;

@@ -25,7 +25,7 @@ interface DataProps {
 }
 
 const DiscoverPage = () => {
-  const { data: seriesData, status: seriesStatus } = useFetchAllNewtSeries();
+  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries();
   const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
 
   return (
@@ -54,8 +54,10 @@ const DiscoverPage = () => {
             </p>
           </div>
           {/* Series */}
-          {seriesStatus === "error" ? (
-            "Error"
+          {isError ? (
+            <div style={{ marginTop: "2rem" }}>
+              Sorry, there was an error fetching the data.
+            </div>
           ) : firstSeries ? (
             <div style={{ marginTop: "2rem" }}>
               <SeriesCard
@@ -64,7 +66,7 @@ const DiscoverPage = () => {
                 creator={firstSeries.contentCreators[0].name}
                 creatorSlug={firstSeries.contentCreators[0].slug}
                 data={firstSeries.content}
-                isLoading={seriesStatus === "loading"}
+                isLoading={isLoading}
               />
             </div>
           ) : null}
