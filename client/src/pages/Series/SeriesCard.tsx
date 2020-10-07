@@ -7,11 +7,18 @@ import { FiChevronRight } from "react-icons/fi";
 interface SeriesCardProps {
   name: string;
   creator: string;
+  creatorSlug: string;
   linkPath: string;
   data?: any;
 }
 
-const SeriesCard = ({ name, creator, linkPath, data }: SeriesCardProps) => {
+const SeriesCard = ({
+  name,
+  creator,
+  creatorSlug,
+  linkPath,
+  data,
+}: SeriesCardProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.nameContainer}>
@@ -34,7 +41,7 @@ const SeriesCard = ({ name, creator, linkPath, data }: SeriesCardProps) => {
                 thumbnailUrl={item.thumbnailUrl}
                 creator={creator}
                 contentNameSlug={item.slug}
-                contentCreatorSlug={item.slug}
+                contentCreatorSlug={creatorSlug}
                 className={styles.contentCard}
               />
             ))

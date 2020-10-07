@@ -1,15 +1,13 @@
 import React from "react";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 // API
-import {
-  useFetchAllNewtSeries,
-  useFetchNewtContent,
-} from "../../api/newtContent";
+import { useFetchAllNewtSeries } from "../../api/newtContent";
 // Components
-import { MainContainer, Navbar, ContentCard } from "../../components";
+import SeriesCard from "../Series/SeriesCard";
+import { MainContainer, Navbar } from "../../components";
 // Styling
 import styles from "./Discover.module.css";
-import SeriesCard from "../Series/SeriesCard";
 
 interface DataProps {
   _id: string;
@@ -27,8 +25,6 @@ interface DataProps {
 }
 
 const DiscoverPage = () => {
-  // const { data, status } = useFetchNewtContent();
-
   const { data: seriesData, status: seriesStatus } = useFetchAllNewtSeries();
   const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
 
@@ -44,36 +40,17 @@ const DiscoverPage = () => {
               Find the next thing you want to learn from our curated library*.
             </p>
             <p className={styles.disclaimer}>
-              * (This is an experimental section, which is why there's only one
-              item right now. Click on the link below for a sneak peek into what
-              we're trying to build).
+              * (Under construction 🚧. To try the experimental quiz feature,
+              check out &nbsp;
+              <Link
+                to={`/crash-course/content/early-computing-crash-course-computer-science-1`}
+              >
+                Early Computing Crash Course Computer Science #1
+              </Link>
+              ).
             </p>
           </div>
-          {/* <div className={styles.contentContainer}>
-            {status === "loading"
-              ? "Loading..."
-              : status === "error"
-              ? "Error"
-              : data.map(
-                  ({
-                    _id: id,
-                    name,
-                    thumbnailUrl,
-                    contentCreators,
-                    slug,
-                  }: DataProps) => (
-                    <ContentCard
-                      key={id}
-                      id={id}
-                      name={name}
-                      thumbnailUrl={thumbnailUrl}
-                      creator={contentCreators[0].name}
-                      contentNameSlug={slug}
-                      contentCreatorSlug={contentCreators[0].slug}
-                    />
-                  )
-                )}
-          </div> */}
+          {/* Series */}
           {seriesStatus === "loading" ? (
             "Loading..."
           ) : seriesStatus === "error" ? (
@@ -84,6 +61,7 @@ const DiscoverPage = () => {
                 name={firstSeries.name}
                 linkPath={`/${firstSeries.contentCreators[0].slug}/series/${firstSeries.slug}`}
                 creator={firstSeries.contentCreators[0].name}
+                creatorSlug={firstSeries.contentCreators[0].slug}
                 data={firstSeries.content}
               />
             </div>
