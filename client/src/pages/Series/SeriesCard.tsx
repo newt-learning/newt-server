@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import { ContentCard } from "../../components";
 import styles from "./SeriesCard.module.css";
 import { FiChevronRight } from "react-icons/fi";
@@ -23,10 +23,13 @@ const SeriesCard = ({
   isLoading,
 }: SeriesCardProps) => {
   return isLoading ? (
-    // Show loading skeleton container
-    <SkeletonTheme color="#e9f9ff" highlightColor="#d5f5ff">
-      <Skeleton height={150} style={{ borderRadius: "1rem" }} />
-    </SkeletonTheme>
+    // Show loading spinner
+    <div
+      className={styles.container}
+      style={{ height: 150, justifyContent: "center", alignItems: "center" }}
+    >
+      <PropagateLoader size={18} color="#86e1ff" loading={isLoading} />
+    </div>
   ) : (
     <div className={styles.container}>
       <div className={styles.nameContainer}>
