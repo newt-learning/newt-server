@@ -21,11 +21,11 @@
     max-height: 100%;
   }
 
-  .container div:first-child {
+  .container > div:first-child {
     border-top: 0px;
   }
 
-  .container div:last-child {
+  .container > div:last-child {
     border-bottom: 1px solid var(--gray-400);
   }
 }

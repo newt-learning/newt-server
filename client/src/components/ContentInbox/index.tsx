@@ -39,6 +39,7 @@ interface ContentInboxProps {
 interface ContentData {
   _id: string;
   name: string;
+  thumbnailUrl?: string;
 }
 
 const cx = classnames.bind(styles);
@@ -128,14 +129,17 @@ const ContentInbox = ({
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
         <AppContentList>
-          {contentData?.map(({ _id, name }: ContentData, index: number) => (
-            <AppContentListCard
-              name={name}
-              onClick={() => setCurrentContent(contentData[index])}
-              isActive={_id === currentContent?._id}
-              key={_id}
-            />
-          ))}
+          {contentData?.map(
+            ({ _id, name, thumbnailUrl }: ContentData, index: number) => (
+              <AppContentListCard
+                name={name}
+                thumbnailUrl={thumbnailUrl}
+                onClick={() => setCurrentContent(contentData[index])}
+                isActive={_id === currentContent?._id}
+                key={_id}
+              />
+            )
+          )}
         </AppContentList>
         <AppContentDetails>
           <ContentFlow
