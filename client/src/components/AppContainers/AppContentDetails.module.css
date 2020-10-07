@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--gray-400);
+  width: 100%;
+}
+
+@media screen and (min-width: 400px) {
+  .container {
+    flex-direction: column;
+    width: 66.67%;
+    overflow: scroll;
+  }
+}

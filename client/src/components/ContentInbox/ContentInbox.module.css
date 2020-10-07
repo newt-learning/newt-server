@@ -1,0 +1,29 @@
+.backBtn {
+  color: var(--gray-600);
+  margin-right: 1rem;
+}
+
+.backBtn:hover {
+  color: var(--gray-900);
+  cursor: pointer;
+}
+
+.optionsDropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 26px;
+  height: 30px;
+  border-radius: 0.5rem;
+  transition: 0.15s linear;
+}
+
+.optionsDropdown:hover {
+  background-color: var(--gray-200);
+}
+
+/* Remove down-arrow that's there by default on dropdowns */
+.dropdownToggle::after {
+  content: none;
+}

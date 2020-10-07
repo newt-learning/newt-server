@@ -1,7 +1,10 @@
 import React from "react";
+import classnames from "classnames/bind";
 import { Link } from "react-router-dom";
 // Styling
 import styles from "./ContentCard.module.css";
+
+const cx = classnames.bind(styles);
 
 export interface ContentCardProps {
   id: string;
@@ -10,6 +13,7 @@ export interface ContentCardProps {
   creator: string;
   contentNameSlug: string;
   contentCreatorSlug: string;
+  className?: string;
 }
 
 const ContentCard = ({
@@ -19,6 +23,7 @@ const ContentCard = ({
   creator,
   contentNameSlug,
   contentCreatorSlug,
+  className,
 }: ContentCardProps) => {
   return (
     <Link
@@ -26,7 +31,7 @@ const ContentCard = ({
         pathname: `/${contentCreatorSlug}/content/${contentNameSlug}`,
       }}
     >
-      <div className={styles.card}>
+      <div className={cx({ card: true }, className)}>
         <img
           src={thumbnailUrl}
           className={styles.img}

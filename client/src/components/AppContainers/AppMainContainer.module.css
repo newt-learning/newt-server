@@ -1,0 +1,16 @@
+.container {
+  padding: 1.75rem;
+  overflow: scroll;
+  height: calc(100vh - 54px); /* Fill the page (54px is height of Navbar) */
+}
+
+.inboxContainer {
+  padding: 0;
+  flex: 1;
+}
+
+@media screen and (min-width: 400px) {
+  .inboxContainer {
+    overflow: hidden;
+  }
+}
