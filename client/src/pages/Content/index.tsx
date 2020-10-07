@@ -31,8 +31,6 @@ const ContentPage = () => {
     contentNameSlug
   );
 
-  console.log(data);
-
   const {
     data: quizData,
     isLoading: isQuizLoading,
@@ -62,9 +60,7 @@ const ContentPage = () => {
     <section>
       <Navbar />
       <MainContainer style={styles.container}>
-        {status === "loading" ? (
-          "Loading..."
-        ) : error ? (
+        {error ? (
           "Sorry, there was an error"
         ) : data ? (
           <>
@@ -85,6 +81,7 @@ const ContentPage = () => {
                     ? "Continue quiz"
                     : "Take the quiz"
                 }
+                isLoading={status === "loading"}
               />
             </div>
             <div className={styles.contentInfoContainer}>
@@ -94,6 +91,7 @@ const ContentPage = () => {
                 seriesName={data.series[0].name}
                 contentCreatorSlug={data.contentCreators[0].slug}
                 seriesSlug={data.series[0].slug}
+                isLoading={status === "loading"}
               />
             </div>
           </>

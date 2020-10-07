@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames/bind";
 import { Button } from "../../components";
 import styles from "./ContentFlow.module.css";
+import Skeleton from "react-loading-skeleton";
 
 let cx = classnames.bind(styles);
 
@@ -18,6 +19,7 @@ interface ContentFlowProps {
   onTakeQuiz?: () => void;
   buttonText?: string;
   variant: "default" | "inbox"; // No container styling for inbox
+  isLoading?: boolean;
 }
 
 const ContentFlow = ({
@@ -31,6 +33,7 @@ const ContentFlow = ({
   onTakeQuiz,
   buttonText,
   variant,
+  isLoading,
 }: ContentFlowProps) => {
   // Render a new iframe each time because if I just change src, it affects browser
   // history (clicking the back button cycles through previous iframes)
@@ -53,25 +56,35 @@ const ContentFlow = ({
         inbox: variant === "inbox",
       })}
     >
-      <div className={styles.titleContainer}>
-        <h2 className={styles.title}>{title}</h2>
-      </div>
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        <div className={styles.titleContainer}>
+          <h2 className={styles.title}>{title}</h2>
+        </div>
+      )}
       <div className={styles.flowContainer}>
         {type === "video" ? (
           <h4 className={styles.instruction}>1. Watch the video</h4>
         ) : null}
         {type === "video" && source?.toLowerCase() === "youtube" ? (
           <div className={styles.videoContainer}>
-            <IFrame
-              title={title}
-              src={`https://www.youtube.com/embed/${mediaId}`}
-            />
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <IFrame
+                title={title}
+                src={`https://www.youtube.com/embed/${mediaId}`}
+              />
+            )}
           </div>
         ) : null}
         {description ? (
           <>
             <h4 className={styles.subheading}>Description</h4>
-            <p className={styles.description}>{description}</p>
+            <p className={styles.description}>
+              {isLoading ? <Skeleton count={3} /> : description}
+            </p>
           </>
         ) : null}
         {hasQuiz ? (
