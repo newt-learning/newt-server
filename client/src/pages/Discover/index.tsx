@@ -58,18 +58,18 @@ const DiscoverPage = () => {
             <div style={{ marginTop: "2rem" }}>
               Sorry, there was an error fetching the data.
             </div>
-          ) : firstSeries ? (
+          ) : (
             <div style={{ marginTop: "2rem" }}>
               <SeriesCard
-                name={firstSeries.name}
-                linkPath={`/${firstSeries.contentCreators[0].slug}/series/${firstSeries.slug}`}
-                creator={firstSeries.contentCreators[0].name}
-                creatorSlug={firstSeries.contentCreators[0].slug}
-                data={firstSeries.content}
+                name={firstSeries?.name}
+                linkPath={`/${firstSeries?.contentCreators[0].slug}/series/${firstSeries?.slug}`}
+                creator={firstSeries?.contentCreators[0].name}
+                creatorSlug={firstSeries?.contentCreators[0].slug}
+                data={firstSeries?.content}
                 isLoading={isLoading}
               />
             </div>
-          ) : null}
+          )}
         </div>
       </MainContainer>
     </section>
