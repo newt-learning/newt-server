@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { ContentCard } from "../../components";
 import styles from "./SeriesCard.module.css";
 import { FiChevronRight } from "react-icons/fi";
@@ -10,6 +11,7 @@ interface SeriesCardProps {
   creatorSlug: string;
   linkPath: string;
   data?: any;
+  isLoading: boolean;
 }
 
 const SeriesCard = ({
@@ -18,8 +20,14 @@ const SeriesCard = ({
   creatorSlug,
   linkPath,
   data,
+  isLoading,
 }: SeriesCardProps) => {
-  return (
+  return isLoading ? (
+    // Show loading skeleton container
+    <SkeletonTheme color="#e9f9ff" highlightColor="#d5f5ff">
+      <Skeleton height={150} style={{ borderRadius: "1rem" }} />
+    </SkeletonTheme>
+  ) : (
     <div className={styles.container}>
       <div className={styles.nameContainer}>
         <Link to={linkPath} className={styles.name}>

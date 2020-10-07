@@ -40,8 +40,11 @@ const DiscoverPage = () => {
               Find the next thing you want to learn from our curated library*.
             </p>
             <p className={styles.disclaimer}>
-              * (Under construction 🚧. To try the experimental quiz feature,
-              check out &nbsp;
+              * (Under construction{" "}
+              <span role="img" aria-label="construction emoji">
+                🚧
+              </span>
+              . To try the experimental quiz feature, check out &nbsp;
               <Link
                 to={`/crash-course/content/early-computing-crash-course-computer-science-1`}
               >
@@ -51,9 +54,7 @@ const DiscoverPage = () => {
             </p>
           </div>
           {/* Series */}
-          {seriesStatus === "loading" ? (
-            "Loading..."
-          ) : seriesStatus === "error" ? (
+          {seriesStatus === "error" ? (
             "Error"
           ) : firstSeries ? (
             <div style={{ marginTop: "2rem" }}>
@@ -63,6 +64,7 @@ const DiscoverPage = () => {
                 creator={firstSeries.contentCreators[0].name}
                 creatorSlug={firstSeries.contentCreators[0].slug}
                 data={firstSeries.content}
+                isLoading={seriesStatus === "loading"}
               />
             </div>
           ) : null}
