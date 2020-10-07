@@ -7,6 +7,7 @@ import LastCallToActionSection from "./LastCallToActionSection";
 // Components
 import { Navbar, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
+// Styling
 import styles from "./Landing.module.css";
 
 const LandingPage = () => {

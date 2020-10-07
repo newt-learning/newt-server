@@ -76,7 +76,7 @@
   }
 }
 
-@media screen and (min-width: 2000px) {
+@media screen and (min-width: 1440px) {
   .App {
     display: flex;
     flex-direction: column;
