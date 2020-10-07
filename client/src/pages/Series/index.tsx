@@ -15,18 +15,15 @@ const SeriesPage = () => {
   return (
     <section>
       <Navbar />
-      {isLoading ? (
-        "Loading..."
-      ) : isError ? (
+      {isError ? (
         "Sorry, there was an error"
-      ) : data ? (
+      ) : (
         <ContentInbox
-          title={data.name}
-          contentData={data.content}
+          title={data?.name}
+          contentData={data?.content}
+          isLoading={isLoading}
           className={styles.parentContainer}
         />
-      ) : (
-        "No data"
       )}
     </section>
   );

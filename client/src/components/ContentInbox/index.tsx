@@ -16,6 +16,7 @@ import {
 import AppContentListCard from "../AppContentListCard";
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Dropdown from "react-bootstrap/Dropdown";
+import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
 
@@ -96,7 +97,7 @@ const ContentInbox = ({
             />
           </div>
           {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
-          <h2>{title}</h2>
+          {isLoading ? <Skeleton /> : <h2>{title}</h2>}{" "}
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}
         {showOptionsDropdown ? (
@@ -129,21 +130,26 @@ const ContentInbox = ({
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
         <AppContentList>
-          {contentData?.map(
-            ({ _id, name, thumbnailUrl }: ContentData, index: number) => (
-              <AppContentListCard
-                name={name}
-                thumbnailUrl={thumbnailUrl}
-                onClick={() => setCurrentContent(contentData[index])}
-                isActive={_id === currentContent?._id}
-                key={_id}
-              />
+          {isLoading ? (
+            <Skeleton height={100} count={4} />
+          ) : (
+            contentData?.map(
+              ({ _id, name, thumbnailUrl }: ContentData, index: number) => (
+                <AppContentListCard
+                  name={name}
+                  thumbnailUrl={thumbnailUrl}
+                  onClick={() => setCurrentContent(contentData[index])}
+                  isActive={_id === currentContent?._id}
+                  key={_id}
+                />
+              )
             )
           )}
         </AppContentList>
         <AppContentDetails>
           <ContentFlow
             variant="inbox"
+            isLoading={isLoading}
             id={currentContent?._id}
             title={currentContent?.name}
             type={currentContent?.type}
