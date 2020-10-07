@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 // API
 import { useFetchNewtSeriesBySlug } from "../../api/newtContent";
 import { Navbar, ContentInbox } from "../../components";
+// Styling
+import styles from "./Series.module.css";
 
 const SeriesPage = () => {
   //@ts-ignore
@@ -18,7 +20,11 @@ const SeriesPage = () => {
       ) : isError ? (
         "Sorry, there was an error"
       ) : data ? (
-        <ContentInbox title={data.name} contentData={data.content} />
+        <ContentInbox
+          title={data.name}
+          contentData={data.content}
+          className={styles.parentContainer}
+        />
       ) : (
         "No data"
       )}

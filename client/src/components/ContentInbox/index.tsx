@@ -32,6 +32,7 @@ interface ContentInboxProps {
   contentData?: any;
   showOptionsDropdown?: boolean;
   optionsDropdownMenu?: OptionsDropdownItemType[];
+  className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
 
@@ -64,6 +65,7 @@ const ContentInbox = ({
   contentData,
   showOptionsDropdown = false,
   optionsDropdownMenu = defaultDropdownMenu,
+  className,
   backButtonStyle,
 }: ContentInboxProps) => {
   const history = useHistory();
@@ -83,7 +85,7 @@ const ContentInbox = ({
   }, [contentData]);
 
   return (
-    <AppMainContainer variant="inbox">
+    <AppMainContainer variant="inbox" className={className}>
       <AppHeaderContainer>
         <div style={{ display: "flex" }}>
           <div onClick={() => history.goBack()}>
