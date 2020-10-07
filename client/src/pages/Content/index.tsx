@@ -37,8 +37,6 @@ const ContentPage = () => {
     isError: isQuizError,
   } = useFetchNewtQuiz(data?.quiz?.id);
 
-  console.log(quizData);
-
   useEffect(() => {
     if (quizData) {
       setQuiz(quizData);
@@ -57,7 +55,7 @@ const ContentPage = () => {
   };
 
   return (
-    <section>
+    <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <MainContainer style={styles.container}>
         {error ? (
