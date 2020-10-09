@@ -2,10 +2,13 @@ import React from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 // API
-import { useFetchAllNewtSeries } from "../../api/newtContent";
+import {
+  useFetchAllNewtSeries,
+  useFetchNewtContent,
+} from "../../api/newtContent";
 // Components
 import SeriesCard from "../Series/SeriesCard";
-import { MainContainer, Navbar } from "../../components";
+import { ContentCard, MainContainer, Navbar } from "../../components";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -25,7 +28,13 @@ interface DataProps {
 }
 
 const DiscoverPage = () => {
+  // Fetch series data
   const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries();
+  // Fetch content not part of a series
+  const {
+    data: contentData,
+    isLoading: contentIsLoading,
+  } = useFetchNewtContent({ partOfSeries: false });
   const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
 
   return (
@@ -68,6 +77,24 @@ const DiscoverPage = () => {
                 data={firstSeries?.content}
                 isLoading={isLoading}
               />
+            </div>
+          )}
+          {/* Content */}
+          {contentIsLoading ? (
+            "Loading..."
+          ) : (
+            <div className={styles.contentContainer}>
+              {contentData.map((content: any) => (
+                <ContentCard
+                  key={content?.id}
+                  id={content?.id}
+                  name={content?.name}
+                  creator={content?.contentCreators[0].name}
+                  thumbnailUrl={content?.thumbnailUrl}
+                  contentNameSlug={content?.slug}
+                  contentCreatorSlug={content?.contentCreators[0].slug}
+                />
+              ))}
             </div>
           )}
         </div>

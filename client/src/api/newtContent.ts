@@ -1,12 +1,16 @@
 import _ from "lodash";
 import axios from "axios";
 import { useQuery } from "react-query";
+import keys from "../config/keys";
 
-const baseUrl = "https://strapi-heroku-trial.herokuapp.com";
+const baseUrl = keys.newtContentBaseUrl;
 
 // API calls
-const fetchNewtContent = async () => {
-  const { data } = await axios.get(`${baseUrl}/newt-contents`);
+const fetchNewtContent = async (queryKey: string, params: any) => {
+  const { data } = await axios.get(`${baseUrl}/newt-contents`, {
+    params,
+  });
+
   return data;
 };
 
@@ -39,8 +43,8 @@ const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
 };
 
 // React-query bindings
-export function useFetchNewtContent() {
-  return useQuery("newt-content", fetchNewtContent);
+export function useFetchNewtContent(params?: any) {
+  return useQuery(["newt-content", params], fetchNewtContent);
 }
 export function useFetchIndividualNewtContent(contentId: string) {
   return useQuery(

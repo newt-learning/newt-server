@@ -86,9 +86,9 @@ const ContentPage = () => {
               <ContentInfo
                 creator={data.contentCreators[0].name}
                 partOfSeries={data.partOfSeries}
-                seriesName={data.series[0].name}
+                seriesName={data.series[0]?.name}
                 contentCreatorSlug={data.contentCreators[0].slug}
-                seriesSlug={data.series[0].slug}
+                seriesSlug={data.series[0]?.slug}
                 isLoading={status === "loading"}
               />
             </div>
