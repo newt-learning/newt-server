@@ -34,6 +34,7 @@ const DiscoverPage = () => {
   const {
     data: contentData,
     isLoading: contentIsLoading,
+    isError: contentIsError,
   } = useFetchNewtContent({ partOfSeries: false });
   const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
 
@@ -82,6 +83,8 @@ const DiscoverPage = () => {
           {/* Content */}
           {contentIsLoading ? (
             "Loading..."
+          ) : contentIsError ? (
+            "Sorry, there was an error"
           ) : (
             <div className={styles.contentContainer}>
               {contentData.map((content: any) => (
