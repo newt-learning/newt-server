@@ -66,7 +66,11 @@ const ContentPage = () => {
               <ContentFlow
                 id={data.id}
                 title={data.name}
+                authors={data?.contentCreators?.map(
+                  (creator: any) => creator.name
+                )}
                 type={data.type}
+                thumbnailUrl={data?.thumbnailUrl}
                 source={data.source}
                 mediaId={data.sourceId}
                 description={data.description}
