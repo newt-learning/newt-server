@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   height: 75px;
+  width: 100%;
+  max-width: 1694px;
   box-sizing: border-box;
   padding: 0 4rem;
   background: linear-gradient(125deg, var(--newtBlue-500) 40%, #3c96ff 100%);
@@ -50,11 +52,5 @@ a {
 @media screen and (min-width: 1024px) {
   .container {
     padding: 0 10rem;
-  }
-}
-
-@media screen and (min-width: 2000px) {
-  .container {
-    width: 1694px; /* TO-DO: not absolute value - this one is width of Feature section */
   }
 }
