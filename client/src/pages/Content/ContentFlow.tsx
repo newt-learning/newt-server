@@ -26,8 +26,10 @@ const ContentFlow = ({
   id,
   title,
   type,
+  authors,
   source,
   mediaId,
+  thumbnailUrl,
   description,
   hasQuiz,
   onTakeQuiz,
@@ -77,6 +79,21 @@ const ContentFlow = ({
                 src={`https://www.youtube.com/embed/${mediaId}`}
               />
             )}
+          </div>
+        ) : type === "book" ? (
+          <div className={styles.bookContainer}>
+            <img
+              src={thumbnailUrl}
+              alt={title}
+              className={styles.bookThumbnail}
+            />
+            <div className={styles.bookInfo}>
+              {authors ? (
+                <div className={styles.authors}>{`by ${authors.join(
+                  ", "
+                )}`}</div>
+              ) : null}
+            </div>
           </div>
         ) : null}
         {description ? (

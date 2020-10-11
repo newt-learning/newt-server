@@ -27,7 +27,7 @@
 .contentContainer {
   padding-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
   gap: 1rem;
 }
 
@@ -40,6 +40,14 @@
 
   .mainContent {
     width: 75%;
+  }
+
+  .title {
+    font-size: var(--FS-4xl);
+  }
+
+  .description {
+    font-size: var(--FS-lg);
   }
 }
 

@@ -66,7 +66,11 @@ const ContentPage = () => {
               <ContentFlow
                 id={data.id}
                 title={data.name}
+                authors={data?.contentCreators?.map(
+                  (creator: any) => creator.name
+                )}
                 type={data.type}
+                thumbnailUrl={data?.thumbnailUrl}
                 source={data.source}
                 mediaId={data.sourceId}
                 description={data.description}
@@ -86,9 +90,9 @@ const ContentPage = () => {
               <ContentInfo
                 creator={data.contentCreators[0].name}
                 partOfSeries={data.partOfSeries}
-                seriesName={data.series[0].name}
+                seriesName={data.series[0]?.name}
                 contentCreatorSlug={data.contentCreators[0].slug}
-                seriesSlug={data.series[0].slug}
+                seriesSlug={data.series[0]?.slug}
                 isLoading={status === "loading"}
               />
             </div>

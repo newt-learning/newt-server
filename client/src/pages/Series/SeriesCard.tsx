@@ -11,6 +11,10 @@ interface SeriesCardProps {
   creatorSlug: string;
   linkPath: string;
   data?: any;
+  colors?: {
+    backgroundColor: string;
+    textColor: string;
+  };
   isLoading: boolean;
 }
 
@@ -20,6 +24,7 @@ const SeriesCard = ({
   creatorSlug,
   linkPath,
   data,
+  colors,
   isLoading,
 }: SeriesCardProps) => {
   return isLoading ? (
@@ -31,9 +36,16 @@ const SeriesCard = ({
       <PropagateLoader size={18} color="#86e1ff" loading={isLoading} />
     </div>
   ) : (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{ backgroundColor: colors?.backgroundColor }}
+    >
       <div className={styles.nameContainer}>
-        <Link to={linkPath} className={styles.name}>
+        <Link
+          to={linkPath}
+          className={styles.name}
+          style={{ color: colors?.textColor }}
+        >
           {name}
           <div style={{ height: 26, width: 26 }}>
             <FiChevronRight size={26} className={styles.icon} />

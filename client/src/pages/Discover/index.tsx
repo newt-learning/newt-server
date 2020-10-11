@@ -2,10 +2,13 @@ import React from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 // API
-import { useFetchAllNewtSeries } from "../../api/newtContent";
+import {
+  useFetchAllNewtSeries,
+  useFetchNewtContent,
+} from "../../api/newtContent";
 // Components
 import SeriesCard from "../Series/SeriesCard";
-import { MainContainer, Navbar } from "../../components";
+import { ContentCard, MainContainer, Navbar } from "../../components";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -25,8 +28,23 @@ interface DataProps {
 }
 
 const DiscoverPage = () => {
-  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries();
-  const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
+  // Fetch series data that's featured
+  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
+    featuredStatus: "featured1",
+  });
+  // Fetch content not part of a series
+  const {
+    data: contentData,
+    isLoading: contentIsLoading,
+    isError: contentIsError,
+  } = useFetchNewtContent({ partOfSeries: false });
+
+  const featuredSeries = !_.isEmpty(seriesData)
+    ? seriesData.filter((series: any) => series.type === "series")[0]
+    : null;
+  const featuredPlaylist = !_.isEmpty(seriesData)
+    ? seriesData.filter((series: any) => series.type === "playlist")[0]
+    : null;
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -60,14 +78,54 @@ const DiscoverPage = () => {
             </div>
           ) : (
             <div style={{ marginTop: "2rem" }}>
-              <SeriesCard
-                name={firstSeries?.name}
-                linkPath={`/${firstSeries?.contentCreators[0].slug}/series/${firstSeries?.slug}`}
-                creator={firstSeries?.contentCreators[0].name}
-                creatorSlug={firstSeries?.contentCreators[0].slug}
-                data={firstSeries?.content}
-                isLoading={isLoading}
-              />
+              {featuredSeries ? (
+                <SeriesCard
+                  name={featuredSeries?.name}
+                  linkPath={`/${featuredSeries?.contentCreators[0].slug}/series/${featuredSeries?.slug}`}
+                  creator={featuredSeries?.contentCreators[0].name}
+                  creatorSlug={featuredSeries?.contentCreators[0].slug}
+                  data={featuredSeries?.content}
+                  colors={{
+                    backgroundColor: featuredSeries?.backgroundColor,
+                    textColor: featuredSeries?.textColor,
+                  }}
+                  isLoading={isLoading}
+                />
+              ) : null}
+              {featuredPlaylist ? (
+                <SeriesCard
+                  name={featuredPlaylist?.name}
+                  linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
+                  creator={featuredPlaylist?.contentCreators[0].name}
+                  creatorSlug={featuredPlaylist?.contentCreators[0].slug}
+                  data={featuredPlaylist?.content}
+                  colors={{
+                    backgroundColor: featuredPlaylist?.backgroundColor,
+                    textColor: featuredPlaylist?.textColor,
+                  }}
+                  isLoading={isLoading}
+                />
+              ) : null}
+            </div>
+          )}
+          {/* Content */}
+          {contentIsLoading ? (
+            "Loading..."
+          ) : contentIsError ? (
+            "Sorry, there was an error"
+          ) : (
+            <div className={styles.contentContainer}>
+              {contentData.map((content: any) => (
+                <ContentCard
+                  key={content?.id}
+                  id={content?.id}
+                  name={content?.name}
+                  creator={content?.contentCreators[0].name}
+                  thumbnailUrl={content?.thumbnailUrl}
+                  contentNameSlug={content?.slug}
+                  contentCreatorSlug={content?.contentCreators[0].slug}
+                />
+              ))}
             </div>
           )}
         </div>
