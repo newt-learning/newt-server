@@ -78,30 +78,34 @@ const DiscoverPage = () => {
             </div>
           ) : (
             <div style={{ marginTop: "2rem" }}>
-              <SeriesCard
-                name={featuredSeries?.name}
-                linkPath={`/${featuredSeries?.contentCreators[0].slug}/series/${featuredSeries?.slug}`}
-                creator={featuredSeries?.contentCreators[0].name}
-                creatorSlug={featuredSeries?.contentCreators[0].slug}
-                data={featuredSeries?.content}
-                colors={{
-                  backgroundColor: featuredSeries?.backgroundColor,
-                  textColor: featuredSeries?.textColor,
-                }}
-                isLoading={isLoading}
-              />
-              <SeriesCard
-                name={featuredPlaylist?.name}
-                linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
-                creator={featuredPlaylist?.contentCreators[0].name}
-                creatorSlug={featuredPlaylist?.contentCreators[0].slug}
-                data={featuredPlaylist?.content}
-                colors={{
-                  backgroundColor: featuredPlaylist?.backgroundColor,
-                  textColor: featuredPlaylist?.textColor,
-                }}
-                isLoading={isLoading}
-              />
+              {featuredSeries ? (
+                <SeriesCard
+                  name={featuredSeries?.name}
+                  linkPath={`/${featuredSeries?.contentCreators[0].slug}/series/${featuredSeries?.slug}`}
+                  creator={featuredSeries?.contentCreators[0].name}
+                  creatorSlug={featuredSeries?.contentCreators[0].slug}
+                  data={featuredSeries?.content}
+                  colors={{
+                    backgroundColor: featuredSeries?.backgroundColor,
+                    textColor: featuredSeries?.textColor,
+                  }}
+                  isLoading={isLoading}
+                />
+              ) : null}
+              {featuredPlaylist ? (
+                <SeriesCard
+                  name={featuredPlaylist?.name}
+                  linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
+                  creator={featuredPlaylist?.contentCreators[0].name}
+                  creatorSlug={featuredPlaylist?.contentCreators[0].slug}
+                  data={featuredPlaylist?.content}
+                  colors={{
+                    backgroundColor: featuredPlaylist?.backgroundColor,
+                    textColor: featuredPlaylist?.textColor,
+                  }}
+                  isLoading={isLoading}
+                />
+              ) : null}
             </div>
           )}
           {/* Content */}
