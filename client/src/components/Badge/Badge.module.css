@@ -1,0 +1,25 @@
+.badge {
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  font-weight: 500;
+}
+
+.small {
+  max-width: 300px;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--FS-xs);
+}
+
+.large {
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--FS-base);
+}
+
+.defaultBadge {
+  background-color: var(--gray-200);
+  color: var(--gray-800);
+}

@@ -6,6 +6,7 @@ export {
   AppContentDetails,
 } from "./AppContainers";
 export { default as AppContentListCard } from "./AppContentListCard";
+export { default as Badge } from "./Badge";
 export { default as Button } from "./Button";
 export { default as ContentCard } from "./ContentCard";
 export { default as ContentInbox } from "./ContentInbox";
