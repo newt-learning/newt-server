@@ -93,18 +93,27 @@ const DiscoverPage = () => {
                 />
               ) : null}
               {featuredPlaylist ? (
-                <SeriesCard
-                  name={featuredPlaylist?.name}
-                  linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
-                  creator={featuredPlaylist?.contentCreators[0].name}
-                  creatorSlug={featuredPlaylist?.contentCreators[0].slug}
-                  data={featuredPlaylist?.content}
-                  colors={{
-                    backgroundColor: featuredPlaylist?.backgroundColor,
-                    textColor: featuredPlaylist?.textColor,
-                  }}
-                  isLoading={isLoading}
-                />
+                <>
+                  <h2 style={{ marginTop: "2.5rem" }}>Newt Playlists</h2>
+                  <p
+                    className={styles.description}
+                    style={{ marginBottom: "1.5rem" }}
+                  >
+                    Check out our curated learning playlists
+                  </p>
+                  <SeriesCard
+                    name={featuredPlaylist?.name}
+                    linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
+                    creator={featuredPlaylist?.contentCreators[0].name}
+                    creatorSlug={featuredPlaylist?.contentCreators[0].slug}
+                    data={featuredPlaylist?.content}
+                    colors={{
+                      backgroundColor: featuredPlaylist?.backgroundColor,
+                      textColor: featuredPlaylist?.textColor,
+                    }}
+                    isLoading={isLoading}
+                  />
+                </>
               ) : null}
             </div>
           )}
@@ -113,21 +122,24 @@ const DiscoverPage = () => {
             "Loading..."
           ) : contentIsError ? (
             "Sorry, there was an error"
-          ) : (
-            <div className={styles.contentContainer}>
-              {contentData.map((content: any) => (
-                <ContentCard
-                  key={content?.id}
-                  id={content?.id}
-                  name={content?.name}
-                  creator={content?.contentCreators[0].name}
-                  thumbnailUrl={content?.thumbnailUrl}
-                  contentNameSlug={content?.slug}
-                  contentCreatorSlug={content?.contentCreators[0].slug}
-                />
-              ))}
-            </div>
-          )}
+          ) : !_.isEmpty(contentData) ? (
+            <>
+              <h2 style={{ marginTop: "2.5rem" }}>Some Favourites</h2>
+              <div className={styles.contentContainer}>
+                {contentData.map((content: any) => (
+                  <ContentCard
+                    key={content?.id}
+                    id={content?.id}
+                    name={content?.name}
+                    creator={content?.contentCreators[0].name}
+                    thumbnailUrl={content?.thumbnailUrl}
+                    contentNameSlug={content?.slug}
+                    contentCreatorSlug={content?.contentCreators[0].slug}
+                  />
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
       </MainContainer>
     </section>
