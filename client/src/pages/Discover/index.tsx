@@ -37,6 +37,9 @@ const DiscoverPage = () => {
     isError: contentIsError,
   } = useFetchNewtContent({ partOfSeries: false });
   const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
+  const secondSeries = !_.isEmpty(seriesData) ? seriesData[1] : null;
+
+  console.log(seriesData);
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -76,6 +79,14 @@ const DiscoverPage = () => {
                 creator={firstSeries?.contentCreators[0].name}
                 creatorSlug={firstSeries?.contentCreators[0].slug}
                 data={firstSeries?.content}
+                isLoading={isLoading}
+              />
+              <SeriesCard
+                name={secondSeries?.name}
+                linkPath={`/${secondSeries?.contentCreators[0].slug}/series/${secondSeries?.slug}`}
+                creator={secondSeries?.contentCreators[0].name}
+                creatorSlug={secondSeries?.contentCreators[0].slug}
+                data={secondSeries?.content}
                 isLoading={isLoading}
               />
             </div>
