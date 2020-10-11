@@ -28,18 +28,23 @@ interface DataProps {
 }
 
 const DiscoverPage = () => {
-  // Fetch series data
-  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries();
+  // Fetch series data that's featured
+  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
+    featuredStatus: "featured1",
+  });
   // Fetch content not part of a series
   const {
     data: contentData,
     isLoading: contentIsLoading,
     isError: contentIsError,
   } = useFetchNewtContent({ partOfSeries: false });
-  const firstSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
-  const secondSeries = !_.isEmpty(seriesData) ? seriesData[1] : null;
 
-  console.log(seriesData);
+  const featuredSeries = !_.isEmpty(seriesData)
+    ? seriesData.filter((series: any) => series.type === "series")[0]
+    : null;
+  const featuredPlaylist = !_.isEmpty(seriesData)
+    ? seriesData.filter((series: any) => series.type === "playlist")[0]
+    : null;
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -74,26 +79,26 @@ const DiscoverPage = () => {
           ) : (
             <div style={{ marginTop: "2rem" }}>
               <SeriesCard
-                name={firstSeries?.name}
-                linkPath={`/${firstSeries?.contentCreators[0].slug}/series/${firstSeries?.slug}`}
-                creator={firstSeries?.contentCreators[0].name}
-                creatorSlug={firstSeries?.contentCreators[0].slug}
-                data={firstSeries?.content}
+                name={featuredSeries?.name}
+                linkPath={`/${featuredSeries?.contentCreators[0].slug}/series/${featuredSeries?.slug}`}
+                creator={featuredSeries?.contentCreators[0].name}
+                creatorSlug={featuredSeries?.contentCreators[0].slug}
+                data={featuredSeries?.content}
                 colors={{
-                  backgroundColor: firstSeries?.backgroundColor,
-                  textColor: firstSeries?.textColor,
+                  backgroundColor: featuredSeries?.backgroundColor,
+                  textColor: featuredSeries?.textColor,
                 }}
                 isLoading={isLoading}
               />
               <SeriesCard
-                name={secondSeries?.name}
-                linkPath={`/${secondSeries?.contentCreators[0].slug}/series/${secondSeries?.slug}`}
-                creator={secondSeries?.contentCreators[0].name}
-                creatorSlug={secondSeries?.contentCreators[0].slug}
-                data={secondSeries?.content}
+                name={featuredPlaylist?.name}
+                linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
+                creator={featuredPlaylist?.contentCreators[0].name}
+                creatorSlug={featuredPlaylist?.contentCreators[0].slug}
+                data={featuredPlaylist?.content}
                 colors={{
-                  backgroundColor: secondSeries?.backgroundColor,
-                  textColor: secondSeries?.textColor,
+                  backgroundColor: featuredPlaylist?.backgroundColor,
+                  textColor: featuredPlaylist?.textColor,
                 }}
                 isLoading={isLoading}
               />

@@ -41,6 +41,14 @@
   .mainContent {
     width: 75%;
   }
+
+  .title {
+    font-size: var(--FS-4xl);
+  }
+
+  .description {
+    font-size: var(--FS-lg);
+  }
 }
 
 @media screen and (min-width: 1024px) {
