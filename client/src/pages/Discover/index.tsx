@@ -79,6 +79,10 @@ const DiscoverPage = () => {
                 creator={firstSeries?.contentCreators[0].name}
                 creatorSlug={firstSeries?.contentCreators[0].slug}
                 data={firstSeries?.content}
+                colors={{
+                  backgroundColor: firstSeries?.backgroundColor,
+                  textColor: firstSeries?.textColor,
+                }}
                 isLoading={isLoading}
               />
               <SeriesCard
@@ -87,6 +91,10 @@ const DiscoverPage = () => {
                 creator={secondSeries?.contentCreators[0].name}
                 creatorSlug={secondSeries?.contentCreators[0].slug}
                 data={secondSeries?.content}
+                colors={{
+                  backgroundColor: secondSeries?.backgroundColor,
+                  textColor: secondSeries?.textColor,
+                }}
                 isLoading={isLoading}
               />
             </div>

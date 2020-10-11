@@ -27,7 +27,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--gray-800);
+  color: var(--newtBlue-900);
   font-size: var(--FS-2xl);
   font-weight: 600;
   margin-right: 1rem;
