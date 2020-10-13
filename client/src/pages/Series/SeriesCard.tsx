@@ -68,7 +68,9 @@ const SeriesCard = ({
                 type === "playlist" ? item.contentCreators[0].name : creator
               }
               contentNameSlug={item.slug}
-              contentCreatorSlug={creatorSlug}
+              contentCreatorSlug={
+                type === "playlist" ? item.contentCreators[0].slug : creatorSlug
+              }
               className={styles.contentCard}
             />
           ))
