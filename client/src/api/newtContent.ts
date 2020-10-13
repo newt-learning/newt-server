@@ -41,6 +41,10 @@ const fetchAllNewtPlaylists = async (queryKey: string, params: any) => {
   const { data } = await axios.get(`${baseUrl}/newt-playlists`, { params });
   return data;
 };
+const fetchNewtPlaylistBySlug = async (queryKey: string, slug: string) => {
+  const { data } = await axios.get(`${baseUrl}/newt-playlists?slug=${slug}`);
+  return !_.isEmpty(data) ? data[0] : null;
+};
 
 // Quizzes
 const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
@@ -74,6 +78,9 @@ export function useFetchNewtSeriesBySlug(slug: string) {
 
 export function useFetchAllNewtPlaylists(params?: any) {
   return useQuery(["newt-playlists", params], fetchAllNewtPlaylists);
+}
+export function useFetchNewtPlaylistBySlug(slug: string) {
+  return useQuery(["newt-playlist-by-slug", slug], fetchNewtPlaylistBySlug);
 }
 
 export function useFetchNewtQuiz(newtQuizId: string) {

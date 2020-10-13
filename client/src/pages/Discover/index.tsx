@@ -107,7 +107,7 @@ const DiscoverPage = () => {
                   <SeriesCard
                     name={featuredPlaylist?.name}
                     type={featuredPlaylist?.type}
-                    linkPath={`/${featuredPlaylist?.creators[0]?.slug}/series/${featuredPlaylist?.slug}`}
+                    linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
                     creator={featuredPlaylist?.creators[0]?.name}
                     creatorSlug={featuredPlaylist?.creators[0]?.slug}
                     data={featuredPlaylist?.content}

@@ -4,35 +4,3 @@
 .parentContainer {
   height: calc(100vh - 65px);
 }
-
-.playlistInfoContainer {
-  display: flex;
-  flex-direction: column;
-  margin: 2rem;
-  padding: 2rem;
-  background-color: var(--gray-300);
-  border-radius: 2rem;
-}
-
-/* Don't display badge in small screens */
-.playlistBadge {
-  display: none;
-}
-
-@media screen and (min-width: 768px) {
-  .playlistBadge {
-    display: inline;
-    margin-left: 1rem;
-    background-color: var(--newtBlue-200);
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .playlistInfoContainer > h1 {
-    font-size: var(--FS-4xl);
-  }
-
-  .playlistInfoContainer > p {
-    font-size: var(--FS-lg);
-  }
-}
