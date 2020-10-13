@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // API
 import {
   useFetchAllNewtSeries,
+  useFetchAllNewtPlaylists,
   useFetchNewtContent,
 } from "../../api/newtContent";
 // Components
@@ -32,6 +33,7 @@ const DiscoverPage = () => {
   const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
     featuredStatus: "featured1",
   });
+  const { data } = useFetchAllNewtPlaylists();
   // Fetch content not part of a series
   const {
     data: contentData,
@@ -82,8 +84,8 @@ const DiscoverPage = () => {
                 <SeriesCard
                   name={featuredSeries?.name}
                   linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
-                  creator={featuredSeries?.contentCreators[0].name}
-                  creatorSlug={featuredSeries?.contentCreators[0].slug}
+                  creator={featuredSeries?.seriesCreator?.name}
+                  creatorSlug={featuredSeries?.seriesCreator?.slug}
                   data={featuredSeries?.content}
                   colors={{
                     backgroundColor: featuredSeries?.backgroundColor,
