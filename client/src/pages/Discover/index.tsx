@@ -33,7 +33,9 @@ const DiscoverPage = () => {
   const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
     featuredStatus: "featured1",
   });
-  const { data } = useFetchAllNewtPlaylists();
+  const { data: playlistData } = useFetchAllNewtPlaylists({
+    featuredStatus: "featured1",
+  });
   // Fetch content not part of a series
   const {
     data: contentData,
@@ -44,9 +46,7 @@ const DiscoverPage = () => {
   const featuredSeries = !_.isEmpty(seriesData)
     ? seriesData.filter((series: any) => series.type === "series")[0]
     : null;
-  const featuredPlaylist = !_.isEmpty(seriesData)
-    ? seriesData.filter((series: any) => series.type === "playlist")[0]
-    : null;
+  const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -105,13 +105,14 @@ const DiscoverPage = () => {
                   </p>
                   <SeriesCard
                     name={featuredPlaylist?.name}
-                    linkPath={`/${featuredPlaylist?.seriesCreator?.slug}/series/${featuredPlaylist?.slug}`}
-                    creator={featuredPlaylist?.contentCreators[0].name}
-                    creatorSlug={featuredPlaylist?.contentCreators[0].slug}
+                    linkPath={`/${featuredPlaylist?.creators[0]?.slug}/series/${featuredPlaylist?.slug}`}
+                    creator={featuredPlaylist?.creators[0]?.name}
+                    creatorSlug={featuredPlaylist?.creators[0]?.slug}
                     data={featuredPlaylist?.content}
                     colors={{
-                      backgroundColor: featuredPlaylist?.backgroundColor,
-                      textColor: featuredPlaylist?.textColor,
+                      backgroundColor:
+                        featuredPlaylist?.colors?.backgroundColor,
+                      textColor: featuredPlaylist?.colors?.textColor,
                     }}
                     isLoading={isLoading}
                   />
