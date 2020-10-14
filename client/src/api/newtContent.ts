@@ -5,7 +5,8 @@ import keys from "../config/keys";
 
 const baseUrl = keys.newtContentBaseUrl;
 
-// API calls
+// --- API calls ---
+// Content
 const fetchNewtContent = async (queryKey: string, params: any) => {
   const { data } = await axios.get(`${baseUrl}/newt-contents`, {
     params,
@@ -13,12 +14,10 @@ const fetchNewtContent = async (queryKey: string, params: any) => {
 
   return data;
 };
-
 const fetchIndividualNewtContent = async (queryKey: any, contentId: string) => {
   const { data } = await axios.get(`${baseUrl}/newt-contents/${contentId}`);
   return data;
 };
-
 const fetchIndividualNewtContentBySlug = async (
   queryKey: any,
   slug: string
@@ -27,16 +26,27 @@ const fetchIndividualNewtContentBySlug = async (
   return !_.isEmpty(data) ? data[0] : null;
 };
 
+// Series
 const fetchAllNewtSeries = async (queryKey: string, params: any) => {
   const { data } = await axios.get(`${baseUrl}/newt-series`, { params });
   return data;
 };
-
 const fetchNewtSeriesBySlug = async (queryKey: string, slug: string) => {
   const { data } = await axios.get(`${baseUrl}/newt-series?slug=${slug}`);
   return !_.isEmpty(data) ? data[0] : null;
 };
 
+// Playlists
+const fetchAllNewtPlaylists = async (queryKey: string, params: any) => {
+  const { data } = await axios.get(`${baseUrl}/newt-playlists`, { params });
+  return data;
+};
+const fetchNewtPlaylistBySlug = async (queryKey: string, slug: string) => {
+  const { data } = await axios.get(`${baseUrl}/newt-playlists?slug=${slug}`);
+  return !_.isEmpty(data) ? data[0] : null;
+};
+
+// Quizzes
 const fetchNewtQuiz = async (queryKey: any, newtQuizId: string) => {
   const { data } = await axios.get(`${baseUrl}/quizzes/${newtQuizId}`);
   return data;
@@ -64,6 +74,13 @@ export function useFetchAllNewtSeries(params?: any) {
 }
 export function useFetchNewtSeriesBySlug(slug: string) {
   return useQuery(["newt-series-by-slug", slug], fetchNewtSeriesBySlug);
+}
+
+export function useFetchAllNewtPlaylists(params?: any) {
+  return useQuery(["newt-playlists", params], fetchAllNewtPlaylists);
+}
+export function useFetchNewtPlaylistBySlug(slug: string) {
+  return useQuery(["newt-playlist-by-slug", slug], fetchNewtPlaylistBySlug);
 }
 
 export function useFetchNewtQuiz(newtQuizId: string) {

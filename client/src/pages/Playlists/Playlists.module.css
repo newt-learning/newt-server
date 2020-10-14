@@ -1,0 +1,38 @@
+/* Overrides AppMainContainer height (based on NewtWebApp Navbar which is 54px).
+   This way there's no scrolling for the whole container, just two separate 
+   scrolling for each section in Inbox. Probs a better way of doing this. */
+.parentContainer {
+  height: calc(100vh - 65px);
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  padding: 2rem;
+  background-color: var(--gray-300);
+  border-radius: 2rem;
+}
+
+/* Don't display badge in small screens */
+.badge {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .badge {
+    display: inline;
+    margin-left: 1rem;
+    background-color: var(--newtBlue-200);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .infoContainer > h1 {
+    font-size: var(--FS-4xl);
+  }
+
+  .infoContainer > p {
+    font-size: var(--FS-lg);
+  }
+}

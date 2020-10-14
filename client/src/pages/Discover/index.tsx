@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // API
 import {
   useFetchAllNewtSeries,
+  useFetchAllNewtPlaylists,
   useFetchNewtContent,
 } from "../../api/newtContent";
 // Components
@@ -32,6 +33,9 @@ const DiscoverPage = () => {
   const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
     featuredStatus: "featured1",
   });
+  const { data: playlistData } = useFetchAllNewtPlaylists({
+    featuredStatus: "featured1",
+  });
   // Fetch content not part of a series
   const {
     data: contentData,
@@ -42,9 +46,7 @@ const DiscoverPage = () => {
   const featuredSeries = !_.isEmpty(seriesData)
     ? seriesData.filter((series: any) => series.type === "series")[0]
     : null;
-  const featuredPlaylist = !_.isEmpty(seriesData)
-    ? seriesData.filter((series: any) => series.type === "playlist")[0]
-    : null;
+  const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -81,9 +83,10 @@ const DiscoverPage = () => {
               {featuredSeries ? (
                 <SeriesCard
                   name={featuredSeries?.name}
-                  linkPath={`/${featuredSeries?.contentCreators[0].slug}/series/${featuredSeries?.slug}`}
-                  creator={featuredSeries?.contentCreators[0].name}
-                  creatorSlug={featuredSeries?.contentCreators[0].slug}
+                  type={featuredSeries?.type}
+                  linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
+                  creator={featuredSeries?.seriesCreator?.name}
+                  creatorSlug={featuredSeries?.seriesCreator?.slug}
                   data={featuredSeries?.content}
                   colors={{
                     backgroundColor: featuredSeries?.backgroundColor,
@@ -103,13 +106,15 @@ const DiscoverPage = () => {
                   </p>
                   <SeriesCard
                     name={featuredPlaylist?.name}
-                    linkPath={`/${featuredPlaylist?.contentCreators[0].slug}/series/${featuredPlaylist?.slug}`}
-                    creator={featuredPlaylist?.contentCreators[0].name}
-                    creatorSlug={featuredPlaylist?.contentCreators[0].slug}
+                    type={featuredPlaylist?.type}
+                    linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
+                    creator={featuredPlaylist?.creators[0]?.name}
+                    creatorSlug={featuredPlaylist?.creators[0]?.slug}
                     data={featuredPlaylist?.content}
                     colors={{
-                      backgroundColor: featuredPlaylist?.backgroundColor,
-                      textColor: featuredPlaylist?.textColor,
+                      backgroundColor:
+                        featuredPlaylist?.colors?.backgroundColor,
+                      textColor: featuredPlaylist?.colors?.textColor,
                     }}
                     isLoading={isLoading}
                   />

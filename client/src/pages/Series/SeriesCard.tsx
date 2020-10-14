@@ -7,6 +7,7 @@ import { FiChevronRight } from "react-icons/fi";
 
 interface SeriesCardProps {
   name: string;
+  type: "series" | "playlist";
   creator: string;
   creatorSlug: string;
   linkPath: string;
@@ -20,6 +21,7 @@ interface SeriesCardProps {
 
 const SeriesCard = ({
   name,
+  type,
   creator,
   creatorSlug,
   linkPath,
@@ -54,20 +56,24 @@ const SeriesCard = ({
       </div>
       {/* Display first 3 items */}
       {data
-        ? data
-            .slice(0, 3)
-            .map((item: any) => (
-              <ContentCard
-                key={item._id}
-                id={item.id}
-                name={item.name}
-                thumbnailUrl={item.thumbnailUrl}
-                creator={creator}
-                contentNameSlug={item.slug}
-                contentCreatorSlug={creatorSlug}
-                className={styles.contentCard}
-              />
-            ))
+        ? data.slice(0, 3).map((item: any) => (
+            <ContentCard
+              key={item._id}
+              id={item.id}
+              name={item.name}
+              thumbnailUrl={item.thumbnailUrl}
+              // For series, the creator is the same. for playlists, show the
+              // creator for each item
+              creator={
+                type === "playlist" ? item.contentCreators[0].name : creator
+              }
+              contentNameSlug={item.slug}
+              contentCreatorSlug={
+                type === "playlist" ? item.contentCreators[0].slug : creatorSlug
+              }
+              className={styles.contentCard}
+            />
+          ))
         : null}
     </div>
   );
