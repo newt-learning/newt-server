@@ -1,33 +1,34 @@
 import React from "react";
+// Components
 import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import { ContentCard } from "../../components";
-import styles from "./SeriesCard.module.css";
 import { FiChevronRight } from "react-icons/fi";
+import { ContentCard } from "../../components";
+// Styling
+import styles from "./SeriesCard.module.css";
 
 interface SeriesCardProps {
-  name: string;
   type: "series" | "playlist";
-  creator: string;
-  creatorSlug: string;
+  isLoading: boolean;
   linkPath: string;
-  data?: any;
+  data: {
+    name: string;
+    creator: string;
+    creatorSlug: string;
+    content?: any;
+  };
   colors?: {
     backgroundColor: string;
     textColor: string;
   };
-  isLoading: boolean;
 }
 
 const SeriesCard = ({
-  name,
   type,
-  creator,
-  creatorSlug,
-  linkPath,
-  data,
-  colors,
   isLoading,
+  linkPath,
+  data: { name, creator, creatorSlug, content },
+  colors,
 }: SeriesCardProps) => {
   return isLoading ? (
     // Show loading spinner
@@ -55,8 +56,8 @@ const SeriesCard = ({
         </Link>
       </div>
       {/* Display first 3 items */}
-      {data
-        ? data.slice(0, 3).map((item: any) => (
+      {content
+        ? content.slice(0, 3).map((item: any) => (
             <ContentCard
               key={item._id}
               data={{

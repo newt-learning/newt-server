@@ -87,17 +87,19 @@ const DiscoverPage = () => {
             <div style={{ marginTop: "2rem" }}>
               {/* Featured series */}
               <SeriesCard
-                name={featuredSeries?.name}
                 type={featuredSeries?.type}
+                isLoading={seriesIsLoading}
                 linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
-                creator={featuredSeries?.seriesCreator?.name}
-                creatorSlug={featuredSeries?.seriesCreator?.slug}
-                data={featuredSeries?.content}
+                data={{
+                  name: featuredSeries?.name,
+                  creator: featuredSeries?.seriesCreator?.name,
+                  creatorSlug: featuredSeries?.seriesCreator?.slug,
+                  content: featuredSeries?.content,
+                }}
                 colors={{
                   backgroundColor: featuredSeries?.backgroundColor,
                   textColor: featuredSeries?.textColor,
                 }}
-                isLoading={seriesIsLoading}
               />
               {/* Featured playlist */}
               <>
@@ -109,17 +111,19 @@ const DiscoverPage = () => {
                   Check out our curated learning playlists
                 </p>
                 <SeriesCard
-                  name={featuredPlaylist?.name}
                   type={featuredPlaylist?.type}
+                  isLoading={playlistIsLoading}
                   linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
-                  creator={featuredPlaylist?.creators[0]?.name}
-                  creatorSlug={featuredPlaylist?.creators[0]?.slug}
-                  data={featuredPlaylist?.content}
+                  data={{
+                    name: featuredPlaylist?.name,
+                    creator: featuredPlaylist?.creators[0]?.name,
+                    creatorSlug: featuredPlaylist?.creators[0]?.slug,
+                    content: featuredPlaylist?.content,
+                  }}
                   colors={{
                     backgroundColor: featuredPlaylist?.colors?.backgroundColor,
                     textColor: featuredPlaylist?.colors?.textColor,
                   }}
-                  isLoading={playlistIsLoading}
                 />
               </>
             </div>
