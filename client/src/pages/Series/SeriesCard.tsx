@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import { FiChevronRight } from "react-icons/fi";
-import { ContentCard } from "../../components";
+import { ContentCard, SeeAllCard } from "../../components";
 // Styling
 import styles from "./SeriesCard.module.css";
 
@@ -13,6 +13,7 @@ interface SeriesCardProps {
   linkPath: string;
   data: {
     name: string;
+    slug: string;
     creator: string;
     creatorSlug: string;
     content?: any;
@@ -27,7 +28,7 @@ const SeriesCard = ({
   type,
   isLoading,
   linkPath,
-  data: { name, creator, creatorSlug, content },
+  data: { name, slug, creator, creatorSlug, content },
   colors,
 }: SeriesCardProps) => {
   return isLoading ? (
@@ -56,8 +57,10 @@ const SeriesCard = ({
         </Link>
       </div>
       {/* Display first 3 items */}
-      {content
-        ? content.slice(0, 3).map((item: any) => (
+
+      {content ? (
+        <>
+          {content.slice(0, 3).map((item: any) => (
             <ContentCard
               key={item._id}
               data={{
@@ -76,8 +79,15 @@ const SeriesCard = ({
               }}
               className={styles.contentCard}
             />
-          ))
-        : null}
+          ))}
+          <SeeAllCard
+            linkPath={`/${creatorSlug}/${
+              type === "playlist" ? "playlists" : "series" // lol fml
+            }/${slug}`}
+            className={styles.contentCard}
+          />
+        </>
+      ) : null}
     </div>
   );
 };

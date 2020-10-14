@@ -53,6 +53,8 @@ const DiscoverPage = () => {
   const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
   const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
 
+  console.log(featuredSeries);
+
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
@@ -92,6 +94,7 @@ const DiscoverPage = () => {
                 linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
                 data={{
                   name: featuredSeries?.name,
+                  slug: featuredSeries?.slug,
                   creator: featuredSeries?.seriesCreator?.name,
                   creatorSlug: featuredSeries?.seriesCreator?.slug,
                   content: featuredSeries?.content,
@@ -116,6 +119,7 @@ const DiscoverPage = () => {
                   linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
                   data={{
                     name: featuredPlaylist?.name,
+                    slug: featuredPlaylist?.slug,
                     creator: featuredPlaylist?.creators[0]?.name,
                     creatorSlug: featuredPlaylist?.creators[0]?.slug,
                     content: featuredPlaylist?.content,
