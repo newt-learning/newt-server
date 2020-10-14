@@ -7,22 +7,19 @@ import styles from "./ContentCard.module.css";
 const cx = classnames.bind(styles);
 
 export interface ContentCardProps {
-  id: string;
-  name: string;
-  thumbnailUrl: string;
-  creator: string;
-  contentNameSlug: string;
-  contentCreatorSlug: string;
+  data: {
+    id?: string;
+    name: string;
+    creator: string;
+    thumbnailUrl: string;
+    contentNameSlug: string;
+    contentCreatorSlug: string;
+  };
   className?: string;
 }
 
 const ContentCard = ({
-  id,
-  name,
-  thumbnailUrl,
-  creator,
-  contentNameSlug,
-  contentCreatorSlug,
+  data: { name, thumbnailUrl, creator, contentNameSlug, contentCreatorSlug },
   className,
 }: ContentCardProps) => {
   return (

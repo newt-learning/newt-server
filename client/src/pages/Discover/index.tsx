@@ -30,10 +30,17 @@ interface DataProps {
 
 const DiscoverPage = () => {
   // Fetch series data that's featured
-  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
+  const {
+    data: seriesData,
+    isLoading: seriesIsLoading,
+    isError,
+  } = useFetchAllNewtSeries({
     featuredStatus: "featured1",
   });
-  const { data: playlistData } = useFetchAllNewtPlaylists({
+  const {
+    data: playlistData,
+    isLoading: playlistIsLoading,
+  } = useFetchAllNewtPlaylists({
     featuredStatus: "featured1",
   });
   // Fetch content not part of a series
@@ -90,7 +97,7 @@ const DiscoverPage = () => {
                   backgroundColor: featuredSeries?.backgroundColor,
                   textColor: featuredSeries?.textColor,
                 }}
-                isLoading={isLoading}
+                isLoading={seriesIsLoading}
               />
               {/* Featured playlist */}
               <>
@@ -112,7 +119,7 @@ const DiscoverPage = () => {
                     backgroundColor: featuredPlaylist?.colors?.backgroundColor,
                     textColor: featuredPlaylist?.colors?.textColor,
                   }}
-                  isLoading={isLoading}
+                  isLoading={playlistIsLoading}
                 />
               </>
             </div>
@@ -129,12 +136,14 @@ const DiscoverPage = () => {
                 {contentData.map((content: any) => (
                   <ContentCard
                     key={content?.id}
-                    id={content?.id}
-                    name={content?.name}
-                    creator={content?.contentCreators[0].name}
-                    thumbnailUrl={content?.thumbnailUrl}
-                    contentNameSlug={content?.slug}
-                    contentCreatorSlug={content?.contentCreators[0].slug}
+                    data={{
+                      id: content?.id,
+                      name: content?.name,
+                      creator: content?.contentCreators[0].name,
+                      thumbnailUrl: content?.thumbnailUrl,
+                      contentNameSlug: content?.slug,
+                      contentCreatorSlug: content?.contentCreators[0].slug,
+                    }}
                   />
                 ))}
               </div>
