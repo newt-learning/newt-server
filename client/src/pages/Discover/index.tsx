@@ -43,9 +43,7 @@ const DiscoverPage = () => {
     isError: contentIsError,
   } = useFetchNewtContent({ partOfSeries: false });
 
-  const featuredSeries = !_.isEmpty(seriesData)
-    ? seriesData.filter((series: any) => series.type === "series")[0]
-    : null;
+  const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
   const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
 
   return (
@@ -80,46 +78,43 @@ const DiscoverPage = () => {
             </div>
           ) : (
             <div style={{ marginTop: "2rem" }}>
-              {featuredSeries ? (
+              {/* Featured series */}
+              <SeriesCard
+                name={featuredSeries?.name}
+                type={featuredSeries?.type}
+                linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
+                creator={featuredSeries?.seriesCreator?.name}
+                creatorSlug={featuredSeries?.seriesCreator?.slug}
+                data={featuredSeries?.content}
+                colors={{
+                  backgroundColor: featuredSeries?.backgroundColor,
+                  textColor: featuredSeries?.textColor,
+                }}
+                isLoading={isLoading}
+              />
+              {/* Featured playlist */}
+              <>
+                <h2 style={{ marginTop: "2.5rem" }}>Newt Playlists</h2>
+                <p
+                  className={styles.description}
+                  style={{ marginBottom: "1.5rem" }}
+                >
+                  Check out our curated learning playlists
+                </p>
                 <SeriesCard
-                  name={featuredSeries?.name}
-                  type={featuredSeries?.type}
-                  linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
-                  creator={featuredSeries?.seriesCreator?.name}
-                  creatorSlug={featuredSeries?.seriesCreator?.slug}
-                  data={featuredSeries?.content}
+                  name={featuredPlaylist?.name}
+                  type={featuredPlaylist?.type}
+                  linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
+                  creator={featuredPlaylist?.creators[0]?.name}
+                  creatorSlug={featuredPlaylist?.creators[0]?.slug}
+                  data={featuredPlaylist?.content}
                   colors={{
-                    backgroundColor: featuredSeries?.backgroundColor,
-                    textColor: featuredSeries?.textColor,
+                    backgroundColor: featuredPlaylist?.colors?.backgroundColor,
+                    textColor: featuredPlaylist?.colors?.textColor,
                   }}
                   isLoading={isLoading}
                 />
-              ) : null}
-              {featuredPlaylist ? (
-                <>
-                  <h2 style={{ marginTop: "2.5rem" }}>Newt Playlists</h2>
-                  <p
-                    className={styles.description}
-                    style={{ marginBottom: "1.5rem" }}
-                  >
-                    Check out our curated learning playlists
-                  </p>
-                  <SeriesCard
-                    name={featuredPlaylist?.name}
-                    type={featuredPlaylist?.type}
-                    linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
-                    creator={featuredPlaylist?.creators[0]?.name}
-                    creatorSlug={featuredPlaylist?.creators[0]?.slug}
-                    data={featuredPlaylist?.content}
-                    colors={{
-                      backgroundColor:
-                        featuredPlaylist?.colors?.backgroundColor,
-                      textColor: featuredPlaylist?.colors?.textColor,
-                    }}
-                    isLoading={isLoading}
-                  />
-                </>
-              ) : null}
+              </>
             </div>
           )}
           {/* Content */}
