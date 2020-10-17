@@ -21,6 +21,7 @@ const SeriesPage = () => {
       ) : (
         <ContentInbox
           title={data?.name}
+          creators={data?.contentCreators[0].name}
           contentData={data?.content}
           isLoading={isLoading}
           className={styles.parentContainer}

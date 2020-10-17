@@ -28,6 +28,7 @@ export interface OptionsDropdownItemType {
 
 interface ContentInboxProps {
   title: string;
+  creators?: string;
   isLoading?: boolean;
   isError?: boolean;
   contentData?: any;
@@ -62,6 +63,7 @@ const defaultDropdownMenu: OptionsDropdownItemType[] = [
 
 const ContentInbox = ({
   title,
+  creators,
   isLoading,
   isError,
   contentData,
@@ -89,15 +91,27 @@ const ContentInbox = ({
   return (
     <AppMainContainer variant="inbox" className={className}>
       <AppHeaderContainer>
-        <div style={{ display: "flex" }}>
-          <div onClick={() => history.goBack()}>
-            <FiArrowLeft
-              size={24}
-              className={cx({ backBtn: true }, backButtonStyle)}
-            />
+        <div className={styles.header}>
+          <div className={styles.titleContainer}>
+            <div onClick={() => history.goBack()}>
+              <FiArrowLeft
+                size={24}
+                className={cx({ backBtn: true }, backButtonStyle)}
+              />
+            </div>
+            {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
+            {isLoading ? <Skeleton /> : <h2>{title}</h2>}
           </div>
-          {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
-          {isLoading ? <Skeleton /> : <h2>{title}</h2>}{" "}
+          <div className={styles.creatorsContainer}>
+            {/* Creators */}
+            {creators ? (
+              <p className={styles.creators}>{`by ${creators}`}</p>
+            ) : null}
+            {/* Number of items in series/playlist */}
+            {!_.isEmpty(contentData) ? (
+              <p className={styles.numItems}>{`${contentData.length} items`}</p>
+            ) : null}
+          </div>
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}
         {showOptionsDropdown ? (
