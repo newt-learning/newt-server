@@ -53,8 +53,6 @@ const DiscoverPage = () => {
   const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
   const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
 
-  console.log(featuredSeries);
-
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
