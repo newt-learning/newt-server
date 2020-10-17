@@ -8,6 +8,14 @@
   padding-left: 1rem;
 }
 
+.loadingContainer {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (min-with: 1024px) {
   .contentInfo {
     padding: 1.5rem;

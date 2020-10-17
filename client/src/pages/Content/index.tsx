@@ -6,6 +6,7 @@ import {
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
+import PropagateLoader from "react-spinners/PropagateLoader";
 import { Navbar, MainContainer, QuizModal } from "../../components";
 // Sections
 import ContentFlow from "./ContentFlow";
@@ -27,7 +28,7 @@ const ContentPage = () => {
   const [showReview, setShowReview] = useState(false);
 
   // Fetch content data from slug
-  const { data, status, error } = useFetchIndividualNewtContentBySlug(
+  const { data, isLoading, isError } = useFetchIndividualNewtContentBySlug(
     contentNameSlug
   );
 
@@ -58,7 +59,11 @@ const ContentPage = () => {
     <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <MainContainer style={styles.container}>
-        {error ? (
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            <PropagateLoader size={18} color="#86e1ff" loading={isLoading} />
+          </div>
+        ) : isError ? (
           "Sorry, there was an error"
         ) : data ? (
           <>
@@ -83,7 +88,7 @@ const ContentPage = () => {
                     ? "Continue quiz"
                     : "Take the quiz"
                 }
-                isLoading={status === "loading"}
+                isLoading={isLoading}
               />
             </div>
             <div className={styles.contentInfoContainer}>
@@ -93,7 +98,7 @@ const ContentPage = () => {
                 seriesName={data.series[0]?.name}
                 contentCreatorSlug={data.contentCreators[0].slug}
                 seriesSlug={data.series[0]?.slug}
-                isLoading={status === "loading"}
+                isLoading={isLoading}
               />
             </div>
           </>

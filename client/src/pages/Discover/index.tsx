@@ -30,10 +30,17 @@ interface DataProps {
 
 const DiscoverPage = () => {
   // Fetch series data that's featured
-  const { data: seriesData, isLoading, isError } = useFetchAllNewtSeries({
+  const {
+    data: seriesData,
+    isLoading: seriesIsLoading,
+    isError,
+  } = useFetchAllNewtSeries({
     featuredStatus: "featured1",
   });
-  const { data: playlistData } = useFetchAllNewtPlaylists({
+  const {
+    data: playlistData,
+    isLoading: playlistIsLoading,
+  } = useFetchAllNewtPlaylists({
     featuredStatus: "featured1",
   });
   // Fetch content not part of a series
@@ -43,10 +50,10 @@ const DiscoverPage = () => {
     isError: contentIsError,
   } = useFetchNewtContent({ partOfSeries: false });
 
-  const featuredSeries = !_.isEmpty(seriesData)
-    ? seriesData.filter((series: any) => series.type === "series")[0]
-    : null;
+  const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
   const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
+
+  console.log(featuredSeries);
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -80,46 +87,49 @@ const DiscoverPage = () => {
             </div>
           ) : (
             <div style={{ marginTop: "2rem" }}>
-              {featuredSeries ? (
+              {/* Featured series */}
+              <SeriesCard
+                type={featuredSeries?.type}
+                isLoading={seriesIsLoading}
+                linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
+                data={{
+                  name: featuredSeries?.name,
+                  slug: featuredSeries?.slug,
+                  creator: featuredSeries?.seriesCreator?.name,
+                  creatorSlug: featuredSeries?.seriesCreator?.slug,
+                  content: featuredSeries?.content,
+                }}
+                colors={{
+                  backgroundColor: featuredSeries?.backgroundColor,
+                  textColor: featuredSeries?.textColor,
+                }}
+              />
+              {/* Featured playlist */}
+              <>
+                <h2 style={{ marginTop: "2.5rem" }}>Newt Playlists</h2>
+                <p
+                  className={styles.description}
+                  style={{ marginBottom: "1.5rem" }}
+                >
+                  Check out our curated learning playlists
+                </p>
                 <SeriesCard
-                  name={featuredSeries?.name}
-                  type={featuredSeries?.type}
-                  linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
-                  creator={featuredSeries?.seriesCreator?.name}
-                  creatorSlug={featuredSeries?.seriesCreator?.slug}
-                  data={featuredSeries?.content}
-                  colors={{
-                    backgroundColor: featuredSeries?.backgroundColor,
-                    textColor: featuredSeries?.textColor,
+                  type={featuredPlaylist?.type}
+                  isLoading={playlistIsLoading}
+                  linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
+                  data={{
+                    name: featuredPlaylist?.name,
+                    slug: featuredPlaylist?.slug,
+                    creator: featuredPlaylist?.creators[0]?.name,
+                    creatorSlug: featuredPlaylist?.creators[0]?.slug,
+                    content: featuredPlaylist?.content,
                   }}
-                  isLoading={isLoading}
+                  colors={{
+                    backgroundColor: featuredPlaylist?.colors?.backgroundColor,
+                    textColor: featuredPlaylist?.colors?.textColor,
+                  }}
                 />
-              ) : null}
-              {featuredPlaylist ? (
-                <>
-                  <h2 style={{ marginTop: "2.5rem" }}>Newt Playlists</h2>
-                  <p
-                    className={styles.description}
-                    style={{ marginBottom: "1.5rem" }}
-                  >
-                    Check out our curated learning playlists
-                  </p>
-                  <SeriesCard
-                    name={featuredPlaylist?.name}
-                    type={featuredPlaylist?.type}
-                    linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
-                    creator={featuredPlaylist?.creators[0]?.name}
-                    creatorSlug={featuredPlaylist?.creators[0]?.slug}
-                    data={featuredPlaylist?.content}
-                    colors={{
-                      backgroundColor:
-                        featuredPlaylist?.colors?.backgroundColor,
-                      textColor: featuredPlaylist?.colors?.textColor,
-                    }}
-                    isLoading={isLoading}
-                  />
-                </>
-              ) : null}
+              </>
             </div>
           )}
           {/* Content */}
@@ -134,12 +144,14 @@ const DiscoverPage = () => {
                 {contentData.map((content: any) => (
                   <ContentCard
                     key={content?.id}
-                    id={content?.id}
-                    name={content?.name}
-                    creator={content?.contentCreators[0].name}
-                    thumbnailUrl={content?.thumbnailUrl}
-                    contentNameSlug={content?.slug}
-                    contentCreatorSlug={content?.contentCreators[0].slug}
+                    data={{
+                      id: content?.id,
+                      name: content?.name,
+                      creator: content?.contentCreators[0].name,
+                      thumbnailUrl: content?.thumbnailUrl,
+                      contentNameSlug: content?.slug,
+                      contentCreatorSlug: content?.contentCreators[0].slug,
+                    }}
                   />
                 ))}
               </div>

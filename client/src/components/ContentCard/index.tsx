@@ -1,28 +1,41 @@
 import React from "react";
 import classnames from "classnames/bind";
 import { Link } from "react-router-dom";
+import { FiChevronRight } from "react-icons/fi";
 // Styling
 import styles from "./ContentCard.module.css";
 
 const cx = classnames.bind(styles);
 
 export interface ContentCardProps {
-  id: string;
-  name: string;
-  thumbnailUrl: string;
-  creator: string;
-  contentNameSlug: string;
-  contentCreatorSlug: string;
+  data: {
+    id?: string;
+    name: string;
+    creator: string;
+    thumbnailUrl: string;
+    contentNameSlug: string;
+    contentCreatorSlug: string;
+  };
   className?: string;
 }
 
+interface SeeAllCardProps {
+  linkPath: string;
+  className?: string;
+}
+
+export const SeeAllCard = ({ linkPath, className }: SeeAllCardProps) => {
+  return (
+    <Link to={linkPath}>
+      <div className={cx({ card: true, seeAllCard: true }, className)}>
+        See all <FiChevronRight color="#2d3748" size={22} />
+      </div>
+    </Link>
+  );
+};
+
 const ContentCard = ({
-  id,
-  name,
-  thumbnailUrl,
-  creator,
-  contentNameSlug,
-  contentCreatorSlug,
+  data: { name, thumbnailUrl, creator, contentNameSlug, contentCreatorSlug },
   className,
 }: ContentCardProps) => {
   return (
