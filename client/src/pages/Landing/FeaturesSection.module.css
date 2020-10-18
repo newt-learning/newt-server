@@ -107,7 +107,8 @@
   .feature {
     display: flex;
     flex-direction: row;
-    margin-bottom: 8rem;
+    padding-bottom: 4rem;
+    margin-bottom: 4rem;
   }
 
   .mockPhoneContainer {
@@ -170,6 +171,14 @@
 @media screen and (min-width: 1024px) {
   .container {
     padding: 8rem 10rem;
+  }
+
+  .feature {
+    border-bottom: 2px solid var(--newtBlue-100);
+  }
+
+  .feature:last-of-type {
+    border-bottom: none;
   }
 
   .mockPhoneContainer {
