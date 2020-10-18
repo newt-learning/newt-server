@@ -68,8 +68,11 @@ const features = [
       "Why should recommendations be limited in the medium that they are in?",
       "After finishing a book, what if the best next thing is not another book, but a documentary? Or an interactive game?",
       <span>
-        Find your next favourite thing at our <b>curated</b> library filled with
-        incredible content.
+        Find your next favourite thing at our{" "}
+        <a href="discover" className={styles.link}>
+          <b>curated</b> library
+        </a>{" "}
+        filled with incredible content.
       </span>,
     ],
     isPhoneMockup: false,

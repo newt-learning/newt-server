@@ -23,6 +23,7 @@ a {
 .text:hover {
   cursor: pointer;
   font-weight: 500;
+  color: white;
   border-bottom: 1px solid white;
 }
 
