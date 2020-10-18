@@ -95,6 +95,11 @@
   color: var(--indigo-400);
 }
 
+.descriptionHeader#discover:hover {
+  color: var(--indigo-500);
+  cursor: pointer;
+}
+
 .link:hover {
   text-decoration: underline;
 }

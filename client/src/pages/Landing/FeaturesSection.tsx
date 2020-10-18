@@ -92,9 +92,18 @@ const Feature = ({ id, title, description, Graphic }: FeatureProps) => {
         {Graphic}
       </div>
       <div className={styles.descriptionContainer}>
-        <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
-          {title}
-        </h2>
+        {/* If title is Discover, link to page, otherwise just show title */}
+        {title === "Discover" ? (
+          <a href="discover">
+            <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
+              {title}
+            </h2>
+          </a>
+        ) : (
+          <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
+            {title}
+          </h2>
+        )}
         {description.map((para, index) => (
           <p className={styles.descriptionText} key={`${id}-${para}-${index}`}>
             {para}
