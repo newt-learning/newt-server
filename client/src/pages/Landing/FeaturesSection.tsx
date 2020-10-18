@@ -105,29 +105,31 @@ const Feature = ({ id, title, description, Graphic }: FeatureProps) => {
 const FeaturesSection = () => {
   return (
     <section className={styles.container}>
-      {features.map((feature) => (
-        <Feature
-          id={feature.id}
-          title={feature.title}
-          description={feature.description}
-          key={feature.id}
-          Graphic={
-            feature.isPhoneMockup ? (
-              <MockPhone
-                {...feature.graphic}
-                phoneStyle={styles.mockPhone}
-                screenshotStyle={styles.screenshot}
-              />
-            ) : (
-              <img
-                src={feature.graphic.imageUrl}
-                alt={feature.graphic.altText}
-                className={styles.discoverImage}
-              />
-            )
-          }
-        />
-      ))}
+      <div className={styles.features}>
+        {features.map((feature) => (
+          <Feature
+            id={feature.id}
+            title={feature.title}
+            description={feature.description}
+            key={feature.id}
+            Graphic={
+              feature.isPhoneMockup ? (
+                <MockPhone
+                  {...feature.graphic}
+                  phoneStyle={styles.mockPhone}
+                  screenshotStyle={styles.screenshot}
+                />
+              ) : (
+                <img
+                  src={feature.graphic.imageUrl}
+                  alt={feature.graphic.altText}
+                  className={styles.discoverImage}
+                />
+              )
+            }
+          />
+        ))}
+      </div>
     </section>
   );
 };

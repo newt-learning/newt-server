@@ -152,6 +152,9 @@
 }
 
 @media screen and (min-width: 1280px) {
+  .container {
+    padding: 14rem 7rem 8rem 7rem;
+  }
   .textContainer {
     margin-bottom: 4rem;
   }
