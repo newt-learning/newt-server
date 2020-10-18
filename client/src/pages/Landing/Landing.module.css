@@ -1,7 +1,7 @@
 .App {
   min-height: 100vh;
   background: url("../../assets/background.svg");
-  background-repeat: repeat-x; /* TO DO: only x-scale background svg */
+  background-repeat: no-repeat;
 }
 
 .mainContainer {
@@ -82,6 +82,8 @@
     flex-direction: column;
     align-items: center;
     justify-self: flex-start;
+    /* Stretch background image across the x-axis while preserving height */
+    background-size: 100% 855px;
   }
 
   .mainContainer {
