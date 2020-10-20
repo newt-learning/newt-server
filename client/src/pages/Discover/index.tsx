@@ -43,12 +43,15 @@ const DiscoverPage = () => {
   } = useFetchAllNewtPlaylists({
     featuredStatus: "featured1",
   });
-  // Fetch content not part of a series
+  // Fetch content not part of a series and that's featured
   const {
     data: contentData,
     isLoading: contentIsLoading,
     isError: contentIsError,
-  } = useFetchNewtContent({ partOfSeries: false });
+  } = useFetchNewtContent({
+    partOfSeries: false,
+    featuredStatus: "featured1",
+  });
 
   const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
   const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
