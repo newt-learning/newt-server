@@ -3,6 +3,7 @@ import _ from "lodash";
 import classnames from "classnames/bind";
 // API
 import { useUpdateContent } from "../../api/content";
+import { useAddContentToChallenge } from "../../api/challenges";
 // Components
 import { Button, Badge } from "../../components";
 import BookSection from "./BookSection";
@@ -75,6 +76,7 @@ const ContentFlow = ({
 
   // Updating content
   const [updateContent] = useUpdateContent();
+  const [addContentToChallenge] = useAddContentToChallenge();
 
   const updateShelf = (selectedShelf: ShelfType) => {
     const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
@@ -82,6 +84,16 @@ const ContentFlow = ({
     });
 
     updateContent({ contentId: id, data: updateData });
+
+    // If it's a book and the selected shelf is "Finished Learning", do
+    // additional stuff like updating the reading challenge
+    if (type === "book" && selectedShelf === "Finished Learning") {
+      // Update the reading challenge by adding this book to the finished list
+      // if a challenge exists.
+      addContentToChallenge(id);
+    }
+
+    // Close modal
     setShowChangeShelfModal(false);
   };
 

@@ -1,5 +1,5 @@
 import newtApi from "./newtApi";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 
 // API calls
 const fetchChallenges = async () => {
@@ -10,6 +10,16 @@ const fetchIndividualChallenge = async (queryKey: any, challengeId: string) => {
   const { data } = await newtApi.get(`/challenges/${challengeId}`);
   return data;
 };
+const addContentToChallenge = async (contentId: string) => {
+  try {
+    await newtApi.put("/challenges/add-content", { contentId });
+  } catch (error) {
+    // Need to figure out what the best thing to do here would be. If this fails,
+    // then the reading challenge will be one book behind than what's actually
+    // finished. Maybe just re-check the Reading Challenge periodically?
+    return;
+  }
+};
 
 // React-query bindings
 export function useFetchChallenges() {
@@ -17,4 +27,7 @@ export function useFetchChallenges() {
 }
 export function useFetchIndividualChallenge(challengeId: string) {
   return useQuery(["challenge", challengeId], fetchIndividualChallenge);
+}
+export function useAddContentToChallenge() {
+  return useMutation(addContentToChallenge);
 }
