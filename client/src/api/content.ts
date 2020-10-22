@@ -1,6 +1,10 @@
 import newtApi from "./newtApi";
 import { useQuery, useMutation, queryCache } from "react-query";
 
+interface UpdateContentParams {
+  contentId: string;
+  data: any
+}
 interface UpdateBookProgressData {
   contentId: string;
   data: { pagesRead: number };
@@ -11,6 +15,10 @@ const fetchAllContent = async () => {
   const { data } = await newtApi.get("/v2/content");
   return data;
 };
+const fetchContent = async (queryKey: any, contentId: string) => {
+  const { data } = await newtApi.get(`/content/${contentId}`)
+  return data
+}
 const fetchAllSeries = async () => {
   const { data } = await newtApi.get("/series");
   return data;
@@ -24,6 +32,9 @@ const addContentV2 = async (data: any) => {
 const createSeries = async (data: any) => {
   await newtApi.post("/series/create", data);
 };
+const updateContent = async ({ contentId, data }: UpdateContentParams) => {
+  await newtApi.put(`/content/${contentId}/update`, data)
+}
 const updateBookProgress = async ({
   contentId,
   data,
@@ -34,6 +45,9 @@ const updateBookProgress = async ({
 // React-query bindings
 export function useFetchAllContent() {
   return useQuery("contents", fetchAllContent);
+}
+export function useFetchContent(contentId: string) {
+  return useQuery(["content", contentId], fetchContent)
 }
 export function useFetchAllSeries() {
   return useQuery("series", fetchAllSeries);
@@ -52,6 +66,11 @@ export function useCreateSeries() {
   return useMutation(createSeries, {
     onSettled: () => queryCache.invalidateQueries("series"),
   });
+}
+export function useUpdateContent() {
+  return useMutation(updateContent, {
+    onSettled: () => queryCache.invalidateQueries("contents")
+  })
 }
 export function useUpdateBookProgress() {
   return useMutation(updateBookProgress, {

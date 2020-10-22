@@ -16,6 +16,7 @@ import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
 
 const ContentPage = () => {
   // Get content name slug from URL parameters
+  // @ts-ignore
   const { contentNameSlug } = useParams();
 
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -68,6 +69,7 @@ const ContentPage = () => {
                 title={data.name}
                 type={data.type}
                 shelf={data.shelf}
+                startFinishDates={data.startFinishDates}
                 source={data.source?.name}
                 mediaId={data.source?.mediaId}
                 description={data.description}

@@ -142,6 +142,7 @@ const ContentInbox = ({
             title={currentContent?.name}
             type={currentContent?.type}
             shelf={currentContent?.shelf}
+            startFinishDates={currentContent?.startFinishDates}
             authors={currentContent?.authors}
             topics={currentContent?.topics}
             source={currentContent?.videoInfo?.source}
