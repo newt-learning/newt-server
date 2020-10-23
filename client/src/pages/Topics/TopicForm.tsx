@@ -66,7 +66,11 @@ const TopicForm = ({
             </Form.Control.Feedback>
           </Form.Group>
           <div className={styles.buttonContainer}>
-            <Button category={buttonCategory} type="submit">
+            <Button
+              category={buttonCategory}
+              type="submit"
+              isDisabled={!!errors.name}
+            >
               {buttonTitle}
             </Button>
           </div>
