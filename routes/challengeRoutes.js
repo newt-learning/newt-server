@@ -75,6 +75,7 @@ module.exports = (app) => {
         {
           _user: userId,
           shelf: "Finished Learning",
+          type: "book", // Only books for now
           "startFinishDates.dateCompleted": {
             $gte: startOfYear,
             $lte: endOfYear,

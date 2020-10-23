@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import _ from "lodash";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 // API
 import {
