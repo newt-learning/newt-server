@@ -1,0 +1,23 @@
+.form {
+  margin: "1rem 0";
+  width: 70%;
+}
+
+.finishedBook {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+  font-size: var(--FS-s);
+  color: var(--blue-500);
+  cursor: pointer;
+}
+
+.finishedBook:hover {
+  color: var(--blue-700);
+  text-decoration: underline;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}

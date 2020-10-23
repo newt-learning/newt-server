@@ -150,6 +150,7 @@ const ContentFlow = ({
             authors={authors}
             pageCount={bookInfo?.pageCount}
             pagesRead={bookInfo?.pagesRead || 0}
+            startFinishDates={startFinishDates}
           />
         ) : null}
         {/* Shelf info */}
