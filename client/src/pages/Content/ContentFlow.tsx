@@ -152,22 +152,23 @@ const ContentFlow = ({
               />
             )}
           </div>
-        ) : // ) : type === "book" ? (
-        //   <div className={styles.bookContainer}>
-        //     <img
-        //       src={thumbnailUrl}
-        //       alt={title}
-        //       className={styles.bookThumbnail}
-        //     />
-        //     <div className={styles.bookInfo}>
-        //       {authors ? (
-        //         <div className={styles.authors}>{`by ${authors.join(
-        //           ", "
-        //         )}`}</div>
-        //       ) : null}
-        //     </div>
-        //   </div>
-        // Otherwise, if it's a book, show Book Section
+        ) : // The !shelf is for books in Newt Discover section (not user added)
+        type === "book" && !shelf ? (
+          <div className={styles.bookContainer}>
+            <img
+              src={thumbnailUrl}
+              alt={title}
+              className={styles.bookThumbnail}
+            />
+            <div className={styles.bookInfo}>
+              {authors ? (
+                <div className={styles.authors}>{`by ${authors.join(
+                  ", "
+                )}`}</div>
+              ) : null}
+            </div>
+          </div>
+        ) : // Otherwise, if it's a book, show Book Section (user added)
         type === "book" ? (
           <BookSection
             id={id}

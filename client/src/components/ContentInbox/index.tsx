@@ -168,7 +168,13 @@ const ContentInbox = ({
             type={currentContent?.type}
             shelf={currentContent?.shelf}
             startFinishDates={currentContent?.startFinishDates}
-            authors={currentContent?.authors}
+            // .authors for user data, .contentCreators for Newt Discover data
+            authors={
+              currentContent?.authors ||
+              currentContent?.contentCreators?.map(
+                (creator: any) => creator.name
+              )
+            }
             topics={currentContent?.topics}
             source={currentContent?.videoInfo?.source || currentContent?.source}
             mediaId={
