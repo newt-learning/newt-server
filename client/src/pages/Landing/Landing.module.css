@@ -1,7 +1,7 @@
 .App {
   min-height: 100vh;
   background: url("../../assets/background.svg");
-  background-repeat: repeat-x; /* TO DO: only x-scale background svg */
+  background-repeat: no-repeat;
 }
 
 .mainContainer {
@@ -10,7 +10,6 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  width: 100vw;
   max-width: 1600px;
   padding: 0 2rem;
   flex-direction: column;
@@ -37,7 +36,6 @@
 }
 
 .title {
-  font-family: "Avenir";
   font-size: var(--FS-3xl);
   color: white;
   margin-bottom: 2rem;
@@ -78,12 +76,14 @@
   }
 }
 
-@media screen and (min-width: 2000px) {
+@media screen and (min-width: 1440px) {
   .App {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-self: flex-start;
+    /* Stretch background image across the x-axis while preserving height */
+    background-size: 100% 855px;
   }
 
   .mainContainer {

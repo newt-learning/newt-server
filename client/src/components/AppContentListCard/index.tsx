@@ -6,6 +6,7 @@ let cx = classnames.bind(styles);
 
 interface AppContentListCardProps {
   name: string;
+  thumbnailUrl?: string;
   isActive: boolean;
   onClick: () => void;
 }
@@ -13,6 +14,7 @@ interface AppContentListCardProps {
 const AppContentListCard = ({
   name,
   isActive,
+  thumbnailUrl,
   onClick,
 }: AppContentListCardProps) => {
   return (
@@ -23,7 +25,17 @@ const AppContentListCard = ({
       })}
       onClick={onClick}
     >
-      {name}
+      {/* If there's a thumbnail url, show thumbnail */}
+      <div className={styles.thumbnailContainer}>
+        {thumbnailUrl ? (
+          <img
+            src={thumbnailUrl}
+            alt={`Thumbnail for ${name}`}
+            className={styles.thumbnail}
+          />
+        ) : null}
+      </div>
+      <div className={styles.name}>{name}</div>
     </div>
   );
 };

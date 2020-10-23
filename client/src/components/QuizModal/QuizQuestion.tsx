@@ -12,7 +12,7 @@ const QuizQuestion = ({
   numQuestions,
   questionInfo: {
     question,
-    options,
+    options: { options },
     correctAnswer,
     optionChosen,
     isChoiceCorrect,

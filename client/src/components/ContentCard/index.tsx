@@ -18,7 +18,6 @@ interface ContentCardProps {
   showAddToLibrary?: boolean;
   onClickAddToLibrary?: () => void;
 }
-
 const ContentCard = ({
   size,
   showAddToLibrary,

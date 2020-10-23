@@ -11,4 +11,5 @@ module.exports = {
   firebaseMeasurementId: "G-L4FC5RXQ9M",
   youtubeApiKey: "AIzaSyDb0j4Clsjga241MKPJto_mzmuwcAcVTtI",
   googleBooksApiKey: "AIzaSyAAnhzLusMT6bRsmJpHm18SDECXuwzclxw",
+  newtContentBaseUrl: "https://strapi-heroku-trial.herokuapp.com",
 };

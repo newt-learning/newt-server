@@ -1,11 +1,20 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 4rem 2rem;
   background-color: var(--newtBlue-50);
+  width: 100%;
 }
 
 /* No margin below last feature */
 .container div:last-child {
   margin-bottom: 0;
+}
+
+.features {
+  max-width: 1440px;
 }
 
 .feature {
@@ -66,7 +75,7 @@
 .descriptionText {
   text-align: center;
   font-size: var(--FS-base);
-  color: var(--gray-600);
+  color: var(--gray-700);
   margin-top: 0.75rem;
 }
 
@@ -86,6 +95,15 @@
   color: var(--indigo-400);
 }
 
+.descriptionHeader#discover:hover {
+  color: var(--indigo-500);
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 @media screen and (min-width: 640px) {
   .container {
     padding: 4rem;
@@ -94,7 +112,8 @@
   .feature {
     display: flex;
     flex-direction: row;
-    margin-bottom: 8rem;
+    padding-bottom: 4rem;
+    margin-bottom: 4rem;
   }
 
   .mockPhoneContainer {
@@ -156,7 +175,15 @@
 
 @media screen and (min-width: 1024px) {
   .container {
-    padding: 5rem 10rem;
+    padding: 8rem 10rem;
+  }
+
+  .feature {
+    border-bottom: 2px solid var(--newtBlue-100);
+  }
+
+  .feature:last-of-type {
+    border-bottom: none;
   }
 
   .mockPhoneContainer {

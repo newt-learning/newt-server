@@ -6,6 +6,7 @@ import {
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
+import PropagateLoader from "react-spinners/PropagateLoader";
 import { Navbar, MainContainer, QuizModal } from "../../components";
 // Sections
 import ContentFlow from "./ContentFlow";
@@ -27,14 +28,15 @@ const ContentPage = () => {
   const [showReview, setShowReview] = useState(false);
 
   // Fetch content data from slug
-  const { data, status, error } = useFetchIndividualNewtContentBySlug(
+  const { data, isLoading, isError } = useFetchIndividualNewtContentBySlug(
     contentNameSlug
   );
+
   const {
     data: quizData,
     isLoading: isQuizLoading,
     isError: isQuizError,
-  } = useFetchNewtQuiz(data?.quizId);
+  } = useFetchNewtQuiz(data?.quiz?.id);
 
   useEffect(() => {
     if (quizData) {
@@ -54,26 +56,34 @@ const ContentPage = () => {
   };
 
   return (
-    <section>
+    <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <MainContainer style={styles.container}>
-        {status === "loading" ? (
-          "Loading..."
-        ) : error ? (
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            <PropagateLoader size={18} color="#86e1ff" loading={isLoading} />
+          </div>
+        ) : isError ? (
           "Sorry, there was an error"
-        ) : (
+        ) : data ? (
           <>
             <div className={styles.contentFlowContainer}>
               <ContentFlow
-                id={data._id}
+                id={data._id || data.id}
                 title={data.name}
+                authors={data?.contentCreators?.map(
+                  (creator: any) => creator.name
+                )}
                 type={data.type}
-                shelf={data.shelf}
+                shelf={data?.shelf}
                 startFinishDates={data.startFinishDates}
-                source={data.source?.name}
-                mediaId={data.source?.mediaId}
+                source={data?.source?.name || data?.source}
+                mediaId={data.source?.mediaId || data?.sourceId}
+                thumbnailUrl={data?.thumbnailUrl}
+                // source={data.source}
+                // mediaId={data.sourceId}
                 description={data.description}
-                hasQuiz={data.quizId ? true : false}
+                hasQuiz={data.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}
                 buttonText={
                   showReview
@@ -82,17 +92,21 @@ const ContentPage = () => {
                     ? "Continue quiz"
                     : "Take the quiz"
                 }
+                isLoading={isLoading}
               />
             </div>
             <div className={styles.contentInfoContainer}>
               <ContentInfo
-                creator={data.contentCreator?.name}
+                creator={data.contentCreators[0].name}
                 partOfSeries={data.partOfSeries}
-                seriesName={data.series?.name}
+                seriesName={data.series[0]?.name}
+                contentCreatorSlug={data.contentCreators[0].slug}
+                seriesSlug={data.series[0]?.slug}
+                isLoading={isLoading}
               />
             </div>
           </>
-        )}
+        ) : null}
       </MainContainer>
       <QuizModal
         showModal={showQuizModal}

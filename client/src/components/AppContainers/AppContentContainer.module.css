@@ -6,8 +6,15 @@
 .inboxContainer {
   padding: 0;
   height: 100%;
+  flex-direction: column;
 }
 
 .tabPaneContainer {
   display: block;
+}
+
+@media screen and (min-width: 400px) {
+  .inboxContainer {
+    flex-direction: row;
+  }
 }

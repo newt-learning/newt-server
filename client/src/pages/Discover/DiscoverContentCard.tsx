@@ -1,30 +1,50 @@
 import React from "react";
+import classnames from "classnames/bind";
 import { Link } from "react-router-dom";
+import { FiChevronRight } from "react-icons/fi";
 // Styling
 import styles from "./DiscoverContentCard.module.css";
 
-export interface ContentCardProps {
-  name: string;
-  thumbnailUrl: string;
-  creator: string;
-  contentNameSlug: string;
-  contentCreatorSlug: string;
+const cx = classnames.bind(styles);
+
+export interface DiscoverContentCardProps {
+  data: {
+    id?: string;
+    name: string;
+    creator: string;
+    thumbnailUrl: string;
+    contentNameSlug: string;
+    contentCreatorSlug: string;
+  };
+  className?: string;
 }
 
-const ContentCard = ({
-  name,
-  thumbnailUrl,
-  creator,
-  contentNameSlug,
-  contentCreatorSlug,
-}: ContentCardProps) => {
+interface SeeAllCardProps {
+  linkPath: string;
+  className?: string;
+}
+
+export const SeeAllCard = ({ linkPath, className }: SeeAllCardProps) => {
+  return (
+    <Link to={linkPath}>
+      <div className={cx({ card: true, seeAllCard: true }, className)}>
+        See all <FiChevronRight color="#2d3748" size={22} />
+      </div>
+    </Link>
+  );
+};
+
+const DiscoverContentCard = ({
+  data: { name, thumbnailUrl, creator, contentNameSlug, contentCreatorSlug },
+  className,
+}: DiscoverContentCardProps) => {
   return (
     <Link
       to={{
         pathname: `/${contentCreatorSlug}/content/${contentNameSlug}`,
       }}
     >
-      <div className={styles.card}>
+      <div className={cx({ card: true }, className)}>
         <img
           src={thumbnailUrl}
           className={styles.img}
@@ -37,4 +57,4 @@ const ContentCard = ({
   );
 };
 
-export default ContentCard;
+export default DiscoverContentCard;

@@ -1,12 +1,14 @@
 export interface QuizQuestionType {
   _id: string;
   question: string;
-  options: [
-    {
-      option: string;
-      explanation?: string;
-    }
-  ];
+  options: {
+    options: [
+      {
+        option: string;
+        explanation?: string;
+      }
+    ];
+  };
   correctAnswer: string;
   optionChosen?: string;
   isChoiceCorrect?: boolean;

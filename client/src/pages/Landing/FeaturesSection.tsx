@@ -68,8 +68,11 @@ const features = [
       "Why should recommendations be limited in the medium that they are in?",
       "After finishing a book, what if the best next thing is not another book, but a documentary? Or an interactive game?",
       <span>
-        Find your next favourite thing at our <b>curated</b> library filled with
-        incredible content.
+        Find your next favourite thing at our{" "}
+        <a href="discover" className={styles.link}>
+          <b>curated</b> library
+        </a>{" "}
+        filled with incredible content.
       </span>,
     ],
     isPhoneMockup: false,
@@ -89,9 +92,18 @@ const Feature = ({ id, title, description, Graphic }: FeatureProps) => {
         {Graphic}
       </div>
       <div className={styles.descriptionContainer}>
-        <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
-          {title}
-        </h2>
+        {/* If title is Discover, link to page, otherwise just show title */}
+        {title === "Discover" ? (
+          <a href="discover">
+            <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
+              {title}
+            </h2>
+          </a>
+        ) : (
+          <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
+            {title}
+          </h2>
+        )}
         {description.map((para, index) => (
           <p className={styles.descriptionText} key={`${id}-${para}-${index}`}>
             {para}
@@ -105,29 +117,31 @@ const Feature = ({ id, title, description, Graphic }: FeatureProps) => {
 const FeaturesSection = () => {
   return (
     <section className={styles.container}>
-      {features.map((feature) => (
-        <Feature
-          id={feature.id}
-          title={feature.title}
-          description={feature.description}
-          key={feature.id}
-          Graphic={
-            feature.isPhoneMockup ? (
-              <MockPhone
-                {...feature.graphic}
-                phoneStyle={styles.mockPhone}
-                screenshotStyle={styles.screenshot}
-              />
-            ) : (
-              <img
-                src={feature.graphic.imageUrl}
-                alt={feature.graphic.altText}
-                className={styles.discoverImage}
-              />
-            )
-          }
-        />
-      ))}
+      <div className={styles.features}>
+        {features.map((feature) => (
+          <Feature
+            id={feature.id}
+            title={feature.title}
+            description={feature.description}
+            key={feature.id}
+            Graphic={
+              feature.isPhoneMockup ? (
+                <MockPhone
+                  {...feature.graphic}
+                  phoneStyle={styles.mockPhone}
+                  screenshotStyle={styles.screenshot}
+                />
+              ) : (
+                <img
+                  src={feature.graphic.imageUrl}
+                  alt={feature.graphic.altText}
+                  className={styles.discoverImage}
+                />
+              )
+            }
+          />
+        ))}
+      </div>
     </section>
   );
 };

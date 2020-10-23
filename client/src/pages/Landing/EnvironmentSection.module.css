@@ -74,7 +74,7 @@
 .flowEndpointText {
   margin-top: 0.2rem;
   font-size: var(--FS-base);
-  color: var(--gray-600);
+  color: var(--gray-700);
 }
 
 @media screen and (min-width: 640px) {
@@ -152,6 +152,9 @@
 }
 
 @media screen and (min-width: 1280px) {
+  .container {
+    padding: 14rem 7rem 8rem 7rem;
+  }
   .textContainer {
     margin-bottom: 4rem;
   }

@@ -46,9 +46,6 @@ const Badge = ({ children, variant, size, className }: BadgeProps) => {
 
   return (
     <span
-      // className={`${styles.badge} ${selectBadgeStyle(variant)} ${
-      //   className ? className : ""
-      // }`}
       className={cx(
         "badge",
         selectBadgeSize(size),

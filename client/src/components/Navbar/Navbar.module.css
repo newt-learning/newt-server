@@ -1,4 +1,8 @@
 .nav {
+  display: flex;
+  width: 100%;
+  max-width: 1600px;
+  box-sizing: border-box;
   height: 65px;
   padding: 0 2rem;
   border-bottom: 2px solid var(--gray-200);
@@ -112,5 +116,12 @@
   .toDash {
     margin-right: 1rem;
     font-size: var(--FS-base);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .nav {
+    justify-self: center;
+    align-self: center;
   }
 }
