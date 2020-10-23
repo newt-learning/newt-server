@@ -13,8 +13,6 @@ const ReadingChallengeTab = () => {
     challengeType: "reading",
   });
 
-  console.table(readingChallengeData);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

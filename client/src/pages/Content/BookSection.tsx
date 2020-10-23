@@ -11,6 +11,11 @@ import UpdateProgressForm, {
 // Styling
 import styles from "./BookSection.module.css";
 
+type StartFinishDateType = {
+  dateStarted: Date | number;
+  dateCompleted: Date | number;
+};
+
 interface BookSectionProps {
   id: string;
   title: string;
@@ -18,6 +23,7 @@ interface BookSectionProps {
   thumbnailUrl?: string;
   pageCount?: number;
   pagesRead: number;
+  startFinishDates: StartFinishDateType[];
 }
 
 const BookSection = ({
@@ -27,6 +33,7 @@ const BookSection = ({
   authors,
   pageCount,
   pagesRead = 0,
+  startFinishDates,
 }: BookSectionProps) => {
   const [showUpdateProgressModal, setShowUpdateProgressModal] = useState(false);
   const [updateBookProgress] = useUpdateBookProgress();
@@ -51,6 +58,30 @@ const BookSection = ({
     };
 
     updateBookProgress({ contentId: id, data: values });
+    createLearningUpdate(learningUpdateData);
+    setShowUpdateProgressModal(false);
+  };
+
+  // Function that updates pages read to page count and changes shelf to
+  // "Finished Learning" when finished book button is pressed
+  const handleFinishBook = () => {
+    const learningUpdateData = {
+      contentId: id,
+      previousPagesRead: pagesRead,
+      updatedPagesRead: pageCount,
+      numPagesRead: pageCount ? pageCount - pagesRead : null,
+      contentType: "book",
+    };
+
+    // Set the last readings session's dateCompleted as now
+    let updatedStartFinishDates = [...startFinishDates];
+    updatedStartFinishDates[
+      updatedStartFinishDates.length - 1
+    ].dateCompleted = Date.now();
+
+    // pageCount || 0 could introduce bugs? (if there's no page count for example.
+    // But then there would be no page updating either)...
+    updateBookProgress({ contentId: id, data: { pagesRead: pageCount || 0 } });
     createLearningUpdate(learningUpdateData);
     setShowUpdateProgressModal(false);
   };
@@ -99,6 +130,7 @@ const BookSection = ({
             initialValues={pagesRead ? { pagesRead } : { pagesRead: 0 }}
             totalPages={pageCount ? pageCount : 1000000000} // Max is a billion pages if not specified. Hack to ensure page validation
             onSubmit={handleUpdateProgress}
+            onFinishBook={handleFinishBook}
           />
         </Modal.Body>
       </Modal>

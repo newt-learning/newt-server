@@ -20,6 +20,8 @@ interface TopicFormProps {
   buttonCategory?: ButtonCategory;
 }
 
+const CHARACTER_LIMIT = 24;
+
 const TopicForm = ({
   initialValues = { name: "" },
   onSubmit,
@@ -27,7 +29,10 @@ const TopicForm = ({
   buttonCategory = "success",
 }: TopicFormProps) => {
   const createTopicSchema = yup.object({
-    name: yup.string().required("A topic name is required."),
+    name: yup
+      .string()
+      .required("A topic name is required.")
+      .max(CHARACTER_LIMIT),
   });
 
   return (
@@ -61,7 +66,11 @@ const TopicForm = ({
             </Form.Control.Feedback>
           </Form.Group>
           <div className={styles.buttonContainer}>
-            <Button category={buttonCategory} type="submit">
+            <Button
+              category={buttonCategory}
+              type="submit"
+              isDisabled={!!errors.name}
+            >
               {buttonTitle}
             </Button>
           </div>

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
+// API
+import { useUpdateContent } from "../../api/content";
+import { useAddContentToChallenge } from "../../api/challenges";
 // Components
 import { Button, Badge } from "../../components";
 import BookSection from "./BookSection";
@@ -12,6 +15,7 @@ import Modal from "react-bootstrap/Modal";
 import styles from "./ContentFlow.module.css";
 // Helpers
 import { shortenText } from "../Shelves/helpers";
+import { figureOutShelfMovingDataChanges } from "./helpers";
 
 let cx = classnames.bind(styles);
 
@@ -21,11 +25,18 @@ type TopicType =
       name: string;
     }
   | string;
+type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
+type StartFinishDateType = {
+  dateStarted: Date;
+  dateCompleted: Date;
+};
+
 interface ContentFlowProps {
   id: string;
   title: string;
   type: string;
-  shelf: "Currently Learning" | "Want to Learn" | "Finished Learning";
+  shelf: ShelfType;
+  startFinishDates: StartFinishDateType[];
   authors?: string[];
   topics?: TopicType[];
   source?: string;
@@ -48,6 +59,7 @@ const ContentFlow = ({
   authors,
   type,
   shelf,
+  startFinishDates,
   topics,
   source,
   mediaId,
@@ -61,6 +73,29 @@ const ContentFlow = ({
 }: ContentFlowProps) => {
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
+
+  // Updating content
+  const [updateContent] = useUpdateContent();
+  const [addContentToChallenge] = useAddContentToChallenge();
+
+  const updateShelf = (selectedShelf: ShelfType) => {
+    const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
+      startFinishDates,
+    });
+
+    updateContent({ contentId: id, data: updateData });
+
+    // If it's a book and the selected shelf is "Finished Learning", do
+    // additional stuff like updating the reading challenge
+    if (type === "book" && selectedShelf === "Finished Learning") {
+      // Update the reading challenge by adding this book to the finished list
+      // if a challenge exists.
+      addContentToChallenge(id);
+    }
+
+    // Close modal
+    setShowChangeShelfModal(false);
+  };
 
   // Render a new iframe each time because if I just change src, it affects browser
   // history (clicking the back button cycles through previous iframes)
@@ -115,6 +150,7 @@ const ContentFlow = ({
             authors={authors}
             pageCount={bookInfo?.pageCount}
             pagesRead={bookInfo?.pagesRead || 0}
+            startFinishDates={startFinishDates}
           />
         ) : null}
         {/* Shelf info */}
@@ -188,7 +224,7 @@ const ContentFlow = ({
         animation={false}
         backdrop="static"
       >
-        <Modal.Header closeButton>Update Progress</Modal.Header>
+        <Modal.Header closeButton>Change Shelf</Modal.Header>
         <Modal.Body
           style={{
             display: "flex",
@@ -199,7 +235,7 @@ const ContentFlow = ({
         >
           <ChangeShelfForm
             initialValues={{ shelf }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => updateShelf(values.shelf)}
           />
         </Modal.Body>
       </Modal>

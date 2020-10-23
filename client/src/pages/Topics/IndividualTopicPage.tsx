@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import _ from "lodash";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 // API
 import {
@@ -69,9 +68,7 @@ const IndividualTopicPage = () => {
   return (
     <>
       <ContentInbox
-        title={
-          locationState.name ? locationState.name : data ? data.name : "..."
-        }
+        title={data?.name || locationState?.name || "..."}
         contentData={data?.content}
         showOptionsDropdown={true}
         optionsDropdownMenu={dropdownMenu}

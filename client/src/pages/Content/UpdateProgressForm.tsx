@@ -4,6 +4,8 @@ import * as yup from "yup";
 // Components
 import { Button } from "../../components";
 import Form from "react-bootstrap/Form";
+// Styling
+import styles from "./UpdateProgressForm.module.css";
 
 export type UpdateProgressFormValues = {
   pagesRead: number;
@@ -13,12 +15,14 @@ interface UpdateProgressFormProps {
   initialValues: UpdateProgressFormValues;
   totalPages: number;
   onSubmit: (values: UpdateProgressFormValues) => void;
+  onFinishBook: () => void;
 }
 
 const UpdateProgressForm = ({
   initialValues = { pagesRead: 0 },
   totalPages,
   onSubmit,
+  onFinishBook,
 }: UpdateProgressFormProps) => {
   const emDash = String.fromCharCode(8212);
 
@@ -59,7 +63,7 @@ const UpdateProgressForm = ({
             event.preventDefault();
             handleSubmit();
           }}
-          style={{ margin: "1rem 0", width: "70%" }}
+          className={styles.form}
         >
           <Form.Group controlId="pagesRead">
             <Form.Label>Pages read</Form.Label>
@@ -75,7 +79,10 @@ const UpdateProgressForm = ({
               {touched.pagesRead ? errors.pagesRead : null}
             </Form.Control.Feedback>
           </Form.Group>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <p className={styles.finishedBook} onClick={onFinishBook}>
+            I've finished the book
+          </p>
+          <div className={styles.btnContainer}>
             <Button category="success" isDisabled={!isValid} type="submit">
               Update
             </Button>
