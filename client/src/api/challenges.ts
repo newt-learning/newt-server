@@ -1,5 +1,5 @@
 import newtApi from "./newtApi";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, queryCache } from "react-query";
 
 // API calls
 const fetchChallenges = async () => {
@@ -20,6 +20,9 @@ const addContentToChallenge = async (contentId: string) => {
     return;
   }
 };
+const deleteChallenge = async (challengeId: string) => {
+    await newtApi.delete(`/challenges/${challengeId}`);
+};
 
 // React-query bindings
 export function useFetchChallenges() {
@@ -30,4 +33,9 @@ export function useFetchIndividualChallenge(challengeId: string) {
 }
 export function useAddContentToChallenge() {
   return useMutation(addContentToChallenge);
+}
+export function useDeleteChallenge() {
+  return useMutation(deleteChallenge, {
+    onSettled: () => queryCache.invalidateQueries("challenges"),
+  });
 }

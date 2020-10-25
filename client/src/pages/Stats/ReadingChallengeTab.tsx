@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 // API
-import { useFetchChallenges } from "../../api/challenges";
+import { useFetchChallenges, useDeleteChallenge } from "../../api/challenges";
 // Components
 import {
   ContentCard,
@@ -19,6 +19,7 @@ const ReadingChallengeTab = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { isLoading, data: allChallengesData } = useFetchChallenges();
+  const [deleteChallenge] = useDeleteChallenge();
 
   const readingChallengeData = _.filter(allChallengesData, {
     challengeType: "reading",
@@ -33,6 +34,7 @@ const ReadingChallengeTab = () => {
   }
 
   const {
+    _id,
     numItemsFinished,
     totalItems,
     itemsFinished,
@@ -55,6 +57,11 @@ const ReadingChallengeTab = () => {
       onClick: () => setShowDeleteModal(true),
     },
   ];
+
+  const handleDeleteChallenge = () => {
+    deleteChallenge(_id);
+    setShowDeleteModal(false);
+  };
 
   return (
     <>
@@ -110,7 +117,7 @@ const ReadingChallengeTab = () => {
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
         itemToDelete="challenge"
-        onDelete={() => alert("delete challenge")}
+        onDelete={handleDeleteChallenge}
       />
     </>
   );
