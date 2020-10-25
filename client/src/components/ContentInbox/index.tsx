@@ -87,9 +87,13 @@ const ContentInbox = ({
               <p className={styles.creators}>{`by ${creators}`}</p>
             ) : null}
             {/* Number of items in series/playlist */}
-            {!_.isEmpty(contentData) ? (
-              <p className={styles.numItems}>{`${contentData.length} items`}</p>
-            ) : null}
+            {/* {!_.isEmpty(contentData) ? ( */}
+            {!isLoading && (
+              <p className={styles.numItems}>{`${
+                contentData?.length || 0
+              } items`}</p>
+            )}
+            {/* ) : null} */}
           </div>
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}

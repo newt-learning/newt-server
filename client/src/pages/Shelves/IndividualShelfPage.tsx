@@ -14,6 +14,7 @@ const SHELF_SLUG_TO_NAME: any = {
 };
 
 const IndividualShelfPage = () => {
+  // @ts-ignore
   let { shelfName } = useParams();
 
   const { data } = useFetchAllContent();

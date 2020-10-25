@@ -73,6 +73,8 @@ const IndividualTopicPage = () => {
         showOptionsDropdown={true}
         optionsDropdownMenu={dropdownMenu}
         backButtonStyle={styles.backBtn}
+        isLoading={isLoading}
+        isError={isError}
       />
       <Modal
         size="lg"
