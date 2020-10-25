@@ -11,13 +11,12 @@ import ChangeShelfForm from "./ChangeShelfForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import TopicCard from "../Topics/TopicCard";
 import Modal from "react-bootstrap/Modal";
+import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentFlow.module.css";
 // Helpers
 import { shortenText } from "../Shelves/helpers";
 import { figureOutShelfMovingDataChanges } from "./helpers";
-
-let cx = classnames.bind(styles);
 
 type TopicType =
   | {
@@ -51,7 +50,10 @@ interface ContentFlowProps {
   onTakeQuiz?: () => void;
   buttonText?: string;
   variant: "default" | "inbox"; // No container styling for inbox
+  isLoading?: boolean;
 }
+
+let cx = classnames.bind(styles);
 
 const ContentFlow = ({
   id,
@@ -70,6 +72,7 @@ const ContentFlow = ({
   onTakeQuiz,
   buttonText,
   variant,
+  isLoading,
 }: ContentFlowProps) => {
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -118,13 +121,17 @@ const ContentFlow = ({
         inbox: variant === "inbox",
       })}
     >
-      {title ? (
+      {isLoading ? (
+        <Skeleton />
+      ) : title ? (
         <div className={styles.titleContainer}>
           <h2 className={styles.title}>
             {title}{" "}
             {/* Do this a better way where there's type-checking AND I can just pass data.
               Might have to set types for all the data */}
-            <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
+            {shelf ? (
+              <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
+            ) : null}
           </h2>
         </div>
       ) : null}
@@ -136,12 +143,32 @@ const ContentFlow = ({
         {/* If video and from youtube, embed video */}
         {type === "video" && source?.toLowerCase() === "youtube" ? (
           <div className={styles.videoContainer}>
-            <IFrame
-              title={title}
-              src={`https://www.youtube.com/embed/${mediaId}`}
-            />
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <IFrame
+                title={title}
+                src={`https://www.youtube.com/embed/${mediaId}`}
+              />
+            )}
           </div>
-        ) : // Otherwise, if it's a book, show Book Section
+        ) : // The !shelf is for books in Newt Discover section (not user added)
+        type === "book" && !shelf ? (
+          <div className={styles.bookContainer}>
+            <img
+              src={thumbnailUrl}
+              alt={title}
+              className={styles.bookThumbnail}
+            />
+            <div className={styles.bookInfo}>
+              {authors ? (
+                <div className={styles.authors}>{`by ${authors.join(
+                  ", "
+                )}`}</div>
+              ) : null}
+            </div>
+          </div>
+        ) : // Otherwise, if it's a book, show Book Section (user added)
         type === "book" ? (
           <BookSection
             id={id}

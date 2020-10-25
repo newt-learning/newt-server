@@ -1,5 +1,4 @@
 .container {
-  width: 100vw;
   max-width: 1600px;
   box-sizing: border-box;
   padding: 2rem;
@@ -15,5 +14,12 @@
 @media screen and (min-width: 1024px) {
   .container {
     padding: 2rem 6rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    justify-self: center;
+    align-self: center;
   }
 }

@@ -1,9 +1,16 @@
 import React from "react";
+import _ from "lodash";
+import { Link } from "react-router-dom";
 // API
-import { useFetchNewtContent } from "../../api/newtContent";
+import {
+  useFetchAllNewtSeries,
+  useFetchAllNewtPlaylists,
+  useFetchNewtContent,
+} from "../../api/newtContent";
 // Components
 import { MainContainer, Navbar } from "../../components";
 import DiscoverContentCard from "./DiscoverContentCard";
+import SeriesCard from "../Series/SeriesCard";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -11,22 +18,44 @@ interface DataProps {
   _id: string;
   name: string;
   thumbnailUrl: string;
-  contentCreator: {
-    contentCreatorId: string;
-    name: string;
-    url: string;
-    slug: string;
-  };
+  contentCreators: [
+    {
+      _id: string;
+      name: string;
+      slug: string;
+      url: string;
+    }
+  ];
   slug: string;
 }
 
 const DiscoverPage = () => {
-  const { data, status } = useFetchNewtContent();
+  // Fetch series data that's featured
+  const {
+    data: seriesData,
+    isLoading: seriesIsLoading,
+    isError,
+  } = useFetchAllNewtSeries({
+    featuredStatus: "featured1",
+  });
+  const {
+    data: playlistData,
+    isLoading: playlistIsLoading,
+  } = useFetchAllNewtPlaylists({
+    featuredStatus: "featured1",
+  });
+  // Fetch content not part of a series
+  const {
+    data: contentData,
+    isLoading: contentIsLoading,
+    isError: contentIsError,
+  } = useFetchNewtContent({ partOfSeries: false });
 
-  console.log(data);
+  const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
+  const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
 
   return (
-    <section>
+    <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <MainContainer>
         <aside className={styles.sidebar}></aside>
@@ -37,33 +66,96 @@ const DiscoverPage = () => {
               Find the next thing you want to learn from our curated library*.
             </p>
             <p className={styles.disclaimer}>
-              * (This is an experimental section, which is why there's only one
-              item right now. Click on the link below for a sneak peek into what
-              we're trying to build).
+              * (Under construction{" "}
+              <span role="img" aria-label="construction emoji">
+                🚧
+              </span>
+              . To try the experimental quiz feature, check out &nbsp;
+              <Link
+                to={`/crash-course/content/early-computing-crash-course-computer-science-1`}
+              >
+                Early Computing Crash Course Computer Science #1
+              </Link>
+              ).
             </p>
           </div>
-          <div className={styles.contentContainer}>
-            {status === "loading"
-              ? "Loading..."
-              : data.map(
-                  ({
-                    _id: id,
-                    name,
-                    thumbnailUrl,
-                    contentCreator,
-                    slug,
-                  }: DataProps) => (
-                    <DiscoverContentCard
-                      key={id}
-                      name={name}
-                      thumbnailUrl={thumbnailUrl}
-                      creator={contentCreator.name}
-                      contentNameSlug={slug}
-                      contentCreatorSlug={contentCreator.slug}
-                    />
-                  )
-                )}
-          </div>
+          {/* Series */}
+          {isError ? (
+            <div style={{ marginTop: "2rem" }}>
+              Sorry, there was an error fetching the data.
+            </div>
+          ) : (
+            <div style={{ marginTop: "2rem" }}>
+              {/* Featured series */}
+              <SeriesCard
+                type={featuredSeries?.type}
+                isLoading={seriesIsLoading}
+                linkPath={`/${featuredSeries?.seriesCreator?.slug}/series/${featuredSeries?.slug}`}
+                data={{
+                  name: featuredSeries?.name,
+                  slug: featuredSeries?.slug,
+                  creator: featuredSeries?.seriesCreator?.name,
+                  creatorSlug: featuredSeries?.seriesCreator?.slug,
+                  content: featuredSeries?.content,
+                }}
+                colors={{
+                  backgroundColor: featuredSeries?.backgroundColor,
+                  textColor: featuredSeries?.textColor,
+                }}
+              />
+              {/* Featured playlist */}
+              <>
+                <h2 style={{ marginTop: "2.5rem" }}>Newt Playlists</h2>
+                <p
+                  className={styles.description}
+                  style={{ marginBottom: "1.5rem" }}
+                >
+                  Check out our curated learning playlists
+                </p>
+                <SeriesCard
+                  type={featuredPlaylist?.type}
+                  isLoading={playlistIsLoading}
+                  linkPath={`/${featuredPlaylist?.creators[0]?.slug}/playlists/${featuredPlaylist?.slug}`}
+                  data={{
+                    name: featuredPlaylist?.name,
+                    slug: featuredPlaylist?.slug,
+                    creator: featuredPlaylist?.creators[0]?.name,
+                    creatorSlug: featuredPlaylist?.creators[0]?.slug,
+                    content: featuredPlaylist?.content,
+                  }}
+                  colors={{
+                    backgroundColor: featuredPlaylist?.colors?.backgroundColor,
+                    textColor: featuredPlaylist?.colors?.textColor,
+                  }}
+                />
+              </>
+            </div>
+          )}
+          {/* Content */}
+          {contentIsLoading ? (
+            "Loading..."
+          ) : contentIsError ? (
+            "Sorry, there was an error"
+          ) : !_.isEmpty(contentData) ? (
+            <>
+              <h2 style={{ marginTop: "2.5rem" }}>Some Favourites</h2>
+              <div className={styles.contentContainer}>
+                {contentData.map((content: any) => (
+                  <DiscoverContentCard
+                    key={content?.id}
+                    data={{
+                      id: content?.id,
+                      name: content?.name,
+                      creator: content?.contentCreators[0].name,
+                      thumbnailUrl: content?.thumbnailUrl,
+                      contentNameSlug: content?.slug,
+                      contentCreatorSlug: content?.contentCreators[0].slug,
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
       </MainContainer>
     </section>

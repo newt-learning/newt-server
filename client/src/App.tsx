@@ -10,7 +10,14 @@ import { Provider as SidebarProvider } from "./context/SidebarContext";
 // Section
 import NewtWebApp from "./NewtWebApp";
 // Pages
-import { LandingPage, LoginPage, DiscoverPage, ContentPage } from "./pages";
+import {
+  LandingPage,
+  DiscoverPage,
+  ContentPage,
+  PlaylistPage,
+  SeriesPage,
+  LoginPage,
+} from "./pages";
 
 // Routes in app that don't require authentication
 const NoAuthRequiredSection = () => {
@@ -21,6 +28,11 @@ const NoAuthRequiredSection = () => {
       <Route
         path="/:creator/content/:contentNameSlug"
         component={ContentPage}
+      />
+      <Route path="/:creator/series/:seriesSlug" component={SeriesPage} />
+      <Route
+        path="/:creator/playlists/:playlistSlug"
+        component={PlaylistPage}
       />
       <Route path="/" component={LandingPage} />
     </Switch>
@@ -49,7 +61,14 @@ const App = () => {
         component={NewtWebApp}
       />
       <Route
-        path={["/", "/login", "/discover", "/:creator"]}
+        path={[
+          "/",
+          "/login",
+          "/discover",
+          "/:creator/content/:contentNameSlug",
+          "/:creator/series/:seriesSlug",
+          "/:creator/playlists/:playlistSlug",
+        ]}
         component={NoAuthRequiredSection}
       />
     </Switch>

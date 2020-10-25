@@ -16,6 +16,7 @@ import {
 import AppContentListCard from "../AppContentListCard";
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Dropdown from "react-bootstrap/Dropdown";
+import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
 
@@ -27,17 +28,20 @@ export interface OptionsDropdownItemType {
 
 interface ContentInboxProps {
   title: string;
+  creators?: string;
   isLoading?: boolean;
   isError?: boolean;
   contentData?: any;
   showOptionsDropdown?: boolean;
   optionsDropdownMenu?: OptionsDropdownItemType[];
+  className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
 
 interface ContentData {
   _id: string;
   name: string;
+  thumbnailUrl?: string;
 }
 
 const cx = classnames.bind(styles);
@@ -59,11 +63,13 @@ const defaultDropdownMenu: OptionsDropdownItemType[] = [
 
 const ContentInbox = ({
   title,
+  creators,
   isLoading,
   isError,
   contentData,
   showOptionsDropdown = false,
   optionsDropdownMenu = defaultDropdownMenu,
+  className,
   backButtonStyle,
 }: ContentInboxProps) => {
   const history = useHistory();
@@ -83,17 +89,29 @@ const ContentInbox = ({
   }, [contentData]);
 
   return (
-    <AppMainContainer variant="inbox">
+    <AppMainContainer variant="inbox" className={className}>
       <AppHeaderContainer>
-        <div style={{ display: "flex" }}>
-          <div onClick={() => history.goBack()}>
-            <FiArrowLeft
-              size={24}
-              className={cx({ backBtn: true }, backButtonStyle)}
-            />
+        <div className={styles.header}>
+          <div className={styles.titleContainer}>
+            <div onClick={() => history.goBack()}>
+              <FiArrowLeft
+                size={24}
+                className={cx({ backBtn: true }, backButtonStyle)}
+              />
+            </div>
+            {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
+            {isLoading ? <Skeleton /> : <h2>{title}</h2>}
           </div>
-          {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
-          <h2>{title}</h2>
+          <div className={styles.creatorsContainer}>
+            {/* Creators */}
+            {creators ? (
+              <p className={styles.creators}>{`by ${creators}`}</p>
+            ) : null}
+            {/* Number of items in series/playlist */}
+            {!_.isEmpty(contentData) ? (
+              <p className={styles.numItems}>{`${contentData.length} items`}</p>
+            ) : null}
+          </div>
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}
         {showOptionsDropdown ? (
@@ -126,14 +144,21 @@ const ContentInbox = ({
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
         <AppContentList>
-          {contentData?.map(({ _id, name }: ContentData, index: number) => (
-            <AppContentListCard
-              name={name}
-              onClick={() => setCurrentContent(contentData[index])}
-              isActive={_id === currentContent?._id}
-              key={_id}
-            />
-          ))}
+          {isLoading ? (
+            <Skeleton height={100} count={4} />
+          ) : (
+            contentData?.map(
+              ({ _id, name, thumbnailUrl }: ContentData, index: number) => (
+                <AppContentListCard
+                  name={name}
+                  thumbnailUrl={thumbnailUrl}
+                  onClick={() => setCurrentContent(contentData[index])}
+                  isActive={_id === currentContent?._id}
+                  key={_id}
+                />
+              )
+            )
+          )}
         </AppContentList>
         <AppContentDetails>
           <ContentFlow
@@ -143,16 +168,25 @@ const ContentInbox = ({
             type={currentContent?.type}
             shelf={currentContent?.shelf}
             startFinishDates={currentContent?.startFinishDates}
-            authors={currentContent?.authors}
+            // .authors for user data, .contentCreators for Newt Discover data
+            authors={
+              currentContent?.authors ||
+              currentContent?.contentCreators?.map(
+                (creator: any) => creator.name
+              )
+            }
             topics={currentContent?.topics}
-            source={currentContent?.videoInfo?.source}
-            mediaId={currentContent?.videoInfo?.videoId}
+            source={currentContent?.videoInfo?.source || currentContent?.source}
+            mediaId={
+              currentContent?.videoInfo?.videoId || currentContent?.sourceId
+            }
             thumbnailUrl={currentContent?.thumbnailUrl}
             description={currentContent?.description}
             bookInfo={{
               pageCount: currentContent?.bookInfo?.pageCount,
               pagesRead: currentContent?.bookInfo?.pagesRead,
             }}
+            isLoading={isLoading}
             // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}
             hasQuiz={false} // Don't show for now
           />

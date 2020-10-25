@@ -1,0 +1,6 @@
+/* Overrides AppMainContainer height (based on NewtWebApp Navbar which is 54px).
+   This way there's no scrolling for the whole container, just two separate 
+   scrolling for each section in Inbox. Probs a better way of doing this. */
+.parentContainer {
+  height: calc(100vh - 65px);
+}
