@@ -178,6 +178,9 @@ const ContentFlow = ({
             pageCount={bookInfo?.pageCount}
             pagesRead={bookInfo?.pagesRead || 0}
             startFinishDates={startFinishDates}
+            showProgressBar={
+              shelf === "Currently Learning" || shelf === "Finished Learning"
+            }
           />
         ) : null}
         {/* Shelf info */}
