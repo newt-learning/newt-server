@@ -9,7 +9,7 @@ import {
 // Components
 import { ContentInbox, DeleteItemModal } from "../../components";
 // Types
-import { OptionsDropdownItemType } from "../../components/ContentInbox";
+import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 import styles from "./Topics.module.css";
 import Modal from "react-bootstrap/Modal";
 import TopicForm, { TopicFormValues } from "./TopicForm";
