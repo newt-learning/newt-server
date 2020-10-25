@@ -39,21 +39,6 @@ interface ContentData {
 }
 
 const cx = classnames.bind(styles);
-const defaultDropdownMenu: OptionsDropdownItemType[] = [
-  {
-    type: "item",
-    title: "Edit",
-    onClick: () => console.log("edit"),
-  },
-  {
-    type: "divider",
-  },
-  {
-    type: "item",
-    title: "Delete",
-    onClick: () => console.log("delete"),
-  },
-];
 
 const ContentInbox = ({
   title,
@@ -62,7 +47,7 @@ const ContentInbox = ({
   isError,
   contentData,
   showOptionsDropdown = false,
-  optionsDropdownMenu = defaultDropdownMenu,
+  optionsDropdownMenu,
   className,
   backButtonStyle,
 }: ContentInboxProps) => {

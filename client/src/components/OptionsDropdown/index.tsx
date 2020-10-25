@@ -14,6 +14,22 @@ interface OptionsDropdownProps {
   options: OptionsDropdownItemType[];
 }
 
+const defaultDropdownMenu: OptionsDropdownItemType[] = [
+  {
+    type: "item",
+    title: "Edit",
+    onClick: () => console.log("edit"),
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "item",
+    title: "Delete",
+    onClick: () => console.log("delete"),
+  },
+];
+
 const OptionsDropdown = ({ id, options }: OptionsDropdownProps) => {
   return (
     <div className={styles.dropdown}>
@@ -38,6 +54,10 @@ const OptionsDropdown = ({ id, options }: OptionsDropdownProps) => {
       </Dropdown>
     </div>
   );
+};
+
+OptionsDropdown.defaultProps = {
+  options: defaultDropdownMenu,
 };
 
 export default OptionsDropdown;

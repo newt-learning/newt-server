@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
+// API
 import { useFetchChallenges } from "../../api/challenges";
-import { ContentCard } from "../../components";
+// Components
+import {
+  ContentCard,
+  OptionsDropdown,
+  DeleteItemModal,
+} from "../../components";
 import { CircularProgressbar } from "react-circular-progressbar";
+// Styling
 import "react-circular-progressbar/dist/styles.css";
 import styles from "./Stats.module.css";
+// Types
+import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
 const ReadingChallengeTab = () => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const { isLoading, data: allChallengesData } = useFetchChallenges();
 
   const readingChallengeData = _.filter(allChallengesData, {
@@ -29,8 +40,30 @@ const ReadingChallengeTab = () => {
   const progress = numItemsFinished / totalItems;
   const finishedFraction = `${numItemsFinished} / ${totalItems}`;
 
+  const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: "Edit",
+      onClick: () => console.log("edit"),
+    },
+    {
+      type: "divider",
+    },
+    {
+      type: "item",
+      title: "Delete",
+      onClick: () => setShowDeleteModal(true),
+    },
+  ];
+
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <OptionsDropdown
+          id="reading-challenge-dropdown"
+          options={dropdownMenu}
+        />
+      </div>
       <div className={styles.challengeProgressContainer}>
         <div style={{ width: 225, height: 225 }}>
           <CircularProgressbar
@@ -73,6 +106,12 @@ const ReadingChallengeTab = () => {
             : null}
         </div>
       </div>
+      <DeleteItemModal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        itemToDelete="challenge"
+        onDelete={() => alert("delete challenge")}
+      />
     </>
   );
 };
