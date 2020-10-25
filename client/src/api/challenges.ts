@@ -1,6 +1,11 @@
 import newtApi from "./newtApi";
 import { useQuery, useMutation, queryCache } from "react-query";
 
+type UpdateChallengeParams = {
+  challengeId: string;
+  data: any
+}
+
 // API calls
 const fetchChallenges = async () => {
   const { data } = await newtApi.get("v2/challenges");
@@ -12,6 +17,9 @@ const fetchIndividualChallenge = async (queryKey: any, challengeId: string) => {
 };
 const createChallenge = async (data: any) => {
   await newtApi.post("/challenges/create", data);
+}
+const updateChallenge = async ({ challengeId, data }: UpdateChallengeParams) => {
+  await newtApi.put(`/challenges/${challengeId}/update`, data)
 }
 const addContentToChallenge = async (contentId: string) => {
   try {
@@ -38,6 +46,11 @@ export function useCreateChallenge() {
   return useMutation(createChallenge, {
     onSettled: () => queryCache.invalidateQueries("challenges")
   })
+}
+export function useUpdateChallenge() {
+  return useMutation(updateChallenge, {
+    onSettled: () => queryCache.invalidateQueries("challenges"),
+  });
 }
 export function useAddContentToChallenge() {
   return useMutation(addContentToChallenge);

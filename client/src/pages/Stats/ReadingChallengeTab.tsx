@@ -5,6 +5,7 @@ import {
   useFetchChallenges,
   useCreateChallenge,
   useDeleteChallenge,
+  useUpdateChallenge,
 } from "../../api/challenges";
 // Components
 import {
@@ -31,6 +32,7 @@ const ReadingChallengeTab = () => {
 
   const { isLoading, data: allChallengesData } = useFetchChallenges();
   const [createChallenge] = useCreateChallenge();
+  const [updateChallenge] = useUpdateChallenge();
   const [deleteChallenge] = useDeleteChallenge();
 
   const handleCreateChallenge = (values: ReadingChallengeFormValues) => {
@@ -42,9 +44,6 @@ const ReadingChallengeTab = () => {
 
     createChallenge(data);
     setShowCreateModal(false);
-  };
-  const handleEditChallenge = (values: ReadingChallengeFormValues) => {
-    console.log(values);
   };
 
   const readingChallengeData = _.filter(allChallengesData, {
@@ -121,6 +120,13 @@ const ReadingChallengeTab = () => {
     },
   ];
 
+  const handleEditChallenge = (values: ReadingChallengeFormValues) => {
+    updateChallenge({
+      challengeId: _id,
+      data: { totalItems: Number(values.totalItems) },
+    });
+    setShowEditModal(false);
+  };
   const handleDeleteChallenge = () => {
     deleteChallenge(_id);
     setShowDeleteModal(false);
