@@ -26,6 +26,7 @@ import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
 const ReadingChallengeTab = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { isLoading, data: allChallengesData } = useFetchChallenges();
@@ -41,6 +42,9 @@ const ReadingChallengeTab = () => {
 
     createChallenge(data);
     setShowCreateModal(false);
+  };
+  const handleEditChallenge = (values: ReadingChallengeFormValues) => {
+    console.log(values);
   };
 
   const readingChallengeData = _.filter(allChallengesData, {
@@ -105,7 +109,7 @@ const ReadingChallengeTab = () => {
     {
       type: "item",
       title: "Edit",
-      onClick: () => console.log("edit"),
+      onClick: () => setShowEditModal(true),
     },
     {
       type: "divider",
@@ -172,6 +176,32 @@ const ReadingChallengeTab = () => {
             : null}
         </div>
       </div>
+      <Modal
+        show={showEditModal}
+        onHide={() => setShowEditModal(false)}
+        size="lg"
+        backdrop="static"
+        animation={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Reading Challenge</Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ReadingChallengeForm
+            initialValues={{ totalItems }}
+            onSubmit={handleEditChallenge}
+            buttonTitle="Edit"
+            buttonCategory="secondary"
+          />
+        </Modal.Body>
+      </Modal>
       <DeleteItemModal
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
