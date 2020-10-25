@@ -5,10 +5,13 @@ import { useFetchChallenges, useDeleteChallenge } from "../../api/challenges";
 // Components
 import {
   ContentCard,
+  Button,
   OptionsDropdown,
   DeleteItemModal,
 } from "../../components";
+import ReadingChallengeForm from "./ReadingChallengeForm";
 import { CircularProgressbar } from "react-circular-progressbar";
+import Modal from "react-bootstrap/Modal";
 // Styling
 import "react-circular-progressbar/dist/styles.css";
 import styles from "./Stats.module.css";
@@ -16,6 +19,7 @@ import styles from "./Stats.module.css";
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
 const ReadingChallengeTab = () => {
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { isLoading, data: allChallengesData } = useFetchChallenges();
@@ -29,8 +33,47 @@ const ReadingChallengeTab = () => {
     return <div>Loading...</div>;
   }
 
+  // Return this (UI to create one) is no reading challenge data exists
   if (_.isEmpty(readingChallengeData)) {
-    return <div>No reading challenges</div>;
+    return (
+      <>
+        <div
+          style={{
+            height: "400px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button category="success" onClick={() => setShowCreateModal(true)}>
+            Create Reading Challenge
+          </Button>
+        </div>
+        <Modal
+          show={showCreateModal}
+          onHide={() => setShowCreateModal(false)}
+          size="lg"
+          backdrop="static"
+          animation={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Create Reading Challenge</Modal.Title>
+          </Modal.Header>
+          <Modal.Body
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ReadingChallengeForm
+              onSubmit={(values: any) => console.log(values)}
+            />
+          </Modal.Body>
+        </Modal>
+      </>
+    );
   }
 
   const {
