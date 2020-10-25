@@ -10,6 +10,9 @@ const fetchIndividualChallenge = async (queryKey: any, challengeId: string) => {
   const { data } = await newtApi.get(`/challenges/${challengeId}`);
   return data;
 };
+const createChallenge = async (data: any) => {
+  await newtApi.post("/challenges/create", data);
+}
 const addContentToChallenge = async (contentId: string) => {
   try {
     await newtApi.put("/challenges/add-content", { contentId });
@@ -30,6 +33,11 @@ export function useFetchChallenges() {
 }
 export function useFetchIndividualChallenge(challengeId: string) {
   return useQuery(["challenge", challengeId], fetchIndividualChallenge);
+}
+export function useCreateChallenge() {
+  return useMutation(createChallenge, {
+    onSettled: () => queryCache.invalidateQueries("challenges")
+  })
 }
 export function useAddContentToChallenge() {
   return useMutation(addContentToChallenge);

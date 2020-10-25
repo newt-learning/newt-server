@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import _ from "lodash";
 // API
-import { useFetchChallenges, useDeleteChallenge } from "../../api/challenges";
+import {
+  useFetchChallenges,
+  useCreateChallenge,
+  useDeleteChallenge,
+} from "../../api/challenges";
 // Components
 import {
   ContentCard,
@@ -9,7 +13,9 @@ import {
   OptionsDropdown,
   DeleteItemModal,
 } from "../../components";
-import ReadingChallengeForm from "./ReadingChallengeForm";
+import ReadingChallengeForm, {
+  ReadingChallengeFormValues,
+} from "./ReadingChallengeForm";
 import { CircularProgressbar } from "react-circular-progressbar";
 import Modal from "react-bootstrap/Modal";
 // Styling
@@ -23,7 +29,19 @@ const ReadingChallengeTab = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { isLoading, data: allChallengesData } = useFetchChallenges();
+  const [createChallenge] = useCreateChallenge();
   const [deleteChallenge] = useDeleteChallenge();
+
+  const handleCreateChallenge = (values: ReadingChallengeFormValues) => {
+    const data = {
+      contentTypes: ["book"],
+      challengeType: "reading",
+      totalItems: Number(values.totalItems),
+    };
+
+    createChallenge(data);
+    setShowCreateModal(false);
+  };
 
   const readingChallengeData = _.filter(allChallengesData, {
     challengeType: "reading",
@@ -67,9 +85,7 @@ const ReadingChallengeTab = () => {
               alignItems: "center",
             }}
           >
-            <ReadingChallengeForm
-              onSubmit={(values: any) => console.log(values)}
-            />
+            <ReadingChallengeForm onSubmit={handleCreateChallenge} />
           </Modal.Body>
         </Modal>
       </>
