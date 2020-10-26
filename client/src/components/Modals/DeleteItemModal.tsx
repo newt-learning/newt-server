@@ -6,7 +6,7 @@ import Button from "../Button";
 interface DeleteItemModalProps {
   show: boolean;
   onHide: () => void;
-  itemToDelete?: "item" | "topic" | "challenge";
+  itemToDelete?: string;
   onDelete: () => void;
 }
 

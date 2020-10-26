@@ -5,7 +5,12 @@ import classnames from "classnames/bind";
 import { useUpdateContent } from "../../api/content";
 import { useAddContentToChallenge } from "../../api/challenges";
 // Components
-import { Button, Badge } from "../../components";
+import {
+  Button,
+  Badge,
+  OptionsDropdown,
+  DeleteItemModal,
+} from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
@@ -17,6 +22,8 @@ import styles from "./ContentFlow.module.css";
 // Helpers
 import { shortenText } from "../Shelves/helpers";
 import { figureOutShelfMovingDataChanges } from "./helpers";
+// Types
+import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
 type TopicType =
   | {
@@ -74,6 +81,7 @@ const ContentFlow = ({
   variant,
   isLoading,
 }: ContentFlowProps) => {
+  const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
@@ -114,6 +122,14 @@ const ContentFlow = ({
     />
   );
 
+  const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: "Delete",
+      onClick: () => setShowDeleteItemModal(true),
+    },
+  ];
+
   return (
     <div
       className={cx({
@@ -133,6 +149,10 @@ const ContentFlow = ({
               <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
             ) : null}
           </h2>
+          <OptionsDropdown
+            id={`${title}-options-dropdown`}
+            options={dropdownMenu}
+          />
         </div>
       ) : null}
       <div className={styles.flowContainer}>
@@ -269,6 +289,12 @@ const ContentFlow = ({
           />
         </Modal.Body>
       </Modal>
+      <DeleteItemModal
+        show={showDeleteItemModal}
+        onHide={() => setShowDeleteItemModal(false)}
+        itemToDelete={type}
+        onDelete={() => alert("delete")}
+      />
     </div>
   );
 };
