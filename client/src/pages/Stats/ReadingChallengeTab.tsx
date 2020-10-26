@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import _ from "lodash";
 // API
 import {
@@ -22,6 +22,8 @@ import Modal from "react-bootstrap/Modal";
 // Styling
 import "react-circular-progressbar/dist/styles.css";
 import styles from "./Stats.module.css";
+// Helpers
+import { orderByFinishDate } from "../Shelves/helpers";
 // Types
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
@@ -104,6 +106,9 @@ const ReadingChallengeTab = () => {
   const progress = numItemsFinished / totalItems;
   const finishedFraction = `${numItemsFinished} / ${totalItems}`;
 
+  // Sort items by finish data (should really be done server-side, eh?)
+  const sortedItemsFinished = orderByFinishDate(itemsFinished, "asc");
+
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
       type: "item",
@@ -161,8 +166,8 @@ const ReadingChallengeTab = () => {
       <div className={styles.finishedItemsContainer}>
         <h4 className={styles.header}>Completed books</h4>
         <div className={styles.finishedItems}>
-          {!_.isEmpty(itemsFinished)
-            ? itemsFinished.map((item: any) => {
+          {!_.isEmpty(sortedItemsFinished)
+            ? sortedItemsFinished.map((item: any) => {
                 const { startFinishDates } = item;
                 const latestDateCompleted = !_.isEmpty(startFinishDates)
                   ? startFinishDates[startFinishDates.length - 1].dateCompleted
