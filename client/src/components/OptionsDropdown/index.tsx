@@ -44,7 +44,13 @@ const OptionsDropdown = ({ id, options }: OptionsDropdownProps) => {
               return <Dropdown.Divider key={index} />;
             } else {
               return (
-                <Dropdown.Item key={index} onClick={item.onClick}>
+                <Dropdown.Item
+                  key={index}
+                  onClick={item.onClick}
+                  className={
+                    item.title === "Delete" ? styles.delete : undefined
+                  }
+                >
                   {item.title}
                 </Dropdown.Item>
               );
