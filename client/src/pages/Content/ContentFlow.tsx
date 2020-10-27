@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
-import { useUpdateContent } from "../../api/content";
+import { useUpdateContent, useDeleteContent } from "../../api/content";
 import { useAddContentToChallenge } from "../../api/challenges";
 // Components
 import {
@@ -87,6 +87,7 @@ const ContentFlow = ({
 
   // Updating content
   const [updateContent] = useUpdateContent();
+  const [deleteContent, { isLoading: isDeleting }] = useDeleteContent();
   const [addContentToChallenge] = useAddContentToChallenge();
 
   const updateShelf = (selectedShelf: ShelfType) => {
@@ -106,6 +107,11 @@ const ContentFlow = ({
 
     // Close modal
     setShowChangeShelfModal(false);
+  };
+
+  const handleDeleteItem = async () => {
+    await deleteContent(id);
+    setShowDeleteItemModal(false);
   };
 
   // Render a new iframe each time because if I just change src, it affects browser
@@ -293,7 +299,8 @@ const ContentFlow = ({
         show={showDeleteItemModal}
         onHide={() => setShowDeleteItemModal(false)}
         itemToDelete={type}
-        onDelete={() => alert("delete")}
+        onDelete={handleDeleteItem}
+        isDeleting={isDeleting}
       />
     </div>
   );
