@@ -64,6 +64,8 @@ const ContentInbox = ({
   useEffect(() => {
     if (!_.isEmpty(contentData)) {
       setCurrentContent(contentData[0]);
+    } else {
+      setCurrentContent(null);
     }
   }, [contentData]);
 
