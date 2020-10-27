@@ -14,6 +14,7 @@ export { default as ContentInbox } from "./ContentInbox";
 export { default as Footer } from "./Footer";
 export { default as Input } from "./Input";
 export { default as MainContainer } from "./MainContainer";
+export { default as MessageBox } from "./MessageBox"
 export { DeleteItemModal } from "./Modals";
 export { default as Navbar } from "./Navbar";
 export { default as OptionsDropdown } from "./OptionsDropdown"
