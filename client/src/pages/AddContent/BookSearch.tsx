@@ -117,6 +117,10 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
                   key={`${book?.id}-${book?.etag}`}
                   size="small"
                   showAddToLibrary={true}
+                  onClick={() => {
+                    setBookToAdd(book);
+                    setShowAddBookModal(true);
+                  }}
                   onClickAddToLibrary={() => {
                     setBookToAdd(book);
                     setShowAddBookModal(true);
