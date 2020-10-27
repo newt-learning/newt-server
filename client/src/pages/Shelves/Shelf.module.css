@@ -55,3 +55,8 @@
 .name#finished-learning:hover {
   color: var(--gray-900);
 }
+
+.empty {
+  color: var(--gray-600);
+  margin: 0.5rem 0 0 3rem;
+}

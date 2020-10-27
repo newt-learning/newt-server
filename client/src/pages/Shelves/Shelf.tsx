@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { Link } from "react-router-dom";
 import ShelfContentCard from "./ShelfContentCard";
 import styles from "./Shelf.module.css";
@@ -23,19 +24,24 @@ const Shelf = ({ id, name, data }: ShelfProps) => {
           <FiChevronRight size={26} className={styles.icon} />
         </Link>
       </div>
-      {/* Display first 3 items in the shelf */}
-      {data
-        ? data
-            .slice(0, 3)
-            .map((item: any) => (
-              <ShelfContentCard
-                key={item._id}
-                name={item.name}
-                thumbnailUrl={item.thumbnailUrl}
-                shelfId={id}
-              />
-            ))
-        : null}
+      {/* If empty, display empty message, otherwise first 3 items in the shelf */}
+      {_.isEmpty(data) ? (
+        <div className={styles.empty}>
+          Shelf is empty. <Link to="/add-content">Add a book or video</Link>
+        </div>
+      ) : (
+        /* Display first 3 items in the shelf */
+        data
+          .slice(0, 3)
+          .map((item: any) => (
+            <ShelfContentCard
+              key={item._id}
+              name={item.name}
+              thumbnailUrl={item.thumbnailUrl}
+              shelfId={id}
+            />
+          ))
+      )}
     </div>
   );
 };
