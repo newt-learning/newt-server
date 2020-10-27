@@ -209,16 +209,20 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
               </Col>
             </Form.Row>
           ) : null}
-          <h4 className={styles.subheader}>Description</h4>
-          <p className={styles.youtubeText}>
-            {showMore
-              ? bookToAdd?.volumeInfo?.description
-              : shortenText(bookToAdd?.volumeInfo?.description, 300)}
-            <ShowMoreShowLess
-              showMore={showMore}
-              onClick={() => setShowMore(!showMore)}
-            />
-          </p>
+          {bookToAdd?.volumeInfo?.description ? (
+            <>
+              <h4 className={styles.subheader}>Description</h4>
+              <p className={styles.youtubeText}>
+                {showMore
+                  ? bookToAdd?.volumeInfo?.description
+                  : shortenText(bookToAdd?.volumeInfo?.description, 300)}
+                <ShowMoreShowLess
+                  showMore={showMore}
+                  onClick={() => setShowMore(!showMore)}
+                />
+              </p>
+            </>
+          ) : null}
           <Button
             style={styles.addBtn}
             category="success"
