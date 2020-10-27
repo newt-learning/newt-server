@@ -1,3 +1,7 @@
 .container {
   flex-direction: column;
 }
+
+.badge {
+  font-size: var(--FS-base);
+}
