@@ -28,7 +28,10 @@ const IndividualTopicPage = () => {
 
   const { isLoading, data, isError } = useFetchTopic(topicId);
   const [updateTopic, { error: updateTopicError }] = useUpdateTopic();
-  const [deleteTopic, { error: deleteTopicError }] = useDeleteTopic();
+  const [
+    deleteTopic,
+    { isLoading: isDeleting, error: deleteTopicError },
+  ] = useDeleteTopic();
 
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
@@ -50,8 +53,8 @@ const IndividualTopicPage = () => {
     updateTopic({ topicId, data: values });
     setShowEditModal(false);
   };
-  const handleDeleteTopic = () => {
-    deleteTopic(topicId);
+  const handleDeleteTopic = async () => {
+    await deleteTopic(topicId);
     // Close modal
     setShowDeleteModal(false);
     // Go back to Topics page
@@ -100,6 +103,7 @@ const IndividualTopicPage = () => {
         onHide={() => setShowDeleteModal(false)}
         itemToDelete="topic"
         onDelete={handleDeleteTopic}
+        isDeleting={isDeleting}
       />
     </>
   );
