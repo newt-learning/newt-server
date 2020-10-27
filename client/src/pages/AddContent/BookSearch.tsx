@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
 // API
 import { getBookInfo } from "../../api/googleBooksApi";
 // Components
+import { FiBook } from "react-icons/fi";
 import DatePicker from "react-datepicker";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -144,13 +146,20 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
       >
         <Modal.Header closeButton>Add Book to Library</Modal.Header>
         <Modal.Body className={styles.modalBody}>
-          <Image
-            src={
-              bookToAdd ? checkThumbnailExistence(bookToAdd?.volumeInfo) : null
-            }
-            className={styles.thumbnail}
-            fluid
-          />
+          {/* If no thumbnail exists, show Book icon, otherwise book cover image */}
+          {_.isEmpty(checkThumbnailExistence(bookToAdd?.volumeInfo)) ? (
+            <FiBook size={72} color="#4a5568" className={styles.thumbnail} />
+          ) : (
+            <Image
+              src={
+                bookToAdd
+                  ? checkThumbnailExistence(bookToAdd?.volumeInfo)
+                  : null
+              }
+              className={styles.thumbnail}
+              fluid
+            />
+          )}
           <h3 className={styles.title}>{bookToAdd?.volumeInfo?.title}</h3>
           <p className={styles.creator}>{bookToAdd?.volumeInfo?.authors}</p>
           <Form.Group controlId="shelf">
