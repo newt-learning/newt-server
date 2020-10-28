@@ -13,6 +13,7 @@ import {
 } from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
+import SelectTopicsForm from "./SelectTopicsForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import TopicCard, { AddTopicCard } from "../Topics/TopicCard";
 import Modal from "react-bootstrap/Modal";
@@ -305,16 +306,9 @@ const ContentFlow = ({
         animation={false}
         backdrop="static"
       >
-        <Modal.Header closeButton>Add Topics</Modal.Header>
-        <Modal.Body
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          Add topics
+        <Modal.Header closeButton />
+        <Modal.Body>
+          <SelectTopicsForm />
         </Modal.Body>
       </Modal>
       {/* Modal to delete content */}
