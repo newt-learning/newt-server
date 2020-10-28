@@ -14,7 +14,7 @@ import {
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
-import TopicCard from "../Topics/TopicCard";
+import TopicCard, { AddTopicCard } from "../Topics/TopicCard";
 import Modal from "react-bootstrap/Modal";
 import Skeleton from "react-loading-skeleton";
 // Styling
@@ -83,6 +83,7 @@ const ContentFlow = ({
 }: ContentFlowProps) => {
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
+  const [showAddTopicsModal, setShowAddTopicsModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   // Updating content
@@ -242,6 +243,7 @@ const ContentFlow = ({
                   />
                 );
               })}
+              <AddTopicCard onClick={() => setShowAddTopicsModal(true)} />
             </div>
           </>
         ) : null}
@@ -274,6 +276,7 @@ const ContentFlow = ({
           </>
         ) : null}
       </div>
+      {/* Modal to change shelf */}
       <Modal
         show={showChangeShelfModal}
         onHide={() => setShowChangeShelfModal(false)}
@@ -295,6 +298,26 @@ const ContentFlow = ({
           />
         </Modal.Body>
       </Modal>
+      {/* Modal to add topics */}
+      <Modal
+        show={showAddTopicsModal}
+        onHide={() => setShowAddTopicsModal(false)}
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>Add Topics</Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Add topics
+        </Modal.Body>
+      </Modal>
+      {/* Modal to delete content */}
       <DeleteItemModal
         show={showDeleteItemModal}
         onHide={() => setShowDeleteItemModal(false)}

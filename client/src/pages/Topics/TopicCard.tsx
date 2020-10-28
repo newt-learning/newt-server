@@ -5,11 +5,25 @@ import styles from "./TopicCard.module.css";
 
 const cx = classnames.bind(styles);
 
+interface AddTopicCardProps {
+  onClick: () => void;
+}
 interface TopicCardProps {
   id: string;
   name: string;
   variant: "card" | "pill";
 }
+
+export const AddTopicCard = ({ onClick }: AddTopicCardProps) => {
+  return (
+    <div
+      className={cx(styles.container, styles.pill, styles.addPill)}
+      onClick={onClick}
+    >
+      <h6 style={{ marginBottom: 0 }}>+ Add topic</h6>
+    </div>
+  );
+};
 
 const TopicCard = ({ id, name, variant }: TopicCardProps) => {
   return (
