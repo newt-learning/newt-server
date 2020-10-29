@@ -112,6 +112,12 @@ const SelectTopicsForm = ({
         category="success"
         onClick={handleSubmit}
         isLoading={contentIsUpdating || isAddingTopics || isRemovingTopics}
+        style={{
+          display: "flex",
+          margin: "1rem auto",
+          justifyContent: "center",
+          width: "40%",
+        }}
       >
         Confirm
       </Button>
