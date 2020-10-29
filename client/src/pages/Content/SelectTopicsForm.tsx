@@ -22,11 +22,13 @@ interface SelectTopicsFormProps {
   initialTopics: TopicSelectOptionType[] | [] | undefined;
   // initialTopics: any;
   contentId: string;
+  closeModal: () => void;
 }
 
 const SelectTopicsForm = ({
   initialTopics,
   contentId,
+  closeModal,
 }: SelectTopicsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(initialTopics);
   const { data: allTopics, isLoading } = useFetchAllTopics();
@@ -84,9 +86,13 @@ const SelectTopicsForm = ({
     // Send request to add the content to the newly selected topics, remove
     // topics that were unselected, and update the content by adding the topics
     // to it
-    await updateContent({ contentId, data: { topics: selectedTopicsIds } });
-    await addContentToTopics({ topicIds: topicsToAdd, contentId });
+    updateContent({ contentId, data: { topics: selectedTopicsIds } });
+    addContentToTopics({ topicIds: topicsToAdd, contentId });
     await removeContentFromTopics({ topicIds: topicsToRemove, contentId });
+
+    // Close modal -- maybe I should move this whole handler to the parent, how
+    // I usually do
+    closeModal();
   };
 
   return (
@@ -102,7 +108,11 @@ const SelectTopicsForm = ({
         isLoading={isLoading}
         style={{ width: "100%" }}
       />
-      <Button category="success" type="submit" onClick={handleSubmit}>
+      <Button
+        category="success"
+        onClick={handleSubmit}
+        isLoading={contentIsUpdating || isAddingTopics || isRemovingTopics}
+      >
         Confirm
       </Button>
     </>

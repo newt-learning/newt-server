@@ -322,6 +322,7 @@ const ContentFlow = ({
               }
             })}
             contentId={id}
+            closeModal={() => setShowAddTopicsModal(false)}
           />
         </Modal.Body>
       </Modal>
