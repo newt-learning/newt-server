@@ -1,26 +1,82 @@
 import React, { useState } from "react";
-import { useFetchAllTopics } from "../../api/topics";
+import _ from "lodash";
+// API
+import {
+  useFetchAllTopics,
+  useAddContentToTopics,
+  useRemoveContentFromTopics,
+} from "../../api/topics";
+import { useUpdateContent } from "../../api/content";
+// Components
 import Select from "react-select";
 import { Button } from "../../components";
+import TopicCard from "../Topics/TopicCard";
 
 interface SelectTopicsFormProps {
   initialTopics: any;
+  contentId: string;
 }
 
-const SelectTopicsForm = ({ initialTopics }: SelectTopicsFormProps) => {
+const SelectTopicsForm = ({
+  initialTopics,
+  contentId,
+}: SelectTopicsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>([]);
   const { data: allTopics, isLoading } = useFetchAllTopics();
+  const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
+  const [
+    addContentToTopics,
+    { isLoading: isAddingTopics },
+  ] = useAddContentToTopics();
+  const [
+    removeContentFromTopics,
+    { isLoading: isRemovingTopics },
+  ] = useRemoveContentFromTopics();
+
   const formattedTopics = allTopics?.map((topic: any) => ({
     id: topic._id,
     value: topic.name,
     label: topic.name,
   }));
 
-  const handleSubmit = () => {
+  // Pretty much identical to mobile
+  const handleSubmit = async () => {
     // Only get the topic ids from the selected options
-    const selectedTopicsIds = selectedOptions.map((option: any) => option.id);
+    const selectedTopicsIds = selectedOptions?.map((option: any) => option.id);
+    const initialTopicsIds = initialTopics?.map((topic: any) => topic._id);
 
-    console.log(selectedTopicsIds);
+    console.log(initialTopicsIds);
+
+    let topicsToAdd: any = [];
+    let topicsToRemove: any = [];
+
+    // For each of the topics selected, if they're not in the existing topics,
+    // only then add it to the topicsToAdd array. Only those topics will then
+    // have the content added to it to avoid duplication.
+    selectedTopicsIds.forEach((topicId: string) => {
+      if (!_.includes(initialTopicsIds, topicId)) {
+        topicsToAdd.push(topicId);
+      }
+    });
+
+    // For each of the existing topics, if they're not in the selected topics,
+    // then add it to the topicsToRemove array. It will be used to remove the
+    // topic <==> content associations.
+    initialTopicsIds.forEach((topicId: string) => {
+      if (!_.includes(selectedTopicsIds, topicId)) {
+        topicsToRemove.push(topicId);
+      }
+    });
+
+    console.log("topics to add: ", topicsToAdd);
+    console.log("topics to remove: ", topicsToRemove);
+
+    // Send request to add the content to the newly selected topics, remove
+    // topics that were unselected, and update the content by adding the topics
+    // to it
+    await updateContent({ contentId, data: { topics: selectedTopicsIds } });
+    await addContentToTopics({ topicIds: topicsToAdd, contentId });
+    await removeContentFromTopics({ topicIds: topicsToRemove, contentId });
   };
 
   return (

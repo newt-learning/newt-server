@@ -25,6 +25,12 @@ const createTopic = async (data: TopicData) => {
 const updateTopic = async ({ topicId, data }: UpdateTopicParams) => {
   await newtApi.put(`/topics/${topicId}/update`, data);
 };
+const addContentToTopics = async (data: any) => {
+  await newtApi.put('/topics/add-content', data)
+}
+const removeContentFromTopics = async (data: any) => {
+  await newtApi.put("/topics/remove-content", data)
+}
 // Deletes topic and associated content
 const deleteTopic = async (topicId: string) => {
   await newtApi.delete(`/topics/${topicId}`);
@@ -46,6 +52,16 @@ export function useUpdateTopic() {
   return useMutation(updateTopic, {
     onSettled: () => queryCache.invalidateQueries("topic"),
   });
+}
+export function useAddContentToTopics() {
+  return useMutation(addContentToTopics, {
+    onSettled: () => queryCache.invalidateQueries("topics")
+  })
+}
+export function useRemoveContentFromTopics() {
+  return useMutation(removeContentFromTopics, {
+    onSettled: () => queryCache.invalidateQueries("topics")
+  })
 }
 export function useDeleteTopic() {
   return useMutation(deleteTopic, {

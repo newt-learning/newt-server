@@ -308,7 +308,7 @@ const ContentFlow = ({
       >
         <Modal.Header closeButton />
         <Modal.Body>
-          <SelectTopicsForm initialTopics={topics} />
+          <SelectTopicsForm initialTopics={topics} contentId={id} />
         </Modal.Body>
       </Modal>
       {/* Modal to delete content */}
