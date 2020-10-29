@@ -306,7 +306,7 @@ const ContentFlow = ({
         animation={false}
         backdrop="static"
       >
-        <Modal.Header closeButton />
+        <Modal.Header closeButton>Add Topics</Modal.Header>
         <Modal.Body>
           <SelectTopicsForm
             initialTopics={topics?.map((topic: TopicType) => {

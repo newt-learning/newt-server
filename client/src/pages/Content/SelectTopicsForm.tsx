@@ -80,9 +80,6 @@ const SelectTopicsForm = ({
       }
     });
 
-    console.log("topics to add: ", topicsToAdd);
-    console.log("topics to remove: ", topicsToRemove);
-
     // Send request to add the content to the newly selected topics, remove
     // topics that were unselected, and update the content by adding the topics
     // to it
@@ -93,6 +90,33 @@ const SelectTopicsForm = ({
     // Close modal -- maybe I should move this whole handler to the parent, how
     // I usually do
     closeModal();
+  };
+
+  const colorStyles = {
+    option: (styles: any, { isFocused }: any) => {
+      return {
+        ...styles,
+        backgroundColor: isFocused ? "#ffeff3" : "white",
+      };
+    },
+    multiValue: (styles: any) => ({
+      ...styles,
+      backgroundColor: "#ffeff3",
+    }),
+    multiValueLabel: (styles: any) => ({
+      ...styles,
+      color: "#ff386b",
+      fontSize: "1rem",
+    }),
+    multiValueRemove: (styles: any) => ({
+      ...styles,
+      color: "#ff386b",
+      cursor: "pointer",
+      ":hover": {
+        backgroundColor: "#ff386b",
+        color: "#ffeff3",
+      },
+    }),
   };
 
   return (
@@ -106,6 +130,7 @@ const SelectTopicsForm = ({
         options={formattedTopics}
         closeMenuOnSelect={false}
         isLoading={isLoading}
+        styles={colorStyles}
         style={{ width: "100%" }}
       />
       <Button
