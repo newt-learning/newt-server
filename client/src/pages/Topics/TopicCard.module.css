@@ -17,10 +17,11 @@
 }
 
 .pill {
+  border: 2px solid var(--hotPink-100);
   background-color: var(--hotPink-100);
   max-width: 150px;
   padding: 0.5rem 1rem;
-  border-radius: 1.5rem;
+  border-radius: 1.75rem;
 }
 
 .addPill {
@@ -29,12 +30,14 @@
 }
 
 .container:hover {
+  border: 2px solid var(--hotPink-500);
   background-color: var(--hotPink-500);
   color: var(--hotPink-100);
   cursor: pointer;
 }
 
 .addPill:hover {
+  border: 2px dashed var(--hotPink-500);
   background-color: var(--hotPink-100);
   color: var(--hotPink-500);
 }

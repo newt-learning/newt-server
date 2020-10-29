@@ -87,7 +87,7 @@ const SelectTopicsForm = ({
     // topics that were unselected, and update the content by adding the topics
     // to it
     updateContent({ contentId, data: { topics: selectedTopicsIds } });
-    addContentToTopics({ topicIds: topicsToAdd, contentId });
+    await addContentToTopics({ topicIds: topicsToAdd, contentId });
     await removeContentFromTopics({ topicIds: topicsToRemove, contentId });
 
     // Close modal -- maybe I should move this whole handler to the parent, how
