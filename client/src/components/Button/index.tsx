@@ -18,7 +18,8 @@ interface ButtonProps {
   category?: ButtonCategory;
   isLoading?: boolean;
   isDisabled?: boolean;
-  style?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 let cx = classnames.bind(styles);
@@ -30,6 +31,7 @@ const Button = ({
   category,
   isLoading,
   isDisabled,
+  className,
   style,
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
@@ -57,8 +59,9 @@ const Button = ({
         styles.btn,
         selectClassFromCategory(category),
         { disabledBtn: isDisabled },
-        style
+        className
       )}
+      style={style}
     >
       {isLoading ? (
         <div className={styles.spinnerContainer}>

@@ -224,7 +224,7 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
             </>
           ) : null}
           <Button
-            style={styles.addBtn}
+            className={styles.addBtn}
             category="success"
             isLoading={isLoading}
             onClick={async () => {

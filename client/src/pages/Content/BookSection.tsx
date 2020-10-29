@@ -107,7 +107,7 @@ const BookSection = ({
             />
             <Button
               category="secondary"
-              style={styles.updateBtn}
+              className={styles.updateBtn}
               onClick={() => setShowUpdateProgressModal(true)}
             >
               Update Progress

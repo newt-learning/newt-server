@@ -23,7 +23,7 @@ const LoginPage = () => {
             <ul>
               <li className={styles.providerBtn}>
                 <Button
-                  style={`${styles.loginBtn} ${styles.googleBtn}`}
+                  className={`${styles.loginBtn} ${styles.googleBtn}`}
                   onClick={() => authenticateWithGoogle(history)}
                 >
                   <div className={styles.btnContent}>
@@ -36,7 +36,7 @@ const LoginPage = () => {
               </li>
               <li>
                 <Button
-                  style={`${styles.loginBtn} ${styles.githubBtn}`}
+                  className={`${styles.loginBtn} ${styles.githubBtn}`}
                   // onClick={() => authenticateWithGithub(history)}
                 >
                   <div className={styles.btnContent}>

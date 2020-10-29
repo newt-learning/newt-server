@@ -268,7 +268,7 @@ const ContentFlow = ({
             <div className={styles.btnContainer}>
               <Button
                 category="primary"
-                style={styles.quizBtn}
+                className={styles.quizBtn}
                 onClick={onTakeQuiz}
               >
                 {buttonText}
