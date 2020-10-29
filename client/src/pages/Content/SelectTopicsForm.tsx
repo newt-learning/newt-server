@@ -10,10 +10,17 @@ import { useUpdateContent } from "../../api/content";
 // Components
 import Select from "react-select";
 import { Button } from "../../components";
-import TopicCard from "../Topics/TopicCard";
 
+export type TopicSelectOptionType =
+  | {
+      id: string;
+      value: string;
+      label: string;
+    }
+  | undefined;
 interface SelectTopicsFormProps {
-  initialTopics: any;
+  initialTopics: TopicSelectOptionType[] | [] | undefined;
+  // initialTopics: any;
   contentId: string;
 }
 
@@ -21,7 +28,7 @@ const SelectTopicsForm = ({
   initialTopics,
   contentId,
 }: SelectTopicsFormProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
+  const [selectedOptions, setSelectedOptions] = useState<any>(initialTopics);
   const { data: allTopics, isLoading } = useFetchAllTopics();
   const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
   const [
@@ -43,7 +50,10 @@ const SelectTopicsForm = ({
   const handleSubmit = async () => {
     // Only get the topic ids from the selected options
     const selectedTopicsIds = selectedOptions?.map((option: any) => option.id);
-    const initialTopicsIds = initialTopics?.map((topic: any) => topic._id);
+    const initialTopicsIds = _.map(
+      initialTopics,
+      (topic: TopicSelectOptionType) => topic?.id
+    );
 
     console.log(initialTopicsIds);
 
@@ -62,7 +72,7 @@ const SelectTopicsForm = ({
     // For each of the existing topics, if they're not in the selected topics,
     // then add it to the topicsToRemove array. It will be used to remove the
     // topic <==> content associations.
-    initialTopicsIds.forEach((topicId: string) => {
+    initialTopicsIds.forEach((topicId: string | undefined) => {
       if (!_.includes(selectedTopicsIds, topicId)) {
         topicsToRemove.push(topicId);
       }
@@ -85,7 +95,7 @@ const SelectTopicsForm = ({
       <Select
         isMulti
         name="topics"
-        // defaultValue={selectedOptions}
+        defaultValue={selectedOptions}
         onChange={(options) => setSelectedOptions(options)}
         options={formattedTopics}
         closeMenuOnSelect={false}

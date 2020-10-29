@@ -13,7 +13,7 @@ import {
 } from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
-import SelectTopicsForm from "./SelectTopicsForm";
+import SelectTopicsForm, { TopicSelectOptionType } from "./SelectTopicsForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import TopicCard, { AddTopicCard } from "../Topics/TopicCard";
 import Modal from "react-bootstrap/Modal";
@@ -26,7 +26,7 @@ import { figureOutShelfMovingDataChanges } from "./helpers";
 // Types
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
-type TopicType =
+export type TopicType =
   | {
       _id: string;
       name: string;
@@ -308,7 +308,21 @@ const ContentFlow = ({
       >
         <Modal.Header closeButton />
         <Modal.Body>
-          <SelectTopicsForm initialTopics={topics} contentId={id} />
+          <SelectTopicsForm
+            initialTopics={topics?.map((topic: TopicType) => {
+              // Convert from db topic type to input selection type
+              if (topic && typeof topic !== "string") {
+                const topicOption: TopicSelectOptionType = {
+                  id: topic._id,
+                  value: topic.name,
+                  label: topic.name,
+                };
+
+                return topicOption;
+              }
+            })}
+            contentId={id}
+          />
         </Modal.Body>
       </Modal>
       {/* Modal to delete content */}
