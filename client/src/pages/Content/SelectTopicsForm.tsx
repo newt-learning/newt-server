@@ -1,11 +1,27 @@
 import React, { useState } from "react";
-import Select, { OptionsType } from "react-select";
+import { useFetchAllTopics } from "../../api/topics";
+import Select from "react-select";
 import { Button } from "../../components";
 
-const SelectTopicsForm = () => {
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
+interface SelectTopicsFormProps {
+  initialTopics: any;
+}
 
-  console.log(selectedOptions);
+const SelectTopicsForm = ({ initialTopics }: SelectTopicsFormProps) => {
+  const [selectedOptions, setSelectedOptions] = useState<any>([]);
+  const { data: allTopics, isLoading } = useFetchAllTopics();
+  const formattedTopics = allTopics?.map((topic: any) => ({
+    id: topic._id,
+    value: topic.name,
+    label: topic.name,
+  }));
+
+  const handleSubmit = () => {
+    // Only get the topic ids from the selected options
+    const selectedTopicsIds = selectedOptions.map((option: any) => option.id);
+
+    console.log(selectedTopicsIds);
+  };
 
   return (
     <>
@@ -15,13 +31,14 @@ const SelectTopicsForm = () => {
         name="topics"
         // defaultValue={selectedOptions}
         onChange={(options) => setSelectedOptions(options)}
-        options={[
-          { value: "space", label: "Space" },
-          { value: "tech", label: "Tech " },
-        ]}
+        options={formattedTopics}
+        closeMenuOnSelect={false}
+        isLoading={isLoading}
         style={{ width: "100%" }}
       />
-      <Button category="success">Confirm</Button>
+      <Button category="success" type="submit" onClick={handleSubmit}>
+        Confirm
+      </Button>
     </>
   );
 };
