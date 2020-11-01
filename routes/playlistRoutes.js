@@ -42,7 +42,7 @@ module.exports = (app) => {
       data.dateAdded = Date.now();
       data.lastUpdated = Date.now();
 
-      // Create Topic, save to database and send back to client
+      // Create Playlist, save to database and send back to client
       const playlist = new Playlist(data);
       await playlist.save();
       res.send(playlist);

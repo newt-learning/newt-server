@@ -55,6 +55,8 @@ const ContentInbox = ({
 
   const [currentContent, setCurrentContent] = useState<any>(null);
 
+  console.log(contentData);
+
   // Okay there's this weird bug where the Inbox keeps moving to the first item
   // if I go to a different tab, or go off screen, or even open Inspector and close
   // it, but ONLY for Shelves, not for Topics. Must be something from changing data,
