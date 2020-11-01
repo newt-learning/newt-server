@@ -14,7 +14,7 @@ import {
   LandingPage,
   DiscoverPage,
   ContentPage,
-  PlaylistPage,
+  NewtPlaylistPage,
   SeriesPage,
   LoginPage,
 } from "./pages";
@@ -32,7 +32,7 @@ const NoAuthRequiredSection = () => {
       <Route path="/:creator/series/:seriesSlug" component={SeriesPage} />
       <Route
         path="/:creator/playlists/:playlistSlug"
-        component={PlaylistPage}
+        component={NewtPlaylistPage}
       />
       <Route path="/" component={LandingPage} />
     </Switch>
