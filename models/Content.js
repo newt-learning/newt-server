@@ -23,9 +23,12 @@ const startFinishDatesSchema = new Schema(
 );
 
 const contentSchema = new Schema({
+  // 1 - orignial
+  // 2 - dateAdded/dateCompleted converted to startFinishDates
+  // 3 - Deprecating topics, adding playlists instead
   schemaVersion: {
     type: Number,
-    default: 1,
+    default: 3,
   },
   name: String,
   description: String,
@@ -51,6 +54,12 @@ const contentSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Topic",
+    },
+  ],
+  playlists: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Playlist",
     },
   ],
   dateAdded: Date,
