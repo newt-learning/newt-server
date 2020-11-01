@@ -11,8 +11,8 @@ import { PrivateRoute, Sidebar, AppNavbar } from "./components";
 import {
   Dashboard,
   ProfilePage,
-  TopicsPage,
-  IndividualTopicPage,
+  UserPlaylistsPage,
+  IndividualUserPlaylistPage,
   ShelvesPage,
   IndividualShelfPage,
   AddContentPage,
@@ -67,14 +67,14 @@ const NewtWebApp = () => {
             path="/shelves"
           />
           <PrivateRoute
-            Component={IndividualTopicPage}
+            Component={IndividualUserPlaylistPage}
             authExists={exists}
-            path="/topics/:topicId"
+            path="/playlists/:playlistId"
           />
           <PrivateRoute
-            Component={TopicsPage}
+            Component={UserPlaylistsPage}
             authExists={exists}
-            path="/topics"
+            path="/playlists"
           />
           <PrivateRoute
             Component={StatsPage}

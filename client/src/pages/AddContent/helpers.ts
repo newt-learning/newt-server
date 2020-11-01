@@ -48,11 +48,11 @@ export function getBestThumbnail(thumbnails: any) {
 }
 
 // Extract only relevant video information from result of Youtube API + add
-// other content info like shelf and topics
+// other content info like shelf and playlists
 export function extractAndAssembleVideoInfo(
   videoInfo: any,
   shelf: string,
-  topics: any,
+  playlists: any,
   startDate: Date,
   finishDate: Date
 ) {
@@ -77,7 +77,7 @@ export function extractAndAssembleVideoInfo(
     thumbnailUrl: bestThumbnail ? bestThumbnail.url : null,
     type: "video",
     shelf,
-    topics,
+    playlists,
     videoInfo: {
       source: "youtube",
       videoId: _.isString(id) ? id : null,
@@ -173,7 +173,7 @@ export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
 export function extractAndAssembleBookInfo(
   bookObj: any,
   shelf: string,
-  topics: any,
+  playlists: any,
   startDate: Date,
   finishDate: Date
 ) {
@@ -219,7 +219,7 @@ export function extractAndAssembleBookInfo(
     thumbnailUrl: checkThumbnailExistence(bookObj.volumeInfo),
     type: "book",
     shelf,
-    topics,
+    playlists,
     bookInfo: {
       bookId: id,
       title: _.isString(title) ? title : null,

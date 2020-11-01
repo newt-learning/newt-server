@@ -82,11 +82,11 @@ const AddContentPage = () => {
 
   const handleSubmit = async (values: any) => {
     if (onConfirmationPage === "video") {
-      const { videoInfo, shelf, topics, startDate, finishDate } = values;
+      const { videoInfo, shelf, playlists, startDate, finishDate } = values;
       const contentInfo = extractAndAssembleVideoInfo(
         videoInfo,
         shelf,
-        topics,
+        playlists,
         startDate,
         finishDate
       );
@@ -110,11 +110,11 @@ const AddContentPage = () => {
   };
 
   const handleSubmitBook = async (values: any) => {
-    const { bookInfo, shelf, topics, startDate, finishDate } = values;
+    const { bookInfo, shelf, playlists, startDate, finishDate } = values;
     const formattedBookInfo = extractAndAssembleBookInfo(
       bookInfo,
       shelf,
-      topics,
+      playlists,
       startDate,
       finishDate
     );

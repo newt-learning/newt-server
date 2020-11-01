@@ -25,8 +25,8 @@ export default [
     icon: () => <FiFolder size={20} className={styles.icon} />,
   },
   {
-    name: "Topics",
-    route: "/topics",
+    name: "Playlists",
+    route: "/playlists",
     icon: () => <FiArchive size={20} className={styles.icon} />,
   },
   {

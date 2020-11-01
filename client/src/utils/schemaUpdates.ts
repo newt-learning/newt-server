@@ -30,8 +30,3 @@ export const updateToV2ContentSchema = (
     }
   }
 };
-
-// Converting topics to playlists
-export const updateToV3ContentSchema = (topics: any) => {
-  console.log(topics)
-}

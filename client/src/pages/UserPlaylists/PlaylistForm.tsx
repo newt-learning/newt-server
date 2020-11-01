@@ -7,37 +7,37 @@ import Form from "react-bootstrap/Form";
 // Types
 import { ButtonCategory } from "../../components/Button";
 // Styling
-import styles from "./Topics.module.css";
+import styles from "./Playlists.module.css";
 
-export type TopicFormValues = {
+export type PlaylistFormValues = {
   name: string;
 };
 
-interface TopicFormProps {
+interface PlaylistFormProps {
   initialValues?: { name: string };
-  onSubmit: (values: TopicFormValues) => void;
+  onSubmit: (values: PlaylistFormValues) => void;
   buttonTitle?: string;
   buttonCategory?: ButtonCategory;
 }
 
 const CHARACTER_LIMIT = 24;
 
-const TopicForm = ({
+const PlaylistForm = ({
   initialValues = { name: "" },
   onSubmit,
   buttonTitle = "Create",
   buttonCategory = "success",
-}: TopicFormProps) => {
-  const createTopicSchema = yup.object({
+}: PlaylistFormProps) => {
+  const createPlaylistSchema = yup.object({
     name: yup
       .string()
-      .required("A topic name is required.")
+      .required("A playlist name is required.")
       .max(CHARACTER_LIMIT),
   });
 
   return (
     <Formik
-      validationSchema={createTopicSchema}
+      validationSchema={createPlaylistSchema}
       initialValues={initialValues}
       onSubmit={(values) => onSubmit(values)}
     >
@@ -51,8 +51,8 @@ const TopicForm = ({
           }}
           className={styles.form}
         >
-          <Form.Group controlId="topicName">
-            <Form.Label>Topic name</Form.Label>
+          <Form.Group controlId="playlistName">
+            <Form.Label>Playlist name</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -80,4 +80,4 @@ const TopicForm = ({
   );
 };
 
-export default TopicForm;
+export default PlaylistForm;

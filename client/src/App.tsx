@@ -54,7 +54,7 @@ const App = () => {
           "/dashboard",
           "/add-content",
           "/shelves",
-          "/topics",
+          "/playlists",
           "/stats",
           "/profile",
         ]}

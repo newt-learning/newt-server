@@ -1,5 +1,5 @@
 // Container for the left-side list of cards
-// (e.g. used in Topic page to list content)
+// (e.g. used in Playlist page to list content)
 import React from "react";
 import styles from "./AppContentList.module.css";
 

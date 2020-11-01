@@ -1,5 +1,5 @@
 // This is the container for viewing Content in inbox-style (list on left side,
-// details on right) -- used in Topics/Shelves
+// details on right) -- used in Playlists/Shelves
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
@@ -59,10 +59,10 @@ const ContentInbox = ({
 
   // Okay there's this weird bug where the Inbox keeps moving to the first item
   // if I go to a different tab, or go off screen, or even open Inspector and close
-  // it, but ONLY for Shelves, not for Topics. Must be something from changing data,
+  // it, but ONLY for Shelves, not for Playlists. Must be something from changing data,
   // but can't seem to find it. Adding the second condition fixes it. :S
   // Nevermind went back to old one bec data wouldn't update instantly after
-  // changes (does in Shelves, doesn't in Topics??)
+  // changes (does in Shelves, doesn't in Playlists??)
   useEffect(() => {
     if (!_.isEmpty(contentData)) {
       setCurrentContent(contentData[0]);
@@ -82,7 +82,7 @@ const ContentInbox = ({
                 className={cx({ backBtn: true }, backButtonStyle)}
               />
             </div>
-            {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
+            {/* If playlistName exists, show that immediately. Otherwise wait for data to load */}
             {isLoading ? <Skeleton /> : <h2>{title}</h2>}
           </div>
           <div className={styles.creatorsContainer}>
@@ -141,7 +141,7 @@ const ContentInbox = ({
                 (creator: any) => creator.name
               )
             }
-            topics={currentContent?.topics}
+            playlists={currentContent?.playlists}
             source={currentContent?.videoInfo?.source || currentContent?.source}
             mediaId={
               currentContent?.videoInfo?.videoId || currentContent?.sourceId

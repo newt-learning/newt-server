@@ -13,9 +13,11 @@ import {
 } from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
-import SelectTopicsForm, { TopicSelectOptionType } from "./SelectTopicsForm";
+import SelectPlaylistsForm, {
+  PlaylistSelectOptionType,
+} from "./SelectPlaylistsForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
-import TopicCard, { AddTopicCard } from "../Topics/TopicCard";
+import PlaylistCard, { AddPlaylistCard } from "../UserPlaylists/PlaylistCard";
 import Modal from "react-bootstrap/Modal";
 import Skeleton from "react-loading-skeleton";
 // Styling
@@ -26,7 +28,7 @@ import { figureOutShelfMovingDataChanges } from "./helpers";
 // Types
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
-export type TopicType =
+export type PlaylistType =
   | {
       _id: string;
       name: string;
@@ -45,7 +47,7 @@ interface ContentFlowProps {
   shelf: ShelfType;
   startFinishDates: StartFinishDateType[];
   authors?: string[];
-  topics?: TopicType[];
+  playlists?: PlaylistType[];
   source?: string;
   mediaId?: string;
   thumbnailUrl?: string;
@@ -70,7 +72,7 @@ const ContentFlow = ({
   type,
   shelf,
   startFinishDates,
-  topics,
+  playlists,
   source,
   mediaId,
   thumbnailUrl,
@@ -84,7 +86,7 @@ const ContentFlow = ({
 }: ContentFlowProps) => {
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
-  const [showAddTopicsModal, setShowAddTopicsModal] = useState(false);
+  const [showAddPlaylistsModal, setShowAddPlaylistsModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   // Updating content
@@ -229,22 +231,22 @@ const ContentFlow = ({
             <p></p>
           </div>
         ) : null}
-        {/* Topics */}
-        {topics && typeof topics[0] !== "string" ? (
+        {/* Playlists */}
+        {playlists && typeof playlists[0] !== "string" ? (
           <>
-            <h4 className={styles.subheading}>Topics</h4>
-            <div className={styles.topics}>
-              {_.map(topics, (topic) => {
-                return typeof topic === "string" ? null : (
-                  <TopicCard
-                    key={topic._id}
+            <h4 className={styles.subheading}>Playlists</h4>
+            <div className={styles.playlists}>
+              {_.map(playlists, (playlist) => {
+                return typeof playlist === "string" ? null : (
+                  <PlaylistCard
+                    key={playlist._id}
                     variant="pill"
-                    id={topic._id}
-                    name={topic.name}
+                    id={playlist._id}
+                    name={playlist.name}
                   />
                 );
               })}
-              <AddTopicCard onClick={() => setShowAddTopicsModal(true)} />
+              <AddPlaylistCard onClick={() => setShowAddPlaylistsModal(true)} />
             </div>
           </>
         ) : null}
@@ -299,30 +301,30 @@ const ContentFlow = ({
           />
         </Modal.Body>
       </Modal>
-      {/* Modal to add topics */}
+      {/* Modal to add playlists */}
       <Modal
-        show={showAddTopicsModal}
-        onHide={() => setShowAddTopicsModal(false)}
+        show={showAddPlaylistsModal}
+        onHide={() => setShowAddPlaylistsModal(false)}
         animation={false}
         backdrop="static"
       >
-        <Modal.Header closeButton>Add Topics</Modal.Header>
+        <Modal.Header closeButton>Add Playlists</Modal.Header>
         <Modal.Body>
-          <SelectTopicsForm
-            initialTopics={topics?.map((topic: TopicType) => {
-              // Convert from db topic type to input selection type
-              if (topic && typeof topic !== "string") {
-                const topicOption: TopicSelectOptionType = {
-                  id: topic._id,
-                  value: topic.name,
-                  label: topic.name,
+          <SelectPlaylistsForm
+            initialPlaylists={playlists?.map((playlist: PlaylistType) => {
+              // Convert from db playlist type to input selection type
+              if (playlist && typeof playlist !== "string") {
+                const playlistOption: PlaylistSelectOptionType = {
+                  id: playlist._id,
+                  value: playlist.name,
+                  label: playlist.name,
                 };
 
-                return topicOption;
+                return playlistOption;
               }
             })}
             contentId={id}
-            closeModal={() => setShowAddTopicsModal(false)}
+            closeModal={() => setShowAddPlaylistsModal(false)}
           />
         </Modal.Body>
       </Modal>
