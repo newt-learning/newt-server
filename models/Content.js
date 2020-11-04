@@ -50,12 +50,6 @@ const contentSchema = new Schema({
     type: String,
     enum: ["Currently Learning", "Want to Learn", "Finished Learning"],
   },
-  topics: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Topic",
-    },
-  ],
   playlists: [
     {
       type: Schema.Types.ObjectId,

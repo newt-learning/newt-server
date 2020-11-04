@@ -4,7 +4,6 @@ const keys = require("../config/keys");
 const userSchema = require("../models/User");
 const contentSchema = require("../models/Content");
 const learningUpdateSchema = require("../models/LearningUpdate");
-const topicSchema = require("../models/Topic");
 const playlistSchema = require("../models/Playlist");
 const challengeSchema = require("../models/Challenge");
 const seriesSchema = require("../models/Series");
@@ -30,7 +29,6 @@ mongoose.connections[1].on("error", (error) => {
 conn.model("users", userSchema);
 conn.model("content", contentSchema);
 conn.model("learning-updates", learningUpdateSchema);
-conn.model("topics", topicSchema);
 conn.model("playlists", playlistSchema);
 conn.model("challenges", challengeSchema);
 conn.model("series", seriesSchema);

@@ -3,7 +3,6 @@ const requireLogin = require("../middleware/requireLogin");
 const _ = require("lodash");
 
 const Content = userDbConn.model("content");
-// const Topic = userDbConn.model("topics");
 const Playlist = userDbConn.model("playlists");
 const Quiz = userDbConn.model("quizzes");
 const Challenge = userDbConn.model("challenges");
@@ -27,7 +26,6 @@ module.exports = (app) => {
     const userId = req.user.uid;
 
     Content.find({ _user: userId })
-      // .populate({ path: "topics", model: Topic, select: "_id name" })
       .populate({ path: "playlists", model: Playlist, select: "_id name" })
       .exec((error, content) => {
         if (error) {
