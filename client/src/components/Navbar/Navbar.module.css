@@ -43,6 +43,7 @@
 .navLink {
   color: var(--gray-700);
   font-size: var(--FS-lg);
+  margin: 0 1rem;
 }
 
 .landingNavLink {

@@ -42,6 +42,19 @@ const Navbar = ({ variant }: NavbarProps) => {
         >
           Discover
         </NavLink>
+        <NavLink
+          to="/about"
+          className={cx({
+            navLink: true,
+            landingNavLink: variant === "landing",
+          })}
+          activeClassName={cx({
+            activeNavLink: true,
+            landingActiveNavLink: variant === "landing",
+          })}
+        >
+          About
+        </NavLink>
       </div>
     </nav>
   );
