@@ -87,6 +87,7 @@ const ContentFlow = ({
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showAddPlaylistsModal, setShowAddPlaylistsModal] = useState(false);
+  const [showAddEditDatesModal, setShowAddEditDatesModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   // Updating content
@@ -133,6 +134,16 @@ const ContentFlow = ({
   );
 
   const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: `Add/Edit Dates ${
+        type === "book" ? "Read" : type === "video" ? "Watched" : ""
+      }`,
+      onClick: () => setShowAddEditDatesModal(true),
+    },
+    {
+      type: "divider",
+    },
     {
       type: "item",
       title: "Delete",
@@ -327,6 +338,20 @@ const ContentFlow = ({
             closeModal={() => setShowAddPlaylistsModal(false)}
           />
         </Modal.Body>
+      </Modal>
+      {/* Modal to add/edit dates read/watched */}
+      <Modal
+        show={showAddEditDatesModal}
+        onHide={() => setShowAddEditDatesModal(false)}
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          {`Add/Edit Dates ${
+            type === "book" ? "Read" : type === "video" ? "Watched" : ""
+          }`}
+        </Modal.Header>
+        <Modal.Body>Add/edit dates form</Modal.Body>
       </Modal>
       {/* Modal to delete content */}
       <DeleteItemModal
