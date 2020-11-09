@@ -11,6 +11,12 @@
   transition: width 0.5s;
 }
 
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .expanded {
   width: calc(100% - 220px);
 }

@@ -2,7 +2,11 @@ import React from "react";
 // API
 import { useFetchAllContent } from "../../api/content";
 // Components
-import { AppMainContainer, AppContentContainer } from "../../components";
+import {
+  AppMainContainer,
+  AppContentContainer,
+  Loader,
+} from "../../components";
 import Shelf from "./Shelf";
 // Helpers
 import { filterAndOrderContentByShelf } from "./helpers";
@@ -26,7 +30,7 @@ const ShelvesPage = () => {
     <AppMainContainer className={styles.container}>
       <AppContentContainer className={styles.contentContainer}>
         {isLoading ? (
-          "Loading..."
+          <Loader />
         ) : (
           <>
             <Shelf
