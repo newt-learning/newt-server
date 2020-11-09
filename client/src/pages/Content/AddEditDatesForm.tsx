@@ -47,6 +47,14 @@ const AddEditDatesForm = ({
     }
   };
 
+  // Delete the session
+  const handleDeleteSession = (index: number) => {
+    let updatedDatesRead = [...datesRead];
+    // Remove 1 element starting at index
+    updatedDatesRead.splice(index, 1);
+    setDatesRead(updatedDatesRead);
+  };
+
   // Add another session
   const handleAddSession = () => {
     let updatedDatesRead = [
@@ -87,7 +95,16 @@ const AddEditDatesForm = ({
         >
           {datesRead.map((date, index) => (
             <div key={index}>
-              <h4>{`#${index + 1}`}</h4>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h4>{`#${index + 1}`}</h4>
+                <p
+                  onClick={() => handleDeleteSession(index)}
+                  style={{ color: "var(--red-500)", cursor: "pointer" }}
+                >
+                  Delete
+                </p>
+              </div>
+
               <Form.Row>
                 <Col sm={12} md={6}>
                   <Form.Group>
