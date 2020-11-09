@@ -37,8 +37,8 @@ export type PlaylistType =
   | string;
 type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
 export type StartFinishDateType = {
-  dateStarted: Date | null | undefined;
-  dateCompleted: Date | null | undefined;
+  dateStarted: Date | string | null | undefined;
+  dateCompleted: Date | string | null | undefined;
 };
 
 interface ContentFlowProps {
@@ -118,6 +118,14 @@ const ContentFlow = ({
   const handleDeleteItem = async () => {
     await deleteContent(id);
     setShowDeleteItemModal(false);
+  };
+
+  // Update start/finish date sessions
+  const updateStartFinishDates = async (
+    startFinishDates: StartFinishDateType[]
+  ) => {
+    await updateContent({ contentId: id, data: { startFinishDates } });
+    setShowAddEditDatesModal(false);
   };
 
   // Render a new iframe each time because if I just change src, it affects browser
@@ -359,7 +367,10 @@ const ContentFlow = ({
             flexDirection: "column",
           }}
         >
-          <AddEditDatesForm initialValues={{ startFinishDates }} />
+          <AddEditDatesForm
+            initialValues={{ startFinishDates }}
+            onSubmit={updateStartFinishDates}
+          />
         </Modal.Body>
       </Modal>
       {/* Modal to delete content */}

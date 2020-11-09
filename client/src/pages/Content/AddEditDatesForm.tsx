@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import * as yup from "yup";
+// import moment from "moment";
+import { parseISO } from "date-fns";
 // Components
 import { Button } from "../../components";
 import Form from "react-bootstrap/Form";
@@ -15,10 +16,15 @@ export type AddEditDatesFormValues = {
 
 interface AddEditDatesFormProps {
   initialValues: AddEditDatesFormValues;
+  onSubmit: (startFinishDates: StartFinishDateType[]) => Promise<void>;
 }
 
-const AddEditDatesForm = ({ initialValues }: AddEditDatesFormProps) => {
+const AddEditDatesForm = ({
+  initialValues,
+  onSubmit,
+}: AddEditDatesFormProps) => {
   const [datesRead, setDatesRead] = useState(initialValues.startFinishDates);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Update the date in state
   const handleDateChange = (
@@ -50,10 +56,14 @@ const AddEditDatesForm = ({ initialValues }: AddEditDatesFormProps) => {
 
     setDatesRead(updatedDatesRead);
   };
+
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={async () => {
+        setIsSubmitting(true);
+        await onSubmit(datesRead);
+      }}
     >
       {({
         handleSubmit,
@@ -85,7 +95,12 @@ const AddEditDatesForm = ({ initialValues }: AddEditDatesFormProps) => {
                       Start Date
                     </Form.Label>
                     <DatePicker
-                      selected={date.dateStarted}
+                      selected={
+                        typeof date.dateStarted === "string"
+                          ? parseISO(date.dateStarted)
+                          : date.dateStarted
+                      }
+                      placeholderText="Select date"
                       onChange={(date) =>
                         handleDateChange(index, "Start date", date)
                       }
@@ -98,29 +113,52 @@ const AddEditDatesForm = ({ initialValues }: AddEditDatesFormProps) => {
                       Finish Date
                     </Form.Label>
                     <DatePicker
-                      selected={date.dateCompleted}
+                      selected={
+                        typeof date.dateCompleted === "string"
+                          ? parseISO(date.dateCompleted)
+                          : date.dateCompleted
+                      }
+                      placeholderText="Select date"
                       onChange={(date) =>
                         handleDateChange(index, "Finish date", date)
                       }
-                      minDate={date.dateStarted}
+                      minDate={
+                        typeof date.dateStarted === "string"
+                          ? parseISO(date.dateStarted)
+                          : date.dateStarted
+                      }
                     />
                   </Form.Group>
                 </Col>
               </Form.Row>
             </div>
           ))}
-          <p
+          <div
             style={{
-              color: "var(--blue)",
-              margin: "1rem 0",
-              cursor: "pointer",
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
-            onClick={handleAddSession}
           >
-            Add dates
-          </p>
+            <p
+              style={{
+                color: "var(--blue)",
+                margin: "1rem 0",
+                cursor: "pointer",
+              }}
+              onClick={handleAddSession}
+            >
+              Add dates
+            </p>
+            <Button
+              type="submit"
+              category="success"
+              isLoading={isSubmitting}
+              style={{ marginTop: "2rem", width: "200px" }}
+            >
+              Confirm
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>
