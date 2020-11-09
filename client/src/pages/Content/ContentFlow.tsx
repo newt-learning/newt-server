@@ -37,8 +37,8 @@ export type PlaylistType =
   | string;
 type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
 export type StartFinishDateType = {
-  dateStarted: Date | number | null;
-  dateCompleted: Date | number | null;
+  dateStarted: Date | null | undefined;
+  dateCompleted: Date | null | undefined;
 };
 
 interface ContentFlowProps {
@@ -344,6 +344,7 @@ const ContentFlow = ({
       <Modal
         show={showAddEditDatesModal}
         onHide={() => setShowAddEditDatesModal(false)}
+        size="lg"
         animation={false}
         backdrop="static"
       >
@@ -352,7 +353,12 @@ const ContentFlow = ({
             type === "book" ? "Read" : type === "video" ? "Watched" : ""
           }`}
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <AddEditDatesForm initialValues={{ startFinishDates }} />
         </Modal.Body>
       </Modal>
