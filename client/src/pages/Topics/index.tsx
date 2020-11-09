@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _ from "lodash";
 // API
 import { useFetchAllTopics, useCreateTopic } from "../../api/topics";
 // Components
@@ -6,6 +7,7 @@ import {
   AppMainContainer,
   AppHeaderContainer,
   AppContentContainer,
+  MessageBox,
   Button,
 } from "../../components";
 import TopicCard from "./TopicCard";
@@ -45,14 +47,31 @@ const TopicsPage = () => {
           Create topic
         </Button>
       </AppHeaderContainer>
-      <AppContentContainer className={styles.container}>
-        {status === "loading"
-          ? "Loading..."
-          : error
-          ? "Error"
-          : data.map(({ _id, name }: TopicData) => (
-              <TopicCard key={_id} id={_id} name={name} />
-            ))}
+      <AppContentContainer
+        className={!_.isEmpty(data) ? styles.container : undefined}
+      >
+        {status === "loading" ? (
+          "Loading..."
+        ) : error ? (
+          "Error"
+        ) : _.isEmpty(data) ? (
+          // UI for No topics
+          <MessageBox>
+            No topics yet.{" "}
+            <span
+              className={styles.create}
+              onClick={() => setShowCreateModal(true)}
+            >
+              Create
+            </span>{" "}
+            your first topic!
+          </MessageBox>
+        ) : (
+          // Cards for each topic
+          data.map(({ _id, name }: TopicData) => (
+            <TopicCard key={_id} id={_id} name={name} />
+          ))
+        )}
       </AppContentContainer>
       <Modal
         show={showCreateModal}

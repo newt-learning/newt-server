@@ -9,13 +9,21 @@ import {
 import { TabPaneField } from "../../components/TabPane";
 
 const AccountTabPane = ({ userInfo }: { userInfo: any }) => (
-  <>
-    <h3>Account</h3>
-    <label>First Name</label>
-    <input value={userInfo?.firstName} readOnly />
-    <label>Last Name</label>
-    <input value={userInfo?.lastName} readOnly />
-  </>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <img
+      src={require("../../assets/icons8-owl-64.png")}
+      height={64}
+      alt="Icon of an owl"
+    />
+    <h3 style={{ marginTop: "1rem" }}>{userInfo?.displayName}</h3>
+  </div>
 );
 
 const ProfilePage = () => {

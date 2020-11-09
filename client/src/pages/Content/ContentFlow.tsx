@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
-import { useUpdateContent } from "../../api/content";
+import { useUpdateContent, useDeleteContent } from "../../api/content";
 import { useAddContentToChallenge } from "../../api/challenges";
 // Components
-import { Button, Badge } from "../../components";
+import {
+  Button,
+  Badge,
+  OptionsDropdown,
+  DeleteItemModal,
+} from "../../components";
 import BookSection from "./BookSection";
 import ChangeShelfForm from "./ChangeShelfForm";
+import SelectTopicsForm, { TopicSelectOptionType } from "./SelectTopicsForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
-import TopicCard from "../Topics/TopicCard";
+import TopicCard, { AddTopicCard } from "../Topics/TopicCard";
 import Modal from "react-bootstrap/Modal";
 import Skeleton from "react-loading-skeleton";
 // Styling
@@ -17,8 +23,10 @@ import styles from "./ContentFlow.module.css";
 // Helpers
 import { shortenText } from "../Shelves/helpers";
 import { figureOutShelfMovingDataChanges } from "./helpers";
+// Types
+import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 
-type TopicType =
+export type TopicType =
   | {
       _id: string;
       name: string;
@@ -74,11 +82,14 @@ const ContentFlow = ({
   variant,
   isLoading,
 }: ContentFlowProps) => {
+  const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
+  const [showAddTopicsModal, setShowAddTopicsModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   // Updating content
   const [updateContent] = useUpdateContent();
+  const [deleteContent, { isLoading: isDeleting }] = useDeleteContent();
   const [addContentToChallenge] = useAddContentToChallenge();
 
   const updateShelf = (selectedShelf: ShelfType) => {
@@ -100,6 +111,11 @@ const ContentFlow = ({
     setShowChangeShelfModal(false);
   };
 
+  const handleDeleteItem = async () => {
+    await deleteContent(id);
+    setShowDeleteItemModal(false);
+  };
+
   // Render a new iframe each time because if I just change src, it affects browser
   // history (clicking the back button cycles through previous iframes)
   const IFrame = ({ title, src }: any) => (
@@ -113,6 +129,14 @@ const ContentFlow = ({
       allowFullScreen
     />
   );
+
+  const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: "Delete",
+      onClick: () => setShowDeleteItemModal(true),
+    },
+  ];
 
   return (
     <div
@@ -133,6 +157,10 @@ const ContentFlow = ({
               <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
             ) : null}
           </h2>
+          <OptionsDropdown
+            id={`${title}-options-dropdown`}
+            options={dropdownMenu}
+          />
         </div>
       ) : null}
       <div className={styles.flowContainer}>
@@ -178,6 +206,9 @@ const ContentFlow = ({
             pageCount={bookInfo?.pageCount}
             pagesRead={bookInfo?.pagesRead || 0}
             startFinishDates={startFinishDates}
+            showProgressBar={
+              shelf === "Currently Learning" || shelf === "Finished Learning"
+            }
           />
         ) : null}
         {/* Shelf info */}
@@ -213,6 +244,7 @@ const ContentFlow = ({
                   />
                 );
               })}
+              <AddTopicCard onClick={() => setShowAddTopicsModal(true)} />
             </div>
           </>
         ) : null}
@@ -236,7 +268,7 @@ const ContentFlow = ({
             <div className={styles.btnContainer}>
               <Button
                 category="primary"
-                style={styles.quizBtn}
+                className={styles.quizBtn}
                 onClick={onTakeQuiz}
               >
                 {buttonText}
@@ -245,6 +277,7 @@ const ContentFlow = ({
           </>
         ) : null}
       </div>
+      {/* Modal to change shelf */}
       <Modal
         show={showChangeShelfModal}
         onHide={() => setShowChangeShelfModal(false)}
@@ -266,6 +299,41 @@ const ContentFlow = ({
           />
         </Modal.Body>
       </Modal>
+      {/* Modal to add topics */}
+      <Modal
+        show={showAddTopicsModal}
+        onHide={() => setShowAddTopicsModal(false)}
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>Add Topics</Modal.Header>
+        <Modal.Body>
+          <SelectTopicsForm
+            initialTopics={topics?.map((topic: TopicType) => {
+              // Convert from db topic type to input selection type
+              if (topic && typeof topic !== "string") {
+                const topicOption: TopicSelectOptionType = {
+                  id: topic._id,
+                  value: topic.name,
+                  label: topic.name,
+                };
+
+                return topicOption;
+              }
+            })}
+            contentId={id}
+            closeModal={() => setShowAddTopicsModal(false)}
+          />
+        </Modal.Body>
+      </Modal>
+      {/* Modal to delete content */}
+      <DeleteItemModal
+        show={showDeleteItemModal}
+        onHide={() => setShowDeleteItemModal(false)}
+        itemToDelete={type}
+        onDelete={handleDeleteItem}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 };

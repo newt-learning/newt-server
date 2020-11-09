@@ -1,5 +1,10 @@
 import newtApi from "./newtApi";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, queryCache } from "react-query";
+
+type UpdateChallengeParams = {
+  challengeId: string;
+  data: any
+}
 
 // API calls
 const fetchChallenges = async () => {
@@ -10,6 +15,12 @@ const fetchIndividualChallenge = async (queryKey: any, challengeId: string) => {
   const { data } = await newtApi.get(`/challenges/${challengeId}`);
   return data;
 };
+const createChallenge = async (data: any) => {
+  await newtApi.post("/challenges/create", data);
+}
+const updateChallenge = async ({ challengeId, data }: UpdateChallengeParams) => {
+  await newtApi.put(`/challenges/${challengeId}/update`, data)
+}
 const addContentToChallenge = async (contentId: string) => {
   try {
     await newtApi.put("/challenges/add-content", { contentId });
@@ -20,6 +31,9 @@ const addContentToChallenge = async (contentId: string) => {
     return;
   }
 };
+const deleteChallenge = async (challengeId: string) => {
+    await newtApi.delete(`/challenges/${challengeId}`);
+};
 
 // React-query bindings
 export function useFetchChallenges() {
@@ -28,6 +42,21 @@ export function useFetchChallenges() {
 export function useFetchIndividualChallenge(challengeId: string) {
   return useQuery(["challenge", challengeId], fetchIndividualChallenge);
 }
+export function useCreateChallenge() {
+  return useMutation(createChallenge, {
+    onSettled: () => queryCache.invalidateQueries("challenges")
+  })
+}
+export function useUpdateChallenge() {
+  return useMutation(updateChallenge, {
+    onSettled: () => queryCache.invalidateQueries("challenges"),
+  });
+}
 export function useAddContentToChallenge() {
   return useMutation(addContentToChallenge);
+}
+export function useDeleteChallenge() {
+  return useMutation(deleteChallenge, {
+    onSettled: () => queryCache.invalidateQueries("challenges"),
+  });
 }

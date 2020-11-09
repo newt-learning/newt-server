@@ -114,7 +114,7 @@ const VideoConfirmation = ({
         />
       </p>
       <Button
-        style={styles.addBtn}
+        className={styles.addBtn}
         category="success"
         isLoading={isLoading}
         onClick={() =>
@@ -205,7 +205,7 @@ const SeriesConfirmation = ({
         </div>
       ) : null}
       <Button
-        style={styles.addBtn}
+        className={styles.addBtn}
         category="success"
         isLoading={isLoading}
         onClick={() =>

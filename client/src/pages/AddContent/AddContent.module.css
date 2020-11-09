@@ -50,7 +50,6 @@
 .youtubeText {
   font-size: var(--FS-s);
   color: var(--gray-800);
-  margin-bottom: 1rem;
 }
 
 .backArrow {
@@ -80,6 +79,7 @@
   width: 100%;
   max-width: 300px;
   align-self: center;
+  margin-top: 1rem;
 }
 
 .searchbar {
@@ -95,5 +95,5 @@
 .modalBody {
   display: flex;
   flex-direction: column;
-  padding: 2rem 4rem;
+  padding: 3rem 4rem;
 }

@@ -24,6 +24,7 @@ interface BookSectionProps {
   pageCount?: number;
   pagesRead: number;
   startFinishDates: StartFinishDateType[];
+  showProgressBar?: boolean;
 }
 
 const BookSection = ({
@@ -34,6 +35,7 @@ const BookSection = ({
   pageCount,
   pagesRead = 0,
   startFinishDates,
+  showProgressBar,
 }: BookSectionProps) => {
   const [showUpdateProgressModal, setShowUpdateProgressModal] = useState(false);
   const [updateBookProgress] = useUpdateBookProgress();
@@ -98,18 +100,20 @@ const BookSection = ({
             <div className={styles.pageCount}>{`${pageCount} pages`}</div>
           ) : null}
         </div>
-        <div className={styles.progressBarContainer}>
-          <ProgressBar
-            percentComplete={calculatePercentComplete(pagesRead, pageCount)}
-          />
-          <Button
-            category="secondary"
-            style={styles.updateBtn}
-            onClick={() => setShowUpdateProgressModal(true)}
-          >
-            Update Progress
-          </Button>
-        </div>
+        {showProgressBar ? (
+          <div className={styles.progressBarContainer}>
+            <ProgressBar
+              percentComplete={calculatePercentComplete(pagesRead, pageCount)}
+            />
+            <Button
+              category="secondary"
+              className={styles.updateBtn}
+              onClick={() => setShowUpdateProgressModal(true)}
+            >
+              Update Progress
+            </Button>
+          </div>
+        ) : null}
       </div>
       <Modal
         show={showUpdateProgressModal}

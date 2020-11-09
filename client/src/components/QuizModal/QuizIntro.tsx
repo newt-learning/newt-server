@@ -32,7 +32,7 @@ const QuizIntro = ({
       <p className={styles.light}>{`Total Questions: ${numQuestions}`}</p>
       <Button
         category="primary"
-        style={styles.beginButton}
+        className={styles.beginButton}
         onClick={onClickBegin}
       >
         {showReview ? "Review Quiz" : "Begin Quiz"}

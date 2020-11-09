@@ -78,7 +78,7 @@ const Navbar = ({ variant }: NavbarProps) => {
               Go to Dashboard
             </NavLink>
             <Button
-              style={cx({
+              className={cx({
                 signInBtn: true,
                 landingSignInBtn: variant === "landing",
               })}
@@ -90,7 +90,7 @@ const Navbar = ({ variant }: NavbarProps) => {
         ) : (
           <NavLink to="/login">
             <Button
-              style={cx({
+              className={cx({
                 signInBtn: true,
                 landingSignInBtn: variant === "landing",
               })}

@@ -16,6 +16,7 @@ interface ContentCardProps {
   thumbnailUrl?: string;
   dateCompleted?: string;
   showAddToLibrary?: boolean;
+  onClick?: () => void;
   onClickAddToLibrary?: () => void;
 }
 const ContentCard = ({
@@ -26,10 +27,14 @@ const ContentCard = ({
   description,
   thumbnailUrl,
   dateCompleted,
+  onClick,
   onClickAddToLibrary,
 }: ContentCardProps) => {
   return (
-    <div className={styles.card}>
+    <div
+      className={cx({ card: true, clickable: onClick ? true : false })}
+      onClick={onClick}
+    >
       <div
         className={cx({ cardVisual: true, smallCardVisual: size === "small" })}
       >

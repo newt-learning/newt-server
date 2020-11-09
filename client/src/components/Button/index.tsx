@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames/bind";
 import ClipLoader from "react-spinners/ClipLoader";
 import styles from "./Button.module.css";
 
@@ -17,8 +18,11 @@ interface ButtonProps {
   category?: ButtonCategory;
   isLoading?: boolean;
   isDisabled?: boolean;
-  style?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
+
+let cx = classnames.bind(styles);
 
 const Button = ({
   children,
@@ -27,6 +31,7 @@ const Button = ({
   category,
   isLoading,
   isDisabled,
+  className,
   style,
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
@@ -49,14 +54,22 @@ const Button = ({
   return (
     <button
       type={type}
-      onClick={isDisabled ? () => {} : onClick}
-      className={`${styles.btn} ${selectClassFromCategory(category)} ${style} ${
-        isDisabled ? styles.disabledBtn : ""
-      }`}
+      onClick={isDisabled ? undefined : onClick}
+      className={cx(
+        styles.btn,
+        selectClassFromCategory(category),
+        { disabledBtn: isDisabled },
+        className
+      )}
+      style={style}
     >
       {isLoading ? (
         <div className={styles.spinnerContainer}>
-          <ClipLoader color="#003e53" size="0.9rem" loading={isLoading} />
+          <ClipLoader
+            color={selectClassFromCategory(category)}
+            size="1rem"
+            loading={isLoading}
+          />
         </div>
       ) : (
         children

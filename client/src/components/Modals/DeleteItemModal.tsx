@@ -6,8 +6,9 @@ import Button from "../Button";
 interface DeleteItemModalProps {
   show: boolean;
   onHide: () => void;
-  itemToDelete?: "item" | "topic";
+  itemToDelete?: string;
   onDelete: () => void;
+  isDeleting?: boolean;
 }
 
 const DeleteItemModal = ({
@@ -15,6 +16,7 @@ const DeleteItemModal = ({
   onHide,
   itemToDelete = "item",
   onDelete,
+  isDeleting,
 }: DeleteItemModalProps) => (
   <Modal show={show} onHide={onHide}>
     <Modal.Header closeButton>
@@ -27,11 +29,15 @@ const DeleteItemModal = ({
       <Button category="secondary" onClick={onHide}>
         Close
       </Button>
-      <Button category="danger" onClick={onDelete}>
+      <Button category="danger" onClick={onDelete} isLoading={isDeleting}>
         Delete
       </Button>
     </Modal.Footer>
   </Modal>
 );
+
+DeleteItemModal.defaultProps = {
+  isDeleting: false,
+};
 
 export default DeleteItemModal;

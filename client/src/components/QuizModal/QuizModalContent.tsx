@@ -72,7 +72,7 @@ const QuizModalContent = ({
         {currentSection === "outro" && !showReview && (
           <Button
             category="primary"
-            style={
+            className={
               isQuizComplete
                 ? styles.finishButton
                 : `${styles.finishButton} ${styles.disabledButton}`

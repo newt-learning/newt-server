@@ -5,7 +5,7 @@ import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import classnames from "classnames/bind";
 // Components
-import { FiArrowLeft, FiMoreVertical } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
 import {
   AppMainContainer,
   AppHeaderContainer,
@@ -14,17 +14,11 @@ import {
   AppContentDetails,
 } from "../AppContainers";
 import AppContentListCard from "../AppContentListCard";
+import OptionsDropdown, { OptionsDropdownItemType } from "../OptionsDropdown";
 import ContentFlow from "../../pages/Content/ContentFlow";
-import Dropdown from "react-bootstrap/Dropdown";
 import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
-
-export interface OptionsDropdownItemType {
-  type: "item" | "divider";
-  title?: string;
-  onClick?: () => void;
-}
 
 interface ContentInboxProps {
   title: string;
@@ -45,21 +39,6 @@ interface ContentData {
 }
 
 const cx = classnames.bind(styles);
-const defaultDropdownMenu: OptionsDropdownItemType[] = [
-  {
-    type: "item",
-    title: "Edit",
-    onClick: () => console.log("edit"),
-  },
-  {
-    type: "divider",
-  },
-  {
-    type: "item",
-    title: "Delete",
-    onClick: () => console.log("delete"),
-  },
-];
 
 const ContentInbox = ({
   title,
@@ -68,7 +47,7 @@ const ContentInbox = ({
   isError,
   contentData,
   showOptionsDropdown = false,
-  optionsDropdownMenu = defaultDropdownMenu,
+  optionsDropdownMenu,
   className,
   backButtonStyle,
 }: ContentInboxProps) => {
@@ -85,6 +64,8 @@ const ContentInbox = ({
   useEffect(() => {
     if (!_.isEmpty(contentData)) {
       setCurrentContent(contentData[0]);
+    } else {
+      setCurrentContent(null);
     }
   }, [contentData]);
 
@@ -108,38 +89,21 @@ const ContentInbox = ({
               <p className={styles.creators}>{`by ${creators}`}</p>
             ) : null}
             {/* Number of items in series/playlist */}
-            {!_.isEmpty(contentData) ? (
-              <p className={styles.numItems}>{`${contentData.length} items`}</p>
-            ) : null}
+            {/* {!_.isEmpty(contentData) ? ( */}
+            {!isLoading && (
+              <p className={styles.numItems}>{`${
+                contentData?.length || 0
+              } items`}</p>
+            )}
+            {/* ) : null} */}
           </div>
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}
         {showOptionsDropdown ? (
-          <div className={styles.optionsDropdown}>
-            <Dropdown alignRight={true} drop="down">
-              <Dropdown.Toggle
-                id={`${title}-page-more-dropdown`}
-                className={styles.dropdownToggle}
-                as="div"
-              >
-                <FiMoreVertical size={24} />
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {/* Create dropdown menu by mapping through passed items. Allows for custom menus. */}
-                {optionsDropdownMenu.map((item, index) => {
-                  if (item.type === "divider") {
-                    return <Dropdown.Divider key={index} />;
-                  } else {
-                    return (
-                      <Dropdown.Item key={index} onClick={item.onClick}>
-                        {item.title}
-                      </Dropdown.Item>
-                    );
-                  }
-                })}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+          <OptionsDropdown
+            id={`${title}-page-more-dropdown`}
+            options={optionsDropdownMenu}
+          />
         ) : null}
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
