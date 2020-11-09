@@ -10,11 +10,8 @@ import UpdateProgressForm, {
 } from "./UpdateProgressForm";
 // Styling
 import styles from "./BookSection.module.css";
-
-type StartFinishDateType = {
-  dateStarted: Date | number;
-  dateCompleted: Date | number;
-};
+// Types
+import { StartFinishDateType } from "./ContentFlow";
 
 interface BookSectionProps {
   id: string;

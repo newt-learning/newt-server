@@ -16,6 +16,7 @@ import ChangeShelfForm from "./ChangeShelfForm";
 import SelectPlaylistsForm, {
   PlaylistSelectOptionType,
 } from "./SelectPlaylistsForm";
+import AddEditDatesForm from "./AddEditDatesForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import PlaylistCard, { AddPlaylistCard } from "../UserPlaylists/PlaylistCard";
 import Modal from "react-bootstrap/Modal";
@@ -35,9 +36,9 @@ export type PlaylistType =
     }
   | string;
 type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
-type StartFinishDateType = {
-  dateStarted: Date;
-  dateCompleted: Date;
+export type StartFinishDateType = {
+  dateStarted: Date | number | null;
+  dateCompleted: Date | number | null;
 };
 
 interface ContentFlowProps {
@@ -351,7 +352,9 @@ const ContentFlow = ({
             type === "book" ? "Read" : type === "video" ? "Watched" : ""
           }`}
         </Modal.Header>
-        <Modal.Body>Add/edit dates form</Modal.Body>
+        <Modal.Body>
+          <AddEditDatesForm initialValues={{ startFinishDates }} />
+        </Modal.Body>
       </Modal>
       {/* Modal to delete content */}
       <DeleteItemModal
