@@ -9,6 +9,7 @@ import {
   AppContentContainer,
   MessageBox,
   Button,
+  Loader,
 } from "../../components";
 import PlaylistCard from "./PlaylistCard";
 import PlaylistForm from "./PlaylistForm";
@@ -51,7 +52,7 @@ const PlaylistsPage = () => {
         className={!_.isEmpty(data) ? styles.container : undefined}
       >
         {status === "loading" ? (
-          "Loading..."
+          <Loader size={12} />
         ) : error ? (
           "Error"
         ) : _.isEmpty(data) ? (
