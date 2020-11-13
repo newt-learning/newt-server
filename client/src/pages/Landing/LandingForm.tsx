@@ -66,7 +66,7 @@ const LandingForm = ({ labelStyle }: LandingFormProps) => {
         type="submit"
         category="landing"
         isLoading={isSubmitting}
-        style={styles.btn}
+        className={styles.btn}
       >
         Get early access
       </Button>

@@ -1,11 +1,11 @@
 // This is the container for viewing Content in inbox-style (list on left side,
-// details on right) -- used in Topics/Shelves
+// details on right) -- used in Playlists/Shelves
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import classnames from "classnames/bind";
 // Components
-import { FiArrowLeft, FiMoreVertical } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
 import {
   AppMainContainer,
   AppHeaderContainer,
@@ -14,17 +14,11 @@ import {
   AppContentDetails,
 } from "../AppContainers";
 import AppContentListCard from "../AppContentListCard";
+import OptionsDropdown, { OptionsDropdownItemType } from "../OptionsDropdown";
 import ContentFlow from "../../pages/Content/ContentFlow";
-import Dropdown from "react-bootstrap/Dropdown";
 import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
-
-export interface OptionsDropdownItemType {
-  type: "item" | "divider";
-  title?: string;
-  onClick?: () => void;
-}
 
 interface ContentInboxProps {
   title: string;
@@ -45,21 +39,6 @@ interface ContentData {
 }
 
 const cx = classnames.bind(styles);
-const defaultDropdownMenu: OptionsDropdownItemType[] = [
-  {
-    type: "item",
-    title: "Edit",
-    onClick: () => console.log("edit"),
-  },
-  {
-    type: "divider",
-  },
-  {
-    type: "item",
-    title: "Delete",
-    onClick: () => console.log("delete"),
-  },
-];
 
 const ContentInbox = ({
   title,
@@ -68,7 +47,7 @@ const ContentInbox = ({
   isError,
   contentData,
   showOptionsDropdown = false,
-  optionsDropdownMenu = defaultDropdownMenu,
+  optionsDropdownMenu,
   className,
   backButtonStyle,
 }: ContentInboxProps) => {
@@ -76,15 +55,19 @@ const ContentInbox = ({
 
   const [currentContent, setCurrentContent] = useState<any>(null);
 
+  console.log(contentData);
+
   // Okay there's this weird bug where the Inbox keeps moving to the first item
   // if I go to a different tab, or go off screen, or even open Inspector and close
-  // it, but ONLY for Shelves, not for Topics. Must be something from changing data,
+  // it, but ONLY for Shelves, not for Playlists. Must be something from changing data,
   // but can't seem to find it. Adding the second condition fixes it. :S
   // Nevermind went back to old one bec data wouldn't update instantly after
-  // changes (does in Shelves, doesn't in Topics??)
+  // changes (does in Shelves, doesn't in Playlists??)
   useEffect(() => {
     if (!_.isEmpty(contentData)) {
       setCurrentContent(contentData[0]);
+    } else {
+      setCurrentContent(null);
     }
   }, [contentData]);
 
@@ -99,7 +82,7 @@ const ContentInbox = ({
                 className={cx({ backBtn: true }, backButtonStyle)}
               />
             </div>
-            {/* If topicName exists, show that immediately. Otherwise wait for data to load */}
+            {/* If playlistName exists, show that immediately. Otherwise wait for data to load */}
             {isLoading ? <Skeleton /> : <h2>{title}</h2>}
           </div>
           <div className={styles.creatorsContainer}>
@@ -108,38 +91,21 @@ const ContentInbox = ({
               <p className={styles.creators}>{`by ${creators}`}</p>
             ) : null}
             {/* Number of items in series/playlist */}
-            {!_.isEmpty(contentData) ? (
-              <p className={styles.numItems}>{`${contentData.length} items`}</p>
-            ) : null}
+            {/* {!_.isEmpty(contentData) ? ( */}
+            {!isLoading && (
+              <p className={styles.numItems}>{`${
+                contentData?.length || 0
+              } items`}</p>
+            )}
+            {/* ) : null} */}
           </div>
         </div>
         {/* Show 3-dot options menu with dropdown for additional options */}
         {showOptionsDropdown ? (
-          <div className={styles.optionsDropdown}>
-            <Dropdown alignRight={true} drop="down">
-              <Dropdown.Toggle
-                id={`${title}-page-more-dropdown`}
-                className={styles.dropdownToggle}
-                as="div"
-              >
-                <FiMoreVertical size={24} />
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {/* Create dropdown menu by mapping through passed items. Allows for custom menus. */}
-                {optionsDropdownMenu.map((item, index) => {
-                  if (item.type === "divider") {
-                    return <Dropdown.Divider key={index} />;
-                  } else {
-                    return (
-                      <Dropdown.Item key={index} onClick={item.onClick}>
-                        {item.title}
-                      </Dropdown.Item>
-                    );
-                  }
-                })}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+          <OptionsDropdown
+            id={`${title}-page-more-dropdown`}
+            options={optionsDropdownMenu}
+          />
         ) : null}
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
@@ -163,17 +129,30 @@ const ContentInbox = ({
         <AppContentDetails>
           <ContentFlow
             variant="inbox"
-            isLoading={isLoading}
             id={currentContent?._id}
             title={currentContent?.name}
             type={currentContent?.type}
-            authors={currentContent?.authors}
-            // source={currentContent?.videoInfo?.source}
-            source={currentContent?.source}
-            // mediaId={currentContent?.videoInfo?.videoId}
-            mediaId={currentContent?.sourceId}
+            shelf={currentContent?.shelf}
+            startFinishDates={currentContent?.startFinishDates}
+            // .authors for user data, .contentCreators for Newt Discover data
+            authors={
+              currentContent?.authors ||
+              currentContent?.contentCreators?.map(
+                (creator: any) => creator.name
+              )
+            }
+            playlists={currentContent?.playlists}
+            source={currentContent?.videoInfo?.source || currentContent?.source}
+            mediaId={
+              currentContent?.videoInfo?.videoId || currentContent?.sourceId
+            }
             thumbnailUrl={currentContent?.thumbnailUrl}
             description={currentContent?.description}
+            bookInfo={{
+              pageCount: currentContent?.bookInfo?.pageCount,
+              pagesRead: currentContent?.bookInfo?.pagesRead,
+            }}
+            isLoading={isLoading}
             // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}
             hasQuiz={false} // Don't show for now
           />

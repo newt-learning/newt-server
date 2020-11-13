@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.container:hover > span {
+  color: var(--gray-800);
+}
+
+.container > span {
+  font-size: var(--FS-xs);
+  color: var(--gray-600);
+}

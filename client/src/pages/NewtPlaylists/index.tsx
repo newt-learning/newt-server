@@ -5,9 +5,9 @@ import { useFetchNewtPlaylistBySlug } from "../../api/newtContent";
 // Components
 import { Navbar, Badge, ContentInbox } from "../../components";
 // Styling
-import styles from "./Playlists.module.css";
+import styles from "./NewtPlaylists.module.css";
 
-const PlaylistPage = () => {
+const NewtPlaylistPage = () => {
   //@ts-ignore
   const { playlistSlug } = useParams();
 
@@ -44,4 +44,4 @@ const PlaylistPage = () => {
   );
 };
 
-export default PlaylistPage;
+export default NewtPlaylistPage;

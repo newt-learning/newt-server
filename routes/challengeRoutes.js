@@ -19,6 +19,26 @@ module.exports = (app) => {
     });
   });
 
+  // GET request v2 to fetch all of a user's challenges
+  app.get("/api/v2/challenges", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+
+    Challenge.find({ _user: userId })
+      // Populate itemsFinished field with content info + only select certain fields
+      .populate({
+        path: "itemsFinished",
+        model: Content,
+        select: "_id name authors thumbnailUrl startFinishDates dateCompleted",
+      })
+      .exec((error, challenges) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(challenges);
+        }
+      });
+  });
+
   // GET request to fetch individual challenge by id
   app.get("/api/challenges/:challengeId", requireLogin, (req, res) => {
     const { challengeId } = req.params;
@@ -55,6 +75,7 @@ module.exports = (app) => {
         {
           _user: userId,
           shelf: "Finished Learning",
+          type: "book", // Only books for now
           "startFinishDates.dateCompleted": {
             $gte: startOfYear,
             $lte: endOfYear,

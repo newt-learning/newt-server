@@ -8,8 +8,9 @@ import {
   useFetchNewtContent,
 } from "../../api/newtContent";
 // Components
+import { MainContainer, Navbar } from "../../components";
+import DiscoverContentCard from "./DiscoverContentCard";
 import SeriesCard from "../Series/SeriesCard";
-import { ContentCard, MainContainer, Navbar } from "../../components";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -140,7 +141,7 @@ const DiscoverPage = () => {
               <h2 style={{ marginTop: "2.5rem" }}>Some Favourites</h2>
               <div className={styles.contentContainer}>
                 {contentData.map((content: any) => (
-                  <ContentCard
+                  <DiscoverContentCard
                     key={content?.id}
                     data={{
                       id: content?.id,

@@ -69,15 +69,19 @@ const ContentPage = () => {
           <>
             <div className={styles.contentFlowContainer}>
               <ContentFlow
-                id={data.id}
+                id={data._id || data.id}
                 title={data.name}
                 authors={data?.contentCreators?.map(
                   (creator: any) => creator.name
                 )}
                 type={data.type}
+                shelf={data?.shelf}
+                startFinishDates={data.startFinishDates}
+                source={data?.source?.name || data?.source}
+                mediaId={data.source?.mediaId || data?.sourceId}
                 thumbnailUrl={data?.thumbnailUrl}
-                source={data.source}
-                mediaId={data.sourceId}
+                // source={data.source}
+                // mediaId={data.sourceId}
                 description={data.description}
                 hasQuiz={data.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}

@@ -4,6 +4,7 @@
   align-items: center;
   align-self: center;
   font-weight: 500;
+  white-space: nowrap; /* prevent span elem from breaking the word */
 }
 
 .small {
@@ -22,4 +23,19 @@
 .defaultBadge {
   background-color: var(--gray-200);
   color: var(--gray-800);
+}
+
+.currentlyLearningBadge {
+  background-color: var(--yellow-100);
+  color: var(--yellow-900);
+}
+
+.wantToLearnBadge {
+  background-color: var(--newtBlue-50);
+  color: var(--newtBlue-900);
+}
+
+.finishedLearningBadge {
+  background-color: var(--lightGreen-100);
+  color: var(--lightGreen-900);
 }

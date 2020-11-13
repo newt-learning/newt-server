@@ -3,8 +3,10 @@ const requireLogin = require("../middleware/requireLogin");
 const _ = require("lodash");
 
 const Content = userDbConn.model("content");
-const Topic = userDbConn.model("topics");
+// const Topic = userDbConn.model("topics");
+const Playlist = userDbConn.model("playlists");
 const Quiz = userDbConn.model("quizzes");
+const Challenge = userDbConn.model("challenges");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's content
@@ -18,6 +20,22 @@ module.exports = (app) => {
         res.send(content);
       }
     });
+  });
+
+  // v2 GET request to fetch all user's content (populates playlists)
+  app.get("/api/v2/content", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+
+    Content.find({ _user: userId })
+      // .populate({ path: "topics", model: Topic, select: "_id name" })
+      .populate({ path: "playlists", model: Playlist, select: "_id name" })
+      .exec((error, content) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(content);
+        }
+      });
   });
 
   // GET request to check if a Google Book already exists in user's library
@@ -56,12 +74,12 @@ module.exports = (app) => {
       if (error) {
         res.status(500).send(error);
       } else {
-        // If there are topics, add the content to each of those topics
-        if (!_.isEmpty(content.topics)) {
-          // First argument matches _ids in the topicIds array, second argument pushes
-          // the contentId to those matched topics
-          Topic.updateMany(
-            { _id: { $in: content.topics } },
+        // If there are playlists, add the content to each of those playlists
+        if (!_.isEmpty(content.playlists)) {
+          // First argument matches _ids in the playlistIds array, second argument pushes
+          // the contentId to those matched playlists
+          Playlist.updateMany(
+            { _id: { $in: content.playlists } },
             { $push: { content: content._id } },
             (error) => {
               if (error) {
@@ -70,6 +88,67 @@ module.exports = (app) => {
             }
           );
         }
+        res.send(content);
+      }
+    });
+  });
+
+  // v2 POST request to add content to database (updates challenge directly here)
+  app.post("/api/v2/content/create", requireLogin, async (req, res) => {
+    const userId = req.user.uid;
+    const data = req.body;
+    // Add user id and dates to data object
+    data._user = userId;
+    data.dateAdded = Date.now();
+    data.lastUpdated = Date.now();
+    // Add schema version
+    data.schemaVersion = 2;
+
+    // Create Content, save to database and send back to client
+    Content.create(data, (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        // If there are playlists, add the content to each of those playlists
+        if (!_.isEmpty(content.playlists)) {
+          // First argument matches _ids in the playlistIds array, second argument pushes
+          // the contentId to those matched playlists
+          Playlist.updateMany(
+            { _id: { $in: content.playlists } },
+            { $push: { content: content._id } },
+            (error) => {
+              if (error) {
+                res.status(500).send(error);
+              }
+            }
+          );
+        }
+
+        // Update the reading challenge by adding this book to the finished list
+        // if a challenge exists (if selected shelf is Finished).
+        if (content.shelf === "Finished Learning" && content.type === "book") {
+          Challenge.findOne(
+            { _user: userId, challengeType: "reading" },
+            async (error, challenge) => {
+              if (error) {
+                res.send(content);
+                res.status(500).send(error);
+              } else {
+                // If no challenge exists, return all okay. Add finished books will be
+                // done when the challenge is created
+                if (challenge) {
+                  // Update challenge: add contentId to finished items, increment
+                  // num finished by 1, and set lastUpdated to now
+                  challenge.itemsFinished.push(content._id);
+                  challenge.numItemsFinished += 1;
+                  challenge.lastUpdated = Date.now();
+                  await challenge.save();
+                }
+              }
+            }
+          );
+        }
+
         res.send(content);
       }
     });
@@ -117,7 +196,7 @@ module.exports = (app) => {
   });
 
   // DELETE request to delete content and remove all pointers to the content that
-  // were there in particular Topics
+  // were there in particular Playlists
   app.delete("/api/content/:contentId", requireLogin, (req, res) => {
     const { contentId } = req.params;
 
@@ -125,14 +204,14 @@ module.exports = (app) => {
       if (error) {
         res.status(500).send(error);
       } else {
-        // Get all the topic ids that were saved in this content item
-        const { topics, quizInfo } = content;
+        // Get all the playlist ids that were saved in this content item
+        const { playlists, quizInfo } = content;
         const quizId = _.isEmpty(quizInfo) ? null : quizInfo[0].quizId;
 
-        // For all the topic ids, remove pointers to this content from the content
-        // array in the Topic model (because content is going to be deleted).
-        Topic.updateMany(
-          { _id: { $in: topics } },
+        // For all the playlist ids, remove pointers to this content from the content
+        // array in the Playlist model (because content is going to be deleted).
+        Playlist.updateMany(
+          { _id: { $in: playlists } },
           { $pull: { content: contentId } },
           async (error) => {
             if (error) {

@@ -1,0 +1,28 @@
+.dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 26px;
+  height: 30px;
+  border-radius: 0.5rem;
+  transition: 0.15s linear;
+}
+
+.dropdown:hover {
+  background-color: var(--gray-200);
+}
+
+.delete {
+  color: var(--red-600);
+}
+
+.delete:hover {
+  background-color: var(--red-100);
+  color: var(--red-600);
+}
+
+/* Remove down-arrow that's there by default on dropdowns */
+.dropdownToggle::after {
+  content: none;
+}

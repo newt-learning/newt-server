@@ -1,0 +1,17 @@
+.tabPane {
+  min-height: 500px;
+  padding: 2rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.tabOptions {
+  margin-top: 1rem;
+}
+
+.subheader {
+  color: var(--gray-700);
+  margin-top: 1rem;
+}

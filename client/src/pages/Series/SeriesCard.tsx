@@ -3,7 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import { FiChevronRight } from "react-icons/fi";
-import { ContentCard, SeeAllCard } from "../../components";
+import DiscoverContentCard, {
+  SeeAllCard,
+} from "../Discover/DiscoverContentCard";
 // Styling
 import styles from "./SeriesCard.module.css";
 
@@ -61,7 +63,7 @@ const SeriesCard = ({
       {content ? (
         <>
           {content.slice(0, 3).map((item: any) => (
-            <ContentCard
+            <DiscoverContentCard
               key={item._id}
               data={{
                 id: item?.id,

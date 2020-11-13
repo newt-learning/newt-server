@@ -1,0 +1,8 @@
+.messageBox {
+  width: 100%;
+  padding: 1.5rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 0.5rem;
+  min-width: 350px;
+  font-size: var(--FS-base);
+}

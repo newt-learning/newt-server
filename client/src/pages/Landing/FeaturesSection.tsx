@@ -17,7 +17,7 @@ const features = [
       "Everything you want to learn from \u2014 books, videos, articles, online courses, podcasts, interactive games, etc. \u2014 in one place.",
       <span>
         Sort content by <b>shelf</b> (Currently Learning, Want to Learn,
-        Finished Learning) or by <b>topics</b> (make as many as you like).
+        Finished Learning) or by <b>playlists</b> (make as many as you like).
       </span>,
     ],
     isPhoneMockup: true,
