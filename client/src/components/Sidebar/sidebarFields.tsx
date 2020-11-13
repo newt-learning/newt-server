@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  FiPlus,
-  FiArchive,
-  FiGrid,
-  FiTrello,
-  FiFolder,
-  FiBarChart,
-} from "react-icons/fi";
+import { FiPlus, FiGrid, FiTrello, FiFolder, FiBarChart } from "react-icons/fi";
 import styles from "./Sidebar.module.css";
 
 export default [
