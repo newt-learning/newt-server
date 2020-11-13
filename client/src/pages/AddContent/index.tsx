@@ -44,10 +44,7 @@ const AddContentPage = () => {
     { isLoading, error: addContentError },
   ] = useCreateContent();
   const [addContentV2, { isLoading: isAddingBook }] = useCreateContentV2();
-  const [
-    createSeries,
-    { isLoading: isCreatingSeries, error: createSeriesError },
-  ] = useCreateSeries();
+  const [createSeries, { isLoading: isCreatingSeries }] = useCreateSeries();
 
   const handleGoToConfirmation = async (values: YoutubeFormValues) => {
     const { videoUrl, playlistUrl } = values;

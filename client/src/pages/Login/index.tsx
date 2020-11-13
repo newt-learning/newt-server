@@ -7,7 +7,7 @@ import { Navbar, Button } from "../../components";
 // Styling
 import styles from "./Login.module.css";
 import googleLogo from "../../assets/logos/googleLoginLogo";
-import githubLogo from "../../assets/logos/GitHubLoginLogo.png";
+// import githubLogo from "../../assets/logos/GitHubLoginLogo.png";
 
 const LoginPage = () => {
   const { authenticateWithGoogle } = useAuthData();
@@ -34,7 +34,7 @@ const LoginPage = () => {
                   </div>
                 </Button>
               </li>
-              <li>
+              {/* <li>
                 <Button
                   className={`${styles.loginBtn} ${styles.githubBtn}`}
                   // onClick={() => authenticateWithGithub(history)}
@@ -50,7 +50,7 @@ const LoginPage = () => {
                     </div>
                   </div>
                 </Button>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
