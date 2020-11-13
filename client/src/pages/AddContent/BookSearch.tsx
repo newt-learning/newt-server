@@ -231,7 +231,7 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
               await onSubmit({
                 bookInfo: bookToAdd,
                 shelf,
-                topics: [],
+                playlists: [],
                 startDate,
                 finishDate,
               });

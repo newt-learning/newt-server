@@ -121,7 +121,7 @@ const VideoConfirmation = ({
           onSubmit({
             videoInfo: data,
             shelf,
-            topics: [],
+            playlists: [],
             startDate,
             finishDate,
           })

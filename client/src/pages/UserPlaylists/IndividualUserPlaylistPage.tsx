@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 // API
 import {
-  useFetchTopic,
-  useUpdateTopic,
-  useDeleteTopic,
-} from "../../api/topics";
+  useFetchPlaylist,
+  useUpdatePlaylist,
+  useDeletePlaylist,
+} from "../../api/playlists";
 // Components
 import { ContentInbox, DeleteItemModal } from "../../components";
 // Types
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
-import styles from "./Topics.module.css";
+import styles from "./Playlists.module.css";
 import Modal from "react-bootstrap/Modal";
-import TopicForm, { TopicFormValues } from "./TopicForm";
+import PlaylistForm, { PlaylistFormValues } from "./PlaylistForm";
 
-const IndividualTopicPage = () => {
+const IndividualPlaylistPage = () => {
   // @ts-ignore
-  const { topicId } = useParams();
-  // Get name of topic from location state
+  const { playlistId } = useParams();
+  // Get name of playlist from location state
   const location: any = useLocation();
   const { state: locationState } = location;
 
@@ -26,12 +26,12 @@ const IndividualTopicPage = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { isLoading, data, isError } = useFetchTopic(topicId);
-  const [updateTopic, { error: updateTopicError }] = useUpdateTopic();
+  const { isLoading, data, isError } = useFetchPlaylist(playlistId);
+  const [updatePlaylist, { error: updatePlaylistError }] = useUpdatePlaylist();
   const [
-    deleteTopic,
-    { isLoading: isDeleting, error: deleteTopicError },
-  ] = useDeleteTopic();
+    deletePlaylist,
+    { isLoading: isDeleting, error: deletePlaylistError },
+  ] = useDeletePlaylist();
 
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
@@ -49,23 +49,23 @@ const IndividualTopicPage = () => {
     },
   ];
 
-  const handleEditTopic = (values: TopicFormValues) => {
-    updateTopic({ topicId, data: values });
+  const handleEditPlaylist = (values: PlaylistFormValues) => {
+    updatePlaylist({ playlistId, data: values });
     setShowEditModal(false);
   };
-  const handleDeleteTopic = async () => {
-    await deleteTopic(topicId);
+  const handleDeletePlaylist = async () => {
+    await deletePlaylist(playlistId);
     // Close modal
     setShowDeleteModal(false);
-    // Go back to Topics page
+    // Go back to Playlists page
     history.goBack();
   };
 
-  if (updateTopicError) {
-    console.log(updateTopicError);
+  if (updatePlaylistError) {
+    console.log(updatePlaylistError);
   }
-  if (deleteTopicError) {
-    console.error(deleteTopicError);
+  if (deletePlaylistError) {
+    console.error(deletePlaylistError);
   }
 
   return (
@@ -86,13 +86,13 @@ const IndividualTopicPage = () => {
         backdrop="static"
         animation={false}
       >
-        <Modal.Header closeButton>Edit Topic</Modal.Header>
+        <Modal.Header closeButton>Edit Playlist</Modal.Header>
         <Modal.Body className={styles.modalBody}>
-          <TopicForm
+          <PlaylistForm
             initialValues={{
               name: data ? data.name : "",
             }}
-            onSubmit={handleEditTopic}
+            onSubmit={handleEditPlaylist}
             buttonTitle="Edit"
             buttonCategory="secondary"
           />
@@ -101,12 +101,12 @@ const IndividualTopicPage = () => {
       <DeleteItemModal
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
-        itemToDelete="topic"
-        onDelete={handleDeleteTopic}
+        itemToDelete="playlist"
+        onDelete={handleDeletePlaylist}
         isDeleting={isDeleting}
       />
     </>
   );
 };
 
-export default IndividualTopicPage;
+export default IndividualPlaylistPage;

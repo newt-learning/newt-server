@@ -2,6 +2,7 @@ import React from "react";
 import {
   FiPlus,
   FiArchive,
+  FiGrid,
   FiTrello,
   FiFolder,
   FiBarChart,
@@ -25,9 +26,10 @@ export default [
     icon: () => <FiFolder size={20} className={styles.icon} />,
   },
   {
-    name: "Topics",
-    route: "/topics",
-    icon: () => <FiArchive size={20} className={styles.icon} />,
+    name: "Playlists",
+    route: "/playlists",
+    // icon: () => <FiArchive size={20} className={styles.icon} />,
+    icon: () => <FiGrid size={20} className={styles.icon} />,
   },
   {
     name: "Stats",

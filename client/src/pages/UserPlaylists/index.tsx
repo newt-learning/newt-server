@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 // API
-import { useFetchAllTopics, useCreateTopic } from "../../api/topics";
+import { useFetchAllPlaylists, useCreatePlaylist } from "../../api/playlists";
 // Components
 import {
   AppMainContainer,
@@ -10,41 +10,41 @@ import {
   MessageBox,
   Button,
 } from "../../components";
-import TopicCard from "./TopicCard";
-import TopicForm from "./TopicForm";
+import PlaylistCard from "./PlaylistCard";
+import PlaylistForm from "./PlaylistForm";
 import Modal from "react-bootstrap/Modal";
 // Styling
-import styles from "./Topics.module.css";
+import styles from "./Playlists.module.css";
 
-interface TopicData {
+interface PlaylistData {
   _id: string;
   name: string;
 }
 
-interface CreateTopicValues {
+interface CreatePlaylistValues {
   name: string;
 }
 
-const TopicsPage = () => {
+const PlaylistsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const { data, status, error } = useFetchAllTopics();
-  const [createTopic, { error: createTopicError }] = useCreateTopic();
+  const { data, status, error } = useFetchAllPlaylists();
+  const [createPlaylist, { error: createPlaylistError }] = useCreatePlaylist();
 
-  const handleCreateTopic = (values: CreateTopicValues) => {
-    createTopic(values);
+  const handleCreatePlaylist = (values: CreatePlaylistValues) => {
+    createPlaylist(values);
     setShowCreateModal(false);
   };
 
-  if (createTopicError) {
-    console.log(createTopicError);
+  if (createPlaylistError) {
+    console.log(createPlaylistError);
   }
 
   return (
     <AppMainContainer>
       <AppHeaderContainer>
-        <h2>Topics</h2>
+        <h2>Playlists</h2>
         <Button category="success" onClick={() => setShowCreateModal(true)}>
-          Create topic
+          Create playlist
         </Button>
       </AppHeaderContainer>
       <AppContentContainer
@@ -55,21 +55,21 @@ const TopicsPage = () => {
         ) : error ? (
           "Error"
         ) : _.isEmpty(data) ? (
-          // UI for No topics
+          // UI for No playlists
           <MessageBox>
-            No topics yet.{" "}
+            No playlists yet.{" "}
             <span
               className={styles.create}
               onClick={() => setShowCreateModal(true)}
             >
               Create
             </span>{" "}
-            your first topic!
+            your first playlist!
           </MessageBox>
         ) : (
-          // Cards for each topic
-          data.map(({ _id, name }: TopicData) => (
-            <TopicCard key={_id} id={_id} name={name} />
+          // Cards for each playlist
+          data.map(({ _id, name }: PlaylistData) => (
+            <PlaylistCard key={_id} id={_id} name={name} />
           ))
         )}
       </AppContentContainer>
@@ -81,14 +81,14 @@ const TopicsPage = () => {
         animation={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create Topic</Modal.Title>
+          <Modal.Title>Create Playlist</Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
-          <TopicForm onSubmit={handleCreateTopic} />
+          <PlaylistForm onSubmit={handleCreatePlaylist} />
         </Modal.Body>
       </Modal>
     </AppMainContainer>
   );
 };
 
-export default TopicsPage;
+export default PlaylistsPage;

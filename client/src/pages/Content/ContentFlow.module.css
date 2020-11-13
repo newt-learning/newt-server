@@ -80,7 +80,7 @@
   margin-bottom: 0.5rem;
 }
 
-.topics {
+.playlists {
   display: grid;
   grid-template-columns: repeat(auto-fill, 150px);
   gap: 0.5rem;

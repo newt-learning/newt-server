@@ -1,33 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames/bind";
-import styles from "./TopicCard.module.css";
+import styles from "./PlaylistCard.module.css";
 
 const cx = classnames.bind(styles);
 
-interface AddTopicCardProps {
+interface AddPlaylistCardProps {
   onClick: () => void;
 }
-interface TopicCardProps {
+interface PlaylistCardProps {
   id: string;
   name: string;
   variant: "card" | "pill";
 }
 
-export const AddTopicCard = ({ onClick }: AddTopicCardProps) => {
+export const AddPlaylistCard = ({ onClick }: AddPlaylistCardProps) => {
   return (
     <div
       className={cx(styles.container, styles.pill, styles.addPill)}
       onClick={onClick}
     >
-      <h6 style={{ marginBottom: 0 }}>+ Add topic</h6>
+      <h6 style={{ marginBottom: 0 }}>+ Add playlist</h6>
     </div>
   );
 };
 
-const TopicCard = ({ id, name, variant }: TopicCardProps) => {
+const PlaylistCard = ({ id, name, variant }: PlaylistCardProps) => {
   return (
-    <Link to={{ pathname: `/topics/${id}`, state: { name } }}>
+    <Link to={{ pathname: `/playlists/${id}`, state: { name } }}>
       <div
         className={cx({
           container: true,
@@ -45,8 +45,8 @@ const TopicCard = ({ id, name, variant }: TopicCardProps) => {
   );
 };
 
-TopicCard.defaultProps = {
+PlaylistCard.defaultProps = {
   variant: "card",
 };
 
-export default TopicCard;
+export default PlaylistCard;

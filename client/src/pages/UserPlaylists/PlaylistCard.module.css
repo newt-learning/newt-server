@@ -4,7 +4,7 @@
   align-items: center;
   background-color: var(--hotPink-200);
   color: var(--hotPink-600);
-  overflow-wrap: anywhere; /* break up big topic names */
+  overflow-wrap: anywhere; /* break up big playlist names */
 }
 
 .card {
