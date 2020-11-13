@@ -53,7 +53,7 @@ const Navbar = ({ variant }: NavbarProps) => {
             landingActiveNavLink: variant === "landing",
           })}
         >
-          About
+          The Story
         </NavLink>
       </div>
     </nav>

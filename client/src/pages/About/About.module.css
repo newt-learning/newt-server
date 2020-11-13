@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap");
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px; /* Slightly smaller than the usual 1600px for easier reading */
+}
+
+.container > h1 {
+  font-family: "Lora", serif;
+  font-size: var(--FS-4xl);
+  margin: 2rem 0;
+}
+
+.lede {
+  font-size: var(--FS-lg);
+  font-weight: 500;
+  color: var(--gray-600);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.container > p {
+  font-size: var(--FS-base);
+}
+
+@media screen and (min-width: 640px) {
+  .container > h1 {
+    font-size: var(--FS-5xl);
+  }
+
+  .lede {
+    margin-bottom: 4rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container > h1 {
+    font-size: var(--FS-6xl);
+  }
+
+  .container > p {
+    font-size: var(--FS-lg);
+  }
+}
