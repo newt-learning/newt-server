@@ -22,19 +22,19 @@ interface PlaylistFormProps {
 
 const CHARACTER_LIMIT = 24;
 
+export const createPlaylistSchema = yup.object({
+  name: yup
+    .string()
+    .required("A playlist name is required.")
+    .max(CHARACTER_LIMIT),
+});
+
 const PlaylistForm = ({
   initialValues = { name: "" },
   onSubmit,
   buttonTitle = "Create",
   buttonCategory = "success",
 }: PlaylistFormProps) => {
-  const createPlaylistSchema = yup.object({
-    name: yup
-      .string()
-      .required("A playlist name is required.")
-      .max(CHARACTER_LIMIT),
-  });
-
   return (
     <Formik
       validationSchema={createPlaylistSchema}
