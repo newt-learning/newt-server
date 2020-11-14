@@ -5,6 +5,7 @@ import styles from "./FeaturesSection.module.css";
 interface FeatureProps {
   id: string;
   title: string;
+  linkTo?: string;
   description: React.ReactNode[];
   Graphic: React.ReactNode;
 }
@@ -13,6 +14,7 @@ const features = [
   {
     id: "organize",
     title: "Organize",
+    linkTo: "shelves",
     description: [
       "Everything you want to learn from \u2014 books, videos, articles, online courses, podcasts, interactive games, etc. \u2014 in one place.",
       <span>
@@ -30,6 +32,7 @@ const features = [
   {
     id: "track",
     title: "Track",
+    linkTo: "stats",
     description: [
       "Get stats on what you've read, watched, listened to, and played.",
       "Follow your progress over time.",
@@ -64,6 +67,7 @@ const features = [
   {
     id: "discover",
     title: "Discover",
+    linkTo: "discover",
     description: [
       "Why should recommendations be limited in the medium that they are in?",
       "After finishing a book, what if the best next thing is not another book, but a documentary? Or an interactive game?",
@@ -85,16 +89,16 @@ const features = [
   },
 ];
 
-const Feature = ({ id, title, description, Graphic }: FeatureProps) => {
+const Feature = ({ id, title, linkTo, description, Graphic }: FeatureProps) => {
   return (
     <div className={styles.feature}>
       <div id={styles[id]} className={styles.mockPhoneContainer}>
         {Graphic}
       </div>
       <div className={styles.descriptionContainer}>
-        {/* If title is Discover, link to page, otherwise just show title */}
-        {title === "Discover" ? (
-          <a href="discover">
+        {/* If link exists, link to page, otherwise just show title */}
+        {linkTo ? (
+          <a href={linkTo}>
             <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
               {title}
             </h2>
@@ -122,6 +126,7 @@ const FeaturesSection = () => {
           <Feature
             id={feature.id}
             title={feature.title}
+            linkTo={feature?.linkTo}
             description={feature.description}
             key={feature.id}
             Graphic={
