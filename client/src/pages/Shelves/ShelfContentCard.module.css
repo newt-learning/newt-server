@@ -12,6 +12,11 @@
   align-items: center;
 }
 
+.card:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.11), 0 8px 8px rgba(0, 0, 0, 0.14);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
 .card#currently-learning {
   background-color: var(--yellow-200);
 }

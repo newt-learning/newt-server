@@ -48,10 +48,13 @@ const removeAuthedUser = () => {
 };
 
 // Function to authenticate with Google
-export const authenticateWithGoogle = (dispatch) => (history) => {
+export const authenticateWithGoogle = (dispatch) => (
+  history,
+  redirectTo = "/dashboard"
+) => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider();
-  authenticateWithProvider(provider, history, dispatch);
+  authenticateWithProvider(provider, history, dispatch, redirectTo);
 };
 
 // Function to authenticate with Google
@@ -63,7 +66,12 @@ export const authenticateWithGithub = (dispatch) => (history) => {
 
 // General function that uses Firebase authentication service (popup)
 // with a given auth provider
-async function authenticateWithProvider(provider, history, dispatch) {
+async function authenticateWithProvider(
+  provider,
+  history,
+  dispatch,
+  redirectTo
+) {
   firebase
     .auth()
     .signInWithPopup(provider)
@@ -88,7 +96,7 @@ async function authenticateWithProvider(provider, history, dispatch) {
       dispatch(setAuthedUser(res.data));
 
       // Redirect to dashboard
-      history.push("/dashboard");
+      history.push(redirectTo);
     })
     .catch((error) => {
       dispatch(removeAuthedUser());

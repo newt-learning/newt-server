@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 // Context
 import { useData as useAuthData } from "../../context/AuthContext";
 // Components
@@ -12,6 +12,12 @@ import googleLogo from "../../assets/logos/googleLoginLogo";
 const LoginPage = () => {
   const { authenticateWithGoogle } = useAuthData();
   const history = useHistory();
+  // Destructuring from state throws type error, so setting as any
+  const location: any = useLocation();
+
+  // If there's a redirect path in state, use that. Otherwise default redirect
+  // after login is to Dashboard
+  const redirectTo = location.state?.redirectTo?.pathname || "/dashboard";
 
   return (
     <section>
@@ -24,7 +30,7 @@ const LoginPage = () => {
               <li className={styles.providerBtn}>
                 <Button
                   className={`${styles.loginBtn} ${styles.googleBtn}`}
-                  onClick={() => authenticateWithGoogle(history)}
+                  onClick={() => authenticateWithGoogle(history, redirectTo)}
                 >
                   <div className={styles.btnContent}>
                     {googleLogo}

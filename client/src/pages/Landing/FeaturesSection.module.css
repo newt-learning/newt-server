@@ -82,9 +82,15 @@
 .descriptionHeader#organize {
   color: var(--newtBlue-600);
 }
+.descriptionHeader#organize:hover {
+  color: var(--newtBlue-700);
+}
 
 .descriptionHeader#track {
   color: var(--hotPink-500);
+}
+.descriptionHeader#track:hover {
+  color: var(--hotPink-700);
 }
 
 .descriptionHeader#learn {

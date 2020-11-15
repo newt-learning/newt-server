@@ -1,12 +1,20 @@
 import React from "react";
 import moment from "moment";
 import classnames from "classnames/bind";
-import styles from "./ContentCard.module.css";
+import { Link } from "react-router-dom";
 import { FiBook, FiPlusSquare } from "react-icons/fi";
+// Styling
+import styles from "./ContentCard.module.css";
 // Helpers
 import { shortenText } from "../../pages/Shelves/helpers";
 
 const cx = classnames.bind(styles);
+
+interface ContentCardTitleProps {
+  title: string;
+  size: "small" | "large";
+  titleLink?: string;
+}
 
 interface ContentCardProps {
   size: "small" | "large";
@@ -18,7 +26,28 @@ interface ContentCardProps {
   showAddToLibrary?: boolean;
   onClick?: () => void;
   onClickAddToLibrary?: () => void;
+  titleLink?: string; // Link to someplace once title is clicked
 }
+
+const ContentCardTitle = ({
+  title,
+  size,
+  titleLink,
+}: ContentCardTitleProps) => {
+  // If title is a link, render Link, otherwise just the title
+  return titleLink ? (
+    <Link to={titleLink} className={styles.titleLink}>
+      <h5 className={cx({ title: true, smallTitle: size === "small" })}>
+        {title}
+      </h5>
+    </Link>
+  ) : (
+    <h5 className={cx({ title: true, smallTitle: size === "small" })}>
+      {title}
+    </h5>
+  );
+};
+
 const ContentCard = ({
   size,
   showAddToLibrary,
@@ -29,6 +58,7 @@ const ContentCard = ({
   dateCompleted,
   onClick,
   onClickAddToLibrary,
+  titleLink,
 }: ContentCardProps) => {
   return (
     <div
@@ -56,9 +86,7 @@ const ContentCard = ({
             Otherwise just the title. */}
         {showAddToLibrary ? (
           <div className={styles.titleContainer}>
-            <h5 className={cx({ title: true, smallTitle: size === "small" })}>
-              {title}
-            </h5>
+            <ContentCardTitle title={title} size={size} titleLink={titleLink} />
             <div className={styles.addIconContainer}>
               <FiPlusSquare
                 size={22}
@@ -68,11 +96,8 @@ const ContentCard = ({
             </div>
           </div>
         ) : (
-          <h5 className={cx({ title: true, smallTitle: size === "small" })}>
-            {title}
-          </h5>
+          <ContentCardTitle title={title} size={size} titleLink={titleLink} />
         )}
-
         {authors ? (
           <p
             className={cx({ authors: true, smallAuthors: size === "small" })}

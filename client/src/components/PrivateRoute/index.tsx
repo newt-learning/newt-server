@@ -4,7 +4,7 @@ import { RouteProps } from "react-router";
 
 interface PrivateRouteProps extends RouteProps {
   // https://stackoverflow.com/questions/53452966/typescript-3-jsx-element-type-component-does-not-have-any-construct-or-call-s?rq=1
-  Component: React.ReactType;
+  Component: React.ElementType;
   authExists: boolean;
 }
 
@@ -13,7 +13,16 @@ function PrivateRoute({ Component, authExists, ...rest }: PrivateRouteProps) {
     <Route
       {...rest}
       render={(props) =>
-        authExists ? <Component {...props} /> : <Redirect to="/login" />
+        authExists ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { redirectTo: props.location },
+            }}
+          />
+        )
       }
     />
   );

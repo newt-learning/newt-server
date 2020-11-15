@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { useToasts } from "react-toast-notifications";
 // API
 import {
   useFetchAllPlaylists,
   useAddContentToPlaylists,
   useRemoveContentFromPlaylists,
+  useCreatePlaylist,
 } from "../../api/playlists";
 import { useUpdateContent } from "../../api/content";
 // Components
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import { Button } from "../../components";
+// Helpers
+import { createPlaylistSchema } from "../UserPlaylists/PlaylistForm";
 
 export type PlaylistSelectOptionType =
   | {
@@ -20,7 +24,6 @@ export type PlaylistSelectOptionType =
   | undefined;
 interface SelectPlaylistsFormProps {
   initialPlaylists: PlaylistSelectOptionType[] | [] | undefined;
-  // initialPlaylists: any;
   contentId: string;
   closeModal: () => void;
 }
@@ -31,6 +34,12 @@ const SelectPlaylistsForm = ({
   closeModal,
 }: SelectPlaylistsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(initialPlaylists);
+  const [invalidPlaylistError, setInvalidPlaylistError] = useState(null);
+
+  // Toasts
+  const { addToast } = useToasts();
+
+  // data API stuff
   const { data: allPlaylists, isLoading } = useFetchAllPlaylists();
   const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
   const [
@@ -41,6 +50,10 @@ const SelectPlaylistsForm = ({
     removeContentFromPlaylists,
     { isLoading: isRemovingPlaylists },
   ] = useRemoveContentFromPlaylists();
+  const [
+    createPlaylist,
+    { isLoading: isCreatingPlaylist },
+  ] = useCreatePlaylist();
 
   const formattedPlaylists = allPlaylists?.map((playlist: any) => ({
     id: playlist._id,
@@ -51,15 +64,14 @@ const SelectPlaylistsForm = ({
   // Pretty much identical to mobile
   const handleSubmit = async () => {
     // Only get the playlist ids from the selected options
-    const selectedPlaylistsIds = selectedOptions?.map(
+    const selectedPlaylistsIds = _.map(
+      selectedOptions,
       (option: any) => option.id
     );
     const initialPlaylistsIds = _.map(
       initialPlaylists,
       (playlist: PlaylistSelectOptionType) => playlist?.id
     );
-
-    console.log(initialPlaylistsIds);
 
     let playlistsToAdd: any = [];
     let playlistsToRemove: any = [];
@@ -85,7 +97,17 @@ const SelectPlaylistsForm = ({
     // Send request to add the content to the newly selected playlists, remove
     // playlists that were unselected, and update the content by adding the playlists
     // to it
-    updateContent({ contentId, data: { playlists: selectedPlaylistsIds } });
+    updateContent(
+      { contentId, data: { playlists: selectedPlaylistsIds } },
+      {
+        onSuccess: () =>
+          addToast("Playlists updated", { appearance: "success" }),
+        onError: () =>
+          addToast("Sorry, there was an error updating the playlist", {
+            appearance: "error",
+          }),
+      }
+    );
     await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
     await removeContentFromPlaylists({
       playlistIds: playlistsToRemove,
@@ -124,20 +146,41 @@ const SelectPlaylistsForm = ({
     }),
   };
 
+  // Handle creating a new playlist from the select component
+  const handleCreatePlaylist = async (newPlaylist: string) => {
+    createPlaylistSchema
+      .validate({ name: newPlaylist })
+      .then((data) => {
+        if (data) {
+          createPlaylist(data);
+        }
+      })
+      .catch((error) => setInvalidPlaylistError(error.message));
+  };
+
   return (
     <>
       <h4>Select playlist(s)</h4>
-      <Select
+      <CreatableSelect
         isMulti
         name="playlists"
         defaultValue={selectedOptions}
         onChange={(options) => setSelectedOptions(options)}
+        // Reset error message on focus
+        onFocus={() => setInvalidPlaylistError(null)}
+        onCreateOption={handleCreatePlaylist}
         options={formattedPlaylists}
         closeMenuOnSelect={false}
-        isLoading={isLoading}
+        isLoading={isLoading || isCreatingPlaylist}
         styles={colorStyles}
         style={{ width: "100%" }}
       />
+      {/* Error message if playlist validation fails */}
+      {invalidPlaylistError ? (
+        <div style={{ fontSize: "var(--FS-s", color: "var(--red-500" }}>
+          Couldn't create the playlist. Name must be at most 24 characters.
+        </div>
+      ) : null}
       <Button
         category="success"
         onClick={handleSubmit}
