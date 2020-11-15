@@ -57,6 +57,15 @@
   margin-bottom: 0.15rem;
 }
 
+.titleLink {
+  color: var(--gray-900);
+}
+
+.titleLink:hover {
+  text-decoration: underline;
+  color: var(--gray-900);
+}
+
 .smallTitle {
   font-size: var(--FS-s);
 }

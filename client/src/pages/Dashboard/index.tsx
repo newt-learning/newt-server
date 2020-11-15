@@ -59,6 +59,7 @@ const Dashboard = () => {
               authors={item.authors}
               description={item.description}
               thumbnailUrl={item.thumbnailUrl}
+              titleLink={`/shelves/currently-learning/${item._id}`}
             />
           ))
         )}
