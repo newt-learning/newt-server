@@ -59,7 +59,7 @@ const NewtWebApp = () => {
           <PrivateRoute
             Component={IndividualShelfPage}
             authExists={exists}
-            path="/shelves/:shelfName"
+            path={["/shelves/:shelfName/:contentId", "/shelves/:shelfName"]}
           />
           <PrivateRoute
             Component={ShelvesPage}
