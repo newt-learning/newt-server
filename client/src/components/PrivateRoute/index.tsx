@@ -13,7 +13,16 @@ function PrivateRoute({ Component, authExists, ...rest }: PrivateRouteProps) {
     <Route
       {...rest}
       render={(props) =>
-        authExists ? <Component {...props} /> : <Redirect to="/login" />
+        authExists ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { redirectTo: props.location },
+            }}
+          />
+        )
       }
     />
   );
