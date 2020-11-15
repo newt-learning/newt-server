@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { useToasts } from "react-toast-notifications";
 // API
 import { useFetchAllPlaylists, useCreatePlaylist } from "../../api/playlists";
 // Components
@@ -27,8 +28,16 @@ interface CreatePlaylistValues {
 
 const PlaylistsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const { addToast } = useToasts();
+
   const { data, status, error } = useFetchAllPlaylists();
-  const [createPlaylist, { error: createPlaylistError }] = useCreatePlaylist();
+  const [createPlaylist, { error: createPlaylistError }] = useCreatePlaylist({
+    onSuccess: () => addToast("Playlist created", { appearance: "success" }),
+    onError: () =>
+      addToast("Sorry, there was an error creating the playlist", {
+        appearance: "error",
+      }),
+  });
 
   const handleCreatePlaylist = (values: CreatePlaylistValues) => {
     createPlaylist(values);

@@ -35,6 +35,7 @@ const Shelf = ({ id, name, data }: ShelfProps) => {
           .slice(0, 3)
           .map((item: any) => (
             <ShelfContentCard
+              contentId={item._id}
               key={item._id}
               name={item.name}
               thumbnailUrl={item.thumbnailUrl}

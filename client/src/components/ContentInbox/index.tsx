@@ -2,7 +2,7 @@
 // details on right) -- used in Playlists/Shelves
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import classnames from "classnames/bind";
 // Components
 import { FiArrowLeft } from "react-icons/fi";
@@ -54,8 +54,10 @@ const ContentInbox = ({
   const history = useHistory();
 
   const [currentContent, setCurrentContent] = useState<any>(null);
-
-  console.log(contentData);
+  // @ts-ignore
+  // Get contentId from route params, if it exists. This is used to set the inbox
+  // to the right content immediately, rather than always starting at the top
+  const { contentId } = useParams();
 
   // Okay there's this weird bug where the Inbox keeps moving to the first item
   // if I go to a different tab, or go off screen, or even open Inspector and close
@@ -65,11 +67,18 @@ const ContentInbox = ({
   // changes (does in Shelves, doesn't in Playlists??)
   useEffect(() => {
     if (!_.isEmpty(contentData)) {
-      setCurrentContent(contentData[0]);
+      // If a contentId exists as a URL parameter, use that to filter the data
+      // and jump to that specific item. If not, start at first one
+      if (contentId) {
+        const chosenContent = _.filter(contentData, { _id: contentId })[0];
+        setCurrentContent(chosenContent);
+      } else {
+        setCurrentContent(contentData[0]);
+      }
     } else {
       setCurrentContent(null);
     }
-  }, [contentData]);
+  }, [contentData, contentId]);
 
   return (
     <AppMainContainer variant="inbox" className={className}>
