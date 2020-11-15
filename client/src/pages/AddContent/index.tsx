@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { useToasts } from "react-toast-notifications";
 // API
 import {
   getYoutubeVideoInfo,
@@ -38,6 +39,9 @@ const AddContentPage = () => {
     OnConfirmationPageState
   >(null);
   const [youtubeContent, setYoutubeContent] = useState<any>(null);
+
+  // Toasts
+  const { addToast } = useToasts();
 
   const [
     addContent,
@@ -88,7 +92,18 @@ const AddContentPage = () => {
         finishDate
       );
 
-      await addContent(contentInfo);
+      await addContent(contentInfo, {
+        // Toast notifications on success and error
+        onSuccess: () =>
+          addToast("Video has been added to Shelves", {
+            appearance: "success",
+          }),
+        onError: () =>
+          addToast(
+            "Sorry, there was an error adding that video. Please try again.",
+            { appearance: "error" }
+          ),
+      });
 
       // Go back to form
       setOnConfirmationPage(null);
@@ -99,7 +114,18 @@ const AddContentPage = () => {
       const { seriesInfo } = values;
       const formattedSeriesInfo = extractAndAssemblePlaylistInfo(seriesInfo);
 
-      await createSeries(formattedSeriesInfo);
+      await createSeries(formattedSeriesInfo, {
+        // Toast notifications on success and error
+        onSuccess: () =>
+          addToast("Video series has been added to Shelves", {
+            appearance: "success",
+          }),
+        onError: () =>
+          addToast(
+            "Sorry, there was an error adding that video series. Please try again.",
+            { appearance: "error" }
+          ),
+      });
       // Go back to form
       setOnConfirmationPage(null);
       setYoutubeContent(null);
@@ -116,7 +142,20 @@ const AddContentPage = () => {
       finishDate
     );
 
-    await addContentV2(formattedBookInfo);
+    await addContentV2(formattedBookInfo, {
+      // Toast notifications on success and error
+      onSuccess: () =>
+        addToast(`${formattedBookInfo.name} added to Shelves`, {
+          appearance: "success",
+        }),
+      onError: () =>
+        addToast(
+          "Sorry, there was an error adding that book. Please try again.",
+          {
+            appearance: "error",
+          }
+        ),
+    });
   };
 
   if (addContentError) {
