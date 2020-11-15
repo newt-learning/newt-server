@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
+import { useToasts } from "react-toast-notifications";
 // API
 import {
   useFetchAllPlaylists,
@@ -34,6 +35,10 @@ const SelectPlaylistsForm = ({
 }: SelectPlaylistsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(initialPlaylists);
   const [invalidPlaylistError, setInvalidPlaylistError] = useState(null);
+
+  // Toasts
+  const { addToast } = useToasts();
+
   // data API stuff
   const { data: allPlaylists, isLoading } = useFetchAllPlaylists();
   const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
@@ -59,7 +64,8 @@ const SelectPlaylistsForm = ({
   // Pretty much identical to mobile
   const handleSubmit = async () => {
     // Only get the playlist ids from the selected options
-    const selectedPlaylistsIds = selectedOptions?.map(
+    const selectedPlaylistsIds = _.map(
+      selectedOptions,
       (option: any) => option.id
     );
     const initialPlaylistsIds = _.map(
@@ -91,7 +97,17 @@ const SelectPlaylistsForm = ({
     // Send request to add the content to the newly selected playlists, remove
     // playlists that were unselected, and update the content by adding the playlists
     // to it
-    updateContent({ contentId, data: { playlists: selectedPlaylistsIds } });
+    updateContent(
+      { contentId, data: { playlists: selectedPlaylistsIds } },
+      {
+        onSuccess: () =>
+          addToast("Playlists updated", { appearance: "success" }),
+        onError: () =>
+          addToast("Sorry, there was an error updating the playlist", {
+            appearance: "error",
+          }),
+      }
+    );
     await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
     await removeContentFromPlaylists({
       playlistIds: playlistsToRemove,
