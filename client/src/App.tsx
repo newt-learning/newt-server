@@ -78,7 +78,11 @@ const App = () => {
 export default () => {
   return (
     <Router>
-      <ToastProvider autoDismiss={true} placement="bottom-center">
+      <ToastProvider
+        autoDismiss={true}
+        autoDismissTimeout={3000}
+        placement="bottom-center"
+      >
         <AuthProvider>
           <SidebarProvider>
             <App />
