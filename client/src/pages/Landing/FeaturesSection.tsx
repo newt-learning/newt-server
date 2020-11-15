@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { MockPhone } from "./PhoneGraphic";
 import styles from "./FeaturesSection.module.css";
 
@@ -98,11 +99,11 @@ const Feature = ({ id, title, linkTo, description, Graphic }: FeatureProps) => {
       <div className={styles.descriptionContainer}>
         {/* If link exists, link to page, otherwise just show title */}
         {linkTo ? (
-          <a href={linkTo}>
+          <Link to={linkTo}>
             <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
               {title}
             </h2>
-          </a>
+          </Link>
         ) : (
           <h2 id={styles[id]} className={`${styles.descriptionHeader}`}>
             {title}
