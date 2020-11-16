@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
-import { useUpdateContent, useDeleteContent } from "../../api/content";
+import {
+  useUpdateContent,
+  useDeleteContent,
+  useDeleteSeries,
+} from "../../api/content";
 import { useAddContentToChallenge } from "../../api/challenges";
 // Components
 import {
@@ -113,8 +117,9 @@ const ContentFlow = ({
 
   // Updating content
   const [updateContent] = useUpdateContent();
-  const [deleteContent, { isLoading: isDeleting }] = useDeleteContent();
+  const [deleteContent, { isLoading: isDeletingContent }] = useDeleteContent();
   const [addContentToChallenge] = useAddContentToChallenge();
+  const [deleteSeries, { isLoading: isDeletingSeries }] = useDeleteSeries();
 
   const updateShelf = (selectedShelf: ShelfType) => {
     const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
@@ -136,7 +141,12 @@ const ContentFlow = ({
   };
 
   const handleDeleteItem = async () => {
-    await deleteContent(id);
+    if (type === "book" || type === "video") {
+      await deleteContent(id);
+    } else if (type === "series") {
+      await deleteSeries(id);
+    }
+
     setShowDeleteItemModal(false);
   };
 
@@ -348,7 +358,7 @@ const ContentFlow = ({
         onHide={() => setShowDeleteItemModal(false)}
         itemToDelete={type}
         onDelete={handleDeleteItem}
-        isDeleting={isDeleting}
+        isDeleting={type === "series" ? isDeletingSeries : isDeletingContent}
       />
     </div>
   );

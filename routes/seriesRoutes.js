@@ -80,15 +80,15 @@ module.exports = (app) => {
         Content.deleteMany({ _id: { $in: contentIds } }, (error) => {
           if (error) {
             res.status(500).send(error);
-          }
-        });
-
-        // Now delete Series
-        Series.findByIdAndDelete(seriesId, (error) => {
-          if (error) {
-            res.status(500).send(error);
           } else {
-            res.sendStatus(200);
+            // Now delete Series
+            Series.findByIdAndDelete(seriesId, (error) => {
+              if (error) {
+                res.status(500).send(error);
+              } else {
+                res.sendStatus(200);
+              }
+            });
           }
         });
       }
