@@ -64,31 +64,31 @@ export function useFetchAllSeries() {
 }
 export function useCreateContent() {
   return useMutation(addContent, {
-    onSettled: () => queryCache.invalidateQueries("contents"),
+    onSettled: () => queryCache.invalidateQueries("contents-and-series"),
   });
 }
 export function useCreateContentV2() {
   return useMutation(addContentV2, {
-    onSettled: () => queryCache.invalidateQueries("contents"),
+    onSettled: () => queryCache.invalidateQueries("contents-and-series"),
   });
 }
 export function useCreateSeries() {
   return useMutation(createSeries, {
-    onSettled: () => queryCache.invalidateQueries("series"),
+    onSettled: () => queryCache.invalidateQueries("contents-and-series"),
   });
 }
 export function useUpdateContent() {
   return useMutation(updateContent, {
-    onSettled: () => queryCache.invalidateQueries("contents")
+    onSettled: () => queryCache.invalidateQueries("contents-and-series")
   })
 }
 export function useUpdateBookProgress() {
   return useMutation(updateBookProgress, {
-    onSettled: () => queryCache.invalidateQueries("contents"),
+    onSettled: () => queryCache.invalidateQueries("contents-and-series"),
   });
 }
 export function useDeleteContent() {
   return useMutation(deleteContent, {
-    onSettled: () => queryCache.invalidateQueries('contents')
+    onSettled: () => queryCache.invalidateQueries('contents-and-series')
   })
 }
