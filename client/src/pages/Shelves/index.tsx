@@ -1,6 +1,6 @@
 import React from "react";
 // API
-import { useFetchAllContent, useFetchAllSeries } from "../../api/content";
+import { useFetchAllContentAndSeries } from "../../api/content";
 // Components
 import { AppMainContainer, AppContentContainer } from "../../components";
 import Shelf from "./Shelf";
@@ -10,12 +10,7 @@ import { filterAndOrderContentByShelf } from "./helpers";
 import styles from "./Shelves.module.css";
 
 const ShelvesPage = () => {
-  const { data, isLoading } = useFetchAllContent();
-  const { data: seriesData, isLoading: seriesIsLoading } = useFetchAllSeries();
-
-  // Maybe should have a single API call for this rather than combining them here
-  const allData =
-    isLoading || seriesIsLoading ? null : [...data, ...seriesData];
+  const { data: allData, isLoading } = useFetchAllContentAndSeries();
 
   const currentlyLearningItems = filterAndOrderContentByShelf(
     "Currently Learning",
