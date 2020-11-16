@@ -65,4 +65,33 @@ module.exports = (app) => {
       }
     });
   });
+
+  // DELETE request to delete a series
+  app.delete("/api/series/:seriesId", requireLogin, (req, res) => {
+    const { seriesId } = req.params;
+
+    Series.findById(seriesId, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        const { contentIds } = series;
+
+        // Delete all the Content in the series
+        Content.deleteMany({ _id: { $in: contentIds } }, (error) => {
+          if (error) {
+            res.status(500).send(error);
+          }
+        });
+
+        // Now delete Series
+        Series.findByIdAndDelete(seriesId, (error) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.sendStatus(200);
+          }
+        });
+      }
+    });
+  });
 };

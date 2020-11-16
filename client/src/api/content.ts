@@ -48,6 +48,9 @@ const updateBookProgress = async ({
 const deleteContent = async (contentId: string) => {
   await newtApi.delete(`/content/${contentId}`)
 }
+const deleteSeries = async (seriesId: string) => {
+  await newtApi.delete(`/series/${seriesId}`)
+}
 
 // React-query bindings
 export function useFetchAllContent() {
@@ -89,6 +92,11 @@ export function useUpdateBookProgress() {
 }
 export function useDeleteContent() {
   return useMutation(deleteContent, {
+    onSettled: () => queryCache.invalidateQueries('contents-and-series')
+  })
+}
+export function useDeleteSeries() {
+  return useMutation(deleteSeries, {
     onSettled: () => queryCache.invalidateQueries('contents-and-series')
   })
 }
