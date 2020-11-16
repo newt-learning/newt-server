@@ -23,4 +23,5 @@ export { default as ProgressBar } from "./ProgressBar";
 export { default as QuizModal } from "./QuizModal";
 export { default as Sidebar } from "./Sidebar";
 export { SideNavItem, SideNavLink } from "./SideNav";
+export { default as StackedImages } from "./StackedImages"
 export { default as TabPane } from "./TabPane";

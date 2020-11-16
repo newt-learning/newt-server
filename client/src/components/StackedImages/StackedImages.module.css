@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+  position: relative;
+  height: 250px;
+}
+
+.container > img {
+  height: 200px;
+  max-height: 200px;
+  border-radius: 0.5rem;
+  position: absolute;
+  transform-origin: 50% -50%;
+  object-fit: contain; /* keep image aspect ratio */
+}
+
+.front {
+  z-index: 3;
+}
+
+.middle {
+  z-index: 2;
+  transform: scale(0.9);
+}
+
+.back {
+  z-index: 1;
+  transform: scale(0.8);
+}

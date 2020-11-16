@@ -5,7 +5,7 @@ import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FiArrowLeft } from "react-icons/fi";
-import { Button, ContentCard } from "../../components";
+import { Button, ContentCard, StackedImages } from "../../components";
 import ShowMoreShowLess from "../Content/ShowMoreShowLess";
 // Styling
 import styles from "./AddContent.module.css";
@@ -140,13 +140,7 @@ const SeriesConfirmation = ({
   isLoading,
 }: VideoConfirmationProps) => {
   const [showMore, setShowMore] = useState(false);
-  const {
-    name,
-    authors,
-    description,
-    videos,
-    seriesInfo: { thumbnails },
-  } = data;
+  const { name, authors, description, videos } = data;
 
   const numOfVideos = videos.length;
   const initialVideosToRender = numOfVideos > 2 ? 2 : numOfVideos;
@@ -156,7 +150,17 @@ const SeriesConfirmation = ({
     ? videos
     : videos.slice(0, initialVideosToRender);
 
-  const bestThumbnail = getBestThumbnail(thumbnails);
+  // const bestThumbnail = getBestThumbnail(thumbnails);
+
+  // Get the first 3 thumbnail URLs to display in the stacked image
+  let thumbnailUrls = [];
+  // Max of 3 images
+  const numImages = videos.length > 3 ? 3 : videos.length;
+  for (let i = 0; i < numImages; i++) {
+    const alt = `Thumbnail for ${videos[i]?.snippet?.title}`;
+    const bestThumbnail = getBestThumbnail(videos[i]?.snippet?.thumbnails);
+    thumbnailUrls.push({ url: bestThumbnail?.url, alt });
+  }
 
   return (
     <>
@@ -164,11 +168,7 @@ const SeriesConfirmation = ({
         <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
         <h3>Confirm Series</h3>
       </div>
-      <Image
-        src={bestThumbnail ? bestThumbnail.url : null}
-        className={styles.thumbnail}
-        fluid
-      />
+      <StackedImages imageUrls={thumbnailUrls} />
       <h3 className={styles.title}>{name}</h3>
       <p className={styles.creator}>{authors.join(", ")}</p>
       <p className={styles.creator}>
