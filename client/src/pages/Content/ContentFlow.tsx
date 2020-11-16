@@ -12,6 +12,7 @@ import {
   DeleteItemModal,
 } from "../../components";
 import BookSection from "./BookSection";
+import SeriesSection from "./SeriesSection";
 import ChangeShelfForm from "./ChangeShelfForm";
 import SelectPlaylistsForm, {
   PlaylistSelectOptionType,
@@ -56,6 +57,9 @@ interface ContentFlowProps {
     pageCount: number | undefined;
     pagesRead: number | undefined;
   };
+  seriesInfo?: {
+    seriesContent: any[] | undefined;
+  };
   hasQuiz?: boolean;
   onTakeQuiz?: () => void;
   buttonText?: string;
@@ -78,6 +82,7 @@ const ContentFlow = ({
   thumbnailUrl,
   description,
   bookInfo,
+  seriesInfo,
   hasQuiz,
   onTakeQuiz,
   buttonText,
@@ -212,6 +217,8 @@ const ContentFlow = ({
               shelf === "Currently Learning" || shelf === "Finished Learning"
             }
           />
+        ) : type === "series" ? (
+          <SeriesSection content={seriesInfo?.seriesContent} />
         ) : null}
         {/* Shelf info */}
         {shelf ? (

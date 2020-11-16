@@ -161,6 +161,9 @@ const ContentInbox = ({
               pageCount: currentContent?.bookInfo?.pageCount,
               pagesRead: currentContent?.bookInfo?.pagesRead,
             }}
+            seriesInfo={{
+              seriesContent: currentContent?.contentIds,
+            }}
             isLoading={isLoading}
             // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}
             hasQuiz={false} // Don't show for now
