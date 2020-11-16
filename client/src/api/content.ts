@@ -15,6 +15,10 @@ const fetchAllContent = async () => {
   const { data } = await newtApi.get("/v2/content");
   return data;
 };
+const fetchAllContentAndSeries = async () => {
+  const { data } = await newtApi.get("/content-and-series")
+  return data
+}
 const fetchContent = async (queryKey: any, contentId: string) => {
   const { data } = await newtApi.get(`/content/${contentId}`)
   return data
@@ -48,6 +52,9 @@ const deleteContent = async (contentId: string) => {
 // React-query bindings
 export function useFetchAllContent() {
   return useQuery("contents", fetchAllContent);
+}
+export function useFetchAllContentAndSeries() {
+  return useQuery("contents-and-series", fetchAllContentAndSeries)
 }
 export function useFetchContent(contentId: string) {
   return useQuery(["content", contentId], fetchContent)
