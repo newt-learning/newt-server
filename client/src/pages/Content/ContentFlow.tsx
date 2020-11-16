@@ -41,6 +41,11 @@ type StartFinishDateType = {
   dateCompleted: Date;
 };
 
+interface IFrameProps {
+  title: string;
+  src: string;
+}
+
 interface ContentFlowProps {
   id: string;
   title: string;
@@ -68,6 +73,18 @@ interface ContentFlowProps {
 }
 
 let cx = classnames.bind(styles);
+
+export const IFrame = ({ title, src }: IFrameProps) => (
+  <iframe
+    id="ytplayer"
+    title={title}
+    width="640"
+    height="360"
+    src={src}
+    frameBorder="0"
+    allowFullScreen
+  />
+);
 
 const ContentFlow = ({
   id,
@@ -123,20 +140,6 @@ const ContentFlow = ({
     setShowDeleteItemModal(false);
   };
 
-  // Render a new iframe each time because if I just change src, it affects browser
-  // history (clicking the back button cycles through previous iframes)
-  const IFrame = ({ title, src }: any) => (
-    <iframe
-      id="ytplayer"
-      title={title}
-      width="640"
-      height="360"
-      src={src}
-      frameBorder="0"
-      allowFullScreen
-    />
-  );
-
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
       type: "item",
@@ -182,6 +185,10 @@ const ContentFlow = ({
               <Skeleton />
             ) : (
               <IFrame
+                // The key ensures the component is recreated. Changing just the
+                // src affects browser history (clicking the back button cycles
+                // through previous iframes)
+                key={id}
                 title={title}
                 src={`https://www.youtube.com/embed/${mediaId}`}
               />
