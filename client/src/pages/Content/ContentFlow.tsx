@@ -218,7 +218,7 @@ const ContentFlow = ({
             }
           />
         ) : type === "series" ? (
-          <SeriesSection content={seriesInfo?.seriesContent} />
+          <SeriesSection id={id} content={seriesInfo?.seriesContent} />
         ) : null}
         {/* Shelf info */}
         {shelf ? (
