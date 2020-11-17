@@ -4,6 +4,7 @@ import classnames from "classnames/bind";
 // API
 import {
   useUpdateContent,
+  useUpdateSeriesShelf,
   useDeleteContent,
   useDeleteSeries,
 } from "../../api/content";
@@ -117,23 +118,28 @@ const ContentFlow = ({
 
   // Updating content
   const [updateContent] = useUpdateContent();
+  const [updateSeriesShelf] = useUpdateSeriesShelf();
   const [deleteContent, { isLoading: isDeletingContent }] = useDeleteContent();
   const [addContentToChallenge] = useAddContentToChallenge();
   const [deleteSeries, { isLoading: isDeletingSeries }] = useDeleteSeries();
 
   const updateShelf = (selectedShelf: ShelfType) => {
-    const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
-      startFinishDates,
-    });
+    if (type === "book" || type === "video") {
+      const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
+        startFinishDates,
+      });
 
-    updateContent({ contentId: id, data: updateData });
+      updateContent({ contentId: id, data: updateData });
 
-    // If it's a book and the selected shelf is "Finished Learning", do
-    // additional stuff like updating the reading challenge
-    if (type === "book" && selectedShelf === "Finished Learning") {
-      // Update the reading challenge by adding this book to the finished list
-      // if a challenge exists.
-      addContentToChallenge(id);
+      // If it's a book and the selected shelf is "Finished Learning", do
+      // additional stuff like updating the reading challenge
+      if (type === "book" && selectedShelf === "Finished Learning") {
+        // Update the reading challenge by adding this book to the finished list
+        // if a challenge exists.
+        addContentToChallenge(id);
+      }
+    } else if (type === "series") {
+      updateSeriesShelf({ seriesId: id, data: { shelf: selectedShelf } });
     }
 
     // Close modal
