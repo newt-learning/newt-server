@@ -11,7 +11,7 @@ interface UpdateBookProgressData {
 }
 interface UpdateSeriesShelfParams {
   seriesId: string;
-  data: { shelf: string }
+  data: { shelf: string, startFinishDates?: any }
 }
 
 // API calls

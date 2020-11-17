@@ -139,7 +139,15 @@ const ContentFlow = ({
         addContentToChallenge(id);
       }
     } else if (type === "series") {
-      updateSeriesShelf({ seriesId: id, data: { shelf: selectedShelf } });
+      const seriesUpdateData = figureOutShelfMovingDataChanges(
+        shelf,
+        selectedShelf,
+        {
+          startFinishDates,
+        }
+      );
+
+      updateSeriesShelf({ seriesId: id, data: seriesUpdateData });
     }
 
     // Close modal

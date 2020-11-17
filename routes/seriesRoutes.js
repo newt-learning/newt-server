@@ -70,6 +70,8 @@ module.exports = (app) => {
   app.put("/api/series/:seriesId/update-shelf", requireLogin, (req, res) => {
     const { seriesId } = req.params;
     const data = req.body;
+    // Update last updated field
+    data.lastUpdated = Date.now();
 
     Series.findByIdAndUpdate(seriesId, data, (error, series) => {
       if (error) {
