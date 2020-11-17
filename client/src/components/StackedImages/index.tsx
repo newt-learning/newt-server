@@ -28,12 +28,14 @@ const StackedImages = ({ imageUrls }: StackedImagesProps) => {
           fluid
         />
       ) : null}
-      <Image
-        src={imageUrls[2]?.url}
-        alt={imageUrls[2]?.alt}
-        className={styles.back}
-        fluid
-      />
+      {imageUrls[2] ? (
+        <Image
+          src={imageUrls[2]?.url}
+          alt={imageUrls[2]?.alt}
+          className={styles.back}
+          fluid
+        />
+      ) : null}
     </div>
   );
 };

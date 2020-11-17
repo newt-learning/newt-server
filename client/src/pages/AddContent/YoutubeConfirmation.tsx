@@ -150,8 +150,6 @@ const SeriesConfirmation = ({
     ? videos
     : videos.slice(0, initialVideosToRender);
 
-  // const bestThumbnail = getBestThumbnail(thumbnails);
-
   // Get the first 3 thumbnail URLs to display in the stacked image
   let thumbnailUrls = [];
   // Max of 3 images
