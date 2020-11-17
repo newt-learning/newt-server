@@ -66,6 +66,27 @@ module.exports = (app) => {
     });
   });
 
+  // PUT request to update shelf and all associated content for a series
+  app.put("/api/series/:seriesId/update-shelf", requireLogin, (req, res) => {
+    const { seriesId } = req.params;
+
+    Series.findByIdAndUpdate(seriesId, data, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        const { contentIds } = series;
+
+        Content.updateMany({ _id: { $in: contentIds } }, data, (error) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.sendStatus(200);
+          }
+        });
+      }
+    });
+  });
+
   // DELETE request to delete a series
   app.delete("/api/series/:seriesId", requireLogin, (req, res) => {
     const { seriesId } = req.params;

@@ -9,6 +9,10 @@ interface UpdateBookProgressData {
   contentId: string;
   data: { pagesRead: number };
 }
+interface UpdateSeriesShelfParams {
+  seriesId: string;
+  data: { shelf: string }
+}
 
 // API calls
 const fetchAllContent = async () => {
@@ -45,6 +49,9 @@ const updateBookProgress = async ({
 }: UpdateBookProgressData) => {
   await newtApi.put(`/content/${contentId}/book-progress`, data);
 };
+const updateSeriesShelf = async ({ seriesId, data }: UpdateSeriesShelfParams) => {
+  await newtApi.put(`/series/${seriesId}/update-shelf`, data)
+}
 const deleteContent = async (contentId: string) => {
   await newtApi.delete(`/content/${contentId}`)
 }
@@ -89,6 +96,11 @@ export function useUpdateBookProgress() {
   return useMutation(updateBookProgress, {
     onSettled: () => queryCache.invalidateQueries("contents-and-series"),
   });
+}
+export function useUpdateSeriesShelf() {
+  return useMutation(updateSeriesShelf, {
+    onSettled: () => queryCache.invalidateQueries('contents-and-series')
+  })
 }
 export function useDeleteContent() {
   return useMutation(deleteContent, {
