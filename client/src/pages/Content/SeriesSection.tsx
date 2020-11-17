@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
+// Components
 import Select, { ValueType } from "react-select";
 import { IFrame } from "./ContentFlow";
+import { Button } from "../../components";
+// Styling
 import styles from "./ContentFlow.module.css";
 
 interface SeriesSectionProps {
@@ -29,8 +32,23 @@ const SeriesSection = ({ id, content }: SeriesSectionProps) => {
     return () => setSelectedContent(null);
   }, [id]);
 
+  // Go to the next video in the series
+  const handleGoToNextVideo = () => {
+    // Get current index and add 1 for next video
+    const currentVideoIndex = _.findIndex(formattedContent, {
+      id: selectedContent.id,
+    });
+    const nextVideoIndex = currentVideoIndex + 1;
+
+    // If the index isn't overshot (past the total number of videos), change
+    // currently selected video to that
+    if (formattedContent && nextVideoIndex < formattedContent.length) {
+      setSelectedContent(formattedContent[nextVideoIndex]);
+    }
+  };
+
   return (
-    <div>
+    <div className={styles.seriesContainer}>
       <h4>Select video</h4>
       <Select
         id={`series-contents-${id}`}
@@ -56,6 +74,19 @@ const SeriesSection = ({ id, content }: SeriesSectionProps) => {
           }
         />
       </div>
+      <Button
+        category="secondary"
+        onClick={handleGoToNextVideo}
+        // Make this more readable
+        isDisabled={
+          formattedContent &&
+          _.findIndex(formattedContent, { id: selectedContent?.id }) ===
+            formattedContent?.length - 1
+        }
+        style={{ width: "200px", alignSelf: "center" }}
+      >
+        Next video
+      </Button>
     </div>
   );
 };

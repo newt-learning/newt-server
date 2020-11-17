@@ -42,6 +42,12 @@
   margin-bottom: 1.5rem;
 }
 
+.seriesContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
 .bookThumbnail {
   height: 150px;
 }
