@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+/* Series Mark as Complete and Next buttons */
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonsContainer > button {
+  width: 100%;
+}
+
+/* If there's 2 buttons (or rather there isn't only 1 button), add margin
+   below for mobile, next to first one for larger screens
+   Honestly need to get better at CSS to write more stuff like this rather 
+   than in JS */
+.buttonsContainer > button:first-child:not(:only-child) {
+  margin-bottom: 0.5rem;
+}
+
+.nextButton {
+  background-color: var(--gray-600);
+  border: 1px solid var(--gray-700);
+  color: white;
+}
+.nextButton:hover {
+  background-color: var(--gray-700);
+}
+
+@media screen and (min-width: 640px) {
+  .buttonsContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .buttonsContainer > button {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .buttonsContainer > button:first-child:not(:only-child) {
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+  }
+}

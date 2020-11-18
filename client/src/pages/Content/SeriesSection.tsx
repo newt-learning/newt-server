@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 // Components
-import Select, { ValueType } from "react-select";
+import Select from "react-select";
 import { IFrame } from "./ContentFlow";
 import { Button } from "../../components";
 // Styling
-import styles from "./ContentFlow.module.css";
+import styles from "./SeriesSection.module.css";
+import parentStyles from "./ContentFlow.module.css";
 // Types
 import { ShelfType } from "./ContentFlow";
 
@@ -51,7 +52,7 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
   };
 
   return (
-    <div className={styles.seriesContainer}>
+    <div className={styles.container}>
       <h4>Select video</h4>
       <Select
         id={`series-contents-${id}`}
@@ -60,7 +61,10 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
         value={selectedContent}
         onChange={(option) => setSelectedContent(option)}
       />
-      <div className={styles.videoContainer} style={{ marginTop: "1rem" }}>
+      <div
+        className={parentStyles.videoContainer}
+        style={{ marginTop: "1rem" }}
+      >
         <IFrame
           // The key ensures the component is recreated. Otherwise just changing the
           // src doesn't sometimes refresh the video.
@@ -77,7 +81,7 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
           }
         />
       </div>
-      <div className={styles.seriesButtonsContainer}>
+      <div className={styles.buttonsContainer}>
         {/* Only show 'Mark as Complete' button if in Currently/Finished shelf */}
         {shelf === "Currently Learning" || shelf === "Finished Learning" ? (
           <Button category="secondary">Mark as Complete</Button>
@@ -85,6 +89,7 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
         <Button
           category="secondary"
           onClick={handleGoToNextVideo}
+          className={styles.nextButton}
           // Make this more readable
           isDisabled={
             formattedContent &&
