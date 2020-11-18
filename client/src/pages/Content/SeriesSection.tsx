@@ -57,22 +57,38 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
     }
   };
 
-  // Mark the current video as "Finished Learning"
+  // Mark the current video as "Finished Learning", or go back to "Currently Learning"
+  // if it's already finished
   const handleMarkAsComplete = async () => {
     // Get current shelf and start/finish dates of content
     const currentShelf = _.filter(content, { _id: selectedContent?.id })[0]
       ?.shelf;
-    const startFinishDates = _.filter(content, { _id: selectedContent?.id })[0]
-      ?.startFinishDates;
-    const updateData = figureOutShelfMovingDataChanges(
-      currentShelf,
-      "Finished Learning",
-      {
-        startFinishDates,
-      }
-    );
 
-    await updateContent({ contentId: selectedContent?.id, data: updateData });
+    // If the video has already been completed, only change the shelf to Currently
+    // Learning. Don't do the start/finish stuff so it doesn't add new sessions,
+    // and some videos are out of sync with (some have more/some less) the rest of the series.
+    // Otherwise, do the usual.
+    if (currentShelf === "Finished Learning") {
+      await updateContent({
+        contentId: selectedContent?.id,
+        data: {
+          shelf: "Currently Learning",
+        },
+      });
+    } else {
+      const startFinishDates = _.filter(content, {
+        _id: selectedContent?.id,
+      })[0]?.startFinishDates;
+      const updateData = figureOutShelfMovingDataChanges(
+        currentShelf,
+        "Finished Learning",
+        {
+          startFinishDates,
+        }
+      );
+
+      await updateContent({ contentId: selectedContent?.id, data: updateData });
+    }
   };
 
   return (
