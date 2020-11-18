@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 // API
-import { useFetchAllContent } from "../../api/content";
+import { useFetchAllContentAndSeries } from "../../api/content";
 // Components
 import {
   AppMainContainer,
@@ -16,7 +16,7 @@ import {
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const { data, isLoading, isError } = useFetchAllContent();
+  const { data, isLoading, isError } = useFetchAllContentAndSeries();
 
   // Filter out content in progress (currently learning) + order by last updated
   const inProgressContent = _.chain(data)
