@@ -4,6 +4,7 @@ import _ from "lodash";
 import { useUpdateContent } from "../../api/content";
 // Components
 import Select from "react-select";
+import { FiCheck } from "react-icons/fi";
 import { IFrame } from "./ContentFlow";
 import { Button } from "../../components";
 // Styling
@@ -108,11 +109,27 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
         {/* Only show 'Mark as Complete' button if in Currently/Finished shelf */}
         {shelf === "Currently Learning" || shelf === "Finished Learning" ? (
           <Button
-            category="secondary"
+            category={
+              _.filter(content, { _id: selectedContent?.id })[0]?.shelf ===
+              "Finished Learning"
+                ? "success"
+                : "secondary"
+            }
             onClick={handleMarkAsComplete}
             isLoading={isUpdatingContent}
           >
-            Mark as Complete
+            {_.filter(content, { _id: selectedContent?.id })[0]?.shelf ===
+            "Finished Learning" ? (
+              <>
+                Completed{" "}
+                <FiCheck
+                  size={17}
+                  style={{ verticalAlign: "top", marginLeft: "0.25rem" }}
+                />
+              </>
+            ) : (
+              `Mark as Complete`
+            )}
           </Button>
         ) : null}
         <Button
