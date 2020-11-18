@@ -22,6 +22,7 @@ import ChangeShelfForm from "./ChangeShelfForm";
 import SelectPlaylistsForm, {
   PlaylistSelectOptionType,
 } from "./SelectPlaylistsForm";
+import AddEditDatesForm from "./AddEditDatesForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import PlaylistCard, { AddPlaylistCard } from "../UserPlaylists/PlaylistCard";
 import Modal from "react-bootstrap/Modal";
@@ -41,9 +42,9 @@ export type PlaylistType =
     }
   | string;
 type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
-type StartFinishDateType = {
-  dateStarted: Date;
-  dateCompleted: Date;
+export type StartFinishDateType = {
+  dateStarted: Date | string | null | undefined;
+  dateCompleted: Date | string | null | undefined;
 };
 
 interface IFrameProps {
@@ -114,6 +115,7 @@ const ContentFlow = ({
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showAddPlaylistsModal, setShowAddPlaylistsModal] = useState(false);
+  const [showAddEditDatesModal, setShowAddEditDatesModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   // Updating content
@@ -164,7 +166,25 @@ const ContentFlow = ({
     setShowDeleteItemModal(false);
   };
 
+  // Update start/finish date sessions
+  const updateStartFinishDates = async (
+    startFinishDates: StartFinishDateType[]
+  ) => {
+    await updateContent({ contentId: id, data: { startFinishDates } });
+    setShowAddEditDatesModal(false);
+  };
+
   const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: `Add/Edit Dates ${
+        type === "book" ? "Read" : type === "video" ? "Watched" : ""
+      }`,
+      onClick: () => setShowAddEditDatesModal(true),
+    },
+    {
+      type: "divider",
+    },
     {
       type: "item",
       title: "Delete",
@@ -363,6 +383,31 @@ const ContentFlow = ({
             })}
             contentId={id}
             closeModal={() => setShowAddPlaylistsModal(false)}
+          />
+        </Modal.Body>
+      </Modal>
+      {/* Modal to add/edit dates read/watched */}
+      <Modal
+        show={showAddEditDatesModal}
+        onHide={() => setShowAddEditDatesModal(false)}
+        size="lg"
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          {`Add/Edit Dates ${
+            type === "book" ? "Read" : type === "video" ? "Watched" : ""
+          }`}
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <AddEditDatesForm
+            initialValues={{ startFinishDates }}
+            onSubmit={updateStartFinishDates}
           />
         </Modal.Body>
       </Modal>

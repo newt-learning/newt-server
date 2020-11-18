@@ -6,7 +6,13 @@ import { Switch } from "react-router-dom";
 import { useData as useAuthData } from "./context/AuthContext";
 import { useData as useSidebar } from "./context/SidebarContext";
 // Components
-import { PrivateRoute, Sidebar, AppNavbar } from "./components";
+import {
+  PrivateRoute,
+  Sidebar,
+  AppNavbar,
+  AppMainContainer,
+} from "./components";
+import SyncLoader from "react-spinners/SyncLoader";
 // Pages
 import {
   Dashboard,
@@ -30,10 +36,6 @@ const NewtWebApp = () => {
     state: { isCollapsed },
   } = useSidebar();
 
-  if (isFetching) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <section className={styles.appContainer}>
       <Sidebar />
@@ -45,48 +47,54 @@ const NewtWebApp = () => {
         }
       >
         <AppNavbar />
-        <Switch>
-          <PrivateRoute
-            Component={Dashboard}
-            authExists={exists}
-            path="/dashboard"
-          />
-          <PrivateRoute
-            Component={AddContentPage}
-            authExists={exists}
-            path="/add-content"
-          />
-          <PrivateRoute
-            Component={IndividualShelfPage}
-            authExists={exists}
-            path={["/shelves/:shelfName/:contentId", "/shelves/:shelfName"]}
-          />
-          <PrivateRoute
-            Component={ShelvesPage}
-            authExists={exists}
-            path="/shelves"
-          />
-          <PrivateRoute
-            Component={IndividualUserPlaylistPage}
-            authExists={exists}
-            path="/playlists/:playlistId"
-          />
-          <PrivateRoute
-            Component={UserPlaylistsPage}
-            authExists={exists}
-            path="/playlists"
-          />
-          <PrivateRoute
-            Component={StatsPage}
-            authExists={exists}
-            path="/stats"
-          />
-          <PrivateRoute
-            Component={ProfilePage}
-            authExists={exists}
-            path="/profile"
-          />
-        </Switch>
+        {isFetching ? (
+          <AppMainContainer className={styles.loadingContainer}>
+            <SyncLoader size={18} color="#38ceff" />
+          </AppMainContainer>
+        ) : (
+          <Switch>
+            <PrivateRoute
+              Component={Dashboard}
+              authExists={exists}
+              path="/dashboard"
+            />
+            <PrivateRoute
+              Component={AddContentPage}
+              authExists={exists}
+              path="/add-content"
+            />
+            <PrivateRoute
+              Component={IndividualShelfPage}
+              authExists={exists}
+              path={["/shelves/:shelfName/:contentId", "/shelves/:shelfName"]}
+            />
+            <PrivateRoute
+              Component={ShelvesPage}
+              authExists={exists}
+              path="/shelves"
+            />
+            <PrivateRoute
+              Component={IndividualUserPlaylistPage}
+              authExists={exists}
+              path="/playlists/:playlistId"
+            />
+            <PrivateRoute
+              Component={UserPlaylistsPage}
+              authExists={exists}
+              path="/playlists"
+            />
+            <PrivateRoute
+              Component={StatsPage}
+              authExists={exists}
+              path="/stats"
+            />
+            <PrivateRoute
+              Component={ProfilePage}
+              authExists={exists}
+              path="/profile"
+            />
+          </Switch>
+        )}
       </section>
     </section>
   );
