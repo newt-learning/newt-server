@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
+// API
+import { useUpdateContent } from "../../api/content";
 // Components
 import Select from "react-select";
 import { IFrame } from "./ContentFlow";
@@ -9,6 +11,7 @@ import styles from "./SeriesSection.module.css";
 import parentStyles from "./ContentFlow.module.css";
 // Types
 import { ShelfType } from "./ContentFlow";
+import { figureOutShelfMovingDataChanges } from "./helpers";
 
 interface SeriesSectionProps {
   id: string;
@@ -24,6 +27,8 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
   }));
 
   const [selectedContent, setSelectedContent] = useState<any>(null);
+
+  const [updateContent, { isLoading: isUpdatingContent }] = useUpdateContent();
 
   // This ensures that the selected value changes once you click on a different series.
   // Otherwise, the selected option is still from the old series (i.e. the options
@@ -49,6 +54,24 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
     if (formattedContent && nextVideoIndex < formattedContent.length) {
       setSelectedContent(formattedContent[nextVideoIndex]);
     }
+  };
+
+  // Mark the current video as "Finished Learning"
+  const handleMarkAsComplete = async () => {
+    // Get current shelf and start/finish dates of content
+    const currentShelf = _.filter(content, { _id: selectedContent?.id })[0]
+      ?.shelf;
+    const startFinishDates = _.filter(content, { _id: selectedContent?.id })[0]
+      ?.startFinishDates;
+    const updateData = figureOutShelfMovingDataChanges(
+      currentShelf,
+      "Finished Learning",
+      {
+        startFinishDates,
+      }
+    );
+
+    await updateContent({ contentId: selectedContent?.id, data: updateData });
   };
 
   return (
@@ -84,7 +107,13 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
       <div className={styles.buttonsContainer}>
         {/* Only show 'Mark as Complete' button if in Currently/Finished shelf */}
         {shelf === "Currently Learning" || shelf === "Finished Learning" ? (
-          <Button category="secondary">Mark as Complete</Button>
+          <Button
+            category="secondary"
+            onClick={handleMarkAsComplete}
+            isLoading={isUpdatingContent}
+          >
+            Mark as Complete
+          </Button>
         ) : null}
         <Button
           category="secondary"
