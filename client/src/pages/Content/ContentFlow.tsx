@@ -41,7 +41,10 @@ export type PlaylistType =
       name: string;
     }
   | string;
-type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
+export type ShelfType =
+  | "Currently Learning"
+  | "Want to Learn"
+  | "Finished Learning";
 export type StartFinishDateType = {
   dateStarted: Date | string | null | undefined;
   dateCompleted: Date | string | null | undefined;
@@ -269,7 +272,11 @@ const ContentFlow = ({
             }
           />
         ) : type === "series" ? (
-          <SeriesSection id={id} content={seriesInfo?.seriesContent} />
+          <SeriesSection
+            id={id}
+            content={seriesInfo?.seriesContent}
+            shelf={shelf}
+          />
         ) : null}
         {/* Shelf info */}
         {shelf ? (

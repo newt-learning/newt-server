@@ -6,13 +6,16 @@ import { IFrame } from "./ContentFlow";
 import { Button } from "../../components";
 // Styling
 import styles from "./ContentFlow.module.css";
+// Types
+import { ShelfType } from "./ContentFlow";
 
 interface SeriesSectionProps {
   id: string;
   content: any[] | undefined;
+  shelf: ShelfType;
 }
 
-const SeriesSection = ({ id, content }: SeriesSectionProps) => {
+const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
   const formattedContent = content?.map((item: any) => ({
     id: item?._id,
     value: item?.name,
@@ -74,19 +77,24 @@ const SeriesSection = ({ id, content }: SeriesSectionProps) => {
           }
         />
       </div>
-      <Button
-        category="secondary"
-        onClick={handleGoToNextVideo}
-        // Make this more readable
-        isDisabled={
-          formattedContent &&
-          _.findIndex(formattedContent, { id: selectedContent?.id }) ===
-            formattedContent?.length - 1
-        }
-        style={{ width: "200px", alignSelf: "center" }}
-      >
-        Next video
-      </Button>
+      <div className={styles.seriesButtonsContainer}>
+        {/* Only show 'Mark as Complete' button if in Currently/Finished shelf */}
+        {shelf === "Currently Learning" || shelf === "Finished Learning" ? (
+          <Button category="secondary">Mark as Complete</Button>
+        ) : null}
+        <Button
+          category="secondary"
+          onClick={handleGoToNextVideo}
+          // Make this more readable
+          isDisabled={
+            formattedContent &&
+            _.findIndex(formattedContent, { id: selectedContent?.id }) ===
+              formattedContent?.length - 1
+          }
+        >
+          Next video
+        </Button>
+      </div>
     </div>
   );
 };

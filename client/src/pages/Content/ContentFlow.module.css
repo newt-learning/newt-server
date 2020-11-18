@@ -48,6 +48,24 @@
   margin-bottom: 1.5rem;
 }
 
+/* Series Mark as Complete and Next buttons */
+.seriesButtonsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.seriesButtonsContainer > button {
+  width: 100%;
+}
+
+/* If there's 2 buttons (or rather there isn't only 1 button), add margin
+   below for mobile, next to first one for larger screens
+   Honestly need to get better at CSS to write more stuff like this rather 
+   than in JS */
+.seriesButtonsContainer > button:first-child:not(:only-child) {
+  margin-bottom: 0.5rem;
+}
+
 .bookThumbnail {
   height: 150px;
 }
@@ -118,6 +136,21 @@
     min-height: 500px;
     min-width: 400px;
     margin-bottom: 1rem;
+  }
+
+  .seriesButtonsContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .seriesButtonsContainer > button {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .seriesButtonsContainer > button:first-child:not(:only-child) {
+    margin-bottom: 0;
+    margin-right: 0.5rem;
   }
 
   .bookThumbnail {
