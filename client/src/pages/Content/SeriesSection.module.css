@@ -4,6 +4,19 @@
   margin-bottom: 1.5rem;
 }
 
+.progressContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.progressTotal {
+  color: var(--gray-700);
+  padding-left: 1rem;
+  white-space: nowrap;
+}
+
 /* Series Mark as Complete and Next buttons */
 .buttonsContainer {
   display: flex;
@@ -23,12 +36,12 @@
 }
 
 .nextButton {
-  background-color: var(--gray-600);
-  border: 1px solid var(--gray-700);
+  background-color: var(--gray-700);
+  border: 1px solid var(--gray-800);
   color: white;
 }
 .nextButton:hover {
-  background-color: var(--gray-700);
+  background-color: var(--gray-800);
 }
 
 @media screen and (min-width: 640px) {

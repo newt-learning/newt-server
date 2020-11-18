@@ -6,7 +6,7 @@ import { useUpdateContent } from "../../api/content";
 import Select from "react-select";
 import { FiCheck } from "react-icons/fi";
 import { IFrame } from "./ContentFlow";
-import { Button } from "../../components";
+import { Button, ProgressBar } from "../../components";
 // Styling
 import styles from "./SeriesSection.module.css";
 import parentStyles from "./ContentFlow.module.css";
@@ -30,6 +30,13 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
   const [selectedContent, setSelectedContent] = useState<any>(null);
 
   const [updateContent, { isLoading: isUpdatingContent }] = useUpdateContent();
+
+  const numCompleted = _.filter(content, { shelf: "Finished Learning" }).length;
+  const totalVideos = content?.length;
+  const percentComplete =
+    _.isNumber(numCompleted) && _.isNumber(totalVideos)
+      ? Math.round((numCompleted / totalVideos) * 100)
+      : undefined;
 
   // This ensures that the selected value changes once you click on a different series.
   // Otherwise, the selected option is still from the old series (i.e. the options
@@ -93,6 +100,20 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
 
   return (
     <div className={styles.container}>
+      {/* Show series progress bar in Currently/Finished Learning shelves */}
+      {shelf !== "Want to Learn" && _.isNumber(percentComplete) ? (
+        <div className={styles.progressContainer}>
+          <ProgressBar
+            percentComplete={percentComplete}
+            containerStyle={{ marginBottom: 0 }}
+          />
+          {totalVideos ? (
+            <div
+              className={styles.progressTotal}
+            >{`${numCompleted} / ${totalVideos}`}</div>
+          ) : null}
+        </div>
+      ) : null}
       <h4>Select video</h4>
       <Select
         id={`series-contents-${id}`}
