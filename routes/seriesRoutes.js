@@ -66,6 +66,21 @@ module.exports = (app) => {
     });
   });
 
+  app.put("/api/series/:seriesId", requireLogin, (req, res) => {
+    const { seriesId } = req.params;
+    const data = req.body;
+    // Update last updated field
+    data.lastUpdated = Date.now();
+
+    Series.findByIdAndUpdate(seriesId, data, { new: true }, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(series);
+      }
+    });
+  });
+
   // PUT request to update shelf and all associated content for a series
   app.put("/api/series/:seriesId/update-shelf", requireLogin, (req, res) => {
     const { seriesId } = req.params;

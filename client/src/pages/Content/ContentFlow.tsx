@@ -4,6 +4,7 @@ import classnames from "classnames/bind";
 // API
 import {
   useUpdateContent,
+  useUpdateSeries,
   useUpdateSeriesShelf,
   useDeleteContent,
   useDeleteSeries,
@@ -121,8 +122,9 @@ const ContentFlow = ({
   const [showAddEditDatesModal, setShowAddEditDatesModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
-  // Updating content
+  // Updating content/series
   const [updateContent] = useUpdateContent();
+  const [updateSeries] = useUpdateSeries();
   const [updateSeriesShelf] = useUpdateSeriesShelf();
   const [deleteContent, { isLoading: isDeletingContent }] = useDeleteContent();
   const [addContentToChallenge] = useAddContentToChallenge();
@@ -173,7 +175,12 @@ const ContentFlow = ({
   const updateStartFinishDates = async (
     startFinishDates: StartFinishDateType[]
   ) => {
-    await updateContent({ contentId: id, data: { startFinishDates } });
+    if (type === "series") {
+      await updateSeries({ seriesId: id, data: { startFinishDates } });
+    } else {
+      await updateContent({ contentId: id, data: { startFinishDates } });
+    }
+
     setShowAddEditDatesModal(false);
   };
 

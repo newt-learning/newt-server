@@ -9,6 +9,12 @@ interface UpdateBookProgressData {
   contentId: string;
   data: { pagesRead: number };
 }
+interface UpdateSeriesParams {
+  seriesId: string;
+  data: {
+    [key: string]: any
+  }
+}
 interface UpdateSeriesShelfParams {
   seriesId: string;
   data: { shelf: string, startFinishDates?: any }
@@ -49,6 +55,9 @@ const updateBookProgress = async ({
 }: UpdateBookProgressData) => {
   await newtApi.put(`/content/${contentId}/book-progress`, data);
 };
+const updateSeries = async ({ seriesId, data }: UpdateSeriesParams) => {
+  await newtApi.put(`/series/${seriesId}`, data)
+} 
 const updateSeriesShelf = async ({ seriesId, data }: UpdateSeriesShelfParams) => {
   await newtApi.put(`/series/${seriesId}/update-shelf`, data)
 }
@@ -96,6 +105,11 @@ export function useUpdateBookProgress() {
   return useMutation(updateBookProgress, {
     onSettled: () => queryCache.invalidateQueries("contents-and-series"),
   });
+}
+export function useUpdateSeries() {
+  return useMutation(updateSeries, {
+    onSettled: () => queryCache.invalidateQueries('contents-and-series')
+  })
 }
 export function useUpdateSeriesShelf() {
   return useMutation(updateSeriesShelf, {
