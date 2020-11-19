@@ -170,7 +170,6 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
           </Button>
         ) : null}
         <Button
-          category="secondary"
           onClick={handleGoToNextVideo}
           className={styles.nextButton}
           // Make this more readable

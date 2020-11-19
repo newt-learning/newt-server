@@ -58,8 +58,11 @@ const Button = ({
       className={cx(
         styles.btn,
         selectClassFromCategory(category),
-        { disabledBtn: isDisabled },
-        className
+        // Don't show custom button styling if it's disabled
+        isDisabled ? undefined : className,
+        {
+          disabledBtn: isDisabled,
+        }
       )}
       style={style}
     >
