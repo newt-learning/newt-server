@@ -69,7 +69,7 @@ export async function getYoutubePlaylistInfo(playlistId: string) {
           params: {
             playlistId,
             part: "snippet",
-            maxResults: 5,
+            maxResults: process.env.NODE_ENV === "production" ? 50 : 5,
             // @ts-ignore
             key: keys.youtubeApiKey,
           },
