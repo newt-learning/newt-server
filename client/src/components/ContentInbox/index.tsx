@@ -20,6 +20,8 @@ import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
 
+export type ContentTypeType = "book" | "video" | "series";
+
 interface ContentInboxProps {
   title: string;
   creators?: string;
@@ -35,6 +37,7 @@ interface ContentInboxProps {
 interface ContentData {
   _id: string;
   name: string;
+  type: ContentTypeType;
   thumbnailUrl?: string;
 }
 
@@ -123,9 +126,13 @@ const ContentInbox = ({
             <Skeleton height={100} count={4} />
           ) : (
             contentData?.map(
-              ({ _id, name, thumbnailUrl }: ContentData, index: number) => (
+              (
+                { _id, type, name, thumbnailUrl }: ContentData,
+                index: number
+              ) => (
                 <AppContentListCard
                   name={name}
+                  contentType={type}
                   thumbnailUrl={thumbnailUrl}
                   onClick={() => setCurrentContent(contentData[index])}
                   isActive={_id === currentContent?._id}

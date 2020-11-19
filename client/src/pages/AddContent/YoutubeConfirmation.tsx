@@ -166,7 +166,14 @@ const SeriesConfirmation = ({
         <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
         <h3>Confirm Series</h3>
       </div>
-      <StackedImages imageUrls={thumbnailUrls} />
+      <StackedImages
+        imageUrls={thumbnailUrls}
+        containerStyle={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: "2rem",
+        }}
+      />
       <h3 className={styles.title}>{name}</h3>
       <p className={styles.creator}>{authors.join(", ")}</p>
       <p className={styles.creator}>

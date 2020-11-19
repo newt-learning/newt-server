@@ -7,16 +7,23 @@ interface StackedImagesProps {
     url: string;
     alt: string;
   }[];
+  containerStyle?: React.CSSProperties;
+  imagesStyle?: React.CSSProperties;
 }
 
-const StackedImages = ({ imageUrls }: StackedImagesProps) => {
+const StackedImages = ({
+  imageUrls,
+  containerStyle,
+  imagesStyle,
+}: StackedImagesProps) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={containerStyle}>
       {imageUrls[0] ? (
         <Image
           src={imageUrls[0]?.url}
           alt={imageUrls[0]?.alt}
           className={styles.front}
+          style={imagesStyle}
           fluid
         />
       ) : null}
@@ -25,6 +32,7 @@ const StackedImages = ({ imageUrls }: StackedImagesProps) => {
           src={imageUrls[1]?.url}
           alt={imageUrls[1]?.alt}
           className={styles.middle}
+          style={imagesStyle}
           fluid
         />
       ) : null}
@@ -33,6 +41,7 @@ const StackedImages = ({ imageUrls }: StackedImagesProps) => {
           src={imageUrls[2]?.url}
           alt={imageUrls[2]?.alt}
           className={styles.back}
+          style={imagesStyle}
           fluid
         />
       ) : null}
