@@ -5,8 +5,7 @@ import { useUpdateContent } from "../../api/content";
 // Components
 import Select from "react-select";
 import { FiCheck } from "react-icons/fi";
-import { IFrame } from "./ContentFlow";
-import { Button, ProgressBar } from "../../components";
+import { Button, IFrame, ProgressBar } from "../../components";
 // Styling
 import styles from "./SeriesSection.module.css";
 import parentStyles from "./ContentFlow.module.css";

@@ -14,6 +14,7 @@ import { useAddContentToChallenge } from "../../api/challenges";
 import {
   Button,
   Badge,
+  IFrame,
   OptionsDropdown,
   DeleteItemModal,
 } from "../../components";
@@ -51,11 +52,6 @@ export type StartFinishDateType = {
   dateCompleted: Date | string | null | undefined;
 };
 
-interface IFrameProps {
-  title: string;
-  src: string;
-}
-
 interface ContentFlowProps {
   id: string;
   title: string;
@@ -83,18 +79,6 @@ interface ContentFlowProps {
 }
 
 let cx = classnames.bind(styles);
-
-export const IFrame = ({ title, src }: IFrameProps) => (
-  <iframe
-    id="ytplayer"
-    title={title}
-    width="640"
-    height="360"
-    src={src}
-    frameBorder="0"
-    allowFullScreen
-  />
-);
 
 const ContentFlow = ({
   id,
