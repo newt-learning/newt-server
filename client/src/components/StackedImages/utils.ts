@@ -16,15 +16,15 @@ export function getFirstThreeThumbnailsForSeries(
       apiEndpoint === "YouTube"
         ? `Thumbnail for ${content[i]?.snippet?.title}`
         : apiEndpoint === "Newt"
-        ? `Thumbnail for ${content[i]?.title}`
+        ? `Thumbnail for ${content[i]?.name}`
         : undefined;
     const bestThumbnail =
       apiEndpoint === "YouTube"
-        ? getBestThumbnail(content[i]?.snippet?.thumbnails)
+        ? getBestThumbnail(content[i]?.snippet?.thumbnails)?.url
         : apiEndpoint === "Newt" ? content[i]?.thumbnailUrl : undefined;
-
+        
     if (bestThumbnail) {
-      thumbnailUrls.push({ url: bestThumbnail?.url, alt })
+      thumbnailUrls.push({ url: bestThumbnail, alt })
     }
   }
 

@@ -16,6 +16,7 @@ import {
 import AppContentListCard from "../AppContentListCard";
 import OptionsDropdown, { OptionsDropdownItemType } from "../OptionsDropdown";
 import ContentFlow from "../../pages/Content/ContentFlow";
+import { getFirstThreeThumbnailsForSeries } from "..";
 import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
@@ -39,6 +40,7 @@ interface ContentData {
   name: string;
   type: ContentTypeType;
   thumbnailUrl?: string;
+  contentIds?: [any]; // Content in a series
 }
 
 const cx = classnames.bind(styles);
@@ -127,18 +129,27 @@ const ContentInbox = ({
           ) : (
             contentData?.map(
               (
-                { _id, type, name, thumbnailUrl }: ContentData,
+                { _id, type, name, thumbnailUrl, contentIds }: ContentData,
                 index: number
-              ) => (
-                <AppContentListCard
-                  name={name}
-                  contentType={type}
-                  thumbnailUrl={thumbnailUrl}
-                  onClick={() => setCurrentContent(contentData[index])}
-                  isActive={_id === currentContent?._id}
-                  key={_id}
-                />
-              )
+              ) => {
+                const thumbnails =
+                  type === "series"
+                    ? getFirstThreeThumbnailsForSeries(contentIds, "Newt")
+                    : thumbnailUrl
+                    ? [{ url: thumbnailUrl, alt: `Thumbnail for ${name}` }]
+                    : [];
+
+                return (
+                  <AppContentListCard
+                    name={name}
+                    contentType={type}
+                    thumbnails={thumbnails}
+                    onClick={() => setCurrentContent(contentData[index])}
+                    isActive={_id === currentContent?._id}
+                    key={_id}
+                  />
+                );
+              }
             )
           )}
         </AppContentList>

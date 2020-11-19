@@ -1,15 +1,17 @@
 import React from "react";
+import _ from "lodash";
 import classnames from "classnames/bind";
 import { StackedImages } from "..";
 import styles from "./AppContentListCard.module.css";
 import { ContentTypeType } from "../ContentInbox";
+import { ImageUrlType } from "../StackedImages";
 
 let cx = classnames.bind(styles);
 
 interface AppContentListCardProps {
   name: string;
   contentType: ContentTypeType;
-  thumbnailUrl?: string;
+  thumbnails: ImageUrlType[];
   isActive: boolean;
   onClick: () => void;
 }
@@ -18,7 +20,7 @@ const AppContentListCard = ({
   name,
   contentType,
   isActive,
-  thumbnailUrl,
+  thumbnails,
   onClick,
 }: AppContentListCardProps) => {
   return (
@@ -32,19 +34,15 @@ const AppContentListCard = ({
       <div className={styles.thumbnailContainer}>
         {contentType === "series" ? (
           <StackedImages
-            imageUrls={
-              thumbnailUrl
-                ? [{ url: thumbnailUrl, alt: `Thumbnail for ${name}` }]
-                : []
-            }
+            imageUrls={thumbnails}
             containerStyle={{ height: "55px", width: "100%" }}
             imagesStyle={{ height: "45px", marginRight: "0.75rem" }}
           />
         ) : /* If there's a thumbnail url, show thumbnail */
-        thumbnailUrl ? (
+        !_.isEmpty(thumbnails) ? (
           <img
-            src={thumbnailUrl}
-            alt={`Thumbnail for ${name}`}
+            src={thumbnails[0].url}
+            alt={thumbnails[0].alt}
             className={styles.thumbnail}
           />
         ) : null}
