@@ -11,6 +11,7 @@ import {
   ContentCard,
   MessageBox,
   Badge,
+  getFirstThreeThumbnailsForSeries,
 } from "../../components";
 // Styling
 import styles from "./Dashboard.module.css";
@@ -52,16 +53,32 @@ const Dashboard = () => {
             shelf. See you soon!
           </MessageBox>
         ) : (
-          _.map(inProgressContent, (item) => (
-            <ContentCard
-              key={item._id}
-              title={item.name}
-              authors={item.authors}
-              description={item.description}
-              thumbnailUrl={item.thumbnailUrl}
-              titleLink={`/shelves/currently-learning/${item._id}`}
-            />
-          ))
+          _.map(inProgressContent, (item) => {
+            // Refactor ?
+            const thumbnails =
+              item.type === "series"
+                ? getFirstThreeThumbnailsForSeries(item.contentIds, "Newt")
+                : item.thumbnailUrl
+                ? [
+                    {
+                      url: item.thumbnailUrl,
+                      alt: `Thumbnail for ${item.name}`,
+                    },
+                  ]
+                : [];
+
+            return (
+              <ContentCard
+                key={item._id}
+                type={item.type}
+                title={item.name}
+                authors={item.authors}
+                description={item.description}
+                thumbnails={thumbnails}
+                titleLink={`/shelves/currently-learning/${item._id}`}
+              />
+            );
+          })
         )}
       </AppContentContainer>
     </AppMainContainer>

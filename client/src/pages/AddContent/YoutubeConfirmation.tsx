@@ -190,14 +190,19 @@ const SeriesConfirmation = ({
       {!_.isEmpty(displayVideos) ? (
         <div className={styles.videosContainer}>
           {displayVideos.map((video: any) => {
+            const title = video?.snippet?.title;
             const bestThumbnail = getBestThumbnail(video.snippet.thumbnails);
+            const thumbnails = bestThumbnail
+              ? [{ url: bestThumbnail.url, alt: `Thumbnail for ${title}` }]
+              : [];
 
             return (
               <ContentCard
-                key={video?.snippet?.title}
+                key={title}
+                type="video"
                 size="small"
-                title={video?.snippet?.title}
-                thumbnailUrl={bestThumbnail?.url}
+                title={title}
+                thumbnails={thumbnails}
               />
             );
           })}

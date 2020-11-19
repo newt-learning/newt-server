@@ -114,10 +114,21 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
         <>
           <div className={styles.booksContainer}>
             {bookResults.map((book: any) => {
+              const thumbnailUrl = checkThumbnailExistence(book?.volumeInfo);
+              const thumbnails = thumbnailUrl
+                ? [
+                    {
+                      url: thumbnailUrl,
+                      alt: `Thumbnail for ${book?.volumeInfo?.title}`,
+                    },
+                  ]
+                : [];
+
               return (
                 <ContentCard
                   key={`${book?.id}-${book?.etag}`}
                   size="small"
+                  type="book"
                   showAddToLibrary={true}
                   onClick={() => {
                     setBookToAdd(book);
@@ -129,7 +140,7 @@ const BookSearch = ({ onSubmit, isLoading }: BookSearchProps) => {
                   }}
                   title={book?.volumeInfo?.title}
                   authors={book?.volumeInfo?.authors}
-                  thumbnailUrl={checkThumbnailExistence(book?.volumeInfo)}
+                  thumbnails={thumbnails}
                 />
               );
             })}

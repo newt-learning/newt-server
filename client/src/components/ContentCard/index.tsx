@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import moment from "moment";
 import classnames from "classnames/bind";
 import { Link } from "react-router-dom";
@@ -7,6 +8,9 @@ import { FiBook, FiPlusSquare } from "react-icons/fi";
 import styles from "./ContentCard.module.css";
 // Helpers
 import { shortenText } from "../../pages/Shelves/helpers";
+// Types
+import StackedImages, { ImageUrlType } from "../StackedImages";
+import { ContentTypeType } from "../ContentInbox";
 
 const cx = classnames.bind(styles);
 
@@ -18,10 +22,11 @@ interface ContentCardTitleProps {
 
 interface ContentCardProps {
   size: "small" | "large";
+  type: ContentTypeType;
   title: string;
   authors?: string[];
   description?: string;
-  thumbnailUrl?: string;
+  thumbnails: ImageUrlType[];
   dateCompleted?: string;
   showAddToLibrary?: boolean;
   onClick?: () => void;
@@ -51,10 +56,11 @@ const ContentCardTitle = ({
 const ContentCard = ({
   size,
   showAddToLibrary,
+  type,
   title,
   authors,
   description,
-  thumbnailUrl,
+  thumbnails,
   dateCompleted,
   onClick,
   onClickAddToLibrary,
@@ -68,10 +74,27 @@ const ContentCard = ({
       <div
         className={cx({ cardVisual: true, smallCardVisual: size === "small" })}
       >
-        {thumbnailUrl ? (
+        {type === "series" ? (
+          <StackedImages
+            imageUrls={thumbnails}
+            containerStyle={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "150px",
+              width: "100%",
+            }}
+            imagesStyle={{
+              height: "75px",
+              margin: "0 0.5rem",
+              boxShadow:
+                "0px 4px 4px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(0, 0, 0, 0.25), inset 1px 1px 8px rgba(0, 0, 0, 0.25)",
+            }}
+          />
+        ) : !_.isEmpty(thumbnails) ? (
           <img
-            src={thumbnailUrl}
-            alt={`Thumbnail for ${title}`}
+            src={thumbnails[0].url}
+            alt={thumbnails[0].alt}
             className={cx({
               thumbnail: true,
               smallThumbnail: size === "small",

@@ -132,6 +132,7 @@ const ContentInbox = ({
                 { _id, type, name, thumbnailUrl, contentIds }: ContentData,
                 index: number
               ) => {
+                // Refactor ?
                 const thumbnails =
                   type === "series"
                     ? getFirstThreeThumbnailsForSeries(contentIds, "Newt")
