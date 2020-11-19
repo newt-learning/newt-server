@@ -36,14 +36,21 @@ const AppContentListCard = ({
           <StackedImages
             imageUrls={thumbnails}
             containerStyle={{ height: "55px", width: "100%" }}
-            imagesStyle={{ height: "45px", marginRight: "0.75rem" }}
+            imagesStyle={{
+              height: "45px",
+              borderRadius: "0.25rem",
+              marginRight: "0.75rem",
+            }}
           />
         ) : /* If there's a thumbnail url, show thumbnail */
         !_.isEmpty(thumbnails) ? (
           <img
             src={thumbnails[0].url}
             alt={thumbnails[0].alt}
-            className={styles.thumbnail}
+            className={cx({
+              thumbnail: true,
+              bookThumbnail: contentType === "book",
+            })}
           />
         ) : null}
       </div>
