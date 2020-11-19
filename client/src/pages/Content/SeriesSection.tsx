@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 // API
-import { useUpdateContent } from "../../api/content";
+import { useUpdateContent, useUpdateSeries } from "../../api/content";
 // Components
 import Select from "react-select";
 import { FiCheck } from "react-icons/fi";
@@ -28,6 +28,7 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
 
   const [selectedContent, setSelectedContent] = useState<any>(null);
 
+  const [updateSeries, { isLoading: isUpdatingSeries }] = useUpdateSeries();
   const [updateContent, { isLoading: isUpdatingContent }] = useUpdateContent();
 
   const numCompleted = _.filter(content, { shelf: "Finished Learning" }).length;
@@ -43,7 +44,26 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
   // has it's own Select component, basically
   useEffect(() => {
     if (id) {
-      setSelectedContent(formattedContent ? formattedContent[0] : null);
+      // Index of the last finished video in series
+      const lastFinishedIndex = _.findLastIndex(content, {
+        shelf: "Finished Learning",
+      });
+
+      let indexToJumpTo = 0;
+      // If there's a Finished video (index >= 0) and it's the last one in the
+      // series, jump to that, otherwise jump to the next one in the series.
+      // If no finished videos jump to first one
+      if (lastFinishedIndex >= 0 && content) {
+        if (lastFinishedIndex === content.length - 1) {
+          indexToJumpTo = lastFinishedIndex;
+        } else {
+          indexToJumpTo = lastFinishedIndex + 1;
+        }
+      }
+
+      setSelectedContent(
+        formattedContent ? formattedContent[indexToJumpTo] : null
+      );
     }
     return () => setSelectedContent(null);
   }, [id]);
@@ -93,7 +113,8 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
         }
       );
 
-      await updateContent({ contentId: selectedContent?.id, data: updateData });
+      updateSeries({ seriesId: id, data: { lastUpdated: Date.now() } });
+      updateContent({ contentId: selectedContent?.id, data: updateData });
     }
   };
 
@@ -152,7 +173,7 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
                 : "secondary"
             }
             onClick={handleMarkAsComplete}
-            isLoading={isUpdatingContent}
+            isLoading={isUpdatingContent || isUpdatingSeries}
           >
             {_.filter(content, { _id: selectedContent?.id })[0]?.shelf ===
             "Finished Learning" ? (
