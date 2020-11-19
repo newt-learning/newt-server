@@ -141,6 +141,40 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
         options={formattedContent}
         value={selectedContent}
         onChange={(option) => setSelectedContent(option)}
+        // components={{ Option: CustomSelectOption }}
+        styles={{
+          option: (base, { data, isFocused, isSelected }) => {
+            // Find finished video based on id (or undefined if not Finished)
+            const finishedItem = _.find(content, {
+              _id: data.id,
+              shelf: "Finished Learning",
+            });
+
+            return {
+              ...base,
+              // Styling for finished options
+              backgroundColor:
+                finishedItem && isSelected
+                  ? "#26a043"
+                  : finishedItem && isFocused
+                  ? "#92e5a5"
+                  : finishedItem
+                  ? "#c1f0cc"
+                  : isSelected
+                  ? "#2d3748"
+                  : isFocused
+                  ? "#e2e8f0"
+                  : base.backgroundColor,
+              color:
+                finishedItem && isSelected
+                  ? "#f0fbf3"
+                  : finishedItem
+                  ? "#176128"
+                  : base.color,
+              fontWeight: finishedItem ? 500 : base.fontWeight,
+            };
+          },
+        }}
       />
       <div
         className={parentStyles.videoContainer}
