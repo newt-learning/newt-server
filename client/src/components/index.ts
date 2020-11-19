@@ -27,3 +27,6 @@ export { default as Sidebar } from "./Sidebar";
 export { SideNavItem, SideNavLink } from "./SideNav";
 export { default as StackedImages } from "./StackedImages"
 export { default as TabPane } from "./TabPane";
+
+// Component utilities/helpers
+export { getFirstThreeThumbnailsForSeries } from "./StackedImages/utils"

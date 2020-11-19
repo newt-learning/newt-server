@@ -2,11 +2,13 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import styles from "./StackedImages.module.css";
 
+export type ImageUrlType = {
+  url: string;
+  alt: string | undefined;
+};
+
 interface StackedImagesProps {
-  imageUrls: {
-    url: string;
-    alt: string;
-  }[];
+  imageUrls: ImageUrlType[];
   containerStyle?: React.CSSProperties;
   imagesStyle?: React.CSSProperties;
 }

@@ -5,7 +5,12 @@ import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FiArrowLeft } from "react-icons/fi";
-import { Button, ContentCard, StackedImages } from "../../components";
+import {
+  Button,
+  ContentCard,
+  StackedImages,
+  getFirstThreeThumbnailsForSeries,
+} from "../../components";
 import ShowMoreShowLess from "../Content/ShowMoreShowLess";
 // Styling
 import styles from "./AddContent.module.css";
@@ -151,14 +156,7 @@ const SeriesConfirmation = ({
     : videos.slice(0, initialVideosToRender);
 
   // Get the first 3 thumbnail URLs to display in the stacked image
-  let thumbnailUrls = [];
-  // Max of 3 images
-  const numImages = videos.length > 3 ? 3 : videos.length;
-  for (let i = 0; i < numImages; i++) {
-    const alt = `Thumbnail for ${videos[i]?.snippet?.title}`;
-    const bestThumbnail = getBestThumbnail(videos[i]?.snippet?.thumbnails);
-    thumbnailUrls.push({ url: bestThumbnail?.url, alt });
-  }
+  const thumbnailUrls = getFirstThreeThumbnailsForSeries(videos, "YouTube");
 
   return (
     <>
