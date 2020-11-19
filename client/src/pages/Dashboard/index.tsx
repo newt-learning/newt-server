@@ -76,6 +76,16 @@ const Dashboard = () => {
                 description={item.description}
                 thumbnails={thumbnails}
                 titleLink={`/shelves/currently-learning/${item._id}`}
+                progressInfo={
+                  item.type === "series"
+                    ? {
+                        total: item.contentIds.length,
+                        numCompleted: _.filter(item.contentIds, {
+                          shelf: "Finished Learning",
+                        }).length,
+                      }
+                    : undefined
+                }
               />
             );
           })

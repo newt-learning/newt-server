@@ -2,15 +2,17 @@ import React from "react";
 import _ from "lodash";
 import moment from "moment";
 import classnames from "classnames/bind";
+// Components
 import { Link } from "react-router-dom";
 import { FiBook, FiPlusSquare } from "react-icons/fi";
+import { ProgressBar, StackedImages } from "../";
 // Styling
 import styles from "./ContentCard.module.css";
 // Helpers
 import { shortenText } from "../../pages/Shelves/helpers";
 // Types
-import StackedImages, { ImageUrlType } from "../StackedImages";
 import { ContentTypeType } from "../ContentInbox";
+import { ImageUrlType } from "../StackedImages";
 
 const cx = classnames.bind(styles);
 
@@ -32,6 +34,10 @@ interface ContentCardProps {
   onClick?: () => void;
   onClickAddToLibrary?: () => void;
   titleLink?: string; // Link to someplace once title is clicked
+  progressInfo?: {
+    numCompleted: number;
+    total: number;
+  }; // Progress for series
 }
 
 const ContentCardTitle = ({
@@ -65,6 +71,7 @@ const ContentCard = ({
   onClick,
   onClickAddToLibrary,
   titleLink,
+  progressInfo,
 }: ContentCardProps) => {
   return (
     <div
@@ -125,6 +132,16 @@ const ContentCard = ({
           <p
             className={cx({ authors: true, smallAuthors: size === "small" })}
           >{`by ${authors.join(", ")}`}</p>
+        ) : null}
+        {/* Progress bar if it's a series */}
+        {type === "series" && size === "large" && progressInfo ? (
+          <ProgressBar
+            percentComplete={Math.round(
+              (progressInfo.numCompleted / progressInfo.total) * 100
+            )}
+            containerStyle={{ height: "20px" }}
+            barStyle={{ height: "20px" }}
+          />
         ) : null}
         {description ? (
           <p className={styles.description}>{shortenText(description, 150)}</p>
