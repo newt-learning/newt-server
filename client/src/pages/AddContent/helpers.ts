@@ -106,7 +106,12 @@ export function extractAndAssembleVideoInfo(
 
 // Extract only relevant playlist and video information from result of Youtube
 // API + add other content info like shelf
-export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
+export function extractAndAssemblePlaylistInfo(
+  seriesInfo: any,
+  shelf: string,
+  startDate: Date,
+  finishDate: Date
+) {
   const { videos } = seriesInfo;
   const seriesThumbnails = seriesInfo.seriesInfo.thumbnails;
   const bestSeriesThumbnail = getBestThumbnail(seriesThumbnails);
@@ -118,7 +123,19 @@ export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
     ? bestSeriesThumbnail.url
     : null;
   // Default shelf to "Want to Learn"
-  formattedSeriesInfo.shelf = "Want to Learn";
+  formattedSeriesInfo.shelf = shelf;
+
+  // If the selected shelf is Currently Learning, set first date started as now
+  if (shelf === "Currently Learning") {
+    formattedSeriesInfo.startFinishDates = [{ dateStarted: Date.now() }];
+  }
+
+  // If the selected shelf is Finished, add the dateCompleted field
+  if (shelf === "Finished Learning") {
+    formattedSeriesInfo.startFinishDates = [
+      { dateStarted: startDate, dateCompleted: finishDate },
+    ];
+  }
 
   // Format the videos from YouTube's API response to content schema
   if (!_.isEmpty(videos)) {
@@ -139,6 +156,20 @@ export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
 
       const bestThumbnail = getBestThumbnail(thumbnails);
 
+      let startFinishDates: any = [];
+
+      // If the selected shelf is Currently Learning, set first date started as now
+      if (shelf === "Currently Learning") {
+        startFinishDates = [{ dateStarted: Date.now() }];
+      }
+
+      // If the selected shelf is Finished, add the dateCompleted field
+      if (shelf === "Finished Learning") {
+        startFinishDates = [
+          { dateStarted: startDate, dateCompleted: finishDate },
+        ];
+      }
+
       return {
         name: _.isString(title) ? title : null,
         description: _.isString(description) ? description : null,
@@ -146,7 +177,8 @@ export function extractAndAssemblePlaylistInfo(seriesInfo: any) {
         thumbnailUrl: bestThumbnail ? bestThumbnail.url : null,
         type: "video",
         partOfSeries: true, // It's part of a series
-        shelf: "Want to Learn", // Default all to "Want to Learn" for now
+        shelf,
+        startFinishDates,
         videoInfo: {
           source: "youtube",
           videoId: _.isString(videoId) ? videoId : null,

@@ -155,11 +155,11 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
               // Styling for finished options
               backgroundColor:
                 finishedItem && isSelected
-                  ? "#26a043"
-                  : finishedItem && isFocused
                   ? "#92e5a5"
-                  : finishedItem
+                  : finishedItem && isFocused
                   ? "#c1f0cc"
+                  : finishedItem
+                  ? "#f0fbf3"
                   : isSelected
                   ? "#2d3748"
                   : isFocused
@@ -167,7 +167,7 @@ const SeriesSection = ({ id, content, shelf }: SeriesSectionProps) => {
                   : base.backgroundColor,
               color:
                 finishedItem && isSelected
-                  ? "#f0fbf3"
+                  ? "#10411b"
                   : finishedItem
                   ? "#176128"
                   : base.color,

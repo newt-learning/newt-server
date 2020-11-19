@@ -111,8 +111,13 @@ const AddContentPage = () => {
     }
 
     if (onConfirmationPage === "playlist") {
-      const { seriesInfo } = values;
-      const formattedSeriesInfo = extractAndAssemblePlaylistInfo(seriesInfo);
+      const { seriesInfo, shelf, startDate, finishDate } = values;
+      const formattedSeriesInfo = extractAndAssemblePlaylistInfo(
+        seriesInfo,
+        shelf,
+        startDate,
+        finishDate
+      );
 
       await createSeries(formattedSeriesInfo, {
         // Toast notifications on success and error
