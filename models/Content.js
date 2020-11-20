@@ -1,26 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const newtContentDbConn = require("../connections/newtContentDbConn");
+const { startFinishDatesSchema } = require("./shared");
 
 // Newt Content models
 const NewtContent = newtContentDbConn.model("newt-content");
 const NewtContentCreator = newtContentDbConn.model("newt-content-creators");
 const NewtSeries = newtContentDbConn.model("newt-series");
 const NewtQuiz = newtContentDbConn.model("newt-quizzes");
-
-const startFinishDatesSchema = new Schema(
-  {
-    dateStarted: {
-      type: Date,
-      default: null,
-    },
-    dateCompleted: {
-      type: Date,
-      default: null,
-    },
-  },
-  { _id: false }
-);
 
 const contentSchema = new Schema({
   // 1 - orignial

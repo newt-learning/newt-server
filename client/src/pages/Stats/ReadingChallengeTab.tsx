@@ -13,6 +13,7 @@ import {
   Button,
   OptionsDropdown,
   DeleteItemModal,
+  getFirstThreeThumbnailsForSeries,
 } from "../../components";
 import ReadingChallengeForm, {
   ReadingChallengeFormValues,
@@ -173,13 +174,27 @@ const ReadingChallengeTab = () => {
                   ? startFinishDates[startFinishDates.length - 1].dateCompleted
                   : null;
 
+                // Refactor ?
+                const thumbnails =
+                  item.type === "series"
+                    ? getFirstThreeThumbnailsForSeries(item.contentIds, "Newt")
+                    : item.thumbnailUrl
+                    ? [
+                        {
+                          url: item.thumbnailUrl,
+                          alt: `Thumbnail for ${item.name}`,
+                        },
+                      ]
+                    : [];
+
                 return (
                   <ContentCard
                     key={item._id}
                     size="small"
+                    type={item.type}
                     title={item.name}
                     authors={item.authors}
-                    thumbnailUrl={item.thumbnailUrl}
+                    thumbnails={thumbnails}
                     dateCompleted={latestDateCompleted}
                   />
                 );

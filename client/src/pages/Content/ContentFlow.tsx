@@ -2,20 +2,29 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
-import { useUpdateContent, useDeleteContent } from "../../api/content";
+import {
+  useUpdateContent,
+  useUpdateSeries,
+  useUpdateSeriesShelf,
+  useDeleteContent,
+  useDeleteSeries,
+} from "../../api/content";
 import { useAddContentToChallenge } from "../../api/challenges";
 // Components
 import {
   Button,
   Badge,
+  IFrame,
   OptionsDropdown,
   DeleteItemModal,
 } from "../../components";
 import BookSection from "./BookSection";
+import SeriesSection from "./SeriesSection";
 import ChangeShelfForm from "./ChangeShelfForm";
 import SelectPlaylistsForm, {
   PlaylistSelectOptionType,
 } from "./SelectPlaylistsForm";
+import AddEditDatesForm from "./AddEditDatesForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import PlaylistCard, { AddPlaylistCard } from "../UserPlaylists/PlaylistCard";
 import Modal from "react-bootstrap/Modal";
@@ -34,10 +43,13 @@ export type PlaylistType =
       name: string;
     }
   | string;
-type ShelfType = "Currently Learning" | "Want to Learn" | "Finished Learning";
-type StartFinishDateType = {
-  dateStarted: Date;
-  dateCompleted: Date;
+export type ShelfType =
+  | "Currently Learning"
+  | "Want to Learn"
+  | "Finished Learning";
+export type StartFinishDateType = {
+  dateStarted: Date | string | null | undefined;
+  dateCompleted: Date | string | null | undefined;
 };
 
 interface ContentFlowProps {
@@ -55,6 +67,9 @@ interface ContentFlowProps {
   bookInfo?: {
     pageCount: number | undefined;
     pagesRead: number | undefined;
+  };
+  seriesInfo?: {
+    seriesContent: any[] | undefined;
   };
   hasQuiz?: boolean;
   onTakeQuiz?: () => void;
@@ -78,6 +93,7 @@ const ContentFlow = ({
   thumbnailUrl,
   description,
   bookInfo,
+  seriesInfo,
   hasQuiz,
   onTakeQuiz,
   buttonText,
@@ -87,26 +103,42 @@ const ContentFlow = ({
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showAddPlaylistsModal, setShowAddPlaylistsModal] = useState(false);
+  const [showAddEditDatesModal, setShowAddEditDatesModal] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
-  // Updating content
+  // Updating content/series
   const [updateContent] = useUpdateContent();
-  const [deleteContent, { isLoading: isDeleting }] = useDeleteContent();
+  const [updateSeries] = useUpdateSeries();
+  const [updateSeriesShelf] = useUpdateSeriesShelf();
+  const [deleteContent, { isLoading: isDeletingContent }] = useDeleteContent();
   const [addContentToChallenge] = useAddContentToChallenge();
+  const [deleteSeries, { isLoading: isDeletingSeries }] = useDeleteSeries();
 
   const updateShelf = (selectedShelf: ShelfType) => {
-    const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
-      startFinishDates,
-    });
+    if (type === "book" || type === "video") {
+      const updateData = figureOutShelfMovingDataChanges(shelf, selectedShelf, {
+        startFinishDates,
+      });
 
-    updateContent({ contentId: id, data: updateData });
+      updateContent({ contentId: id, data: updateData });
 
-    // If it's a book and the selected shelf is "Finished Learning", do
-    // additional stuff like updating the reading challenge
-    if (type === "book" && selectedShelf === "Finished Learning") {
-      // Update the reading challenge by adding this book to the finished list
-      // if a challenge exists.
-      addContentToChallenge(id);
+      // If it's a book and the selected shelf is "Finished Learning", do
+      // additional stuff like updating the reading challenge
+      if (type === "book" && selectedShelf === "Finished Learning") {
+        // Update the reading challenge by adding this book to the finished list
+        // if a challenge exists.
+        addContentToChallenge(id);
+      }
+    } else if (type === "series") {
+      const seriesUpdateData = figureOutShelfMovingDataChanges(
+        shelf,
+        selectedShelf,
+        {
+          startFinishDates,
+        }
+      );
+
+      updateSeriesShelf({ seriesId: id, data: seriesUpdateData });
     }
 
     // Close modal
@@ -114,25 +146,39 @@ const ContentFlow = ({
   };
 
   const handleDeleteItem = async () => {
-    await deleteContent(id);
+    if (type === "book" || type === "video") {
+      await deleteContent(id);
+    } else if (type === "series") {
+      await deleteSeries(id);
+    }
+
     setShowDeleteItemModal(false);
   };
 
-  // Render a new iframe each time because if I just change src, it affects browser
-  // history (clicking the back button cycles through previous iframes)
-  const IFrame = ({ title, src }: any) => (
-    <iframe
-      id="ytplayer"
-      title={title}
-      width="640"
-      height="360"
-      src={src}
-      frameBorder="0"
-      allowFullScreen
-    />
-  );
+  // Update start/finish date sessions
+  const updateStartFinishDates = async (
+    startFinishDates: StartFinishDateType[]
+  ) => {
+    if (type === "series") {
+      await updateSeries({ seriesId: id, data: { startFinishDates } });
+    } else {
+      await updateContent({ contentId: id, data: { startFinishDates } });
+    }
+
+    setShowAddEditDatesModal(false);
+  };
 
   const dropdownMenu: OptionsDropdownItemType[] = [
+    {
+      type: "item",
+      title: `Add/Edit Dates ${
+        type === "book" ? "Read" : type === "video" ? "Watched" : ""
+      }`,
+      onClick: () => setShowAddEditDatesModal(true),
+    },
+    {
+      type: "divider",
+    },
     {
       type: "item",
       title: "Delete",
@@ -177,6 +223,10 @@ const ContentFlow = ({
               <Skeleton />
             ) : (
               <IFrame
+                // The key ensures the component is recreated. Changing just the
+                // src affects browser history (clicking the back button cycles
+                // through previous iframes)
+                key={id}
                 title={title}
                 src={`https://www.youtube.com/embed/${mediaId}`}
               />
@@ -211,6 +261,12 @@ const ContentFlow = ({
             showProgressBar={
               shelf === "Currently Learning" || shelf === "Finished Learning"
             }
+          />
+        ) : type === "series" ? (
+          <SeriesSection
+            id={id}
+            content={seriesInfo?.seriesContent}
+            shelf={shelf}
           />
         ) : null}
         {/* Shelf info */}
@@ -328,13 +384,38 @@ const ContentFlow = ({
           />
         </Modal.Body>
       </Modal>
+      {/* Modal to add/edit dates read/watched */}
+      <Modal
+        show={showAddEditDatesModal}
+        onHide={() => setShowAddEditDatesModal(false)}
+        size="lg"
+        animation={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          {`Add/Edit Dates ${
+            type === "book" ? "Read" : type === "video" ? "Watched" : ""
+          }`}
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <AddEditDatesForm
+            initialValues={{ startFinishDates }}
+            onSubmit={updateStartFinishDates}
+          />
+        </Modal.Body>
+      </Modal>
       {/* Modal to delete content */}
       <DeleteItemModal
         show={showDeleteItemModal}
         onHide={() => setShowDeleteItemModal(false)}
         itemToDelete={type}
         onDelete={handleDeleteItem}
-        isDeleting={isDeleting}
+        isDeleting={type === "series" ? isDeletingSeries : isDeletingContent}
       />
     </div>
   );

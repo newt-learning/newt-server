@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const { startFinishDatesSchema } = require("./shared");
 
 const seriesSchema = new Schema({
   schemaVersion: {
@@ -27,6 +28,7 @@ const seriesSchema = new Schema({
   shelf: String,
   dateAdded: Date,
   lastUpdated: Date,
+  startFinishDates: [startFinishDatesSchema],
   _user: {
     type: String,
     ref: "User",
