@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import _ from "lodash";
+// Components
 import DatePicker from "react-datepicker";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FiArrowLeft } from "react-icons/fi";
-import { Button, ContentCard } from "../../components";
+import {
+  Button,
+  ContentCard,
+  StackedImages,
+  getFirstThreeThumbnailsForSeries,
+} from "../../components";
 import ShowMoreShowLess from "../Content/ShowMoreShowLess";
 // Styling
 import styles from "./AddContent.module.css";
@@ -13,51 +19,96 @@ import "react-datepicker/dist/react-datepicker.css";
 // Helpers
 import { getBestThumbnail } from "./helpers";
 import { shortenText } from "../Shelves/helpers";
+// Types
+import { ImageUrlType } from "../../components/StackedImages";
 
 interface YoutubeConfirmationProps {
-  dataType: "video" | "playlist"; // Youtube data type
-  data: any;
-  onBack: () => void;
-  onSubmit: (values: any) => void;
-  isLoading?: boolean;
-}
-interface VideoConfirmationProps {
+  type: "video" | "series"; // Youtube data type
   data: any;
   onBack: () => void;
   onSubmit: (values: any) => void;
   isLoading?: boolean;
 }
 
-const VideoConfirmation = ({
+const YoutubeConfirmation = ({
+  type,
   data,
   onBack,
   onSubmit,
   isLoading,
-}: VideoConfirmationProps) => {
+}: YoutubeConfirmationProps) => {
   const [showMore, setShowMore] = useState(false);
   const [shelf, setShelf] = useState("Want to Learn");
   const [startDate, setStartDate] = useState<any>(new Date());
   const [finishDate, setFinishDate] = useState<any>(new Date());
+  // // Toggle between seeing first 2 or all series videos
+  const [showAllVideos, setShowAllVideos] = useState(false);
 
-  const {
-    snippet: { title, channelTitle, description, thumbnails },
-  } = data;
+  const { name, authors, description, thumbnailUrl, videos } = data;
 
-  const bestThumbnail = getBestThumbnail(thumbnails);
+  // Stuff for series
+  let numOfVideos = undefined,
+    initialVideosToRender = undefined,
+    displayVideos = undefined,
+    thumbnailUrls: ImageUrlType[] = [];
+
+  if (type === "series") {
+    numOfVideos = videos?.length;
+    initialVideosToRender = numOfVideos > 2 ? 2 : numOfVideos;
+    displayVideos = showAllVideos
+      ? videos
+      : videos.slice(0, initialVideosToRender);
+    // Get the first 3 thumbnail URLs to display in the stacked image
+    thumbnailUrls = getFirstThreeThumbnailsForSeries(videos, "YouTube");
+  }
+
+  const handleSubmit = async () => {
+    // Common data between video and series
+    const submissionData: any = {
+      shelf,
+      startDate,
+      finishDate,
+    };
+
+    // videoInfo for videos, seriesInfo for series
+    if (type === "video") {
+      submissionData.videoInfo = data;
+    } else if (type === "series") {
+      submissionData.seriesInfo = data;
+    }
+
+    await onSubmit(submissionData);
+  };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <div className={styles.navContainer}>
         <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
-        <h3>Confirm Video</h3>
+        {/* Change title based on type */}
+        <h3>{`Confirm ${_.capitalize(type)}`}</h3>
       </div>
-      <Image
-        src={bestThumbnail ? bestThumbnail.url : null}
-        className={styles.thumbnail}
-        fluid
-      />
-      <h3 className={styles.title}>{title}</h3>
-      <p className={styles.creator}>{channelTitle}</p>
+      {/* Single image for video, Stacked images for series */}
+      {type === "video" ? (
+        <Image src={thumbnailUrl} className={styles.thumbnail} fluid />
+      ) : type === "series" ? (
+        <StackedImages
+          imageUrls={thumbnailUrls}
+          containerStyle={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "2rem",
+          }}
+        />
+      ) : null}
+      <h3 className={styles.title}>{name}</h3>
+      <p className={styles.creator}>{authors.join(", ")}</p>
+      {/* If it's a series, num of videos in it */}
+      {type === "series" ? (
+        <p className={styles.creator}>
+          {videos ? `${numOfVideos} videos` : null}
+        </p>
+      ) : null}
+      {/* Form to choose shelf */}
       <Form.Group controlId="shelf">
         <Form.Label className={styles.subheader}>Shelf</Form.Label>
         <Form.Control
@@ -113,88 +164,23 @@ const VideoConfirmation = ({
           onClick={() => setShowMore(!showMore)}
         />
       </p>
-      <Button
-        className={styles.addBtn}
-        category="success"
-        isLoading={isLoading}
-        onClick={() =>
-          onSubmit({
-            videoInfo: data,
-            shelf,
-            playlists: [],
-            startDate,
-            finishDate,
-          })
-        }
-      >
-        Add to Library
-      </Button>
-    </>
-  );
-};
-
-const SeriesConfirmation = ({
-  data,
-  onBack,
-  onSubmit,
-  isLoading,
-}: VideoConfirmationProps) => {
-  const [showMore, setShowMore] = useState(false);
-  const {
-    name,
-    authors,
-    description,
-    videos,
-    seriesInfo: { thumbnails },
-  } = data;
-
-  const numOfVideos = videos.length;
-  const initialVideosToRender = numOfVideos > 2 ? 2 : numOfVideos;
-  // Toggle between seeing first 2 or all videos
-  const [showAllVideos, setShowAllVideos] = useState(false);
-  const displayVideos = showAllVideos
-    ? videos
-    : videos.slice(0, initialVideosToRender);
-
-  const bestThumbnail = getBestThumbnail(thumbnails);
-
-  return (
-    <>
-      <div className={styles.navContainer}>
-        <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
-        <h3>Confirm Series</h3>
-      </div>
-      <Image
-        src={bestThumbnail ? bestThumbnail.url : null}
-        className={styles.thumbnail}
-        fluid
-      />
-      <h3 className={styles.title}>{name}</h3>
-      <p className={styles.creator}>{authors.join(", ")}</p>
-      <p className={styles.creator}>
-        {videos ? `${numOfVideos} videos` : null}
-      </p>
-      <h4 className={styles.subheader}>Description</h4>
-      <p className={styles.youtubeText}>
-        {showMore ? description : shortenText(description, 300)}
-        <ShowMoreShowLess
-          showMore={showMore}
-          onClick={() => setShowMore(!showMore)}
-        />
-      </p>
-      <h4 className={styles.subheader}>Videos</h4>
-      {/* Show videos in Series */}
+      {/* If it's a series, show videos that are part of Series */}
       {!_.isEmpty(displayVideos) ? (
         <div className={styles.videosContainer}>
           {displayVideos.map((video: any) => {
+            const title = video?.snippet?.title;
             const bestThumbnail = getBestThumbnail(video.snippet.thumbnails);
+            const thumbnails = bestThumbnail
+              ? [{ url: bestThumbnail.url, alt: `Thumbnail for ${title}` }]
+              : [];
 
             return (
               <ContentCard
-                key={video?.snippet?.title}
+                key={title}
+                type="video"
                 size="small"
-                title={video?.snippet?.title}
-                thumbnailUrl={bestThumbnail?.url}
+                title={title}
+                thumbnails={thumbnails}
               />
             );
           })}
@@ -208,42 +194,10 @@ const SeriesConfirmation = ({
         className={styles.addBtn}
         category="success"
         isLoading={isLoading}
-        onClick={() =>
-          onSubmit({
-            seriesInfo: data,
-          })
-        }
+        onClick={handleSubmit}
       >
         Add to Library
       </Button>
-    </>
-  );
-};
-
-const YoutubeConfirmation = ({
-  dataType,
-  data,
-  onBack,
-  onSubmit,
-  isLoading,
-}: YoutubeConfirmationProps) => {
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      {dataType === "video" ? (
-        <VideoConfirmation
-          data={data}
-          onBack={onBack}
-          onSubmit={onSubmit}
-          isLoading={isLoading}
-        />
-      ) : (
-        <SeriesConfirmation
-          data={data}
-          onBack={onBack}
-          onSubmit={onSubmit}
-          isLoading={isLoading}
-        />
-      )}
     </div>
   );
 };

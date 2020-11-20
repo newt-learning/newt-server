@@ -10,11 +10,8 @@ import UpdateProgressForm, {
 } from "./UpdateProgressForm";
 // Styling
 import styles from "./BookSection.module.css";
-
-type StartFinishDateType = {
-  dateStarted: Date | number;
-  dateCompleted: Date | number;
-};
+// Types
+import { StartFinishDateType } from "./ContentFlow";
 
 interface BookSectionProps {
   id: string;
@@ -79,7 +76,7 @@ const BookSection = ({
     let updatedStartFinishDates = [...startFinishDates];
     updatedStartFinishDates[
       updatedStartFinishDates.length - 1
-    ].dateCompleted = Date.now();
+    ].dateCompleted = new Date();
 
     // pageCount || 0 could introduce bugs? (if there's no page count for example.
     // But then there would be no page updating either)...

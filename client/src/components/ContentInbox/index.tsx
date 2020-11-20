@@ -16,9 +16,12 @@ import {
 import AppContentListCard from "../AppContentListCard";
 import OptionsDropdown, { OptionsDropdownItemType } from "../OptionsDropdown";
 import ContentFlow from "../../pages/Content/ContentFlow";
+import { getFirstThreeThumbnailsForSeries } from "..";
 import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
+
+export type ContentTypeType = "book" | "video" | "series";
 
 interface ContentInboxProps {
   title: string;
@@ -35,7 +38,9 @@ interface ContentInboxProps {
 interface ContentData {
   _id: string;
   name: string;
+  type: ContentTypeType;
   thumbnailUrl?: string;
+  contentIds?: [any]; // Content in a series
 }
 
 const cx = classnames.bind(styles);
@@ -123,15 +128,29 @@ const ContentInbox = ({
             <Skeleton height={100} count={4} />
           ) : (
             contentData?.map(
-              ({ _id, name, thumbnailUrl }: ContentData, index: number) => (
-                <AppContentListCard
-                  name={name}
-                  thumbnailUrl={thumbnailUrl}
-                  onClick={() => setCurrentContent(contentData[index])}
-                  isActive={_id === currentContent?._id}
-                  key={_id}
-                />
-              )
+              (
+                { _id, type, name, thumbnailUrl, contentIds }: ContentData,
+                index: number
+              ) => {
+                // Refactor ?
+                const thumbnails =
+                  type === "series"
+                    ? getFirstThreeThumbnailsForSeries(contentIds, "Newt")
+                    : thumbnailUrl
+                    ? [{ url: thumbnailUrl, alt: `Thumbnail for ${name}` }]
+                    : [];
+
+                return (
+                  <AppContentListCard
+                    name={name}
+                    contentType={type}
+                    thumbnails={thumbnails}
+                    onClick={() => setCurrentContent(contentData[index])}
+                    isActive={_id === currentContent?._id}
+                    key={_id}
+                  />
+                );
+              }
             )
           )}
         </AppContentList>
@@ -160,6 +179,9 @@ const ContentInbox = ({
             bookInfo={{
               pageCount: currentContent?.bookInfo?.pageCount,
               pagesRead: currentContent?.bookInfo?.pagesRead,
+            }}
+            seriesInfo={{
+              seriesContent: currentContent?.contentIds,
             }}
             isLoading={isLoading}
             // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}

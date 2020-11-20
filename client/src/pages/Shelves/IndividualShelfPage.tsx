@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 // API
-import { useFetchAllContent } from "../../api/content";
+import { useFetchAllContentAndSeries } from "../../api/content";
 // Components
 import { ContentInbox } from "../../components";
 // Helpers
@@ -17,14 +17,18 @@ const IndividualShelfPage = () => {
   // @ts-ignore
   let { shelfName } = useParams();
 
-  const { data } = useFetchAllContent();
+  const { data: allData, isLoading } = useFetchAllContentAndSeries();
+
+  console.log(allData);
 
   // Convery from slug to actual name (eg. want-to-learn ==> Want to Learn)
   const shelf = SHELF_SLUG_TO_NAME[shelfName];
 
-  const shelfData = filterAndOrderContentByShelf(shelf, data);
+  const shelfData = filterAndOrderContentByShelf(shelf, allData);
 
-  return <ContentInbox title={shelf} contentData={shelfData} />;
+  return (
+    <ContentInbox title={shelf} contentData={shelfData} isLoading={isLoading} />
+  );
 };
 
 export default IndividualShelfPage;

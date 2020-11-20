@@ -1,8 +1,12 @@
 import React from "react";
 // API
-import { useFetchAllContent } from "../../api/content";
+import { useFetchAllContentAndSeries } from "../../api/content";
 // Components
-import { AppMainContainer, AppContentContainer } from "../../components";
+import {
+  AppMainContainer,
+  AppContentContainer,
+  Loader,
+} from "../../components";
 import Shelf from "./Shelf";
 // Helpers
 import { filterAndOrderContentByShelf } from "./helpers";
@@ -10,23 +14,26 @@ import { filterAndOrderContentByShelf } from "./helpers";
 import styles from "./Shelves.module.css";
 
 const ShelvesPage = () => {
-  const { data, isLoading } = useFetchAllContent();
+  const { data: allData, isLoading } = useFetchAllContentAndSeries();
 
   const currentlyLearningItems = filterAndOrderContentByShelf(
     "Currently Learning",
-    data
+    allData
   );
-  const wantToLearnItems = filterAndOrderContentByShelf("Want to Learn", data);
+  const wantToLearnItems = filterAndOrderContentByShelf(
+    "Want to Learn",
+    allData
+  );
   const finishedLearningItems = filterAndOrderContentByShelf(
     "Finished Learning",
-    data
+    allData
   );
 
   return (
     <AppMainContainer className={styles.container}>
       <AppContentContainer className={styles.contentContainer}>
         {isLoading ? (
-          "Loading..."
+          <Loader />
         ) : (
           <>
             <Shelf

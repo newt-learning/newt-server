@@ -1,5 +1,7 @@
 import axios from "axios";
 import keys from "../config/keys";
+import _ from "lodash";
+import { getBestThumbnail } from "../pages/AddContent/helpers";
 
 export async function getYoutubeVideoInfo(videoId: string) {
   try {
@@ -15,7 +17,40 @@ export async function getYoutubeVideoInfo(videoId: string) {
       }
     );
 
-    return res.data;
+    const {
+      data: { items },
+    } = res;
+    const {
+      id,
+      snippet: {
+        title,
+        description,
+        channelTitle,
+        thumbnails,
+        channelId,
+        publishedAt,
+      },
+    } = items[0];
+
+    const bestThumbnail = getBestThumbnail(thumbnails);
+
+    // Reorganize data closer to the model schema
+    return {
+      name: _.isString(title) ? title : null,
+      description: _.isString(description) ? description : null,
+      authors: _.isString(channelTitle) ? [channelTitle] : null,
+      thumbnailUrl: bestThumbnail ? bestThumbnail.url : null,
+      type: "video",
+      videoInfo: {
+        source: "youtube",
+        videoId: _.isString(id) ? id : null,
+        title: _.isString(title) ? title : null,
+        description: _.isString(description) ? description : null,
+        channelId: _.isString(channelId) ? channelId : null,
+        thumbnails: !_.isEmpty(thumbnails) ? thumbnails : null,
+        datePublished: _.isString(publishedAt) ? publishedAt : null,
+      },
+    };
   } catch (error) {
     throw new Error(error);
   }
@@ -69,7 +104,7 @@ export async function getYoutubePlaylistInfo(playlistId: string) {
           params: {
             playlistId,
             part: "snippet",
-            maxResults: 5,
+            maxResults: process.env.NODE_ENV === "production" ? 50 : 5,
             // @ts-ignore
             key: keys.youtubeApiKey,
           },

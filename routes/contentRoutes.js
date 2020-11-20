@@ -3,7 +3,7 @@ const requireLogin = require("../middleware/requireLogin");
 const _ = require("lodash");
 
 const Content = userDbConn.model("content");
-// const Topic = userDbConn.model("topics");
+const Series = userDbConn.model("series");
 const Playlist = userDbConn.model("playlists");
 const Quiz = userDbConn.model("quizzes");
 const Challenge = userDbConn.model("challenges");
@@ -34,6 +34,34 @@ module.exports = (app) => {
           res.status(500).send(error);
         } else {
           res.send(content);
+        }
+      });
+  });
+
+  // GET request to fetch all users content and series combined
+  app.get("/api/content-and-series", requireLogin, (req, res) => {
+    const userId = req.user.uid;
+
+    let allData = [];
+
+    Content.find({ _user: userId, partOfSeries: false })
+      // .populate({ path: "topics", model: Topic, select: "_id name" })
+      .populate({ path: "playlists", model: Playlist, select: "_id name" })
+      .exec((error, content) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          allData.push(...content);
+          Series.find({ _user: userId })
+            .populate({ path: "contentIds", model: Content })
+            .exec((error, series) => {
+              if (error) {
+                res.status(500).send(error);
+              } else {
+                allData.push(...series);
+                res.send(allData);
+              }
+            });
         }
       });
   });

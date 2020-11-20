@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 // API
-import { useFetchAllContent } from "../../api/content";
+import { useFetchAllContentAndSeries } from "../../api/content";
 // Components
 import {
   AppMainContainer,
@@ -11,12 +11,13 @@ import {
   ContentCard,
   MessageBox,
   Badge,
+  getFirstThreeThumbnailsForSeries,
 } from "../../components";
 // Styling
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const { data, isLoading, isError } = useFetchAllContent();
+  const { data, isLoading, isError } = useFetchAllContentAndSeries();
 
   // Filter out content in progress (currently learning) + order by last updated
   const inProgressContent = _.chain(data)
@@ -52,16 +53,42 @@ const Dashboard = () => {
             shelf. See you soon!
           </MessageBox>
         ) : (
-          _.map(inProgressContent, (item) => (
-            <ContentCard
-              key={item._id}
-              title={item.name}
-              authors={item.authors}
-              description={item.description}
-              thumbnailUrl={item.thumbnailUrl}
-              titleLink={`/shelves/currently-learning/${item._id}`}
-            />
-          ))
+          _.map(inProgressContent, (item) => {
+            // Refactor ?
+            const thumbnails =
+              item.type === "series"
+                ? getFirstThreeThumbnailsForSeries(item.contentIds, "Newt")
+                : item.thumbnailUrl
+                ? [
+                    {
+                      url: item.thumbnailUrl,
+                      alt: `Thumbnail for ${item.name}`,
+                    },
+                  ]
+                : [];
+
+            return (
+              <ContentCard
+                key={item._id}
+                type={item.type}
+                title={item.name}
+                authors={item.authors}
+                description={item.description}
+                thumbnails={thumbnails}
+                titleLink={`/shelves/currently-learning/${item._id}`}
+                progressInfo={
+                  item.type === "series"
+                    ? {
+                        total: item.contentIds.length,
+                        numCompleted: _.filter(item.contentIds, {
+                          shelf: "Finished Learning",
+                        }).length,
+                      }
+                    : undefined
+                }
+              />
+            );
+          })
         )}
       </AppContentContainer>
     </AppMainContainer>

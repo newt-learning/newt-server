@@ -65,4 +65,86 @@ module.exports = (app) => {
       }
     });
   });
+
+  app.put("/api/series/:seriesId", requireLogin, (req, res) => {
+    const { seriesId } = req.params;
+    const data = req.body;
+    // Update last updated field
+    data.lastUpdated = Date.now();
+
+    Series.findByIdAndUpdate(seriesId, data, { new: true }, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(series);
+      }
+    });
+  });
+
+  // PUT request to update shelf and all associated content for a series
+  app.put("/api/series/:seriesId/update-shelf", requireLogin, (req, res) => {
+    const { seriesId } = req.params;
+    const data = req.body;
+    // Update last updated field
+    data.lastUpdated = Date.now();
+
+    Series.findByIdAndUpdate(seriesId, data, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        const { contentIds } = series;
+
+        // Query content for those in contentIds of series, AND that are not Finished.
+        // The not finished part is so the history of finishing certain videos in
+        // the series is not written over. For example if a series in 'Currently
+        // Learning' and 1 out of 5 videos are completed (20%), and then you decide
+        // to move it to the "Want to Learn" shelf, only the unfinished videos (4/5)
+        // shelves are changed. So if you ever move the series back to Currently Learning,
+        // it'll still be 20% complete.
+        Content.updateMany(
+          {
+            _id: { $in: contentIds },
+            shelf: { $ne: "Finished Learning" },
+          },
+          data,
+          (error) => {
+            if (error) {
+              res.status(500).send(error);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+      }
+    });
+  });
+
+  // DELETE request to delete a series
+  app.delete("/api/series/:seriesId", requireLogin, (req, res) => {
+    const { seriesId } = req.params;
+
+    Series.findById(seriesId, (error, series) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        const { contentIds } = series;
+
+        // Delete all the Content in the series
+        Content.deleteMany({ _id: { $in: contentIds } }, (error) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            // Now delete Series
+            Series.findByIdAndDelete(seriesId, (error) => {
+              if (error) {
+                res.status(500).send(error);
+              } else {
+                res.sendStatus(200);
+              }
+            });
+          }
+        });
+      }
+    });
+  });
 };
