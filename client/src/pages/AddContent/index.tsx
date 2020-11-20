@@ -27,12 +27,12 @@ import { TabPaneField } from "../../components/TabPane";
 import {
   validateYoutubeVideoUrl,
   validateYoutubePlaylistUrl,
-  extractAndAssembleVideoInfo,
+  assembleVideoInfo,
   extractAndAssemblePlaylistInfo,
   extractAndAssembleBookInfo,
 } from "./helpers";
 
-type OnConfirmationPageState = "video" | "playlist" | null;
+type OnConfirmationPageState = "video" | "series" | null;
 
 const AddContentPage = () => {
   const [onConfirmationPage, setOnConfirmationPage] = useState<
@@ -57,8 +57,8 @@ const AddContentPage = () => {
       const videoId = validateYoutubeVideoUrl(videoUrl);
       if (videoId) {
         const videoResults = await getYoutubeVideoInfo(videoId);
-        if (!_.isEmpty(videoResults.items)) {
-          setYoutubeContent(videoResults.items[0]);
+        if (!_.isEmpty(videoResults)) {
+          setYoutubeContent(videoResults);
           setOnConfirmationPage("video");
         }
       } else {
@@ -73,7 +73,7 @@ const AddContentPage = () => {
         const seriesInfo = await getYoutubePlaylistInfo(playlistId);
         if (!_.isEmpty(seriesInfo)) {
           setYoutubeContent(seriesInfo);
-          setOnConfirmationPage("playlist");
+          setOnConfirmationPage("series");
         }
       } else {
         alert("not a playlist url");
@@ -84,7 +84,7 @@ const AddContentPage = () => {
   const handleSubmit = async (values: any) => {
     if (onConfirmationPage === "video") {
       const { videoInfo, shelf, playlists, startDate, finishDate } = values;
-      const contentInfo = extractAndAssembleVideoInfo(
+      const contentInfo = assembleVideoInfo(
         videoInfo,
         shelf,
         playlists,
@@ -110,7 +110,7 @@ const AddContentPage = () => {
       setYoutubeContent(null);
     }
 
-    if (onConfirmationPage === "playlist") {
+    if (onConfirmationPage === "series") {
       const { seriesInfo, shelf, startDate, finishDate } = values;
       const formattedSeriesInfo = extractAndAssemblePlaylistInfo(
         seriesInfo,

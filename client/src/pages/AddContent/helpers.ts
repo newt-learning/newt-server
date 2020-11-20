@@ -47,46 +47,18 @@ export function getBestThumbnail(thumbnails: any) {
   return bestOption;
 }
 
-// Extract only relevant video information from result of Youtube API + add
-// other content info like shelf and playlists
-export function extractAndAssembleVideoInfo(
+// Add other content info like shelf and playlists to formatted video info
+export function assembleVideoInfo(
   videoInfo: any,
   shelf: string,
   playlists: any,
   startDate: Date,
   finishDate: Date
 ) {
-  const {
-    id,
-    snippet: {
-      title,
-      description,
-      channelTitle,
-      thumbnails,
-      channelId,
-      publishedAt,
-    },
-  } = videoInfo;
-
-  const bestThumbnail = getBestThumbnail(thumbnails);
-
   let data: any = {
-    name: _.isString(title) ? title : null,
-    description: _.isString(description) ? description : null,
-    authors: _.isString(channelTitle) ? [channelTitle] : null,
-    thumbnailUrl: bestThumbnail ? bestThumbnail.url : null,
-    type: "video",
+    ...videoInfo,
     shelf,
     playlists,
-    videoInfo: {
-      source: "youtube",
-      videoId: _.isString(id) ? id : null,
-      title: _.isString(title) ? title : null,
-      description: _.isString(description) ? description : null,
-      channelId: _.isString(channelId) ? channelId : null,
-      thumbnails: !_.isEmpty(thumbnails) ? thumbnails : null,
-      datePublished: _.isString(publishedAt) ? publishedAt : null,
-    },
   };
 
   // If the selected shelf is Currently Learning, set first date started as now

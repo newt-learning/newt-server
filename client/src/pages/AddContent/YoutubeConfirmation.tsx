@@ -20,13 +20,14 @@ import { getBestThumbnail } from "./helpers";
 import { shortenText } from "../Shelves/helpers";
 
 interface YoutubeConfirmationProps {
-  dataType: "video" | "playlist"; // Youtube data type
+  dataType: "video" | "series"; // Youtube data type
   data: any;
   onBack: () => void;
   onSubmit: (values: any) => void;
   isLoading?: boolean;
 }
 interface VideoConfirmationProps {
+  dataType: "video" | "series";
   data: any;
   onBack: () => void;
   onSubmit: (values: any) => void;
@@ -34,6 +35,7 @@ interface VideoConfirmationProps {
 }
 
 const VideoConfirmation = ({
+  dataType,
   data,
   onBack,
   onSubmit,
@@ -44,11 +46,7 @@ const VideoConfirmation = ({
   const [startDate, setStartDate] = useState<any>(new Date());
   const [finishDate, setFinishDate] = useState<any>(new Date());
 
-  const {
-    snippet: { title, channelTitle, description, thumbnails },
-  } = data;
-
-  const bestThumbnail = getBestThumbnail(thumbnails);
+  const { name, authors, description, thumbnailUrl } = data;
 
   return (
     <>
@@ -56,13 +54,9 @@ const VideoConfirmation = ({
         <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
         <h3>Confirm Video</h3>
       </div>
-      <Image
-        src={bestThumbnail ? bestThumbnail.url : null}
-        className={styles.thumbnail}
-        fluid
-      />
-      <h3 className={styles.title}>{title}</h3>
-      <p className={styles.creator}>{channelTitle}</p>
+      <Image src={thumbnailUrl} className={styles.thumbnail} fluid />
+      <h3 className={styles.title}>{name}</h3>
+      <p className={styles.creator}>{authors.join(", ")}</p>
       <Form.Group controlId="shelf">
         <Form.Label className={styles.subheader}>Shelf</Form.Label>
         <Form.Control
@@ -293,6 +287,7 @@ const YoutubeConfirmation = ({
     <div style={{ display: "flex", flexDirection: "column" }}>
       {dataType === "video" ? (
         <VideoConfirmation
+          dataType="video"
           data={data}
           onBack={onBack}
           onSubmit={onSubmit}
@@ -300,6 +295,7 @@ const YoutubeConfirmation = ({
         />
       ) : (
         <SeriesConfirmation
+          dataType="series"
           data={data}
           onBack={onBack}
           onSubmit={onSubmit}
