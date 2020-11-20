@@ -176,7 +176,7 @@ const AddContentPage = () => {
       renderTabPane: () =>
         onConfirmationPage ? (
           <YoutubeConfirmation
-            dataType={onConfirmationPage}
+            type={onConfirmationPage}
             data={youtubeContent}
             onBack={() => setOnConfirmationPage(null)}
             onSubmit={handleSubmit}

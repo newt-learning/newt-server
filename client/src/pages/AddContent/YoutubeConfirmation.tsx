@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
+// Components
 import DatePicker from "react-datepicker";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
@@ -18,163 +19,96 @@ import "react-datepicker/dist/react-datepicker.css";
 // Helpers
 import { getBestThumbnail } from "./helpers";
 import { shortenText } from "../Shelves/helpers";
+// Types
+import { ImageUrlType } from "../../components/StackedImages";
 
 interface YoutubeConfirmationProps {
-  dataType: "video" | "series"; // Youtube data type
-  data: any;
-  onBack: () => void;
-  onSubmit: (values: any) => void;
-  isLoading?: boolean;
-}
-interface VideoConfirmationProps {
-  dataType: "video" | "series";
+  type: "video" | "series"; // Youtube data type
   data: any;
   onBack: () => void;
   onSubmit: (values: any) => void;
   isLoading?: boolean;
 }
 
-const VideoConfirmation = ({
-  dataType,
+const YoutubeConfirmation = ({
+  type,
   data,
   onBack,
   onSubmit,
   isLoading,
-}: VideoConfirmationProps) => {
+}: YoutubeConfirmationProps) => {
   const [showMore, setShowMore] = useState(false);
   const [shelf, setShelf] = useState("Want to Learn");
   const [startDate, setStartDate] = useState<any>(new Date());
   const [finishDate, setFinishDate] = useState<any>(new Date());
-
-  const { name, authors, description, thumbnailUrl } = data;
-
-  return (
-    <>
-      <div className={styles.navContainer}>
-        <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
-        <h3>Confirm Video</h3>
-      </div>
-      <Image src={thumbnailUrl} className={styles.thumbnail} fluid />
-      <h3 className={styles.title}>{name}</h3>
-      <p className={styles.creator}>{authors.join(", ")}</p>
-      <Form.Group controlId="shelf">
-        <Form.Label className={styles.subheader}>Shelf</Form.Label>
-        <Form.Control
-          as="select"
-          name="shelf"
-          defaultValue="Want to Learn"
-          onChange={(e: any) => setShelf(e.target.value)}
-        >
-          <option value="Currently Learning">Currently Learning</option>
-          <option value="Want to Learn">Want to Learn</option>
-          <option value="Finished Learning">Finished Learning</option>
-        </Form.Control>
-      </Form.Group>
-      {/* Show start and finish date inputs if the Finished Learning shelf is selected */}
-      {shelf === "Finished Learning" ? (
-        <Form.Row>
-          <Col sm={12} md={6}>
-            <Form.Group>
-              <Form.Label
-                className={styles.subheader}
-                style={{ marginRight: "1rem" }}
-              >
-                Start Date
-              </Form.Label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-              />
-            </Form.Group>
-          </Col>
-          <Col sm={12} md={6}>
-            <Form.Group>
-              <Form.Label
-                className={styles.subheader}
-                style={{ marginRight: "1rem" }}
-              >
-                Finish Date
-              </Form.Label>
-              <DatePicker
-                selected={finishDate}
-                onChange={(date) => setFinishDate(date)}
-                minDate={startDate}
-              />
-            </Form.Group>
-          </Col>
-        </Form.Row>
-      ) : null}
-      <h4 className={styles.subheader}>Description</h4>
-      <p className={styles.youtubeText}>
-        {showMore ? description : shortenText(description, 300)}
-        <ShowMoreShowLess
-          showMore={showMore}
-          onClick={() => setShowMore(!showMore)}
-        />
-      </p>
-      <Button
-        className={styles.addBtn}
-        category="success"
-        isLoading={isLoading}
-        onClick={() =>
-          onSubmit({
-            videoInfo: data,
-            shelf,
-            playlists: [],
-            startDate,
-            finishDate,
-          })
-        }
-      >
-        Add to Library
-      </Button>
-    </>
-  );
-};
-
-const SeriesConfirmation = ({
-  data,
-  onBack,
-  onSubmit,
-  isLoading,
-}: VideoConfirmationProps) => {
-  const [showMore, setShowMore] = useState(false);
-  const [shelf, setShelf] = useState("Want to Learn");
-  const [startDate, setStartDate] = useState<any>(new Date());
-  const [finishDate, setFinishDate] = useState<any>(new Date());
-
-  const { name, authors, description, videos } = data;
-
-  const numOfVideos = videos.length;
-  const initialVideosToRender = numOfVideos > 2 ? 2 : numOfVideos;
-  // Toggle between seeing first 2 or all videos
+  // // Toggle between seeing first 2 or all series videos
   const [showAllVideos, setShowAllVideos] = useState(false);
-  const displayVideos = showAllVideos
-    ? videos
-    : videos.slice(0, initialVideosToRender);
 
-  // Get the first 3 thumbnail URLs to display in the stacked image
-  const thumbnailUrls = getFirstThreeThumbnailsForSeries(videos, "YouTube");
+  const { name, authors, description, thumbnailUrl, videos } = data;
+
+  // Stuff for series
+  let numOfVideos = undefined,
+    initialVideosToRender = undefined,
+    displayVideos = undefined,
+    thumbnailUrls: ImageUrlType[] = [];
+
+  if (type === "series") {
+    numOfVideos = videos?.length;
+    initialVideosToRender = numOfVideos > 2 ? 2 : numOfVideos;
+    displayVideos = showAllVideos
+      ? videos
+      : videos.slice(0, initialVideosToRender);
+    // Get the first 3 thumbnail URLs to display in the stacked image
+    thumbnailUrls = getFirstThreeThumbnailsForSeries(videos, "YouTube");
+  }
+
+  const handleSubmit = async () => {
+    // Common data between video and series
+    const submissionData: any = {
+      shelf,
+      startDate,
+      finishDate,
+    };
+
+    // videoInfo for videos, seriesInfo for series
+    if (type === "video") {
+      submissionData.videoInfo = data;
+    } else if (type === "series") {
+      submissionData.seriesInfo = data;
+    }
+
+    await onSubmit(submissionData);
+  };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <div className={styles.navContainer}>
         <FiArrowLeft size={20} className={styles.backArrow} onClick={onBack} />
-        <h3>Confirm Series</h3>
+        {/* Change title based on type */}
+        <h3>{`Confirm ${_.capitalize(type)}`}</h3>
       </div>
-      <StackedImages
-        imageUrls={thumbnailUrls}
-        containerStyle={{
-          display: "flex",
-          justifyContent: "center",
-          paddingTop: "2rem",
-        }}
-      />
+      {/* Single image for video, Stacked images for series */}
+      {type === "video" ? (
+        <Image src={thumbnailUrl} className={styles.thumbnail} fluid />
+      ) : type === "series" ? (
+        <StackedImages
+          imageUrls={thumbnailUrls}
+          containerStyle={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "2rem",
+          }}
+        />
+      ) : null}
       <h3 className={styles.title}>{name}</h3>
       <p className={styles.creator}>{authors.join(", ")}</p>
-      <p className={styles.creator}>
-        {videos ? `${numOfVideos} videos` : null}
-      </p>
+      {/* If it's a series, num of videos in it */}
+      {type === "series" ? (
+        <p className={styles.creator}>
+          {videos ? `${numOfVideos} videos` : null}
+        </p>
+      ) : null}
+      {/* Form to choose shelf */}
       <Form.Group controlId="shelf">
         <Form.Label className={styles.subheader}>Shelf</Form.Label>
         <Form.Control
@@ -230,8 +164,7 @@ const SeriesConfirmation = ({
           onClick={() => setShowMore(!showMore)}
         />
       </p>
-      <h4 className={styles.subheader}>Videos</h4>
-      {/* Show videos in Series */}
+      {/* If it's a series, show videos that are part of Series */}
       {!_.isEmpty(displayVideos) ? (
         <div className={styles.videosContainer}>
           {displayVideos.map((video: any) => {
@@ -261,47 +194,10 @@ const SeriesConfirmation = ({
         className={styles.addBtn}
         category="success"
         isLoading={isLoading}
-        onClick={() =>
-          onSubmit({
-            seriesInfo: data,
-            shelf,
-            startDate,
-            finishDate,
-          })
-        }
+        onClick={handleSubmit}
       >
         Add to Library
       </Button>
-    </>
-  );
-};
-
-const YoutubeConfirmation = ({
-  dataType,
-  data,
-  onBack,
-  onSubmit,
-  isLoading,
-}: YoutubeConfirmationProps) => {
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      {dataType === "video" ? (
-        <VideoConfirmation
-          dataType="video"
-          data={data}
-          onBack={onBack}
-          onSubmit={onSubmit}
-          isLoading={isLoading}
-        />
-      ) : (
-        <SeriesConfirmation
-          dataType="series"
-          data={data}
-          onBack={onBack}
-          onSubmit={onSubmit}
-          isLoading={isLoading}
-        />
-      )}
     </div>
   );
 };
