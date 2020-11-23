@@ -5,10 +5,12 @@ import { useToasts } from "react-toast-notifications";
 import {
   useFetchAllPlaylists,
   useAddContentToPlaylists,
+  useAddSeriesToPlaylists,
   useRemoveContentFromPlaylists,
+  useRemoveSeriesFromPlaylists,
   useCreatePlaylist,
 } from "../../api/playlists";
-import { useUpdateContent } from "../../api/content";
+import { useUpdateContent, useUpdateSeries } from "../../api/content";
 // Components
 import CreatableSelect from "react-select/creatable";
 import { Button } from "../../components";
@@ -46,14 +48,23 @@ const SelectPlaylistsForm = ({
   // data API stuff
   const { data: allPlaylists, isLoading } = useFetchAllPlaylists();
   const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
+  const [updateSeries, { isLoading: seriesIsUpdating }] = useUpdateSeries();
   const [
     addContentToPlaylists,
-    { isLoading: isAddingPlaylists },
+    { isLoading: isAddingContent },
   ] = useAddContentToPlaylists();
   const [
+    addSeriesToPlaylists,
+    { isLoading: isAddingSeries },
+  ] = useAddSeriesToPlaylists();
+  const [
     removeContentFromPlaylists,
-    { isLoading: isRemovingPlaylists },
+    { isLoading: isRemovingContent },
   ] = useRemoveContentFromPlaylists();
+  const [
+    removeSeriesFromPlaylists,
+    { isLoading: isRemovingSeries },
+  ] = useRemoveSeriesFromPlaylists();
   const [
     createPlaylist,
     { isLoading: isCreatingPlaylist },
@@ -98,25 +109,48 @@ const SelectPlaylistsForm = ({
       }
     });
 
-    // Send request to add the content to the newly selected playlists, remove
-    // playlists that were unselected, and update the content by adding the playlists
-    // to it
-    updateContent(
-      { contentId, data: { playlists: selectedPlaylistsIds } },
-      {
-        onSuccess: () =>
-          addToast("Playlists updated", { appearance: "success" }),
-        onError: () =>
-          addToast("Sorry, there was an error updating the playlist", {
-            appearance: "error",
-          }),
-      }
-    );
-    await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
-    await removeContentFromPlaylists({
-      playlistIds: playlistsToRemove,
-      contentId,
-    });
+    if (contentType === "book" || contentType === "video") {
+      // Send request to add the content to the newly selected playlists, remove
+      // playlists that were unselected, and update the content by adding the playlists
+      // to it
+      updateContent(
+        { contentId, data: { playlists: selectedPlaylistsIds } },
+        {
+          onSuccess: () =>
+            addToast("Playlists updated", { appearance: "success" }),
+          onError: () =>
+            addToast("Sorry, there was an error updating the playlist", {
+              appearance: "error",
+            }),
+        }
+      );
+      await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
+      await removeContentFromPlaylists({
+        playlistIds: playlistsToRemove,
+        contentId,
+      });
+    } else if (contentType === "series") {
+      // Same as content req above, but for series
+      updateSeries(
+        { seriesId: contentId, data: { playlists: selectedPlaylistsIds } },
+        {
+          onSuccess: () =>
+            addToast("Playlists updated", { appearance: "success" }),
+          onError: () =>
+            addToast("Sorry, there was an error updating the playlist", {
+              appearance: "error",
+            }),
+        }
+      );
+      await addSeriesToPlaylists({
+        playlistIds: playlistsToAdd,
+        seriesId: contentId,
+      });
+      await removeSeriesFromPlaylists({
+        playlistIds: playlistsToRemove,
+        seriesId: contentId,
+      });
+    }
 
     // Close modal -- maybe I should move this whole handler to the parent, how
     // I usually do
@@ -189,7 +223,11 @@ const SelectPlaylistsForm = ({
         category="success"
         onClick={handleSubmit}
         isLoading={
-          contentIsUpdating || isAddingPlaylists || isRemovingPlaylists
+          contentIsUpdating ||
+          isAddingContent ||
+          isAddingSeries ||
+          isRemovingContent ||
+          isRemovingSeries
         }
         style={{
           display: "flex",
