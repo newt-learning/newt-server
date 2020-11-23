@@ -13,6 +13,12 @@ const playlistSchema = new Schema({
       ref: "Content",
     },
   ],
+  series: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Series",
+    },
+  ],
   _user: {
     type: String,
     ref: "User",
