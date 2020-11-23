@@ -3,9 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .container > h5 {
   margin-bottom: 3rem;
+}
+
+.googleBtn {
+  background-color: var(--gray-300);
 }

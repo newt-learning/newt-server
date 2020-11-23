@@ -18,7 +18,10 @@ const AddToLibrary = () => {
       ) : (
         <>
           <h5>You need to sign in to add this to your Library</h5>
-          <GoogleSignInButton redirectTo={location.pathname} />
+          <GoogleSignInButton
+            redirectTo={location.pathname}
+            className={styles.googleBtn}
+          />
         </>
       )}
     </div>
