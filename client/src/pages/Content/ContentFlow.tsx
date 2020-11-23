@@ -36,6 +36,7 @@ import { shortenText } from "../Shelves/helpers";
 import { figureOutShelfMovingDataChanges } from "./helpers";
 // Types
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
+import { ContentTypeType } from "../../components/ContentInbox";
 
 export type PlaylistType =
   | {
@@ -55,7 +56,7 @@ export type StartFinishDateType = {
 interface ContentFlowProps {
   id: string;
   title: string;
-  type: string;
+  type: ContentTypeType;
   shelf: ShelfType;
   startFinishDates: StartFinishDateType[];
   authors?: string[];
@@ -380,6 +381,7 @@ const ContentFlow = ({
               }
             })}
             contentId={id}
+            contentType={type}
             closeModal={() => setShowAddPlaylistsModal(false)}
           />
         </Modal.Body>

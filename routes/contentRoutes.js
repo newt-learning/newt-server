@@ -61,6 +61,7 @@ module.exports = (app) => {
 
     const series = Series.find({ _user: userId })
       .populate({ path: "contentIds", model: Content })
+      .populate({ path: "playlists", model: Playlist, select: "_id name" })
       .select({ ...fieldsToUnselect });
 
     // If both succced, send back merged data. Otherwise send error

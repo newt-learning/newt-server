@@ -25,7 +25,16 @@ const seriesSchema = new Schema({
       ref: "Content",
     },
   ],
-  shelf: String,
+  shelf: {
+    type: String,
+    enum: ["Currently Learning", "Want to Learn", "Finished Learning"],
+  },
+  playlists: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Playlist",
+    },
+  ],
   dateAdded: Date,
   lastUpdated: Date,
   startFinishDates: [startFinishDatesSchema],
