@@ -68,11 +68,14 @@ const IndividualPlaylistPage = () => {
     console.error(deletePlaylistError);
   }
 
+  // Combine content and series in playlist
+  const allData = data?.content.concat(data?.series);
+
   return (
     <>
       <ContentInbox
         title={data?.name || locationState?.name || "..."}
-        contentData={data?.content}
+        contentData={allData}
         showOptionsDropdown={true}
         optionsDropdownMenu={dropdownMenu}
         backButtonStyle={styles.backBtn}

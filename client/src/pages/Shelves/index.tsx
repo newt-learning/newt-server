@@ -31,29 +31,27 @@ const ShelvesPage = () => {
 
   return (
     <AppMainContainer className={styles.container}>
-      <AppContentContainer className={styles.contentContainer}>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <Shelf
-              id="currently-learning"
-              name="Currently Learning"
-              data={currentlyLearningItems}
-            />
-            <Shelf
-              id="want-to-learn"
-              name="Want to Learn"
-              data={wantToLearnItems}
-            />
-            <Shelf
-              id="finished-learning"
-              name="Finished Learning"
-              data={finishedLearningItems}
-            />
-          </>
-        )}
-      </AppContentContainer>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <AppContentContainer className={styles.contentContainer}>
+          <Shelf
+            id="currently-learning"
+            name="Currently Learning"
+            data={currentlyLearningItems}
+          />
+          <Shelf
+            id="want-to-learn"
+            name="Want to Learn"
+            data={wantToLearnItems}
+          />
+          <Shelf
+            id="finished-learning"
+            name="Finished Learning"
+            data={finishedLearningItems}
+          />
+        </AppContentContainer>
+      )}
     </AppMainContainer>
   );
 };

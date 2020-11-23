@@ -5,15 +5,19 @@ import { useToasts } from "react-toast-notifications";
 import {
   useFetchAllPlaylists,
   useAddContentToPlaylists,
+  useAddSeriesToPlaylists,
   useRemoveContentFromPlaylists,
+  useRemoveSeriesFromPlaylists,
   useCreatePlaylist,
 } from "../../api/playlists";
-import { useUpdateContent } from "../../api/content";
+import { useUpdateContent, useUpdateSeries } from "../../api/content";
 // Components
 import CreatableSelect from "react-select/creatable";
 import { Button } from "../../components";
 // Helpers
 import { createPlaylistSchema } from "../UserPlaylists/PlaylistForm";
+// Types
+import { ContentTypeType } from "../../components/ContentInbox";
 
 export type PlaylistSelectOptionType =
   | {
@@ -25,31 +29,31 @@ export type PlaylistSelectOptionType =
 interface SelectPlaylistsFormProps {
   initialPlaylists: PlaylistSelectOptionType[] | [] | undefined;
   contentId: string;
+  contentType: ContentTypeType;
   closeModal: () => void;
 }
 
 const SelectPlaylistsForm = ({
   initialPlaylists,
   contentId,
+  contentType,
   closeModal,
 }: SelectPlaylistsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(initialPlaylists);
   const [invalidPlaylistError, setInvalidPlaylistError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Toasts
   const { addToast } = useToasts();
 
   // data API stuff
   const { data: allPlaylists, isLoading } = useFetchAllPlaylists();
-  const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
-  const [
-    addContentToPlaylists,
-    { isLoading: isAddingPlaylists },
-  ] = useAddContentToPlaylists();
-  const [
-    removeContentFromPlaylists,
-    { isLoading: isRemovingPlaylists },
-  ] = useRemoveContentFromPlaylists();
+  const [updateContent] = useUpdateContent();
+  const [updateSeries] = useUpdateSeries();
+  const [addContentToPlaylists] = useAddContentToPlaylists();
+  const [addSeriesToPlaylists] = useAddSeriesToPlaylists();
+  const [removeContentFromPlaylists] = useRemoveContentFromPlaylists();
+  const [removeSeriesFromPlaylists] = useRemoveSeriesFromPlaylists();
   const [
     createPlaylist,
     { isLoading: isCreatingPlaylist },
@@ -94,26 +98,49 @@ const SelectPlaylistsForm = ({
       }
     });
 
-    // Send request to add the content to the newly selected playlists, remove
-    // playlists that were unselected, and update the content by adding the playlists
-    // to it
-    updateContent(
-      { contentId, data: { playlists: selectedPlaylistsIds } },
-      {
-        onSuccess: () =>
-          addToast("Playlists updated", { appearance: "success" }),
-        onError: () =>
-          addToast("Sorry, there was an error updating the playlist", {
-            appearance: "error",
-          }),
-      }
-    );
-    await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
-    await removeContentFromPlaylists({
-      playlistIds: playlistsToRemove,
-      contentId,
-    });
+    // Toast notification after update call succeeds/fails
+    const mutationOptions = {
+      onSuccess: () => addToast("Playlists updated", { appearance: "success" }),
+      onError: () =>
+        addToast("Sorry, there was an error updating the playlist", {
+          appearance: "error",
+        }),
+    };
 
+    // For loading
+    setIsSubmitting(true);
+
+    if (contentType === "book" || contentType === "video") {
+      // Send request to add the content to the newly selected playlists, remove
+      // playlists that were unselected, and update the content by adding the playlists
+      // to it
+      await updateContent(
+        { contentId, data: { playlists: selectedPlaylistsIds } },
+        mutationOptions
+      );
+      await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
+      await removeContentFromPlaylists({
+        playlistIds: playlistsToRemove,
+        contentId,
+      });
+    } else if (contentType === "series") {
+      // Same as content req above, but for series
+      await updateSeries(
+        { seriesId: contentId, data: { playlists: selectedPlaylistsIds } },
+        mutationOptions
+      );
+      await addSeriesToPlaylists({
+        playlistIds: playlistsToAdd,
+        seriesId: contentId,
+      });
+      await removeSeriesFromPlaylists({
+        playlistIds: playlistsToRemove,
+        seriesId: contentId,
+      });
+    }
+
+    // Finish loader
+    setIsSubmitting(false);
     // Close modal -- maybe I should move this whole handler to the parent, how
     // I usually do
     closeModal();
@@ -184,9 +211,7 @@ const SelectPlaylistsForm = ({
       <Button
         category="success"
         onClick={handleSubmit}
-        isLoading={
-          contentIsUpdating || isAddingPlaylists || isRemovingPlaylists
-        }
+        isLoading={isSubmitting}
         style={{
           display: "flex",
           margin: "1rem auto",

@@ -8,6 +8,18 @@ const Playlist = userDbConn.model("playlists");
 const Quiz = userDbConn.model("quizzes");
 const Challenge = userDbConn.model("challenges");
 
+// Used to unselect unused/extra fields
+const fieldsToUnselect = {
+  "videoInfo.title": 0,
+  "bookInfo.title": 0,
+  "bookInfo.authors": 0,
+  "videoInfo.description": 0,
+  "bookInfo.description": 0,
+  "videoInfo.thumbnails": 0,
+  "bookInfo.imageLinks": 0,
+  "videoInfo.channelId": 0,
+};
+
 module.exports = (app) => {
   // GET request to fetch all of a user's content
   app.get("/api/content", requireLogin, async (req, res) => {
@@ -42,27 +54,23 @@ module.exports = (app) => {
   app.get("/api/content-and-series", requireLogin, (req, res) => {
     const userId = req.user.uid;
 
-    let allData = [];
-
-    Content.find({ _user: userId, partOfSeries: false })
-      // .populate({ path: "topics", model: Topic, select: "_id name" })
+    // Two async MongoDB queries to fetch individual content and series
+    const content = Content.find({ _user: userId, partOfSeries: false })
       .populate({ path: "playlists", model: Playlist, select: "_id name" })
-      .exec((error, content) => {
-        if (error) {
-          res.status(500).send(error);
-        } else {
-          allData.push(...content);
-          Series.find({ _user: userId })
-            .populate({ path: "contentIds", model: Content })
-            .exec((error, series) => {
-              if (error) {
-                res.status(500).send(error);
-              } else {
-                allData.push(...series);
-                res.send(allData);
-              }
-            });
-        }
+      .select({ ...fieldsToUnselect });
+
+    const series = Series.find({ _user: userId })
+      .populate({ path: "contentIds", model: Content })
+      .populate({ path: "playlists", model: Playlist, select: "_id name" })
+      .select({ ...fieldsToUnselect });
+
+    // If both succced, send back merged data. Otherwise send error
+    Promise.all([content, series])
+      .then(([contentResults, seriesResults]) => {
+        res.send([...contentResults, ...seriesResults]);
+      })
+      .catch((error) => {
+        res.status(500).send(error);
       });
   });
 
