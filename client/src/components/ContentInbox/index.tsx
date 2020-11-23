@@ -19,6 +19,7 @@ import {
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Skeleton from "react-loading-skeleton";
 import Modal from "react-bootstrap/Modal";
+import AddToLibrary from "./AddToLibrary";
 // Styling
 import styles from "./ContentInbox.module.css";
 // Helpers
@@ -233,7 +234,7 @@ const ContentInbox = ({
               flexDirection: "column",
             }}
           >
-            Add to library
+            <AddToLibrary />
           </Modal.Body>
         </Modal>
       ) : null}
