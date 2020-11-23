@@ -14,6 +14,8 @@ import CreatableSelect from "react-select/creatable";
 import { Button } from "../../components";
 // Helpers
 import { createPlaylistSchema } from "../UserPlaylists/PlaylistForm";
+// Types
+import { ContentTypeType } from "../../components/ContentInbox";
 
 export type PlaylistSelectOptionType =
   | {
@@ -25,12 +27,14 @@ export type PlaylistSelectOptionType =
 interface SelectPlaylistsFormProps {
   initialPlaylists: PlaylistSelectOptionType[] | [] | undefined;
   contentId: string;
+  contentType: ContentTypeType;
   closeModal: () => void;
 }
 
 const SelectPlaylistsForm = ({
   initialPlaylists,
   contentId,
+  contentType,
   closeModal,
 }: SelectPlaylistsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(initialPlaylists);

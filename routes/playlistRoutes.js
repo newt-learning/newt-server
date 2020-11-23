@@ -92,6 +92,25 @@ module.exports = (app) => {
     );
   });
 
+  // PUT request to add series (seriesId) to multiple playlists
+  app.put("/api/playlists/add-series", requireLogin, (req, res) => {
+    const { playlistIds, seriesId } = req.body;
+
+    // First argument matches _ids in the playlistIds array, second argument pushes
+    // the seriesId to those matched playlists
+    Playlist.updateMany(
+      { _id: { $in: playlistIds } },
+      { $push: { series: seriesId } },
+      (error) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.sendStatus(200);
+        }
+      }
+    );
+  });
+
   // PUT request to remove content (contentId) from multiple playlists
   app.put("/api/playlists/remove-content", requireLogin, (req, res) => {
     const { playlistIds, contentId } = req.body;
@@ -101,6 +120,25 @@ module.exports = (app) => {
     Playlist.updateMany(
       { _id: { $in: playlistIds } },
       { $pull: { content: contentId } },
+      (error) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.sendStatus(200);
+        }
+      }
+    );
+  });
+
+  // PUT request to remove series (seriesId) to multiple playlists
+  app.put("/api/playlists/remove-series", requireLogin, (req, res) => {
+    const { playlistIds, seriesId } = req.body;
+
+    // First argument matches _ids in the playlistIds array, second argument pushes
+    // the seriesId to those matched playlists
+    Playlist.updateMany(
+      { _id: { $in: playlistIds } },
+      { $pull: { series: seriesId } },
       (error) => {
         if (error) {
           res.status(500).send(error);
