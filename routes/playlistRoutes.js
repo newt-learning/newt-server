@@ -3,6 +3,7 @@ const requireLogin = require("../middleware/requireLogin");
 
 const Playlist = userDbConn.model("playlists");
 const Content = userDbConn.model("content");
+const Series = userDbConn.model("series");
 
 module.exports = (app) => {
   // GET request to fetch all of a user's playlists
@@ -24,6 +25,12 @@ module.exports = (app) => {
 
     Playlist.findById(playlistId)
       .populate({ path: "content", model: Content })
+      .populate({
+        path: "series",
+        model: Series,
+        // Populate content in the series
+        populate: { path: "contentIds", model: Content },
+      })
       .exec((error, playlist) => {
         if (error) {
           res.status(500).send(error);
