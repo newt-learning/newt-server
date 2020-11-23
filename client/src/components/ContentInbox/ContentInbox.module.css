@@ -3,9 +3,18 @@
   flex-direction: column;
 }
 
+.header:not(:only-child) {
+  margin-right: 1rem;
+}
+
 .titleContainer {
   display: flex;
   flex-direction: row;
+}
+
+.optionsContainer {
+  display: flex;
+  align-items: center;
 }
 
 .creatorsContainer {

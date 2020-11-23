@@ -25,6 +25,7 @@ const SeriesPage = () => {
           contentData={data?.content}
           isLoading={isLoading}
           className={styles.parentContainer}
+          showAddToLibraryButton={true}
         />
       )}
     </section>

@@ -11,15 +11,19 @@ import {
   AppHeaderContainer,
   AppContentContainer,
   AppContentList,
+  AppContentListCard,
   AppContentDetails,
-} from "../AppContainers";
-import AppContentListCard from "../AppContentListCard";
-import OptionsDropdown, { OptionsDropdownItemType } from "../OptionsDropdown";
+  Button,
+  OptionsDropdown,
+} from "..";
 import ContentFlow from "../../pages/Content/ContentFlow";
-import { getFirstThreeThumbnailsForSeries } from "..";
 import Skeleton from "react-loading-skeleton";
 // Styling
 import styles from "./ContentInbox.module.css";
+// Helpers
+import { getFirstThreeThumbnailsForSeries } from "..";
+// Types
+import { OptionsDropdownItemType } from "../OptionsDropdown";
 
 export type ContentTypeType = "book" | "video" | "series";
 
@@ -31,6 +35,7 @@ interface ContentInboxProps {
   contentData?: any;
   showOptionsDropdown?: boolean;
   optionsDropdownMenu?: OptionsDropdownItemType[];
+  showAddToLibraryButton?: boolean;
   className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
@@ -53,6 +58,7 @@ const ContentInbox = ({
   contentData,
   showOptionsDropdown = false,
   optionsDropdownMenu,
+  showAddToLibraryButton,
   className,
   backButtonStyle,
 }: ContentInboxProps) => {
@@ -114,12 +120,27 @@ const ContentInbox = ({
             {/* ) : null} */}
           </div>
         </div>
-        {/* Show 3-dot options menu with dropdown for additional options */}
-        {showOptionsDropdown ? (
-          <OptionsDropdown
-            id={`${title}-page-more-dropdown`}
-            options={optionsDropdownMenu}
-          />
+        {/* Only show the options container if should display either the Add to
+            Library button or the Options dropdown */}
+        {showAddToLibraryButton || showOptionsDropdown ? (
+          <div className={styles.optionsContainer}>
+            {/* Show Add to Library button if requested */}
+            {showAddToLibraryButton ? (
+              <Button
+                category="success"
+                style={{ marginRight: showOptionsDropdown ? "1rem" : 0 }}
+              >
+                Add to Library
+              </Button>
+            ) : null}
+            {/* Show 3-dot options menu with dropdown for additional options */}
+            {showOptionsDropdown ? (
+              <OptionsDropdown
+                id={`${title}-page-more-dropdown`}
+                options={optionsDropdownMenu}
+              />
+            ) : null}
+          </div>
         ) : null}
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
