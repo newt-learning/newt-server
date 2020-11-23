@@ -41,30 +41,19 @@ const SelectPlaylistsForm = ({
 }: SelectPlaylistsFormProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(initialPlaylists);
   const [invalidPlaylistError, setInvalidPlaylistError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Toasts
   const { addToast } = useToasts();
 
   // data API stuff
   const { data: allPlaylists, isLoading } = useFetchAllPlaylists();
-  const [updateContent, { isLoading: contentIsUpdating }] = useUpdateContent();
-  const [updateSeries, { isLoading: seriesIsUpdating }] = useUpdateSeries();
-  const [
-    addContentToPlaylists,
-    { isLoading: isAddingContent },
-  ] = useAddContentToPlaylists();
-  const [
-    addSeriesToPlaylists,
-    { isLoading: isAddingSeries },
-  ] = useAddSeriesToPlaylists();
-  const [
-    removeContentFromPlaylists,
-    { isLoading: isRemovingContent },
-  ] = useRemoveContentFromPlaylists();
-  const [
-    removeSeriesFromPlaylists,
-    { isLoading: isRemovingSeries },
-  ] = useRemoveSeriesFromPlaylists();
+  const [updateContent] = useUpdateContent();
+  const [updateSeries] = useUpdateSeries();
+  const [addContentToPlaylists] = useAddContentToPlaylists();
+  const [addSeriesToPlaylists] = useAddSeriesToPlaylists();
+  const [removeContentFromPlaylists] = useRemoveContentFromPlaylists();
+  const [removeSeriesFromPlaylists] = useRemoveSeriesFromPlaylists();
   const [
     createPlaylist,
     { isLoading: isCreatingPlaylist },
@@ -109,20 +98,25 @@ const SelectPlaylistsForm = ({
       }
     });
 
+    // Toast notification after update call succeeds/fails
+    const mutationOptions = {
+      onSuccess: () => addToast("Playlists updated", { appearance: "success" }),
+      onError: () =>
+        addToast("Sorry, there was an error updating the playlist", {
+          appearance: "error",
+        }),
+    };
+
+    // For loading
+    setIsSubmitting(true);
+
     if (contentType === "book" || contentType === "video") {
       // Send request to add the content to the newly selected playlists, remove
       // playlists that were unselected, and update the content by adding the playlists
       // to it
-      updateContent(
+      await updateContent(
         { contentId, data: { playlists: selectedPlaylistsIds } },
-        {
-          onSuccess: () =>
-            addToast("Playlists updated", { appearance: "success" }),
-          onError: () =>
-            addToast("Sorry, there was an error updating the playlist", {
-              appearance: "error",
-            }),
-        }
+        mutationOptions
       );
       await addContentToPlaylists({ playlistIds: playlistsToAdd, contentId });
       await removeContentFromPlaylists({
@@ -131,16 +125,9 @@ const SelectPlaylistsForm = ({
       });
     } else if (contentType === "series") {
       // Same as content req above, but for series
-      updateSeries(
+      await updateSeries(
         { seriesId: contentId, data: { playlists: selectedPlaylistsIds } },
-        {
-          onSuccess: () =>
-            addToast("Playlists updated", { appearance: "success" }),
-          onError: () =>
-            addToast("Sorry, there was an error updating the playlist", {
-              appearance: "error",
-            }),
-        }
+        mutationOptions
       );
       await addSeriesToPlaylists({
         playlistIds: playlistsToAdd,
@@ -152,6 +139,8 @@ const SelectPlaylistsForm = ({
       });
     }
 
+    // Finish loader
+    setIsSubmitting(false);
     // Close modal -- maybe I should move this whole handler to the parent, how
     // I usually do
     closeModal();
@@ -222,13 +211,7 @@ const SelectPlaylistsForm = ({
       <Button
         category="success"
         onClick={handleSubmit}
-        isLoading={
-          contentIsUpdating ||
-          isAddingContent ||
-          isAddingSeries ||
-          isRemovingContent ||
-          isRemovingSeries
-        }
+        isLoading={isSubmitting}
         style={{
           display: "flex",
           margin: "1rem auto",
