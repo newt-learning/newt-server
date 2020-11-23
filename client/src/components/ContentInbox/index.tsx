@@ -18,6 +18,7 @@ import {
 } from "..";
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Skeleton from "react-loading-skeleton";
+import Modal from "react-bootstrap/Modal";
 // Styling
 import styles from "./ContentInbox.module.css";
 // Helpers
@@ -63,6 +64,9 @@ const ContentInbox = ({
   backButtonStyle,
 }: ContentInboxProps) => {
   const history = useHistory();
+
+  // Modal to add series to Library (in Discover screen)
+  const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
 
   const [currentContent, setCurrentContent] = useState<any>(null);
   // @ts-ignore
@@ -128,6 +132,7 @@ const ContentInbox = ({
             {showAddToLibraryButton ? (
               <Button
                 category="success"
+                onClick={() => setShowAddToLibraryModal(true)}
                 style={{ marginRight: showOptionsDropdown ? "1rem" : 0 }}
               >
                 Add to Library
@@ -210,6 +215,28 @@ const ContentInbox = ({
           />
         </AppContentDetails>
       </AppContentContainer>
+      {/* Add to Library modal */}
+      {showAddToLibraryModal ? (
+        <Modal
+          show={showAddToLibraryModal}
+          onHide={() => setShowAddToLibraryModal(false)}
+          size="lg"
+          animation={false}
+          backdrop="static"
+        >
+          <Modal.Header closeButton>
+            <h3 style={{ margin: 0 }}>Add to Library</h3>
+          </Modal.Header>
+          <Modal.Body
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            Add to library
+          </Modal.Body>
+        </Modal>
+      ) : null}
     </AppMainContainer>
   );
 };
