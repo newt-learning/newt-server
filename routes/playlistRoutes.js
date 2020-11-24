@@ -58,6 +58,17 @@ module.exports = (app) => {
     }
   });
 
+  // POST request to create a user playlist from a Newt playlist (from Discover page)
+  app.post("/api/playlists/create-from-newt", requireLogin, (req, res) => {
+    const data = req.body;
+    // Add user id and dates to data object
+    data._user = req.user.uid;
+    data.dateAdded = Date.now();
+    data.lastUpdated = Date.now();
+
+    console.log(data);
+  });
+
   // PUT request to edit a playlist
   app.put("/api/playlists/:playlistId/update", requireLogin, (req, res) => {
     const { playlistId } = req.params;

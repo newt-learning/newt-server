@@ -13,6 +13,10 @@ const NewtPlaylistPage = () => {
 
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
 
+  const handleAddNewtPlaylist = () => {
+    console.log(data);
+  };
+
   return (
     <section>
       <Navbar />
@@ -37,6 +41,8 @@ const NewtPlaylistPage = () => {
             contentData={data?.content}
             isLoading={isLoading}
             className={styles.parentContainer}
+            showAddToLibraryButton={true}
+            onAddToLibrary={handleAddNewtPlaylist}
           />
         </>
       )}
