@@ -107,6 +107,12 @@ const AddToLibrary = ({ type, onSubmit, isLoading }: AddToLibraryProps) => {
       <h5>Please sign in to add this to your Library</h5>
       <GoogleSignInButton
         redirectTo={location.pathname}
+        callback={
+          type === "newt-playlist"
+            ? async () =>
+                await onSubmit({ shelf, playlists: [], startDate, finishDate })
+            : undefined
+        }
         className={styles.googleBtn}
       />
     </div>

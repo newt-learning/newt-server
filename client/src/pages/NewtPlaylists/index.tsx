@@ -13,8 +13,8 @@ const NewtPlaylistPage = () => {
 
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
 
-  const handleAddNewtPlaylist = () => {
-    console.log(data);
+  const handleAddNewtPlaylist = async (values: any) => {
+    console.log({ data, values });
   };
 
   return (

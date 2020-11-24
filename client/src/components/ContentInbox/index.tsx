@@ -147,6 +147,7 @@ const ContentInbox = ({
             {addToLibrary ? (
               <Button
                 category="success"
+                isLoading={isAddingToLibrary}
                 onClick={() => setShowAddToLibraryModal(true)}
                 style={{ marginRight: showOptionsDropdown ? "1rem" : 0 }}
               >

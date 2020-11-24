@@ -50,11 +50,12 @@ const removeAuthedUser = () => {
 // Function to authenticate with Google
 export const authenticateWithGoogle = (dispatch) => (
   history,
-  redirectTo = "/dashboard"
+  redirectTo = "/dashboard",
+  callback
 ) => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider();
-  authenticateWithProvider(provider, history, dispatch, redirectTo);
+  authenticateWithProvider(provider, history, dispatch, redirectTo, callback);
 };
 
 // Function to authenticate with Google
@@ -70,7 +71,8 @@ async function authenticateWithProvider(
   provider,
   history,
   dispatch,
-  redirectTo
+  redirectTo,
+  callback
 ) {
   firebase
     .auth()
@@ -95,8 +97,13 @@ async function authenticateWithProvider(
 
       dispatch(setAuthedUser(res.data));
 
-      // Redirect to dashboard
+      // Redirect to path
       history.push(redirectTo);
+
+      // If there's a callback...
+      if (callback) {
+        callback();
+      }
     })
     .catch((error) => {
       dispatch(removeAuthedUser());

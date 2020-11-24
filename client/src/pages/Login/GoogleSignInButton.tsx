@@ -13,20 +13,26 @@ const cx = classnames.bind(styles);
 
 interface GoogleSignInButtonProps {
   redirectTo: string; // Where to redirect after signing in
+  callback?: () => void; // Optional callback after signing in
   className?: string;
 }
 
 const GoogleSignInButton = ({
   redirectTo,
+  callback,
   className,
 }: GoogleSignInButtonProps) => {
   const { authenticateWithGoogle } = useAuthData();
   const history = useHistory();
 
+  const signIn = async () => {
+    await authenticateWithGoogle(history, redirectTo, callback);
+  };
+
   return (
     <Button
       className={cx(styles.loginBtn, styles.googleBtn, className)}
-      onClick={() => authenticateWithGoogle(history, redirectTo)}
+      onClick={signIn}
     >
       <div className={styles.btnContent}>
         {googleLogo}
