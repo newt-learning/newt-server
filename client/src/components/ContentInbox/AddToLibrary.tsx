@@ -1,80 +1,106 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 // Context
 import { useData as useAuthData } from "../../context/AuthContext";
 // Components
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import DatePicker from "react-datepicker";
 import { Button } from "..";
 import GoogleSignInButton from "../../pages/Login/GoogleSignInButton";
 // Styling
 import styles from "./AddToLibrary.module.css";
 
-const AddToLibrary = () => {
+interface AddToLibraryProps {
+  onSubmit: (values: any) => void;
+}
+
+const AddToLibrary = ({ onSubmit }: AddToLibraryProps) => {
   const {
     state: { exists },
   } = useAuthData();
 
+  const [shelf, setShelf] = useState("Want to Learn");
+  const [startDate, setStartDate] = useState<any>(new Date());
+  const [finishDate, setFinishDate] = useState<any>(new Date());
+
   const location = useLocation();
 
-  return (
-    <div className={styles.container}>
-      {exists ? (
-        <Formik
-          initialValues={{ shelf: "Want to Learn" }}
-          onSubmit={(values) => console.log(values)}
+  return exists ? (
+    <>
+      {/* Form to choose shelf */}
+      <Form.Group controlId="shelf">
+        <Form.Label className={styles.subheader}>Shelf</Form.Label>
+        <Form.Control
+          as="select"
+          name="shelf"
+          defaultValue="Want to Learn"
+          onChange={(e: any) => setShelf(e.target.value)}
         >
-          {({ initialValues, handleChange, handleSubmit }) => (
-            <Form
-              noValidate
-              onSubmit={(event) => {
-                // Prevent default of adding params to url
-                event.preventDefault();
-                handleSubmit();
-              }}
-              style={{ width: "70%" }}
-            >
-              <Form.Group controlId="shelf">
-                <Form.Label>Shelf</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="shelf"
-                  defaultValue={initialValues.shelf}
-                  onChange={handleChange}
-                >
-                  <option>Currently Learning</option>
-                  <option>Want to Learn</option>
-                  <option>Finished Learning</option>
-                </Form.Control>
-              </Form.Group>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "2rem",
-                }}
+          <option value="Currently Learning">Currently Learning</option>
+          <option value="Want to Learn">Want to Learn</option>
+          <option value="Finished Learning">Finished Learning</option>
+        </Form.Control>
+      </Form.Group>
+      {/* Show start and finish date inputs if the Finished Learning shelf is selected */}
+      {shelf === "Finished Learning" ? (
+        <Form.Row>
+          <Col sm={12} md={6}>
+            <Form.Group>
+              <Form.Label
+                className={styles.subheader}
+                style={{ marginRight: "1rem" }}
               >
-                <Button
-                  category="success"
-                  type="submit"
-                  style={{ width: "250px" }}
-                >
-                  Add to Library
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      ) : (
-        <>
-          <h5>You need to sign in to add this to your Library</h5>
-          <GoogleSignInButton
-            redirectTo={location.pathname}
-            className={styles.googleBtn}
-          />
-        </>
-      )}
-    </div>
+                Start Date
+              </Form.Label>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              />
+            </Form.Group>
+          </Col>
+          <Col sm={12} md={6}>
+            <Form.Group>
+              <Form.Label
+                className={styles.subheader}
+                style={{ marginRight: "1rem" }}
+              >
+                Finish Date
+              </Form.Label>
+              <DatePicker
+                selected={finishDate}
+                onChange={(date) => setFinishDate(date)}
+                minDate={startDate}
+              />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+      ) : null}
+      <Button
+        className={styles.addBtn}
+        category="success"
+        // isLoading={isLoading}
+        onClick={async () => {
+          await onSubmit({
+            shelf,
+            playlists: [],
+            startDate,
+            finishDate,
+          });
+        }}
+      >
+        Add to Library
+      </Button>
+    </>
+  ) : (
+    <>
+      <h5>You need to sign in to add this to your Library</h5>
+      <GoogleSignInButton
+        redirectTo={location.pathname}
+        className={styles.googleBtn}
+      />
+    </>
   );
 };
 

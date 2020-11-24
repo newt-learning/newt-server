@@ -69,6 +69,11 @@ const ContentInbox = ({
   // Modal to add series to Library (in Discover screen)
   const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
 
+  // Function to add series from Discover screen to Library
+  const handleAddSeriesToLibrary = (values: any) => {
+    console.log(values);
+  };
+
   const [currentContent, setCurrentContent] = useState<any>(null);
   // @ts-ignore
   // Get contentId from route params, if it exists. This is used to set the inbox
@@ -232,9 +237,10 @@ const ContentInbox = ({
             style={{
               display: "flex",
               flexDirection: "column",
+              padding: "3rem 4rem",
             }}
           >
-            <AddToLibrary />
+            <AddToLibrary onSubmit={handleAddSeriesToLibrary} />
           </Modal.Body>
         </Modal>
       ) : null}
