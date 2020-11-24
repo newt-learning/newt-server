@@ -37,7 +37,8 @@ interface ContentInboxProps {
   contentData?: any;
   showOptionsDropdown?: boolean;
   optionsDropdownMenu?: OptionsDropdownItemType[];
-  showAddToLibraryButton?: boolean; // To Add series from Discover to User Library
+  // To Add series/playlist from Discover to User Library
+  addToLibrary?: "newt-series" | "newt-playlist";
   onAddToLibrary?: (values: any) => void;
   className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
@@ -61,7 +62,7 @@ const ContentInbox = ({
   contentData,
   showOptionsDropdown = false,
   optionsDropdownMenu,
-  showAddToLibraryButton,
+  addToLibrary,
   onAddToLibrary,
   className,
   backButtonStyle,
@@ -140,10 +141,10 @@ const ContentInbox = ({
         </div>
         {/* Only show the options container if should display either the Add to
             Library button or the Options dropdown */}
-        {showAddToLibraryButton || showOptionsDropdown ? (
+        {addToLibrary || showOptionsDropdown ? (
           <div className={styles.optionsContainer}>
             {/* Show Add to Library button if requested */}
-            {showAddToLibraryButton ? (
+            {addToLibrary ? (
               <Button
                 category="success"
                 onClick={() => setShowAddToLibraryModal(true)}
@@ -230,7 +231,7 @@ const ContentInbox = ({
         </AppContentDetails>
       </AppContentContainer>
       {/* Add to Library modal */}
-      {showAddToLibraryModal && onAddToLibrary ? (
+      {showAddToLibraryModal && addToLibrary && onAddToLibrary ? (
         <Modal
           show={showAddToLibraryModal}
           onHide={() => setShowAddToLibraryModal(false)}
@@ -249,6 +250,7 @@ const ContentInbox = ({
             }}
           >
             <AddToLibrary
+              type={addToLibrary}
               onSubmit={handleAddToLibrary}
               isLoading={isAddingToLibrary}
             />

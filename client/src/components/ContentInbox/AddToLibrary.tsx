@@ -20,11 +20,12 @@ export interface AddToLibraryFormValues {
   finishDate: Date;
 }
 interface AddToLibraryProps {
+  type: "newt-series" | "newt-playlist";
   onSubmit: (values: AddToLibraryFormValues) => void;
   isLoading: boolean;
 }
 
-const AddToLibrary = ({ onSubmit, isLoading }: AddToLibraryProps) => {
+const AddToLibrary = ({ type, onSubmit, isLoading }: AddToLibraryProps) => {
   const {
     state: { exists },
   } = useAuthData();

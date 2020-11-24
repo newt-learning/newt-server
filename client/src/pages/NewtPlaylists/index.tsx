@@ -41,7 +41,7 @@ const NewtPlaylistPage = () => {
             contentData={data?.content}
             isLoading={isLoading}
             className={styles.parentContainer}
-            showAddToLibraryButton={true}
+            addToLibrary="newt-playlist"
             onAddToLibrary={handleAddNewtPlaylist}
           />
         </>

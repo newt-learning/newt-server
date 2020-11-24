@@ -59,7 +59,7 @@ const SeriesPage = () => {
           contentData={data?.content}
           isLoading={isLoading}
           className={styles.parentContainer}
-          showAddToLibraryButton={true}
+          addToLibrary="newt-series"
           onAddToLibrary={handleAddNewtSeriesToLibrary}
         />
       )}
