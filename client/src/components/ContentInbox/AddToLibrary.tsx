@@ -21,9 +21,10 @@ export interface AddToLibraryFormValues {
 }
 interface AddToLibraryProps {
   onSubmit: (values: AddToLibraryFormValues) => void;
+  isLoading: boolean;
 }
 
-const AddToLibrary = ({ onSubmit }: AddToLibraryProps) => {
+const AddToLibrary = ({ onSubmit, isLoading }: AddToLibraryProps) => {
   const {
     state: { exists },
   } = useAuthData();
@@ -87,7 +88,7 @@ const AddToLibrary = ({ onSubmit }: AddToLibraryProps) => {
       <Button
         className={styles.addBtn}
         category="success"
-        // isLoading={isLoading}
+        isLoading={isLoading}
         onClick={async () => {
           await onSubmit({
             shelf,
@@ -101,13 +102,13 @@ const AddToLibrary = ({ onSubmit }: AddToLibraryProps) => {
       </Button>
     </>
   ) : (
-    <>
-      <h5>You need to sign in to add this to your Library</h5>
+    <div className={styles.container}>
+      <h5>Please sign in to add this to your Library</h5>
       <GoogleSignInButton
         redirectTo={location.pathname}
         className={styles.googleBtn}
       />
-    </>
+    </div>
   );
 };
 

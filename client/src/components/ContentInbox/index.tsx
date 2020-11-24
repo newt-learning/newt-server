@@ -19,7 +19,7 @@ import {
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Skeleton from "react-loading-skeleton";
 import Modal from "react-bootstrap/Modal";
-import AddToLibrary from "./AddToLibrary";
+import AddToLibrary, { AddToLibraryFormValues } from "./AddToLibrary";
 // Styling
 import styles from "./ContentInbox.module.css";
 // Helpers
@@ -70,6 +70,7 @@ const ContentInbox = ({
 
   // Modal to add series to Library (in Discover screen)
   const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
+  const [isAddingToLibrary, setIsAddingToLibrary] = useState(false);
 
   const [currentContent, setCurrentContent] = useState<any>(null);
   // @ts-ignore
@@ -97,6 +98,16 @@ const ContentInbox = ({
       setCurrentContent(null);
     }
   }, [contentData, contentId]);
+
+  // Set loading indicator, add series to library, then close modal
+  const handleAddToLibrary = async (values: AddToLibraryFormValues) => {
+    if (onAddToLibrary) {
+      setIsAddingToLibrary(true);
+      await onAddToLibrary(values);
+      setShowAddToLibraryModal(false);
+      setIsAddingToLibrary(false);
+    }
+  };
 
   return (
     <AppMainContainer variant="inbox" className={className}>
@@ -237,7 +248,10 @@ const ContentInbox = ({
               padding: "3rem 4rem",
             }}
           >
-            <AddToLibrary onSubmit={onAddToLibrary} />
+            <AddToLibrary
+              onSubmit={handleAddToLibrary}
+              isLoading={isAddingToLibrary}
+            />
           </Modal.Body>
         </Modal>
       ) : null}
