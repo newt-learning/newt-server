@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 // Context
 import { useData as useAuthData } from "../../context/AuthContext";
 // Components
-import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import DatePicker from "react-datepicker";
@@ -11,9 +10,17 @@ import { Button } from "..";
 import GoogleSignInButton from "../../pages/Login/GoogleSignInButton";
 // Styling
 import styles from "./AddToLibrary.module.css";
+// Types
+import { ShelfType } from "../../pages/Content/ContentFlow";
 
+export interface AddToLibraryFormValues {
+  shelf: ShelfType;
+  playlists: any;
+  startDate: Date;
+  finishDate: Date;
+}
 interface AddToLibraryProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: AddToLibraryFormValues) => void;
 }
 
 const AddToLibrary = ({ onSubmit }: AddToLibraryProps) => {
@@ -21,7 +28,7 @@ const AddToLibrary = ({ onSubmit }: AddToLibraryProps) => {
     state: { exists },
   } = useAuthData();
 
-  const [shelf, setShelf] = useState("Want to Learn");
+  const [shelf, setShelf] = useState<ShelfType>("Want to Learn");
   const [startDate, setStartDate] = useState<any>(new Date());
   const [finishDate, setFinishDate] = useState<any>(new Date());
 

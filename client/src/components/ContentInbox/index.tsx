@@ -37,7 +37,8 @@ interface ContentInboxProps {
   contentData?: any;
   showOptionsDropdown?: boolean;
   optionsDropdownMenu?: OptionsDropdownItemType[];
-  showAddToLibraryButton?: boolean;
+  showAddToLibraryButton?: boolean; // To Add series from Discover to User Library
+  onAddToLibrary?: (values: any) => void;
   className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
@@ -61,6 +62,7 @@ const ContentInbox = ({
   showOptionsDropdown = false,
   optionsDropdownMenu,
   showAddToLibraryButton,
+  onAddToLibrary,
   className,
   backButtonStyle,
 }: ContentInboxProps) => {
@@ -68,11 +70,6 @@ const ContentInbox = ({
 
   // Modal to add series to Library (in Discover screen)
   const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
-
-  // Function to add series from Discover screen to Library
-  const handleAddSeriesToLibrary = (values: any) => {
-    console.log(values);
-  };
 
   const [currentContent, setCurrentContent] = useState<any>(null);
   // @ts-ignore
@@ -222,7 +219,7 @@ const ContentInbox = ({
         </AppContentDetails>
       </AppContentContainer>
       {/* Add to Library modal */}
-      {showAddToLibraryModal ? (
+      {showAddToLibraryModal && onAddToLibrary ? (
         <Modal
           show={showAddToLibraryModal}
           onHide={() => setShowAddToLibraryModal(false)}
@@ -240,7 +237,7 @@ const ContentInbox = ({
               padding: "3rem 4rem",
             }}
           >
-            <AddToLibrary onSubmit={handleAddSeriesToLibrary} />
+            <AddToLibrary onSubmit={onAddToLibrary} />
           </Modal.Body>
         </Modal>
       ) : null}

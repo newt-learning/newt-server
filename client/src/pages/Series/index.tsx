@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useFetchNewtSeriesBySlug } from "../../api/newtContent";
 // Components
 import { Navbar, ContentInbox } from "../../components";
+import { AddToLibraryFormValues } from "../../components/ContentInbox/AddToLibrary";
 // Styling
 import styles from "./Series.module.css";
 
@@ -12,6 +13,10 @@ const SeriesPage = () => {
   const { seriesSlug } = useParams();
 
   const { data, isLoading, isError } = useFetchNewtSeriesBySlug(seriesSlug);
+
+  const handleAddNewtSeriesToLibrary = (formValues: AddToLibraryFormValues) => {
+    console.log({ data, formValues });
+  };
 
   return (
     <section>
@@ -26,6 +31,7 @@ const SeriesPage = () => {
           isLoading={isLoading}
           className={styles.parentContainer}
           showAddToLibraryButton={true}
+          onAddToLibrary={handleAddNewtSeriesToLibrary}
         />
       )}
     </section>
