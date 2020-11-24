@@ -20,6 +20,7 @@ export function formatNewtDiscoverSeries({
     contentType: newtSeriesData?.contentType,
     shelf: formData.shelf,
     playlists: formData?.playlists,
+    isFromNewtDiscover: true, // Whether the series was added from Newt Discover page
     seriesInfo: {
       source: newtSeriesData?.source,
       playlistId: newtSeriesData?.sourceId,
