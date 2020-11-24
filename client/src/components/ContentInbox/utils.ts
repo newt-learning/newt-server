@@ -57,7 +57,7 @@ export function formatNewtDiscoverSeries({
         newtSeriesData?.contentCreators,
         (creator) => creator.name
       ),
-      thumbnailUrl: video.thumbnails,
+      thumbnailUrl: video.thumbnailUrl,
       type: video.type,
       partOfSeries: true,
       shelf: formData.shelf,

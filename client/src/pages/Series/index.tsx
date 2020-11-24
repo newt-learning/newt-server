@@ -1,7 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 // API
 import { useFetchNewtSeriesBySlug } from "../../api/newtContent";
+import { useCreateSeries } from "../../api/content";
 // Components
 import {
   Navbar,
@@ -16,14 +18,33 @@ const SeriesPage = () => {
   //@ts-ignore
   const { seriesSlug } = useParams();
 
-  const { data, isLoading, isError } = useFetchNewtSeriesBySlug(seriesSlug);
+  // Toasts
+  const { addToast } = useToasts();
 
-  const handleAddNewtSeriesToLibrary = (formValues: AddToLibraryFormValues) => {
+  const { data, isLoading, isError } = useFetchNewtSeriesBySlug(seriesSlug);
+  // Function to add series to Library
+  const [createSeries, { isLoading: isCreatingSeries }] = useCreateSeries();
+
+  const handleAddNewtSeriesToLibrary = async (
+    formValues: AddToLibraryFormValues
+  ) => {
     const formattedSeries = formatNewtDiscoverSeries({
       newtSeriesData: data,
       formData: formValues,
     });
-    console.log(formattedSeries);
+
+    await createSeries(formattedSeries, {
+      // Toast notifications on success and error
+      onSuccess: () =>
+        addToast("Video series has been added to your Library", {
+          appearance: "success",
+        }),
+      onError: () =>
+        addToast(
+          "Sorry, there was an error adding that video series. Please try again.",
+          { appearance: "error" }
+        ),
+    });
   };
 
   return (
