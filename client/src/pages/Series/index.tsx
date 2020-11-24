@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 // API
 import { useFetchNewtSeriesBySlug } from "../../api/newtContent";
 // Components
-import { Navbar, ContentInbox } from "../../components";
+import {
+  Navbar,
+  ContentInbox,
+  formatNewtDiscoverSeries,
+} from "../../components";
 import { AddToLibraryFormValues } from "../../components/ContentInbox/AddToLibrary";
 // Styling
 import styles from "./Series.module.css";
@@ -15,7 +19,11 @@ const SeriesPage = () => {
   const { data, isLoading, isError } = useFetchNewtSeriesBySlug(seriesSlug);
 
   const handleAddNewtSeriesToLibrary = (formValues: AddToLibraryFormValues) => {
-    console.log({ data, formValues });
+    const formattedSeries = formatNewtDiscoverSeries({
+      newtSeriesData: data,
+      formData: formValues,
+    });
+    console.log(formattedSeries);
   };
 
   return (
