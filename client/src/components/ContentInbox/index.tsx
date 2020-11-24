@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory, useParams } from "react-router-dom";
 import classnames from "classnames/bind";
+// Context
+import { useData as useAuthData } from "../../context/AuthContext";
 // Components
 import { FiArrowLeft } from "react-icons/fi";
 import {
@@ -68,6 +70,9 @@ const ContentInbox = ({
   backButtonStyle,
 }: ContentInboxProps) => {
   const history = useHistory();
+  const {
+    state: { exists },
+  } = useAuthData();
 
   // Modal to add series to Library (in Discover screen)
   const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
@@ -99,6 +104,26 @@ const ContentInbox = ({
       setCurrentContent(null);
     }
   }, [contentData, contentId]);
+
+  // Temp so both are handled
+  const handlePressAddToLibraryButton = async () => {
+    if (addToLibrary === "newt-series") {
+      setShowAddToLibraryModal(true);
+    } else if (addToLibrary === "newt-playlist") {
+      if (exists && onAddToLibrary) {
+        setIsAddingToLibrary(true);
+        await onAddToLibrary({
+          shelf: "Want to Learn",
+          playlists: [],
+          startDate: null,
+          finishDate: null,
+        });
+        setIsAddingToLibrary(false);
+      } else {
+        setShowAddToLibraryModal(true);
+      }
+    }
+  };
 
   // Set loading indicator, add series to library, then close modal
   const handleAddToLibrary = async (values: AddToLibraryFormValues) => {
@@ -148,7 +173,7 @@ const ContentInbox = ({
               <Button
                 category="success"
                 isLoading={isAddingToLibrary}
-                onClick={() => setShowAddToLibraryModal(true)}
+                onClick={handlePressAddToLibraryButton}
                 style={{ marginRight: showOptionsDropdown ? "1rem" : 0 }}
               >
                 Add to Library

@@ -3,7 +3,12 @@ import { useParams } from "react-router-dom";
 // API
 import { useFetchNewtPlaylistBySlug } from "../../api/newtContent";
 // Components
-import { Navbar, Badge, ContentInbox } from "../../components";
+import {
+  Navbar,
+  Badge,
+  ContentInbox,
+  formatNewtPlaylist,
+} from "../../components";
 // Styling
 import styles from "./NewtPlaylists.module.css";
 
@@ -14,7 +19,12 @@ const NewtPlaylistPage = () => {
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
 
   const handleAddNewtPlaylist = async (values: any) => {
-    console.log({ data, values });
+    const formattedPlaylist = formatNewtPlaylist({
+      newtPlaylistData: data,
+      formData: values,
+    });
+
+    console.log(formattedPlaylist);
   };
 
   return (

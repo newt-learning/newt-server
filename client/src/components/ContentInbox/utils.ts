@@ -2,15 +2,19 @@ import _ from "lodash";
 import { AddToLibraryFormValues } from "./AddToLibrary";
 import { StartFinishDateType } from "../../pages/Content/ContentFlow";
 
-interface NewtDiscoverSeriesData {
+interface FormatNewtDiscoverSeriesParams {
   newtSeriesData: any;
+  formData: AddToLibraryFormValues;
+}
+interface FormatNewtPlaylistParams {
+  newtPlaylistData: any;
   formData: AddToLibraryFormValues;
 }
 
 export function formatNewtDiscoverSeries({
   newtSeriesData,
   formData,
-}: NewtDiscoverSeriesData) {
+}: FormatNewtDiscoverSeriesParams) {
   let formattedSeries: any = {
     name: newtSeriesData?.name,
     description: newtSeriesData?.description,
@@ -81,4 +85,11 @@ export function formatNewtDiscoverSeries({
   formattedSeries.videos = formattedVideos;
 
   return formattedSeries;
+}
+
+export function formatNewtPlaylist({
+  newtPlaylistData,
+  formData,
+}: FormatNewtPlaylistParams) {
+  return { newtPlaylistData, formData };
 }

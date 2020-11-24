@@ -30,4 +30,7 @@ export { default as TabPane } from "./TabPane";
 
 // Component utilities/helpers
 export { getFirstThreeThumbnailsForSeries } from "./StackedImages/utils";
-export { formatNewtDiscoverSeries } from "./ContentInbox/utils";
+export {
+  formatNewtDiscoverSeries,
+  formatNewtPlaylist,
+} from "./ContentInbox/utils";
