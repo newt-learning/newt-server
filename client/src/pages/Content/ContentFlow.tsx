@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
-import { useData as useAuthData } from "../../context/AuthContext";
 import {
   useUpdateContent,
   useUpdateSeries,
@@ -79,6 +78,7 @@ interface ContentFlowProps {
   variant: "default" | "inbox"; // No container styling for inbox
   isLoading?: boolean;
   showOptionsDropdown?: boolean;
+  onAddToLibrary?: () => void;
 }
 
 let cx = classnames.bind(styles);
@@ -103,6 +103,7 @@ const ContentFlow = ({
   variant,
   isLoading,
   showOptionsDropdown = true,
+  onAddToLibrary,
 }: ContentFlowProps) => {
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
@@ -209,11 +210,32 @@ const ContentFlow = ({
               <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
             ) : null}
           </h2>
-          {showOptionsDropdown ? (
-            <OptionsDropdown
-              id={`${title}-options-dropdown`}
-              options={dropdownMenu}
-            />
+          {/* Only show the options container if should display either the Add to
+            Library button or the Options dropdown */}
+          {onAddToLibrary || showOptionsDropdown ? (
+            <div className={styles.optionsContainer}>
+              {/* Show Add to Library button if requested */}
+              {onAddToLibrary ? (
+                <Button
+                  category="success"
+                  // isLoading={isAddingToLibrary}
+                  onClick={onAddToLibrary}
+                  style={{
+                    minWidth: "120px",
+                    marginRight: showOptionsDropdown ? "1rem" : 0,
+                  }}
+                >
+                  Add to Library
+                </Button>
+              ) : null}
+              {/* Show 3-dot options menu with dropdown for additional options */}
+              {showOptionsDropdown ? (
+                <OptionsDropdown
+                  id={`${title}-options-dropdown`}
+                  options={dropdownMenu}
+                />
+              ) : null}
+            </div>
           ) : null}
         </div>
       ) : null}

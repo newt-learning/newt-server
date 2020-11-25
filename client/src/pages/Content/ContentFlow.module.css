@@ -21,6 +21,15 @@
   margin-bottom: 0;
 }
 
+.title:not(:only-child) {
+  margin-right: 1rem;
+}
+
+.optionsContainer {
+  display: flex;
+  align-items: center;
+}
+
 .flowContainer {
   display: flex;
   flex-direction: column;

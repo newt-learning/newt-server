@@ -55,6 +55,10 @@ const ContentPage = () => {
     setQuiz({ ...quiz, questions: results });
   };
 
+  const handleAddToLibrary = () => {
+    console.log(data);
+  };
+
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
@@ -94,6 +98,7 @@ const ContentPage = () => {
                 }
                 isLoading={isLoading}
                 showOptionsDropdown={false}
+                onAddToLibrary={handleAddToLibrary}
               />
             </div>
             <div className={styles.contentInfoContainer}>

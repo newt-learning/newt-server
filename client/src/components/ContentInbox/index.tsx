@@ -41,7 +41,7 @@ interface ContentInboxProps {
   optionsDropdownMenu?: OptionsDropdownItemType[];
   // To Add series/playlist from Discover to User Library
   addToLibrary?: "newt-series" | "newt-playlist";
-  onAddToLibrary?: (values?: any) => void;
+  onAddToLibrary?: () => void;
   className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
