@@ -169,7 +169,10 @@ const ContentInbox = ({
                 category="success"
                 isLoading={isAddingToLibrary}
                 onClick={handlePressAddToLibraryButton}
-                style={{ marginRight: showOptionsDropdown ? "1rem" : 0 }}
+                style={{
+                  minWidth: "120px",
+                  marginRight: showOptionsDropdown ? "1rem" : 0,
+                }}
               >
                 Add to Library
               </Button>
