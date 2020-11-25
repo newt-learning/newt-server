@@ -21,7 +21,7 @@ import {
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Skeleton from "react-loading-skeleton";
 import Modal from "react-bootstrap/Modal";
-import AddToLibrary, { AddToLibraryFormValues } from "./AddToLibrary";
+import AddToLibrarySignIn from "./AddToLibrarySignIn";
 // Styling
 import styles from "./ContentInbox.module.css";
 // Helpers
@@ -105,26 +105,29 @@ const ContentInbox = ({
     }
   }, [contentData, contentId]);
 
-  // Temp so both are handled
-  const handlePressAddToLibraryButton = async () => {
-    // If logged in, add series/playlist to Library. Otherwise open modal to sign in
-    if (exists && onAddToLibrary) {
+  // Set loading indicator, add series/playlist to library, then close modal
+  const handleAddToLibrary = async () => {
+    if (onAddToLibrary) {
       setIsAddingToLibrary(true);
       await onAddToLibrary();
       setIsAddingToLibrary(false);
+    }
+  };
+
+  // If logged in, add series/playlist to library. Otherwise show sign in modal
+  const handlePressAddToLibraryButton = async () => {
+    // If logged in, add series/playlist to Library. Otherwise open modal to sign in
+    if (exists && onAddToLibrary) {
+      await handleAddToLibrary();
     } else {
       setShowAddToLibraryModal(true);
     }
   };
 
-  // Set loading indicator, add series to library, then close modal
-  const handleAddToLibrary = async (values: AddToLibraryFormValues) => {
-    if (onAddToLibrary) {
-      setIsAddingToLibrary(true);
-      await onAddToLibrary(values);
-      setShowAddToLibraryModal(false);
-      setIsAddingToLibrary(false);
-    }
+  // Add series/playlist after signing in
+  const addToLibrarySignInCallback = async () => {
+    setShowAddToLibraryModal(false);
+    await handleAddToLibrary();
   };
 
   return (
@@ -270,11 +273,7 @@ const ContentInbox = ({
               padding: "3rem 4rem",
             }}
           >
-            <AddToLibrary
-              type={addToLibrary}
-              onSubmit={handleAddToLibrary}
-              isLoading={isAddingToLibrary}
-            />
+            <AddToLibrarySignIn callback={addToLibrarySignInCallback} />
           </Modal.Body>
         </Modal>
       ) : null}
