@@ -7,7 +7,12 @@ import {
 } from "../../api/newtContent";
 // Components
 import PropagateLoader from "react-spinners/PropagateLoader";
-import { Navbar, MainContainer, QuizModal } from "../../components";
+import {
+  Navbar,
+  MainContainer,
+  QuizModal,
+  formatNewtContent,
+} from "../../components";
 // Sections
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
@@ -56,7 +61,9 @@ const ContentPage = () => {
   };
 
   const handleAddToLibrary = () => {
-    console.log(data);
+    const formattedContent = formatNewtContent(data);
+
+    console.log(formattedContent);
   };
 
   return (

@@ -137,3 +137,67 @@ export function formatNewtPlaylist(newtPlaylistData: any) {
 
   return { playlistData, playlistContentData };
 }
+
+// Format Newt Content => user content in Library
+export function formatNewtContent(newtContentData: any) {
+  console.log(newtContentData);
+
+  let contentData: any = {
+    name: newtContentData?.name,
+    description: newtContentData?.description,
+    authors: _.map(
+      newtContentData?.contentCreators,
+      (creator) => creator?.name
+    ),
+    thumbnailUrl: newtContentData?.thumbnailUrl,
+    type: newtContentData?.type,
+    shelf: "Want to Learn",
+    playlists: [],
+    startFinishDates: [],
+    partOfSeries: newtContentData?.partOfSeries,
+    isFromNewtDiscover: true,
+    newtInfo: {
+      newtContentId: newtContentData._id,
+      newtCreatorIds: _.map(
+        newtContentData?.contentCreators,
+        (creator) => creator._id
+      ),
+      newtSeriesId:
+        _.map(newtContentData?.series, (series) => series._id)[0] ?? null,
+    },
+  };
+
+  if (newtContentData?.type === "book") {
+    contentData.bookInfo = {
+      bookId: newtContentData?.sourceId,
+      title: newtContentData?.name,
+      description: newtContentData?.description,
+      authors: _.map(
+        newtContentData?.contentCreators,
+        (creator) => creator?.name
+      ),
+      // subtitle: N/A
+      // imageLinks: N/A
+      // industryIdentifiers: N/A
+      // pageCount: N/A,
+      // publisher: N/A
+      // datePublished: N/A
+    };
+  }
+
+  if (newtContentData?.type === "video") {
+    contentData.videoInfo = {
+      source: newtContentData?.source,
+      videoId: newtContentData?.sourceId,
+      title: newtContentData?.name,
+      description: newtContentData?.description,
+      // playlistId: N/A
+      // playlistPosition: N/A
+      // channelId: N/A,
+      // datePublished: N/A,
+      // thumbnails: N/A,
+    };
+  }
+
+  return contentData;
+}

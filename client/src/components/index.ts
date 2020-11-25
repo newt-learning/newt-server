@@ -33,4 +33,5 @@ export { getFirstThreeThumbnailsForSeries } from "./StackedImages/utils";
 export {
   formatNewtDiscoverSeries,
   formatNewtPlaylist,
+  formatNewtContent,
 } from "./ContentInbox/utils";
