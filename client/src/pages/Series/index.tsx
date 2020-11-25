@@ -10,7 +10,6 @@ import {
   ContentInbox,
   formatNewtDiscoverSeries,
 } from "../../components";
-import { AddToLibraryFormValues } from "../../components/ContentInbox/AddToLibrary";
 // Styling
 import styles from "./Series.module.css";
 
@@ -23,25 +22,20 @@ const SeriesPage = () => {
 
   const { data, isLoading, isError } = useFetchNewtSeriesBySlug(seriesSlug);
   // Function to add series to Library
-  const [createSeries, { isLoading: isCreatingSeries }] = useCreateSeries();
+  const [createSeries] = useCreateSeries();
 
-  const handleAddNewtSeriesToLibrary = async (
-    formValues: AddToLibraryFormValues
-  ) => {
-    const formattedSeries = formatNewtDiscoverSeries({
-      newtSeriesData: data,
-      formData: formValues,
-    });
+  const handleAddNewtSeriesToLibrary = async () => {
+    const formattedSeries = formatNewtDiscoverSeries(data);
 
     await createSeries(formattedSeries, {
       // Toast notifications on success and error
       onSuccess: () =>
-        addToast("Video series has been added to your Library", {
+        addToast(`${data?.name} Series has been added to your Library`, {
           appearance: "success",
         }),
       onError: () =>
         addToast(
-          "Sorry, there was an error adding that video series. Please try again.",
+          "Sorry, there was an error adding the video series. Please try again.",
           { appearance: "error" }
         ),
     });

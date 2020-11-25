@@ -22,11 +22,9 @@ const NewtPlaylistPage = () => {
   const { addToast } = useToasts();
 
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
-  const [
-    createPlaylistFromNewtPlaylist,
-    { isLoading: isCreating },
-  ] = useCreatePlaylistFromNewtPlaylist();
+  const [createPlaylistFromNewtPlaylist] = useCreatePlaylistFromNewtPlaylist();
 
+  // Handler to add newt playlist to user library
   const handleAddNewtPlaylist = async () => {
     const { playlistData, playlistContentData } = formatNewtPlaylist(data);
 

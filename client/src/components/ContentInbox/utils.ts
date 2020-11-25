@@ -1,17 +1,7 @@
 import _ from "lodash";
-import { AddToLibraryFormValues } from "./AddToLibrary";
-import { StartFinishDateType } from "../../pages/Content/ContentFlow";
-
-interface FormatNewtDiscoverSeriesParams {
-  newtSeriesData: any;
-  formData: AddToLibraryFormValues;
-}
 
 // Newt series ==> user series
-export function formatNewtDiscoverSeries({
-  newtSeriesData,
-  formData,
-}: FormatNewtDiscoverSeriesParams) {
+export function formatNewtDiscoverSeries(newtSeriesData: any) {
   let formattedSeries: any = {
     name: newtSeriesData?.name,
     description: newtSeriesData?.description,
@@ -19,8 +9,9 @@ export function formatNewtDiscoverSeries({
     thumbnailUrl: newtSeriesData?.thumbnailUrl,
     type: newtSeriesData?.type,
     contentType: newtSeriesData?.contentType,
-    shelf: formData.shelf,
-    playlists: formData?.playlists,
+    shelf: "Want to Learn",
+    playlists: [],
+    startFinishDates: [],
     isFromNewtDiscover: true, // Whether the series was added from Newt Discover page
     seriesInfo: {
       source: newtSeriesData?.source,
@@ -32,23 +23,6 @@ export function formatNewtDiscoverSeries({
       // thumbnails: N/A
     },
   };
-
-  let startFinishDates: StartFinishDateType[] = [];
-
-  // If the selected shelf is Currently Learning, set first date started as now
-  if (formData.shelf === "Currently Learning") {
-    startFinishDates = [{ dateStarted: new Date(), dateCompleted: null }];
-  }
-
-  // If the selected shelf is Finished, add the dateCompleted field
-  if (formData.shelf === "Finished Learning") {
-    startFinishDates = [
-      { dateStarted: formData.startDate, dateCompleted: formData.finishDate },
-    ];
-  }
-
-  // Add startFinishDates field to series info
-  formattedSeries.startFinishDates = startFinishDates;
 
   // Format videos in series
   const formattedVideos = _.map(newtSeriesData?.content, (video, index) => {
@@ -62,8 +36,8 @@ export function formatNewtDiscoverSeries({
       thumbnailUrl: video.thumbnailUrl,
       type: video.type,
       partOfSeries: true,
-      shelf: formData.shelf,
-      startFinishDates,
+      shelf: "Want to Learn",
+      startFinishDates: [],
       videoInfo: {
         source: video.source,
         videoId: video.sourceId,

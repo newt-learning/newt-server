@@ -107,16 +107,13 @@ const ContentInbox = ({
 
   // Temp so both are handled
   const handlePressAddToLibraryButton = async () => {
-    if (addToLibrary === "newt-series") {
+    // If logged in, add series/playlist to Library. Otherwise open modal to sign in
+    if (exists && onAddToLibrary) {
+      setIsAddingToLibrary(true);
+      await onAddToLibrary();
+      setIsAddingToLibrary(false);
+    } else {
       setShowAddToLibraryModal(true);
-    } else if (addToLibrary === "newt-playlist") {
-      if (exists && onAddToLibrary) {
-        setIsAddingToLibrary(true);
-        await onAddToLibrary();
-        setIsAddingToLibrary(false);
-      } else {
-        setShowAddToLibraryModal(true);
-      }
     }
   };
 
