@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 // API
 import {
   useFetchIndividualNewtContentBySlug,
@@ -19,11 +20,15 @@ import ContentInfo from "./ContentInfo";
 // Styling
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
+import { useCreateContentV2 } from "../../api/content";
 
 const ContentPage = () => {
   // Get content name slug from URL parameters
   // @ts-ignore
   const { contentNameSlug } = useParams();
+
+  // Toasts
+  const { addToast } = useToasts();
 
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [quiz, setQuiz] = useState(null);
@@ -36,6 +41,7 @@ const ContentPage = () => {
   const { data, isLoading, isError } = useFetchIndividualNewtContentBySlug(
     contentNameSlug
   );
+  const [createContent] = useCreateContentV2();
 
   const {
     data: quizData,
@@ -60,10 +66,23 @@ const ContentPage = () => {
     setQuiz({ ...quiz, questions: results });
   };
 
-  const handleAddToLibrary = () => {
+  const handleAddToLibrary = async () => {
     const formattedContent = formatNewtContent(data);
 
-    console.log(formattedContent);
+    await createContent(formattedContent, {
+      // Toast notifications on success and error
+      onSuccess: () =>
+        addToast(`${data?.name} has been added to your Library`, {
+          appearance: "success",
+        }),
+      onError: () =>
+        addToast(
+          `Sorry, there was an error adding the ${
+            data?.type ?? "content"
+          }. Please try again.`,
+          { appearance: "error" }
+        ),
+    });
   };
 
   return (

@@ -140,8 +140,6 @@ export function formatNewtPlaylist(newtPlaylistData: any) {
 
 // Format Newt Content => user content in Library
 export function formatNewtContent(newtContentData: any) {
-  console.log(newtContentData);
-
   let contentData: any = {
     name: newtContentData?.name,
     description: newtContentData?.description,
@@ -154,7 +152,8 @@ export function formatNewtContent(newtContentData: any) {
     shelf: "Want to Learn",
     playlists: [],
     startFinishDates: [],
-    partOfSeries: newtContentData?.partOfSeries,
+    // Ignore part of series for now. Won't show on Shelves if true.
+    // partOfSeries: newtContentData?.partOfSeries,
     isFromNewtDiscover: true,
     newtInfo: {
       newtContentId: newtContentData._id,
