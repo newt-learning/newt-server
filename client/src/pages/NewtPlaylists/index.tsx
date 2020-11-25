@@ -19,10 +19,7 @@ const NewtPlaylistPage = () => {
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
 
   const handleAddNewtPlaylist = async (values: any) => {
-    const formattedPlaylist = formatNewtPlaylist({
-      newtPlaylistData: data,
-      formData: values,
-    });
+    const formattedPlaylist = formatNewtPlaylist(data);
 
     console.log(formattedPlaylist);
   };

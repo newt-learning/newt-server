@@ -6,11 +6,8 @@ interface FormatNewtDiscoverSeriesParams {
   newtSeriesData: any;
   formData: AddToLibraryFormValues;
 }
-interface FormatNewtPlaylistParams {
-  newtPlaylistData: any;
-  formData: AddToLibraryFormValues;
-}
 
+// Newt series ==> user series
 export function formatNewtDiscoverSeries({
   newtSeriesData,
   formData,
@@ -87,9 +84,61 @@ export function formatNewtDiscoverSeries({
   return formattedSeries;
 }
 
-export function formatNewtPlaylist({
-  newtPlaylistData,
-  formData,
-}: FormatNewtPlaylistParams) {
-  return { newtPlaylistData, formData };
+// Newt playlist ==> User playlist
+export function formatNewtPlaylist(newtPlaylistData: any) {
+  const playlistData = {
+    name: newtPlaylistData?.name,
+    isNewtPlaylist: true,
+    newtPlaylistId: newtPlaylistData?._id,
+  };
+
+  const playlistContentData = _.map(newtPlaylistData?.content, (content) => {
+    let contentData: any = {
+      name: content?.name,
+      description: content?.description,
+      authors: _.map(content?.contentCreators, (creator) => creator?.name),
+      thumbnailUrl: content?.thumbnailUrl,
+      type: content?.type,
+      shelf: "Want to Learn",
+      playlists: [],
+      startFinishDates: [],
+      isFromNewtDiscover: true,
+      newtContentInfo: {
+        newtContentId: content?._id,
+      },
+    };
+
+    if (content?.type === "book") {
+      contentData.bookInfo = {
+        bookId: content?.sourceId,
+        title: content?.name,
+        description: content?.description,
+        authors: _.map(content?.contentCreators, (creator) => creator?.name),
+        // subtitle: N/A
+        // imageLinks: N/A
+        // industryIdentifiers: N/A
+        // pageCount: N/A,
+        // publisher: N/A
+        // datePublished: N/A
+      };
+    }
+
+    if (content?.type === "video") {
+      contentData.videoInfo = {
+        source: content?.source,
+        videoId: content?.sourceId,
+        title: content?.name,
+        description: content?.description,
+        // playlistId: N/A
+        // playlistPosition: N/A
+        // channelId: N/A,
+        // datePublished: N/A,
+        // thumbnails: N/A,
+      };
+    }
+
+    return contentData;
+  });
+
+  return { playlistData, playlistContentData };
 }

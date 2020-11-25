@@ -58,7 +58,13 @@ const contentSchema = new Schema({
     ref: "User",
   },
   // Newt Content fields
+  // Old one
   isOnNewtContentDatabase: {
+    type: Boolean,
+    default: false,
+  },
+  // New one
+  isFromNewtDiscover: {
     type: Boolean,
     default: false,
   },

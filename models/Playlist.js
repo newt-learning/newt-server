@@ -7,6 +7,7 @@ const playlistSchema = new Schema({
     default: 1,
   },
   name: String,
+  description: String,
   content: [
     {
       type: Schema.Types.ObjectId,
@@ -19,6 +20,13 @@ const playlistSchema = new Schema({
       ref: "Series",
     },
   ],
+  isNewtPlaylist: {
+    type: Boolean,
+    default: false,
+  },
+  newtPlaylistId: {
+    type: Schema.Types.ObjectId,
+  },
   _user: {
     type: String,
     ref: "User",
