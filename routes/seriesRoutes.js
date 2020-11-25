@@ -60,8 +60,13 @@ module.exports = (app) => {
         series.contentIds = contentIds;
 
         // Save series to DB and send to client
-        await series.save();
-        res.send(series);
+        series.save((error) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.send(series);
+          }
+        });
       }
     });
   });

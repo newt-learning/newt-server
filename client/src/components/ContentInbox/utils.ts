@@ -13,6 +13,11 @@ export function formatNewtDiscoverSeries(newtSeriesData: any) {
     playlists: [],
     startFinishDates: [],
     isFromNewtDiscover: true, // Whether the series was added from Newt Discover page
+    newtInfo: {
+      newtSeriesId: newtSeriesData?._id,
+      newtCreatorIds: [newtSeriesData?.seriesCreator?.id],
+      newtContentIds: _.map(newtSeriesData?.content, (video) => video._id),
+    },
     seriesInfo: {
       source: newtSeriesData?.source,
       playlistId: newtSeriesData?.sourceId,
