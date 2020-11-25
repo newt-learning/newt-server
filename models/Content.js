@@ -68,6 +68,21 @@ const contentSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  // New DB
+  newtInfo: {
+    newtContentId: {
+      type: Schema.Types.ObjectId,
+    },
+    newtCreatorIds: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    newtSeriesId: {
+      type: Schema.Types.ObjectId,
+    },
+  },
+  // Old (newtContentInfo)
   newtContentInfo: {
     newtContentId: {
       type: Schema.Types.ObjectId,

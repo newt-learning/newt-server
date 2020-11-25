@@ -24,8 +24,15 @@ const playlistSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  newtPlaylistId: {
-    type: Schema.Types.ObjectId,
+  newtInfo: {
+    newtPlaylistId: {
+      type: Schema.Types.ObjectId,
+    },
+    newtCreatorIds: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   _user: {
     type: String,
