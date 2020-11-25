@@ -12,6 +12,7 @@ interface PlaylistCardProps {
   id: string;
   name: string;
   variant: "card" | "pill";
+  isNewtPlaylist?: boolean;
 }
 
 export const AddPlaylistCard = ({ onClick }: AddPlaylistCardProps) => {
@@ -25,12 +26,18 @@ export const AddPlaylistCard = ({ onClick }: AddPlaylistCardProps) => {
   );
 };
 
-const PlaylistCard = ({ id, name, variant }: PlaylistCardProps) => {
+const PlaylistCard = ({
+  id,
+  name,
+  variant,
+  isNewtPlaylist,
+}: PlaylistCardProps) => {
   return (
     <Link to={{ pathname: `/playlists/${id}`, state: { name } }}>
       <div
         className={cx({
           container: true,
+          "newt-playlist": isNewtPlaylist,
           card: variant === "card",
           pill: variant === "pill",
         })}
