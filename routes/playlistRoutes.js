@@ -60,13 +60,40 @@ module.exports = (app) => {
 
   // POST request to create a user playlist from a Newt playlist (from Discover page)
   app.post("/api/playlists/create-from-newt", requireLogin, (req, res) => {
-    const data = req.body;
-    // Add user id and dates to data object
-    data._user = req.user.uid;
-    data.dateAdded = Date.now();
-    data.lastUpdated = Date.now();
+    let { playlistData, playlistContentData } = req.body;
+    // Add user id and dates to playlist data object
+    playlistData._user = req.user.uid;
+    playlistData.dateAdded = new Date();
+    playlistData.lastUpdated = new Date();
 
-    console.log(data);
+    // Create playlist
+    let playlist = new Playlist(playlistData);
+
+    // Map over each content item in playlist and add user, dates and playlist id
+    playlistContentData = playlistContentData.map((content) => ({
+      ...content,
+      playlists: [playlist._id],
+      _user: req.user.uid,
+      dateAdded: new Date(),
+      lastUpdated: new Date(),
+    }));
+
+    // Create all content in playlist
+    Content.create(playlistContentData, async (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        // Get ids of all created content items
+        const contentIds = content.map((item) => item._id);
+
+        // Add ids to playlist instance
+        playlist.content = contentIds;
+        // Save playlist
+        await playlist.save();
+
+        res.send(playlist);
+      }
+    });
   });
 
   // PUT request to edit a playlist

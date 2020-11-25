@@ -41,7 +41,7 @@ interface ContentInboxProps {
   optionsDropdownMenu?: OptionsDropdownItemType[];
   // To Add series/playlist from Discover to User Library
   addToLibrary?: "newt-series" | "newt-playlist";
-  onAddToLibrary?: (values: any) => void;
+  onAddToLibrary?: (values?: any) => void;
   className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
@@ -112,12 +112,7 @@ const ContentInbox = ({
     } else if (addToLibrary === "newt-playlist") {
       if (exists && onAddToLibrary) {
         setIsAddingToLibrary(true);
-        await onAddToLibrary({
-          shelf: "Want to Learn",
-          playlists: [],
-          startDate: null,
-          finishDate: null,
-        });
+        await onAddToLibrary();
         setIsAddingToLibrary(false);
       } else {
         setShowAddToLibraryModal(true);

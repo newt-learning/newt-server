@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 // API
 import { useFetchNewtPlaylistBySlug } from "../../api/newtContent";
+import { useCreatePlaylistFromNewtPlaylist } from "../../api/playlists";
 // Components
 import {
   Navbar,
@@ -17,11 +18,15 @@ const NewtPlaylistPage = () => {
   const { playlistSlug } = useParams();
 
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
+  const [
+    createPlaylistFromNewtPlaylist,
+    { isLoading: isCreating },
+  ] = useCreatePlaylistFromNewtPlaylist();
 
-  const handleAddNewtPlaylist = async (values: any) => {
-    const formattedPlaylist = formatNewtPlaylist(data);
+  const handleAddNewtPlaylist = async () => {
+    const { playlistData, playlistContentData } = formatNewtPlaylist(data);
 
-    console.log(formattedPlaylist);
+    await createPlaylistFromNewtPlaylist({ playlistData, playlistContentData });
   };
 
   return (
