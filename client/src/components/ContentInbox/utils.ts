@@ -15,7 +15,7 @@ export function formatNewtDiscoverSeries(newtSeriesData: any) {
     isFromNewtDiscover: true, // Whether the series was added from Newt Discover page
     newtInfo: {
       newtSeriesId: newtSeriesData?._id,
-      newtCreatorIds: [newtSeriesData?.seriesCreator?.id],
+      newtCreatorIds: [newtSeriesData?.seriesCreator?._id],
       newtContentIds: _.map(newtSeriesData?.content, (video) => video._id),
     },
     seriesInfo: {
@@ -43,6 +43,12 @@ export function formatNewtDiscoverSeries(newtSeriesData: any) {
       partOfSeries: true,
       shelf: "Want to Learn",
       startFinishDates: [],
+      isFromNewtDiscover: true,
+      newtInfo: {
+        newtContentId: video._id,
+        newtCreatorIds: video.contentCreators,
+        newtSeriesId: newtSeriesData?._id,
+      },
       videoInfo: {
         source: video.source,
         videoId: video.sourceId,
