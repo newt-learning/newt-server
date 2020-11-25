@@ -74,7 +74,13 @@ export function formatNewtPlaylist(newtPlaylistData: any) {
   const playlistData = {
     name: newtPlaylistData?.name,
     isNewtPlaylist: true,
-    newtPlaylistId: newtPlaylistData?._id,
+    newtInfo: {
+      newtPlaylistId: newtPlaylistData?._id,
+      newtCreatorIds: _.map(
+        newtPlaylistData?.creators,
+        (creator) => creator._id
+      ),
+    },
   };
 
   const playlistContentData = _.map(newtPlaylistData?.content, (content) => {
@@ -88,8 +94,12 @@ export function formatNewtPlaylist(newtPlaylistData: any) {
       playlists: [],
       startFinishDates: [],
       isFromNewtDiscover: true,
-      newtContentInfo: {
-        newtContentId: content?._id,
+      newtInfo: {
+        newtContentId: content._id,
+        newtCreatorIds: _.map(
+          content?.contentCreators,
+          (creator) => creator._id
+        ),
       },
     };
 

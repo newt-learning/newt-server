@@ -1,5 +1,6 @@
 const userDbConn = require("../connections/usersDbConn");
 const requireLogin = require("../middleware/requireLogin");
+const _ = require("lodash");
 
 const Playlist = userDbConn.model("playlists");
 const Content = userDbConn.model("content");
@@ -70,7 +71,7 @@ module.exports = (app) => {
     let playlist = new Playlist(playlistData);
 
     // Map over each content item in playlist and add user, dates and playlist id
-    playlistContentData = playlistContentData.map((content) => ({
+    playlistContentData = _.map(playlistContentData, (content) => ({
       ...content,
       playlists: [playlist._id],
       _user: req.user.uid,
@@ -89,9 +90,13 @@ module.exports = (app) => {
         // Add ids to playlist instance
         playlist.content = contentIds;
         // Save playlist
-        await playlist.save();
-
-        res.send(playlist);
+        playlist.save((error) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.send(playlist);
+          }
+        });
       }
     });
   });
