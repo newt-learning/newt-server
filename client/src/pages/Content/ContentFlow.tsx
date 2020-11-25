@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
+import { useData as useAuthData } from "../../context/AuthContext";
 import {
   useUpdateContent,
   useUpdateSeries,
@@ -77,6 +78,7 @@ interface ContentFlowProps {
   buttonText?: string;
   variant: "default" | "inbox"; // No container styling for inbox
   isLoading?: boolean;
+  showOptionsDropdown?: boolean;
 }
 
 let cx = classnames.bind(styles);
@@ -100,6 +102,7 @@ const ContentFlow = ({
   buttonText,
   variant,
   isLoading,
+  showOptionsDropdown = true,
 }: ContentFlowProps) => {
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
@@ -206,10 +209,12 @@ const ContentFlow = ({
               <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
             ) : null}
           </h2>
-          <OptionsDropdown
-            id={`${title}-options-dropdown`}
-            options={dropdownMenu}
-          />
+          {showOptionsDropdown ? (
+            <OptionsDropdown
+              id={`${title}-options-dropdown`}
+              options={dropdownMenu}
+            />
+          ) : null}
         </div>
       ) : null}
       <div className={styles.flowContainer}>

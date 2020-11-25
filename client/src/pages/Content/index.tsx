@@ -69,12 +69,12 @@ const ContentPage = () => {
           <>
             <div className={styles.contentFlowContainer}>
               <ContentFlow
-                id={data._id || data.id}
-                title={data.name}
+                id={data?._id || data?.id}
+                title={data?.name}
                 authors={data?.contentCreators?.map(
                   (creator: any) => creator.name
                 )}
-                type={data.type}
+                type={data?.type}
                 shelf={data?.shelf}
                 startFinishDates={data.startFinishDates}
                 source={data?.source?.name || data?.source}
@@ -82,8 +82,8 @@ const ContentPage = () => {
                 thumbnailUrl={data?.thumbnailUrl}
                 // source={data.source}
                 // mediaId={data.sourceId}
-                description={data.description}
-                hasQuiz={data.quiz?.id ? true : false}
+                description={data?.description}
+                hasQuiz={data?.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}
                 buttonText={
                   showReview
@@ -93,6 +93,7 @@ const ContentPage = () => {
                     : "Take the quiz"
                 }
                 isLoading={isLoading}
+                showOptionsDropdown={false}
               />
             </div>
             <div className={styles.contentInfoContainer}>
