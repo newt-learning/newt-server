@@ -8,6 +8,7 @@ export {
 export { default as AppContentListCard } from "./AppContentListCard";
 export { default as AppNavbar } from "./AppNavbar";
 export { default as Badge } from "./Badge";
+export { default as Boop } from "./Boop";
 export { default as Button } from "./Button";
 export { default as ContentCard } from "./ContentCard";
 export { default as ContentInbox } from "./ContentInbox";
