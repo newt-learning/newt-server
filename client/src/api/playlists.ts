@@ -9,6 +9,10 @@ import {
 interface PlaylistData {
   name: string;
 }
+interface NewtToUserPlaylist {
+  playlistData: any;
+  playlistContentData: any;
+}
 interface UpdatePlaylistParams {
   playlistId: string;
   data: PlaylistData;
@@ -33,6 +37,9 @@ const fetchPlaylist = async (queryKey: any, playlistId: string) => {
 };
 const createPlaylist = async (data: PlaylistData) => {
   await newtApi.post("/playlists/create", data);
+};
+const createPlaylistFromNewtPlaylist = async (data: NewtToUserPlaylist) => {
+  await newtApi.post("/playlists/create-from-newt", data);
 };
 const updatePlaylist = async ({ playlistId, data }: UpdatePlaylistParams) => {
   await newtApi.put(`/playlists/${playlistId}/update`, data);
@@ -67,6 +74,11 @@ export function useCreatePlaylist(
   return useMutation(createPlaylist, {
     onSettled: () => queryCache.invalidateQueries("playlists"),
     ...options,
+  });
+}
+export function useCreatePlaylistFromNewtPlaylist() {
+  return useMutation(createPlaylistFromNewtPlaylist, {
+    onSettled: () => queryCache.invalidateQueries("playlists"),
   });
 }
 export function useUpdatePlaylist() {

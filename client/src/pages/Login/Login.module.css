@@ -58,6 +58,7 @@
 .loginBtn {
   color: var(--darkGrey-2);
   width: 100%;
+  max-width: 350px;
 }
 
 .googleBtn:hover {

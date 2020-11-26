@@ -1,9 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 // API
 import { useFetchNewtPlaylistBySlug } from "../../api/newtContent";
+import { useCreatePlaylistFromNewtPlaylist } from "../../api/playlists";
 // Components
-import { Navbar, Badge, ContentInbox } from "../../components";
+import {
+  Navbar,
+  Badge,
+  ContentInbox,
+  formatNewtPlaylist,
+} from "../../components";
 // Styling
 import styles from "./NewtPlaylists.module.css";
 
@@ -11,7 +18,32 @@ const NewtPlaylistPage = () => {
   //@ts-ignore
   const { playlistSlug } = useParams();
 
+  // Toasts
+  const { addToast } = useToasts();
+
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
+  const [createPlaylistFromNewtPlaylist] = useCreatePlaylistFromNewtPlaylist();
+
+  // Handler to add newt playlist to user library
+  const handleAddNewtPlaylist = async () => {
+    const { playlistData, playlistContentData } = formatNewtPlaylist(data);
+
+    await createPlaylistFromNewtPlaylist(
+      { playlistData, playlistContentData },
+      {
+        // Toast notifications on success and error
+        onSuccess: () =>
+          addToast(`${data?.name} Playlist has been added to your Library`, {
+            appearance: "success",
+          }),
+        onError: () =>
+          addToast(
+            "Sorry, there was an error adding this playlist. Please try again.",
+            { appearance: "error" }
+          ),
+      }
+    );
+  };
 
   return (
     <section>
@@ -37,6 +69,8 @@ const NewtPlaylistPage = () => {
             contentData={data?.content}
             isLoading={isLoading}
             className={styles.parentContainer}
+            addToLibrary="newt-playlist"
+            onAddToLibrary={handleAddNewtPlaylist}
           />
         </>
       )}

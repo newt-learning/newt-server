@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory, useParams } from "react-router-dom";
 import classnames from "classnames/bind";
+// Context
+import { useData as useAuthData } from "../../context/AuthContext";
 // Components
 import { FiArrowLeft } from "react-icons/fi";
 import {
@@ -11,15 +13,21 @@ import {
   AppHeaderContainer,
   AppContentContainer,
   AppContentList,
+  AppContentListCard,
   AppContentDetails,
-} from "../AppContainers";
-import AppContentListCard from "../AppContentListCard";
-import OptionsDropdown, { OptionsDropdownItemType } from "../OptionsDropdown";
+  Button,
+  OptionsDropdown,
+} from "..";
 import ContentFlow from "../../pages/Content/ContentFlow";
-import { getFirstThreeThumbnailsForSeries } from "..";
 import Skeleton from "react-loading-skeleton";
+import Modal from "react-bootstrap/Modal";
+import AddToLibrarySignIn from "./AddToLibrarySignIn";
 // Styling
 import styles from "./ContentInbox.module.css";
+// Helpers
+import { getFirstThreeThumbnailsForSeries } from "..";
+// Types
+import { OptionsDropdownItemType } from "../OptionsDropdown";
 
 export type ContentTypeType = "book" | "video" | "series";
 
@@ -31,6 +39,9 @@ interface ContentInboxProps {
   contentData?: any;
   showOptionsDropdown?: boolean;
   optionsDropdownMenu?: OptionsDropdownItemType[];
+  // To Add series/playlist from Discover to User Library
+  addToLibrary?: "newt-series" | "newt-playlist";
+  onAddToLibrary?: () => void;
   className?: string; // Class for parent container (AppMainContainer)
   backButtonStyle?: string;
 }
@@ -53,10 +64,19 @@ const ContentInbox = ({
   contentData,
   showOptionsDropdown = false,
   optionsDropdownMenu,
+  addToLibrary,
+  onAddToLibrary,
   className,
   backButtonStyle,
 }: ContentInboxProps) => {
   const history = useHistory();
+  const {
+    state: { exists },
+  } = useAuthData();
+
+  // Modal to add series to Library (in Discover screen)
+  const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
+  const [isAddingToLibrary, setIsAddingToLibrary] = useState(false);
 
   const [currentContent, setCurrentContent] = useState<any>(null);
   // @ts-ignore
@@ -84,6 +104,31 @@ const ContentInbox = ({
       setCurrentContent(null);
     }
   }, [contentData, contentId]);
+
+  // Set loading indicator, add series/playlist to library, then close modal
+  const handleAddToLibrary = async () => {
+    if (onAddToLibrary) {
+      setIsAddingToLibrary(true);
+      await onAddToLibrary();
+      setIsAddingToLibrary(false);
+    }
+  };
+
+  // If logged in, add series/playlist to library. Otherwise show sign in modal
+  const handlePressAddToLibraryButton = async () => {
+    // If logged in, add series/playlist to Library. Otherwise open modal to sign in
+    if (exists && onAddToLibrary) {
+      await handleAddToLibrary();
+    } else {
+      setShowAddToLibraryModal(true);
+    }
+  };
+
+  // Add series/playlist after signing in
+  const addToLibrarySignInCallback = async () => {
+    setShowAddToLibraryModal(false);
+    await handleAddToLibrary();
+  };
 
   return (
     <AppMainContainer variant="inbox" className={className}>
@@ -114,12 +159,32 @@ const ContentInbox = ({
             {/* ) : null} */}
           </div>
         </div>
-        {/* Show 3-dot options menu with dropdown for additional options */}
-        {showOptionsDropdown ? (
-          <OptionsDropdown
-            id={`${title}-page-more-dropdown`}
-            options={optionsDropdownMenu}
-          />
+        {/* Only show the options container if should display either the Add to
+            Library button or the Options dropdown */}
+        {addToLibrary || showOptionsDropdown ? (
+          <div className={styles.optionsContainer}>
+            {/* Show Add to Library button if requested */}
+            {addToLibrary ? (
+              <Button
+                category="success"
+                isLoading={isAddingToLibrary}
+                onClick={handlePressAddToLibraryButton}
+                style={{
+                  minWidth: "120px",
+                  marginRight: showOptionsDropdown ? "1rem" : 0,
+                }}
+              >
+                Add to Library
+              </Button>
+            ) : null}
+            {/* Show 3-dot options menu with dropdown for additional options */}
+            {showOptionsDropdown ? (
+              <OptionsDropdown
+                id={`${title}-page-more-dropdown`}
+                options={optionsDropdownMenu}
+              />
+            ) : null}
+          </div>
         ) : null}
       </AppHeaderContainer>
       <AppContentContainer variant="inbox">
@@ -189,6 +254,29 @@ const ContentInbox = ({
           />
         </AppContentDetails>
       </AppContentContainer>
+      {/* Add to Library modal */}
+      {showAddToLibraryModal && addToLibrary && onAddToLibrary ? (
+        <Modal
+          show={showAddToLibraryModal}
+          onHide={() => setShowAddToLibraryModal(false)}
+          size="lg"
+          animation={false}
+          backdrop="static"
+        >
+          <Modal.Header closeButton>
+            <h3 style={{ margin: 0 }}>Add to Library</h3>
+          </Modal.Header>
+          <Modal.Body
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "3rem 4rem",
+            }}
+          >
+            <AddToLibrarySignIn callback={addToLibrarySignInCallback} />
+          </Modal.Body>
+        </Modal>
+      ) : null}
     </AppMainContainer>
   );
 };

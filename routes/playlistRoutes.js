@@ -1,5 +1,6 @@
 const userDbConn = require("../connections/usersDbConn");
 const requireLogin = require("../middleware/requireLogin");
+const _ = require("lodash");
 
 const Playlist = userDbConn.model("playlists");
 const Content = userDbConn.model("content");
@@ -56,6 +57,48 @@ module.exports = (app) => {
     } catch (error) {
       res.status(500).send(error);
     }
+  });
+
+  // POST request to create a user playlist from a Newt playlist (from Discover page)
+  app.post("/api/playlists/create-from-newt", requireLogin, (req, res) => {
+    let { playlistData, playlistContentData } = req.body;
+    // Add user id and dates to playlist data object
+    playlistData._user = req.user.uid;
+    playlistData.dateAdded = new Date();
+    playlistData.lastUpdated = new Date();
+
+    // Create playlist
+    let playlist = new Playlist(playlistData);
+
+    // Map over each content item in playlist and add user, dates and playlist id
+    playlistContentData = _.map(playlistContentData, (content) => ({
+      ...content,
+      playlists: [playlist._id],
+      _user: req.user.uid,
+      dateAdded: new Date(),
+      lastUpdated: new Date(),
+    }));
+
+    // Create all content in playlist
+    Content.create(playlistContentData, async (error, content) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        // Get ids of all created content items
+        const contentIds = content.map((item) => item._id);
+
+        // Add ids to playlist instance
+        playlist.content = contentIds;
+        // Save playlist
+        playlist.save((error) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.send(playlist);
+          }
+        });
+      }
+    });
   });
 
   // PUT request to edit a playlist

@@ -1,0 +1,25 @@
+.container {
+  align-self: center;
+}
+
+.container > h5 {
+  margin-bottom: 3rem;
+}
+
+.googleBtn {
+  background-color: var(--gray-300);
+}
+
+.subheader {
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+  font-size: var(--FS-lg);
+  font-weight: 700;
+}
+
+.addBtn {
+  width: 100%;
+  max-width: 300px;
+  align-self: center;
+  margin-top: 1rem;
+}
