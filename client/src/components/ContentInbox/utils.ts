@@ -132,12 +132,12 @@ export function formatNewtContent(newtContentData: any) {
         newtContentData?.contentCreators,
         (creator) => creator?.name
       ),
+      pageCount: newtContentData?.pageCount ?? null,
+      datePublished: newtContentData?.contentPublishDate,
+      publisher: newtContentData?.contentPublisher,
+      industryIdentifiers: newtContentData?.industryIdentifiers,
       // subtitle: N/A
       // imageLinks: N/A
-      // industryIdentifiers: N/A
-      // pageCount: N/A,
-      // publisher: N/A
-      // datePublished: N/A
     };
   }
 
