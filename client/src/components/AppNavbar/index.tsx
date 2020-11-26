@@ -4,6 +4,7 @@ import React from "react";
 // Context
 import { useData as useAuthData } from "../../context/AuthContext";
 // Components
+import { NavLink } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 // Styling
@@ -15,6 +16,13 @@ const AppNavbar = () => {
 
   return (
     <nav className={styles.container}>
+      <NavLink
+        to="/discover"
+        className={styles.navLink}
+        activeClassName={styles.activeNavLink}
+      >
+        Discover
+      </NavLink>
       <Dropdown alignRight={true} drop="down" className={styles.userIcon}>
         <Dropdown.Toggle id="navbar-options-dropdown" as="div">
           <FiUser size={22} />
