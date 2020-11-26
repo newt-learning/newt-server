@@ -7,6 +7,11 @@
   overflow-wrap: anywhere; /* break up big playlist names */
 }
 
+.newt-playlist {
+  background-color: var(--indigo-200);
+  color: var(--indigo-500);
+}
+
 .card {
   height: 75px;
   min-width: 200px;
@@ -34,6 +39,12 @@
   background-color: var(--hotPink-500);
   color: var(--hotPink-100);
   cursor: pointer;
+}
+
+.newt-playlist:hover {
+  border: 2px solid var(--indigo-500);
+  background-color: var(--indigo-500);
+  color: var(--indigo-100);
 }
 
 .addPill:hover {

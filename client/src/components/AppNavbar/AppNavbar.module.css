@@ -4,12 +4,23 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.75rem 2rem;
 }
 
-.navbarBtns {
-  display: flex;
-  align-items: center;
+.navLink {
+  color: var(--gray-700);
+  font-size: var(--FS-lg);
+  margin-right: 3rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.activeNavLink,
+.navLink:hover {
+  color: var(--gray-700);
+  font-weight: 500;
+  background-color: var(--gray-400);
+  color: var(--gray-800);
 }
 
 .userIcon {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 import classnames from "classnames/bind";
 // API
+import { useData as useAuthData } from "../../context/AuthContext";
 import {
   useUpdateContent,
   useUpdateSeries,
@@ -27,6 +28,7 @@ import SelectPlaylistsForm, {
 import AddEditDatesForm from "./AddEditDatesForm";
 import ShowMoreShowLess from "./ShowMoreShowLess";
 import PlaylistCard, { AddPlaylistCard } from "../UserPlaylists/PlaylistCard";
+import AddToLibrarySignIn from "../../components/ContentInbox/AddToLibrarySignIn";
 import Modal from "react-bootstrap/Modal";
 import Skeleton from "react-loading-skeleton";
 // Styling
@@ -77,6 +79,8 @@ interface ContentFlowProps {
   buttonText?: string;
   variant: "default" | "inbox"; // No container styling for inbox
   isLoading?: boolean;
+  showOptionsDropdown?: boolean;
+  onAddToLibrary?: () => void;
 }
 
 let cx = classnames.bind(styles);
@@ -100,12 +104,21 @@ const ContentFlow = ({
   buttonText,
   variant,
   isLoading,
+  showOptionsDropdown = true,
+  onAddToLibrary,
 }: ContentFlowProps) => {
   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   const [showChangeShelfModal, setShowChangeShelfModal] = useState(false);
   const [showAddPlaylistsModal, setShowAddPlaylistsModal] = useState(false);
   const [showAddEditDatesModal, setShowAddEditDatesModal] = useState(false);
+  // Modal to add series to Library (in Discover screen)
+  const [showAddToLibraryModal, setShowAddToLibraryModal] = useState(false);
+  const [isAddingToLibrary, setIsAddingToLibrary] = useState(false);
   const [showMore, setShowMore] = useState(false);
+
+  const {
+    state: { exists },
+  } = useAuthData();
 
   // Updating content/series
   const [updateContent] = useUpdateContent();
@@ -169,6 +182,31 @@ const ContentFlow = ({
     setShowAddEditDatesModal(false);
   };
 
+  // Set loading indicator, add series/playlist to library, then close modal
+  const handleAddToLibrary = async () => {
+    if (onAddToLibrary) {
+      setIsAddingToLibrary(true);
+      await onAddToLibrary();
+      setIsAddingToLibrary(false);
+    }
+  };
+
+  // If logged in, add series/playlist to library. Otherwise show sign in modal
+  const handlePressAddToLibraryButton = async () => {
+    // If logged in, add series/playlist to Library. Otherwise open modal to sign in
+    if (exists && onAddToLibrary) {
+      await handleAddToLibrary();
+    } else {
+      setShowAddToLibraryModal(true);
+    }
+  };
+
+  // Add content after signing in
+  const addToLibrarySignInCallback = async () => {
+    setShowAddToLibraryModal(false);
+    await handleAddToLibrary();
+  };
+
   const dropdownMenu: OptionsDropdownItemType[] = [
     {
       type: "item",
@@ -206,10 +244,33 @@ const ContentFlow = ({
               <Badge variant={shelf ? shelf : "default"}>{shelf}</Badge>
             ) : null}
           </h2>
-          <OptionsDropdown
-            id={`${title}-options-dropdown`}
-            options={dropdownMenu}
-          />
+          {/* Only show the options container if should display either the Add to
+            Library button or the Options dropdown */}
+          {onAddToLibrary || showOptionsDropdown ? (
+            <div className={styles.optionsContainer}>
+              {/* Show Add to Library button if requested */}
+              {onAddToLibrary ? (
+                <Button
+                  category="success"
+                  isLoading={isAddingToLibrary}
+                  onClick={handlePressAddToLibraryButton}
+                  style={{
+                    minWidth: "120px",
+                    marginRight: showOptionsDropdown ? "1rem" : 0,
+                  }}
+                >
+                  Add to Library
+                </Button>
+              ) : null}
+              {/* Show 3-dot options menu with dropdown for additional options */}
+              {showOptionsDropdown ? (
+                <OptionsDropdown
+                  id={`${title}-options-dropdown`}
+                  options={dropdownMenu}
+                />
+              ) : null}
+            </div>
+          ) : null}
         </div>
       ) : null}
       <div className={styles.flowContainer}>
@@ -419,6 +480,29 @@ const ContentFlow = ({
         onDelete={handleDeleteItem}
         isDeleting={type === "series" ? isDeletingSeries : isDeletingContent}
       />
+      {/* Add to Library modal */}
+      {showAddToLibraryModal && onAddToLibrary ? (
+        <Modal
+          show={showAddToLibraryModal}
+          onHide={() => setShowAddToLibraryModal(false)}
+          size="lg"
+          animation={false}
+          backdrop="static"
+        >
+          <Modal.Header closeButton>
+            <h3 style={{ margin: 0 }}>Add to Library</h3>
+          </Modal.Header>
+          <Modal.Body
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "3rem 4rem",
+            }}
+          >
+            <AddToLibrarySignIn callback={addToLibrarySignInCallback} />
+          </Modal.Body>
+        </Modal>
+      ) : null}
     </div>
   );
 };

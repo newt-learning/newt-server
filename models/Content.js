@@ -58,10 +58,31 @@ const contentSchema = new Schema({
     ref: "User",
   },
   // Newt Content fields
+  // Old one
   isOnNewtContentDatabase: {
     type: Boolean,
     default: false,
   },
+  // New one
+  isFromNewtDiscover: {
+    type: Boolean,
+    default: false,
+  },
+  // New DB
+  newtInfo: {
+    newtContentId: {
+      type: Schema.Types.ObjectId,
+    },
+    newtCreatorIds: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    newtSeriesId: {
+      type: Schema.Types.ObjectId,
+    },
+  },
+  // Old (newtContentInfo)
   newtContentInfo: {
     newtContentId: {
       type: Schema.Types.ObjectId,

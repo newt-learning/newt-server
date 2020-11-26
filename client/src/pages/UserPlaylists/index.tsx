@@ -21,6 +21,7 @@ import styles from "./Playlists.module.css";
 interface PlaylistData {
   _id: string;
   name: string;
+  isNewtPlaylist?: boolean;
 }
 
 interface CreatePlaylistValues {
@@ -78,8 +79,13 @@ const PlaylistsPage = () => {
           </MessageBox>
         ) : (
           // Cards for each playlist
-          data.map(({ _id, name }: PlaylistData) => (
-            <PlaylistCard key={_id} id={_id} name={name} />
+          data.map(({ _id, name, isNewtPlaylist }: PlaylistData) => (
+            <PlaylistCard
+              key={_id}
+              id={_id}
+              name={name}
+              isNewtPlaylist={isNewtPlaylist ?? false}
+            />
           ))
         )}
       </AppContentContainer>

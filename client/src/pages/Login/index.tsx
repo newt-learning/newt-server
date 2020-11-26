@@ -1,17 +1,12 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
-// Context
-import { useData as useAuthData } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
 // Components
-import { Navbar, Button } from "../../components";
+import { Navbar } from "../../components";
+import GoogleSignInButton from "./GoogleSignInButton";
 // Styling
 import styles from "./Login.module.css";
-import googleLogo from "../../assets/logos/googleLoginLogo";
-// import githubLogo from "../../assets/logos/GitHubLoginLogo.png";
 
 const LoginPage = () => {
-  const { authenticateWithGoogle } = useAuthData();
-  const history = useHistory();
   // Destructuring from state throws type error, so setting as any
   const location: any = useLocation();
 
@@ -28,35 +23,8 @@ const LoginPage = () => {
           <div className={styles.panelBody}>
             <ul>
               <li className={styles.providerBtn}>
-                <Button
-                  className={`${styles.loginBtn} ${styles.googleBtn}`}
-                  onClick={() => authenticateWithGoogle(history, redirectTo)}
-                >
-                  <div className={styles.btnContent}>
-                    {googleLogo}
-                    <div style={{ marginRight: "1.5rem" }}>
-                      Sign In With Google
-                    </div>
-                  </div>
-                </Button>
+                <GoogleSignInButton redirectTo={redirectTo} />
               </li>
-              {/* <li>
-                <Button
-                  className={`${styles.loginBtn} ${styles.githubBtn}`}
-                  // onClick={() => authenticateWithGithub(history)}
-                >
-                  <div className={styles.btnContent}>
-                    <img
-                      alt="github-logo"
-                      src={githubLogo}
-                      className={styles.logo}
-                    />
-                    <div style={{ marginRight: "1.5rem" }}>
-                      Sign In With GitHub
-                    </div>
-                  </div>
-                </Button>
-              </li> */}
             </ul>
           </div>
         </div>

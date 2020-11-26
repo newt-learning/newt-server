@@ -38,6 +38,27 @@ const seriesSchema = new Schema({
   dateAdded: Date,
   lastUpdated: Date,
   startFinishDates: [startFinishDatesSchema],
+  isFromNewtDiscover: {
+    // Whether the series was added from Newt Discover page
+    type: Boolean,
+    default: false,
+  },
+  // Newt series id, creator ids, and all newt content ids in the series
+  newtInfo: {
+    newtSeriesId: {
+      type: Schema.Types.ObjectId,
+    },
+    newtCreatorIds: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    newtContentIds: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
+  },
   _user: {
     type: String,
     ref: "User",
