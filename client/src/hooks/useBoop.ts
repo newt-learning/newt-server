@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSpring } from "react-spring";
+import usePrefersReducedMotion from "./usePrefersReducedMotion";
 
 export interface BoopConfig {
   x?: number;
@@ -24,6 +25,8 @@ function useBoop({
     friction: 10,
   },
 }: BoopConfig) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   const [isBooped, setIsBooped] = useState(false);
 
   const style = useSpring({
@@ -53,7 +56,9 @@ function useBoop({
     setIsBooped(true);
   }, []);
 
-  return [style, trigger];
+  let appliedStyle = prefersReducedMotion ? {} : style;
+
+  return [appliedStyle, trigger];
 }
 
 export default useBoop;
