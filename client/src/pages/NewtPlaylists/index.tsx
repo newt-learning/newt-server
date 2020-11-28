@@ -11,6 +11,8 @@ import {
   ContentInbox,
   formatNewtPlaylist,
 } from "../../components";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./NewtPlaylists.module.css";
 
@@ -23,6 +25,10 @@ const NewtPlaylistPage = () => {
 
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
   const [createPlaylistFromNewtPlaylist] = useCreatePlaylistFromNewtPlaylist();
+
+  useMetaTags({
+    title: data?.name ? `${data.name} Playlist / Newt` : "Discover / Newt",
+  });
 
   // Handler to add newt playlist to user library
   const handleAddNewtPlaylist = async () => {

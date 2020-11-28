@@ -13,10 +13,16 @@ import {
   Badge,
   getFirstThreeThumbnailsForSeries,
 } from "../../components";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
+  useMetaTags({
+    title: "Dashboard / Newt",
+  });
+
   const { data, isLoading, isError } = useFetchAllContentAndSeries();
 
   // Filter out content in progress (currently learning) + order by last updated

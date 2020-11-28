@@ -10,6 +10,8 @@ import {
   ContentInbox,
   formatNewtDiscoverSeries,
 } from "../../components";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Series.module.css";
 
@@ -23,6 +25,10 @@ const SeriesPage = () => {
   const { data, isLoading, isError } = useFetchNewtSeriesBySlug(seriesSlug);
   // Function to add series to Library
   const [createSeries] = useCreateSeries();
+
+  useMetaTags({
+    title: data?.name ? `${data.name} / Newt` : `Discover / Newt`,
+  });
 
   const handleAddNewtSeriesToLibrary = async () => {
     const formattedSeries = formatNewtDiscoverSeries(data);

@@ -7,10 +7,16 @@ import LastCallToActionSection from "./LastCallToActionSection";
 // Components
 import { Navbar, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Landing.module.css";
 
 const LandingPage = () => {
+  useMetaTags({
+    title: "Newt",
+  });
+
   return (
     <div className={styles.App}>
       <Navbar variant="landing" />

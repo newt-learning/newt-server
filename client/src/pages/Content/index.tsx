@@ -17,6 +17,8 @@ import {
 // Sections
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
@@ -42,6 +44,15 @@ const ContentPage = () => {
     contentNameSlug
   );
   const [createContent] = useCreateContentV2();
+
+  useMetaTags({
+    title:
+      data?.name && data?.contentCreators
+        ? `${data.name} by ${data.contentCreators.map(
+            (creator: any) => creator?.name
+          )} / Newt`
+        : "Discover / Newt",
+  });
 
   const {
     data: quizData,

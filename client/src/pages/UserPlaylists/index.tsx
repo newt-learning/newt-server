@@ -15,6 +15,8 @@ import {
 import PlaylistCard from "./PlaylistCard";
 import PlaylistForm from "./PlaylistForm";
 import Modal from "react-bootstrap/Modal";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Playlists.module.css";
 
@@ -29,6 +31,10 @@ interface CreatePlaylistValues {
 }
 
 const PlaylistsPage = () => {
+  useMetaTags({
+    title: "Playlists / Newt",
+  });
+
   const [showCreateModal, setShowCreateModal] = useState(false);
   const { addToast } = useToasts();
 

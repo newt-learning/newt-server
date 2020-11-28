@@ -10,10 +10,16 @@ import {
 import Shelf from "./Shelf";
 // Helpers
 import { filterAndOrderContentByShelf } from "./helpers";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Shelves.module.css";
 
 const ShelvesPage = () => {
+  useMetaTags({
+    title: "Shelves / Newt",
+  });
+
   const { data: allData, isLoading } = useFetchAllContentAndSeries();
 
   const currentlyLearningItems = filterAndOrderContentByShelf(
