@@ -152,6 +152,10 @@
     color: white;
     font-weight: 600;
   }
+
+  .rightArrow {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 640px) {

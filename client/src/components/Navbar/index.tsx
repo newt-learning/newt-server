@@ -96,7 +96,7 @@ const Navbar = ({ variant }: NavbarProps) => {
                 <Boop disableTrigger overrideStyle={boopStyle}>
                   <ShiftBy y={-1}>
                     <FiArrowRight
-                      size={20}
+                      size={21}
                       className={cx({
                         rightArrow: true,
                         landingRightArrow: variant === "landing",
