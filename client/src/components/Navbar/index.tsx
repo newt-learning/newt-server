@@ -70,30 +70,27 @@ const Navbar = ({ variant }: NavbarProps) => {
           </NavLink>
         </BootstrapNav>
         {isAuthenticated ? (
-          <div>
-            <NavLink
-              to="/dashboard"
+          <div className={styles.rightNav}>
+            <NavLink to="/dashboard" style={{ marginRight: "1rem" }}>
+              <Button
+                className={cx({
+                  signInBtn: true,
+                  landingSignInBtn: variant === "landing",
+                })}
+              >
+                Go to Dashboard
+              </Button>
+            </NavLink>
+            <div
               className={cx({
                 navLink: true,
+                logout: true,
                 landingNavLink: variant === "landing",
-                toDash: true,
-              })}
-              activeClassName={cx({
-                activeNavLink: true,
-                landingActiveNavLink: variant === "landing",
-              })}
-            >
-              Go to Dashboard
-            </NavLink>
-            <Button
-              className={cx({
-                signInBtn: true,
-                landingSignInBtn: variant === "landing",
               })}
               onClick={handleSignOut}
             >
               Log out
-            </Button>
+            </div>
           </div>
         ) : (
           <NavLink to="/login">
