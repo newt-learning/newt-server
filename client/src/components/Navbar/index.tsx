@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames/bind";
+import { useToasts } from "react-toast-notifications";
 // Context
 import { useData } from "../../context/AuthContext";
 // Components
@@ -21,6 +22,13 @@ const Navbar = ({ variant }: NavbarProps) => {
     state: { exists: isAuthenticated },
     signOut,
   } = useData();
+
+  const { addToast } = useToasts();
+
+  const handleSignOut = async () => {
+    await signOut();
+    addToast("Successfully signed out", { appearance: "success" });
+  };
 
   return (
     <BootstrapNavbar
@@ -82,7 +90,7 @@ const Navbar = ({ variant }: NavbarProps) => {
                 signInBtn: true,
                 landingSignInBtn: variant === "landing",
               })}
-              onClick={signOut}
+              onClick={handleSignOut}
             >
               Log out
             </Button>
