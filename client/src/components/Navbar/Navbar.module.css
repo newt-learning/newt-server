@@ -64,6 +64,13 @@
   align-items: center;
 }
 
+.rightArrow {
+  margin-left: 0.25rem;
+}
+.landingRightArrow {
+  color: white;
+}
+
 .signInBtn {
   background-color: white;
   color: var(--gray-700);
@@ -86,6 +93,9 @@
 
 .landingSignInBtn:hover {
   background-color: white;
+  color: var(--newtBlue-500);
+}
+.landingSignInBtn:hover .landingRightArrow {
   color: var(--newtBlue-500);
 }
 

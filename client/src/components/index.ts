@@ -24,6 +24,7 @@ export { default as OptionsDropdown } from "./OptionsDropdown";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as QuizModal } from "./QuizModal";
+export { default as ShiftBy } from "./ShiftBy";
 export { default as Sidebar } from "./Sidebar";
 export { SideNavItem, SideNavLink } from "./SideNav";
 export { default as StackedImages } from "./StackedImages";

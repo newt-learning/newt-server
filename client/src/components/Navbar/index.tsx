@@ -1,13 +1,17 @@
 import React from "react";
 import classNames from "classnames/bind";
 import { useToasts } from "react-toast-notifications";
+import { animated } from "react-spring";
 // Context
 import { useData } from "../../context/AuthContext";
 // Components
-import Button from "../Button";
+import { Button, ShiftBy } from "..";
 import { NavLink } from "react-router-dom";
 import { default as BootstrapNavbar } from "react-bootstrap/Navbar";
 import { default as BootstrapNav } from "react-bootstrap/Nav";
+import { FiArrowRight } from "react-icons/fi";
+// Hooks
+import { useBoop } from "../../hooks";
 // Styling
 import styles from "./Navbar.module.css";
 
@@ -22,6 +26,8 @@ const Navbar = ({ variant }: NavbarProps) => {
     state: { exists: isAuthenticated },
     signOut,
   } = useData();
+
+  const [boopStyle, trigger] = useBoop({ x: 4, timing: 200 });
 
   const { addToast } = useToasts();
 
@@ -71,14 +77,37 @@ const Navbar = ({ variant }: NavbarProps) => {
         </BootstrapNav>
         {isAuthenticated ? (
           <div className={styles.rightNav}>
-            <NavLink to="/dashboard" style={{ marginRight: "1rem" }}>
+            <NavLink
+              to="/dashboard"
+              style={{
+                display: "flex",
+                flexWrap: "nowrap",
+                marginRight: "1rem",
+              }}
+            >
               <Button
                 className={cx({
                   signInBtn: true,
                   landingSignInBtn: variant === "landing",
                 })}
+                style={{
+                  display: "flex",
+                }}
+                //@ts-ignore
+                onMouseEnter={trigger}
               >
                 Go to Dashboard
+                <animated.span style={boopStyle}>
+                  <ShiftBy y={-1}>
+                    <FiArrowRight
+                      size={20}
+                      className={cx({
+                        rightArrow: true,
+                        landingRightArrow: variant === "landing",
+                      })}
+                    />
+                  </ShiftBy>
+                </animated.span>
               </Button>
             </NavLink>
             <div

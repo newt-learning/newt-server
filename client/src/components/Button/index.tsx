@@ -20,6 +20,9 @@ interface ButtonProps {
   isDisabled?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  onMouseEnter?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 }
 
 let cx = classnames.bind(styles);
@@ -33,6 +36,7 @@ const Button = ({
   isDisabled,
   className,
   style,
+  onMouseEnter,
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
     switch (category) {
@@ -65,6 +69,7 @@ const Button = ({
         }
       )}
       style={style}
+      onMouseEnter={onMouseEnter}
     >
       {isLoading ? (
         <div className={styles.spinnerContainer}>
