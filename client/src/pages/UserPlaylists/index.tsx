@@ -33,16 +33,16 @@ const PlaylistsPage = () => {
   const { addToast } = useToasts();
 
   const { data, status, error } = useFetchAllPlaylists();
-  const [createPlaylist, { error: createPlaylistError }] = useCreatePlaylist({
-    onSuccess: () => addToast("Playlist created", { appearance: "success" }),
-    onError: () =>
-      addToast("Sorry, there was an error creating the playlist", {
-        appearance: "error",
-      }),
-  });
+  const [createPlaylist, { error: createPlaylistError }] = useCreatePlaylist();
 
   const handleCreatePlaylist = (values: CreatePlaylistValues) => {
-    createPlaylist(values);
+    createPlaylist(values, {
+      onSuccess: () => addToast("Playlist created", { appearance: "success" }),
+      onError: () =>
+        addToast("Sorry, there was an error creating the playlist", {
+          appearance: "error",
+        }),
+    });
     setShowCreateModal(false);
   };
 

@@ -1,10 +1,5 @@
 import newtApi from "./newtApi";
-import {
-  useQuery,
-  useMutation,
-  queryCache,
-  MutationOptions,
-} from "react-query";
+import { useQuery, useMutation, queryCache } from "react-query";
 
 interface PlaylistData {
   name: string;
@@ -68,12 +63,9 @@ export function useFetchAllPlaylists() {
 export function useFetchPlaylist(playlistId: string) {
   return useQuery(["playlist", playlistId], fetchPlaylist);
 }
-export function useCreatePlaylist(
-  options?: MutationOptions<void, PlaylistData, Error, unknown> | undefined
-) {
+export function useCreatePlaylist() {
   return useMutation(createPlaylist, {
     onSettled: () => queryCache.invalidateQueries("playlists"),
-    ...options,
   });
 }
 export function useCreatePlaylistFromNewtPlaylist() {
