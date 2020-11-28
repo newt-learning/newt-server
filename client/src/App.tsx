@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastProvider } from "react-toast-notifications";
 // Context
@@ -7,8 +7,7 @@ import {
   useData as useAuthData,
 } from "./context/AuthContext";
 import { Provider as SidebarProvider } from "./context/SidebarContext";
-// Section
-import NewtWebApp from "./NewtWebApp";
+import { Loader } from "./components";
 // Pages
 import {
   LandingPage,
@@ -18,6 +17,21 @@ import {
   SeriesPage,
   LoginPage,
 } from "./pages";
+// Section -- code split the authenticated section (the web app)
+const NewtWebApp = lazy(() => import("./NewtWebApp"));
+
+const FallbackLoader = () => (
+  <div
+    style={{
+      height: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <Loader />
+  </div>
+);
 
 // Routes in app that don't require authentication
 const NoAuthRequiredSection = () => {
@@ -48,30 +62,32 @@ const App = () => {
   }, []);
 
   return (
-    <Switch>
-      <Route
-        path={[
-          "/dashboard",
-          "/add-content",
-          "/shelves",
-          "/playlists",
-          "/stats",
-          "/profile",
-        ]}
-        component={NewtWebApp}
-      />
-      <Route
-        path={[
-          "/",
-          "/login",
-          "/discover",
-          "/:creator/content/:contentNameSlug",
-          "/:creator/series/:seriesSlug",
-          "/:creator/playlists/:playlistSlug",
-        ]}
-        component={NoAuthRequiredSection}
-      />
-    </Switch>
+    <Suspense fallback={<FallbackLoader />}>
+      <Switch>
+        <Route
+          path={[
+            "/dashboard",
+            "/add-content",
+            "/shelves",
+            "/playlists",
+            "/stats",
+            "/profile",
+          ]}
+          component={NewtWebApp}
+        />
+        <Route
+          path={[
+            "/",
+            "/login",
+            "/discover",
+            "/:creator/content/:contentNameSlug",
+            "/:creator/series/:seriesSlug",
+            "/:creator/playlists/:playlistSlug",
+          ]}
+          component={NoAuthRequiredSection}
+        />
+      </Switch>
+    </Suspense>
   );
 };
 
