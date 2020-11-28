@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./EnvironmentSection.module.css";
 
 const EnvironmentSection = () => {
@@ -36,31 +37,35 @@ const EnvironmentSection = () => {
           alt="Newt data flow graphic"
         />
         <div className={styles.flowEndpointContainer}>
-          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint1}`}>
-            <h3
-              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle1}`}
-            >
-              Discover
-            </h3>
+          <div id={styles["discover-endpoint"]} className={styles.flowEndpoint}>
+            <Link to={"/discover"}>
+              <h3
+                id={styles["discover-title"]}
+                className={styles.flowEndpointTitle}
+              >
+                Discover
+              </h3>
+            </Link>
             <p className={styles.flowEndpointText}>
               Get personalized recommendations across all kinds of media.
             </p>
           </div>
-          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint2}`}>
-            <h3
-              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle2}`}
-            >
-              Track
-            </h3>
+          <div id={styles["track-endpoint"]} className={styles.flowEndpoint}>
+            <Link to="/stats">
+              <h3
+                id={styles["track-title"]}
+                className={styles.flowEndpointTitle}
+              >
+                Track
+              </h3>
+            </Link>
             <p className={styles.flowEndpointText}>
               See your reading, watching, and listening stats and follow your
               progress.
             </p>
           </div>
-          <div className={`${styles.flowEndpoint} ${styles.flowEndpoint3}`}>
-            <h3
-              className={`${styles.flowEndpointTitle} ${styles.flowEndpointTitle3}`}
-            >
+          <div id={styles["learn-endpoint"]} className={styles.flowEndpoint}>
+            <h3 id={styles["learn-title"]} className={styles.flowEndpointTitle}>
               Learn
             </h3>
             <p className={styles.flowEndpointText}>
