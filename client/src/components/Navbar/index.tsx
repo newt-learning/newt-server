@@ -1,11 +1,10 @@
 import React from "react";
 import classNames from "classnames/bind";
 import { useToasts } from "react-toast-notifications";
-import { animated } from "react-spring";
 // Context
 import { useData } from "../../context/AuthContext";
 // Components
-import { Button, ShiftBy } from "..";
+import { Button, ShiftBy, Boop } from "..";
 import { NavLink } from "react-router-dom";
 import { default as BootstrapNavbar } from "react-bootstrap/Navbar";
 import { default as BootstrapNav } from "react-bootstrap/Nav";
@@ -90,14 +89,11 @@ const Navbar = ({ variant }: NavbarProps) => {
                   signInBtn: true,
                   landingSignInBtn: variant === "landing",
                 })}
-                style={{
-                  display: "flex",
-                }}
                 //@ts-ignore
                 onMouseEnter={trigger}
               >
                 Go to Dashboard
-                <animated.span style={boopStyle}>
+                <Boop disableTrigger overrideStyle={boopStyle}>
                   <ShiftBy y={-1}>
                     <FiArrowRight
                       size={20}
@@ -107,7 +103,7 @@ const Navbar = ({ variant }: NavbarProps) => {
                       })}
                     />
                   </ShiftBy>
-                </animated.span>
+                </Boop>
               </Button>
             </NavLink>
             <div

@@ -72,6 +72,7 @@
 }
 
 .signInBtn {
+  display: flex;
   background-color: white;
   color: var(--gray-700);
   font-size: var(--FS-base);
