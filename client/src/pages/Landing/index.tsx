@@ -2,7 +2,6 @@ import React from "react";
 // Sections
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
-import LastCallToActionSection from "./LastCallToActionSection";
 // Components
 import { Navbar, Button, Boop, ShiftBy, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
@@ -52,7 +51,29 @@ const LandingPage = () => {
       </section>
       <EnvironmentSection />
       <FeaturesSection />
-      <LastCallToActionSection />
+      <section className={styles.lastCTA}>
+        <h2 style={{ marginBottom: "3rem" }}>Supercharge your learning</h2>
+        <Link to="/dashboard" className={styles.getStartedLink}>
+          <Button
+            className={styles.getStartedBtn}
+            style={{
+              color: "white",
+              fontSize: "var(--FS-base)",
+              background:
+                "linear-gradient(135deg, var(--newtBlue-500) 40%, #3c96ff 100%)",
+            }}
+            //@ts-ignore
+            onMouseEnter={trigger}
+          >
+            Get Started
+            <Boop disableTrigger overrideStyle={iconBoop}>
+              <ShiftBy y={-1}>
+                <FiArrowRight size={16} className={styles.rightArrow} />
+              </ShiftBy>
+            </Boop>
+          </Button>
+        </Link>
+      </section>
       <Footer />
     </div>
   );

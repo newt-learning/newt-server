@@ -67,6 +67,16 @@
   margin-left: 0.5rem;
 }
 
+.lastCTA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 2rem;
+}
+.lastCTA h2 {
+  color: var(--gray-800);
+}
+
 @media screen and (min-width: 640px) {
   .mainContainer {
     display: flex;
@@ -102,6 +112,15 @@
 
   .getStartedLink {
     width: 225px;
+  }
+
+  .lastCTA {
+    padding: 7rem 2rem;
+  }
+
+  .lastCTA h2 {
+    font-size: var(--FS-3xl);
+    font-weight: 600;
   }
 }
 
