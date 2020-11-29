@@ -23,6 +23,7 @@ export const MockPhone = ({
     >
       <img
         src={imageUrl}
+        height={462}
         alt={altText ? altText : "Screenshot on Newt mobile app"}
         className={`${styles.screenshot} ${
           screenshotStyle ? screenshotStyle : ""

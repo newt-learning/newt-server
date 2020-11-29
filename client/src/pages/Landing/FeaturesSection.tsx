@@ -140,6 +140,7 @@ const FeaturesSection = () => {
               ) : (
                 <img
                   src={feature.graphic.imageUrl}
+                  height={400}
                   alt={feature.graphic.altText}
                   className={styles.discoverImage}
                 />
