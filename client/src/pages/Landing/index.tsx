@@ -24,7 +24,7 @@ const LandingPage = () => {
           <h1 className={styles.title}>Organize everything you're learning</h1>
           <p className={styles.subtitle}>
             Everything you want to learn from &mdash; books, videos, online
-            courses, podcasts, interactive games &mdash; all in one place
+            courses, podcasts and more &mdash; in one place
           </p>
           <GetStartedButton />
         </div>

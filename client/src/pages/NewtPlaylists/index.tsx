@@ -5,6 +5,7 @@ import { useToasts } from "react-toast-notifications";
 import { useFetchNewtPlaylistBySlug } from "../../api/newtContent";
 import { useCreatePlaylistFromNewtPlaylist } from "../../api/playlists";
 // Components
+import { Link } from "react-router-dom";
 import {
   Navbar,
   Badge,
@@ -39,9 +40,24 @@ const NewtPlaylistPage = () => {
       {
         // Toast notifications on success and error
         onSuccess: () =>
-          addToast(`${data?.name} Playlist has been added to your Library`, {
-            appearance: "success",
-          }),
+          addToast(
+            <div>
+              {`${data?.name} Playlist has been added to your `}
+              <Link
+                to="/playlists"
+                style={{
+                  color: "var(--lightGreen-900)",
+                  textDecoration: "underline",
+                  fontWeight: 600,
+                }}
+              >
+                Library
+              </Link>
+            </div>,
+            {
+              appearance: "success",
+            }
+          ),
         onError: () =>
           addToast(
             "Sorry, there was an error adding this playlist. Please try again.",

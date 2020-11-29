@@ -7,6 +7,7 @@ import {
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
+import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import {
   Navbar,
@@ -83,9 +84,24 @@ const ContentPage = () => {
     await createContent(formattedContent, {
       // Toast notifications on success and error
       onSuccess: () =>
-        addToast(`${data?.name} has been added to your Library`, {
-          appearance: "success",
-        }),
+        addToast(
+          <div>
+            {`${data?.name} has been added to your `}
+            <Link
+              to="/shelves/want-to-learn"
+              style={{
+                color: "var(--lightGreen-900)",
+                textDecoration: "underline",
+                fontWeight: 600,
+              }}
+            >
+              Want to Learn shelf
+            </Link>
+          </div>,
+          {
+            appearance: "success",
+          }
+        ),
       onError: () =>
         addToast(
           `Sorry, there was an error adding the ${
