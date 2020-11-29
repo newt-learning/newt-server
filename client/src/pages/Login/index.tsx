@@ -21,7 +21,7 @@ const LoginPage = () => {
   const redirectTo = location.state?.redirectTo?.pathname || "/dashboard";
 
   return (
-    <section>
+    <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.panel}>
