@@ -3,13 +3,11 @@ import React from "react";
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
 // Components
-import { Navbar, Button, Boop, ShiftBy, Footer } from "../../components";
+import { Navbar, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
-import { FiArrowRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import GetStartedButton from "./GetStartedButton";
 // Hooks
-import useMetaTags from "../../hooks/useMetaTags";
-import { useBoop } from "../../hooks";
+import { useMetaTags } from "../../hooks";
 // Styling
 import styles from "./Landing.module.css";
 
@@ -17,8 +15,6 @@ const LandingPage = () => {
   useMetaTags({
     title: "Newt",
   });
-
-  const [iconBoop, trigger] = useBoop({ x: 4, timing: 200 });
 
   return (
     <div className={styles.App}>
@@ -30,20 +26,7 @@ const LandingPage = () => {
             Everything you want to learn from &mdash; books, videos, online
             courses, podcasts, interactive games &mdash; all in one place
           </p>
-          <Link to="/dashboard" className={styles.getStartedLink}>
-            <Button
-              className={styles.getStartedBtn}
-              //@ts-ignore
-              onMouseEnter={trigger}
-            >
-              Get Started
-              <Boop disableTrigger overrideStyle={iconBoop}>
-                <ShiftBy y={-1}>
-                  <FiArrowRight size={16} className={styles.rightArrow} />
-                </ShiftBy>
-              </Boop>
-            </Button>
-          </Link>
+          <GetStartedButton />
         </div>
         <div className={styles.phoneGraphicContainer}>
           <PhoneGraphic />
@@ -53,26 +36,7 @@ const LandingPage = () => {
       <FeaturesSection />
       <section className={styles.lastCTA}>
         <h2 style={{ marginBottom: "3rem" }}>Supercharge your learning</h2>
-        <Link to="/dashboard" className={styles.getStartedLink}>
-          <Button
-            className={styles.getStartedBtn}
-            style={{
-              color: "white",
-              fontSize: "var(--FS-base)",
-              background:
-                "linear-gradient(135deg, var(--newtBlue-500) 40%, #3c96ff 100%)",
-            }}
-            //@ts-ignore
-            onMouseEnter={trigger}
-          >
-            Get Started
-            <Boop disableTrigger overrideStyle={iconBoop}>
-              <ShiftBy y={-1}>
-                <FiArrowRight size={16} className={styles.rightArrow} />
-              </ShiftBy>
-            </Boop>
-          </Button>
-        </Link>
+        <GetStartedButton variant="last" />
       </section>
       <Footer />
     </div>

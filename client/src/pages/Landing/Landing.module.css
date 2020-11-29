@@ -48,25 +48,6 @@
   margin-bottom: 3rem;
 }
 
-.getStartedLink {
-  width: 100%;
-}
-
-.getStartedBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--newtBlue-50);
-  border: 0px;
-  color: var(--gray-800);
-}
-
-.rightArrow {
-  margin-left: 0.5rem;
-}
-
 .lastCTA {
   display: flex;
   flex-direction: column;
@@ -108,10 +89,6 @@
     font-size: var(--FS-5xl);
     text-align: start;
     margin-bottom: 3rem;
-  }
-
-  .getStartedLink {
-    width: 225px;
   }
 
   .lastCTA {
