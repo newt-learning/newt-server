@@ -1,6 +1,7 @@
 {
   "short_name": "Newt",
   "name": "Newt",
+  "description": "Organize your learning -- all your books, videos, and online courses in one place. Discover your next favourite thing to learn.",
   "icons": [
     {
       "src": "favicon.ico",

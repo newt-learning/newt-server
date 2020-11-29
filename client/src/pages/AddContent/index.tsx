@@ -23,6 +23,8 @@ import YoutubeConfirmation from "./YoutubeConfirmation";
 import BookSearch from "./BookSearch";
 // Types
 import { TabPaneField } from "../../components/TabPane";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Helpers
 import {
   validateYoutubeVideoUrl,
@@ -35,9 +37,14 @@ import {
 type OnConfirmationPageState = "video" | "series" | null;
 
 const AddContentPage = () => {
-  const [onConfirmationPage, setOnConfirmationPage] = useState<
-    OnConfirmationPageState
-  >(null);
+  useMetaTags({
+    title: "Add Content / Newt",
+  });
+
+  const [
+    onConfirmationPage,
+    setOnConfirmationPage,
+  ] = useState<OnConfirmationPageState>(null);
   const [youtubeContent, setYoutubeContent] = useState<any>(null);
 
   // Toasts
