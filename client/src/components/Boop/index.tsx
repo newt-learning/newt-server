@@ -12,7 +12,7 @@ interface BoopProps {
 const Boop = ({
   children,
   boopConfig,
-  disableTrigger,
+  disableTrigger = false,
   overrideStyle,
 }: BoopProps) => {
   const [style, trigger] = useBoop(boopConfig ?? {});
@@ -26,10 +26,6 @@ const Boop = ({
       {children}
     </animated.span>
   );
-};
-
-Boop.defaultProps = {
-  disableTrigger: false,
 };
 
 export default Boop;

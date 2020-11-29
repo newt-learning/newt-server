@@ -36,10 +36,35 @@
 }
 
 .title {
-  font-size: var(--FS-3xl);
+  font-size: var(--FS-4xl);
   color: white;
   margin-bottom: 2rem;
   text-align: center;
+}
+
+.subtitle {
+  font-size: var(--FS-lg);
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.getStartedLink {
+  width: 100%;
+}
+
+.getStartedBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--newtBlue-50);
+  border: 0px;
+  color: var(--gray-800);
+}
+
+.rightArrow {
+  margin-left: 0.5rem;
 }
 
 @media screen and (min-width: 640px) {
@@ -61,7 +86,7 @@
   }
 
   .titleContainer {
-    margin-top: 200px;
+    margin-top: 175px;
     width: 50%;
     min-width: 400px;
     justify-content: center;
@@ -73,6 +98,10 @@
     font-size: var(--FS-5xl);
     text-align: start;
     margin-bottom: 3rem;
+  }
+
+  .getStartedLink {
+    width: 225px;
   }
 }
 
