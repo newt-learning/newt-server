@@ -5,11 +5,14 @@ import { useToasts } from "react-toast-notifications";
 import { useFetchNewtSeriesBySlug } from "../../api/newtContent";
 import { useCreateSeries } from "../../api/content";
 // Components
+import { Link } from "react-router-dom";
 import {
   Navbar,
   ContentInbox,
   formatNewtDiscoverSeries,
 } from "../../components";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Series.module.css";
 
@@ -24,15 +27,34 @@ const SeriesPage = () => {
   // Function to add series to Library
   const [createSeries] = useCreateSeries();
 
+  useMetaTags({
+    title: data?.name ? `${data.name} / Newt` : `Discover / Newt`,
+  });
+
   const handleAddNewtSeriesToLibrary = async () => {
     const formattedSeries = formatNewtDiscoverSeries(data);
 
     await createSeries(formattedSeries, {
       // Toast notifications on success and error
       onSuccess: () =>
-        addToast(`${data?.name} Series has been added to your Library`, {
-          appearance: "success",
-        }),
+        addToast(
+          <div>
+            {`${data?.name} Series has been added to your `}
+            <Link
+              to="/shelves/want-to-learn"
+              style={{
+                color: "var(--lightGreen-900)",
+                textDecoration: "underline",
+                fontWeight: 600,
+              }}
+            >
+              Want to Learn shelf
+            </Link>
+          </div>,
+          {
+            appearance: "success",
+          }
+        ),
       onError: () =>
         addToast(
           "Sorry, there was an error adding the video series. Please try again.",

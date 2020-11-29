@@ -12,6 +12,8 @@ import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
 import { TabPaneField } from "../../components/TabPane";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // API
 import { useStatsByPeriod, StatsPeriodType } from "../../api/stats";
 import styles from "./Stats.module.css";
@@ -67,6 +69,10 @@ const BooksPane = () => {
 };
 
 const StatsPage = () => {
+  useMetaTags({
+    title: "Stats / Newt",
+  });
+
   const tabFields: TabPaneField[] = [
     {
       id: "books",

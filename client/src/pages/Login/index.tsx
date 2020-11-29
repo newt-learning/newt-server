@@ -3,10 +3,16 @@ import { useLocation } from "react-router-dom";
 // Components
 import { Navbar } from "../../components";
 import GoogleSignInButton from "./GoogleSignInButton";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Login.module.css";
 
 const LoginPage = () => {
+  useMetaTags({
+    title: "Sign In / Newt",
+  });
+
   // Destructuring from state throws type error, so setting as any
   const location: any = useLocation();
 
@@ -15,7 +21,7 @@ const LoginPage = () => {
   const redirectTo = location.state?.redirectTo?.pathname || "/dashboard";
 
   return (
-    <section>
+    <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.panel}>

@@ -8,6 +8,8 @@ import {
   Boop,
 } from "../../components";
 import { TabPaneField } from "../../components/TabPane";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 
 const AccountTabPane = ({ userInfo }: { userInfo: any }) => (
   <div
@@ -42,6 +44,12 @@ const ProfilePage = () => {
   const {
     state: { userInfo },
   } = useAuthData();
+
+  useMetaTags({
+    title: userInfo?.displayName
+      ? `${userInfo.displayName} / Newt`
+      : "Profile / Newt",
+  });
 
   let tabFields: TabPaneField[] = [
     {

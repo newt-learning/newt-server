@@ -5,12 +5,15 @@ import { useToasts } from "react-toast-notifications";
 import { useFetchNewtPlaylistBySlug } from "../../api/newtContent";
 import { useCreatePlaylistFromNewtPlaylist } from "../../api/playlists";
 // Components
+import { Link } from "react-router-dom";
 import {
   Navbar,
   Badge,
   ContentInbox,
   formatNewtPlaylist,
 } from "../../components";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./NewtPlaylists.module.css";
 
@@ -24,6 +27,10 @@ const NewtPlaylistPage = () => {
   const { data, isLoading, isError } = useFetchNewtPlaylistBySlug(playlistSlug);
   const [createPlaylistFromNewtPlaylist] = useCreatePlaylistFromNewtPlaylist();
 
+  useMetaTags({
+    title: data?.name ? `${data.name} Playlist / Newt` : "Discover / Newt",
+  });
+
   // Handler to add newt playlist to user library
   const handleAddNewtPlaylist = async () => {
     const { playlistData, playlistContentData } = formatNewtPlaylist(data);
@@ -33,9 +40,24 @@ const NewtPlaylistPage = () => {
       {
         // Toast notifications on success and error
         onSuccess: () =>
-          addToast(`${data?.name} Playlist has been added to your Library`, {
-            appearance: "success",
-          }),
+          addToast(
+            <div>
+              {`${data?.name} Playlist has been added to your `}
+              <Link
+                to="/playlists"
+                style={{
+                  color: "var(--lightGreen-900)",
+                  textDecoration: "underline",
+                  fontWeight: 600,
+                }}
+              >
+                Library
+              </Link>
+            </div>,
+            {
+              appearance: "success",
+            }
+          ),
         onError: () =>
           addToast(
             "Sorry, there was an error adding this playlist. Please try again.",

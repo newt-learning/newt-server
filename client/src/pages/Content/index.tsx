@@ -7,6 +7,7 @@ import {
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
+import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import {
   Navbar,
@@ -17,6 +18,8 @@ import {
 // Sections
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
@@ -42,6 +45,15 @@ const ContentPage = () => {
     contentNameSlug
   );
   const [createContent] = useCreateContentV2();
+
+  useMetaTags({
+    title:
+      data?.name && data?.contentCreators
+        ? `${data.name} by ${data.contentCreators.map(
+            (creator: any) => creator?.name
+          )} / Newt`
+        : "Discover / Newt",
+  });
 
   const {
     data: quizData,
@@ -72,9 +84,24 @@ const ContentPage = () => {
     await createContent(formattedContent, {
       // Toast notifications on success and error
       onSuccess: () =>
-        addToast(`${data?.name} has been added to your Library`, {
-          appearance: "success",
-        }),
+        addToast(
+          <div>
+            {`${data?.name} has been added to your `}
+            <Link
+              to="/shelves/want-to-learn"
+              style={{
+                color: "var(--lightGreen-900)",
+                textDecoration: "underline",
+                fontWeight: 600,
+              }}
+            >
+              Want to Learn shelf
+            </Link>
+          </div>,
+          {
+            appearance: "success",
+          }
+        ),
       onError: () =>
         addToast(
           `Sorry, there was an error adding the ${

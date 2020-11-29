@@ -1,12 +1,16 @@
 import React from "react";
 import classNames from "classnames/bind";
+import { useToasts } from "react-toast-notifications";
 // Context
 import { useData } from "../../context/AuthContext";
 // Components
-import Button from "../Button";
+import { Button, ShiftBy, Boop } from "..";
 import { NavLink } from "react-router-dom";
 import { default as BootstrapNavbar } from "react-bootstrap/Navbar";
 import { default as BootstrapNav } from "react-bootstrap/Nav";
+import { FiArrowRight } from "react-icons/fi";
+// Hooks
+import { useBoop } from "../../hooks";
 // Styling
 import styles from "./Navbar.module.css";
 
@@ -21,6 +25,15 @@ const Navbar = ({ variant }: NavbarProps) => {
     state: { exists: isAuthenticated },
     signOut,
   } = useData();
+
+  const [boopStyle, trigger] = useBoop({ x: 4, timing: 200 });
+
+  const { addToast } = useToasts();
+
+  const handleSignOut = async () => {
+    await signOut();
+    addToast("Successfully signed out", { appearance: "success" });
+  };
 
   return (
     <BootstrapNavbar
@@ -62,30 +75,47 @@ const Navbar = ({ variant }: NavbarProps) => {
           </NavLink>
         </BootstrapNav>
         {isAuthenticated ? (
-          <div>
+          <div className={styles.rightNav}>
             <NavLink
               to="/dashboard"
+              style={{
+                display: "flex",
+                flexWrap: "nowrap",
+                marginRight: "1rem",
+              }}
+            >
+              <Button
+                className={cx({
+                  signInBtn: true,
+                  landingSignInBtn: variant === "landing",
+                })}
+                //@ts-ignore
+                onMouseEnter={trigger}
+              >
+                Go to Dashboard
+                <Boop disableTrigger overrideStyle={boopStyle}>
+                  <ShiftBy y={-1}>
+                    <FiArrowRight
+                      size={21}
+                      className={cx({
+                        rightArrow: true,
+                        landingRightArrow: variant === "landing",
+                      })}
+                    />
+                  </ShiftBy>
+                </Boop>
+              </Button>
+            </NavLink>
+            <div
               className={cx({
                 navLink: true,
+                logout: true,
                 landingNavLink: variant === "landing",
-                toDash: true,
               })}
-              activeClassName={cx({
-                activeNavLink: true,
-                landingActiveNavLink: variant === "landing",
-              })}
-            >
-              Go to Dashboard
-            </NavLink>
-            <Button
-              className={cx({
-                signInBtn: true,
-                landingSignInBtn: variant === "landing",
-              })}
-              onClick={signOut}
+              onClick={handleSignOut}
             >
               Log out
-            </Button>
+            </div>
           </div>
         ) : (
           <NavLink to="/login">

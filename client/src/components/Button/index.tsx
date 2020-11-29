@@ -11,28 +11,23 @@ export declare type ButtonCategory =
   | "danger"
   | undefined;
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  type: "button" | "submit";
   onClick?: () => void;
   category?: ButtonCategory;
   isLoading?: boolean;
   isDisabled?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
 }
 
 let cx = classnames.bind(styles);
 
 const Button = ({
   children,
-  type,
   onClick,
   category,
   isLoading,
   isDisabled,
-  className,
-  style,
+  ...props
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
     switch (category) {
@@ -53,18 +48,17 @@ const Button = ({
 
   return (
     <button
-      type={type}
+      {...props}
       onClick={isDisabled ? undefined : onClick}
       className={cx(
         styles.btn,
         selectClassFromCategory(category),
         // Don't show custom button styling if it's disabled
-        isDisabled ? undefined : className,
+        isDisabled ? undefined : props.className,
         {
           disabledBtn: isDisabled,
         }
       )}
-      style={style}
     >
       {isLoading ? (
         <div className={styles.spinnerContainer}>
