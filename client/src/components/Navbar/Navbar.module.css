@@ -1,3 +1,5 @@
+/* Way too much CSS in here, particularly for Bootstrap collapsable navbar
+   Need to redo */
 .nav {
   display: flex;
   width: 100%;
@@ -5,8 +7,6 @@
   box-sizing: border-box;
   height: 65px;
   padding: 0 2rem;
-  align-items: center;
-  justify-content: space-between;
   border-bottom: 2px solid var(--gray-200);
 }
 
@@ -14,10 +14,6 @@
   height: 75px;
   background-color: inherit;
   border-bottom: 0px;
-}
-
-.logoContainer {
-  min-width: 50%;
 }
 
 .logo {
@@ -63,10 +59,109 @@
   color: white;
 }
 
+.rightNav {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.rightArrow {
+  margin-left: 0.25rem;
+}
+.landingRightArrow {
+  color: white;
+}
+
+.signInBtn {
+  display: flex;
+  background-color: white;
+  color: var(--gray-700);
+  font-size: var(--FS-base);
+  border: 2px solid var(--gray-600);
+}
+
+.signInBtn:hover {
+  background-color: var(--gray-600);
+  color: white;
+}
+
+.landingSignInBtn {
+  background-color: var(--newtBlue-500);
+  color: white;
+  font-size: var(--FS-base);
+  font-weight: 500;
+  border: 2px solid white;
+}
+
+.landingSignInBtn:hover {
+  background-color: white;
+  color: var(--newtBlue-500);
+}
+.landingSignInBtn:hover .landingRightArrow {
+  color: var(--newtBlue-500);
+}
+
+.toDash {
+  margin-right: 0.5rem;
+  font-size: var(--FS-base);
+}
+
+/* Bootstrap sm screen */
+@media screen and (max-width: 576px) {
+  .collapsedNavbar {
+    background-color: var(--newtBlue-700);
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  .rightNav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navLink {
+    color: white;
+    border-bottom: 0px;
+  }
+
+  .activeNavLink,
+  .navLink:hover {
+    color: white;
+    font-weight: 600;
+    border-bottom: 0px;
+  }
+
+  .signInBtn {
+    border: 0px;
+    padding: 0;
+    color: white;
+    background-color: var(--newtBlue-700);
+  }
+
+  .signInBtn:hover {
+    background-color: var(--newtBlue-700);
+    color: white;
+    font-weight: 600;
+  }
+
+  .landingSignInBtn {
+    background-color: var(--newtBlue-700);
+  }
+
+  .landingSignInBtn:hover {
+    background-color: var(--newtBlue-700);
+    color: white;
+    font-weight: 600;
+  }
+
+  .rightArrow {
+    display: none;
+  }
+}
+
 @media screen and (min-width: 640px) {
   .nav {
     padding: 0 4rem;
-    justify-content: flex-start;
   }
 
   .logo {
@@ -81,6 +176,19 @@
   .navLink {
     font-size: var(--FS-xl);
   }
+
+  .toDash {
+    margin-right: 1rem;
+    font-size: var(--FS-base);
+  }
+}
+
+.logout {
+  font-size: var(--FS-base);
+  cursor: pointer;
+}
+.logout:hover {
+  border-bottom: 0px;
 }
 
 @media screen and (min-width: 1440px) {

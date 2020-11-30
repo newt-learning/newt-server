@@ -1,0 +1,8 @@
+.container {
+  overflow-y: scroll;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+}

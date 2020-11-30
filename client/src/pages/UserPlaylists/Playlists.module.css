@@ -1,0 +1,38 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.backBtn:hover {
+  color: var(--hotPink-300);
+  cursor: pointer;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  margin: 1rem 0;
+  width: 70%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.create {
+  color: var(--lightGreen-500);
+  font-weight: 600;
+}
+
+.create:hover {
+  color: var(--lightGreen-600);
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -28,9 +28,14 @@
 }
 
 .thumbnail {
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   height: 45px;
   margin-right: 0.75rem;
+}
+
+.bookThumbnail {
+  border-radius: 0.15rem;
+  height: 55px;
 }
 
 @media screen and (min-width: 400px) {

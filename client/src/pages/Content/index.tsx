@@ -1,24 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 // API
 import {
   useFetchIndividualNewtContentBySlug,
   useFetchNewtQuiz,
 } from "../../api/newtContent";
 // Components
+import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import { Navbar, MainContainer, QuizModal } from "../../components";
+import {
+  Navbar,
+  MainContainer,
+  QuizModal,
+  formatNewtContent,
+} from "../../components";
 // Sections
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
+import { useCreateContentV2 } from "../../api/content";
 
 const ContentPage = () => {
   // Get content name slug from URL parameters
   // @ts-ignore
   const { contentNameSlug } = useParams();
+
+  // Toasts
+  const { addToast } = useToasts();
 
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [quiz, setQuiz] = useState(null);
@@ -31,6 +44,16 @@ const ContentPage = () => {
   const { data, isLoading, isError } = useFetchIndividualNewtContentBySlug(
     contentNameSlug
   );
+  const [createContent] = useCreateContentV2();
+
+  useMetaTags({
+    title:
+      data?.name && data?.contentCreators
+        ? `${data.name} by ${data.contentCreators.map(
+            (creator: any) => creator?.name
+          )} / Newt`
+        : "Discover / Newt",
+  });
 
   const {
     data: quizData,
@@ -55,6 +78,40 @@ const ContentPage = () => {
     setQuiz({ ...quiz, questions: results });
   };
 
+  const handleAddToLibrary = async () => {
+    const formattedContent = formatNewtContent(data);
+
+    await createContent(formattedContent, {
+      // Toast notifications on success and error
+      onSuccess: () =>
+        addToast(
+          <div>
+            {`${data?.name} has been added to your `}
+            <Link
+              to="/shelves/want-to-learn"
+              style={{
+                color: "var(--lightGreen-900)",
+                textDecoration: "underline",
+                fontWeight: 600,
+              }}
+            >
+              Want to Learn shelf
+            </Link>
+          </div>,
+          {
+            appearance: "success",
+          }
+        ),
+      onError: () =>
+        addToast(
+          `Sorry, there was an error adding the ${
+            data?.type ?? "content"
+          }. Please try again.`,
+          { appearance: "error" }
+        ),
+    });
+  };
+
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
       <Navbar />
@@ -69,17 +126,21 @@ const ContentPage = () => {
           <>
             <div className={styles.contentFlowContainer}>
               <ContentFlow
-                id={data.id}
-                title={data.name}
+                id={data?._id || data?.id}
+                title={data?.name}
                 authors={data?.contentCreators?.map(
                   (creator: any) => creator.name
                 )}
-                type={data.type}
+                type={data?.type}
+                shelf={data?.shelf}
+                startFinishDates={data.startFinishDates}
+                source={data?.source?.name || data?.source}
+                mediaId={data.source?.mediaId || data?.sourceId}
                 thumbnailUrl={data?.thumbnailUrl}
-                source={data.source}
-                mediaId={data.sourceId}
-                description={data.description}
-                hasQuiz={data.quiz?.id ? true : false}
+                // source={data.source}
+                // mediaId={data.sourceId}
+                description={data?.description}
+                hasQuiz={data?.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}
                 buttonText={
                   showReview
@@ -89,6 +150,8 @@ const ContentPage = () => {
                     : "Take the quiz"
                 }
                 isLoading={isLoading}
+                showOptionsDropdown={false}
+                onAddToLibrary={handleAddToLibrary}
               />
             </div>
             <div className={styles.contentInfoContainer}>

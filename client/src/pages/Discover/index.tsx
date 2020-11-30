@@ -8,8 +8,11 @@ import {
   useFetchNewtContent,
 } from "../../api/newtContent";
 // Components
+import { MainContainer, Navbar } from "../../components";
+import DiscoverContentCard from "./DiscoverContentCard";
 import SeriesCard from "../Series/SeriesCard";
-import { ContentCard, MainContainer, Navbar } from "../../components";
+// Hooks
+import useMetaTags from "../../hooks/useMetaTags";
 // Styling
 import styles from "./Discover.module.css";
 
@@ -52,6 +55,10 @@ const DiscoverPage = () => {
 
   const featuredSeries = !_.isEmpty(seriesData) ? seriesData[0] : null;
   const featuredPlaylist = !_.isEmpty(playlistData) ? playlistData[0] : null;
+
+  useMetaTags({
+    title: "Discover / Newt",
+  });
 
   return (
     <section style={{ display: "flex", flexDirection: "column" }}>
@@ -140,7 +147,7 @@ const DiscoverPage = () => {
               <h2 style={{ marginTop: "2.5rem" }}>Some Favourites</h2>
               <div className={styles.contentContainer}>
                 {contentData.map((content: any) => (
-                  <ContentCard
+                  <DiscoverContentCard
                     key={content?.id}
                     data={{
                       id: content?.id,

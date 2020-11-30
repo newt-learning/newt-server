@@ -1,23 +1,32 @@
 import React from "react";
 // Sections
-import LandingForm from "./LandingForm";
 import EnvironmentSection from "./EnvironmentSection";
 import FeaturesSection from "./FeaturesSection";
-import LastCallToActionSection from "./LastCallToActionSection";
 // Components
 import { Navbar, Footer } from "../../components";
 import PhoneGraphic from "./PhoneGraphic";
+import GetStartedButton from "./GetStartedButton";
+// Hooks
+import { useMetaTags } from "../../hooks";
 // Styling
 import styles from "./Landing.module.css";
 
 const LandingPage = () => {
+  useMetaTags({
+    title: "Newt",
+  });
+
   return (
     <div className={styles.App}>
       <Navbar variant="landing" />
       <section className={styles.mainContainer}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>Organize everything you're learning</h1>
-          <LandingForm />
+          <p className={styles.subtitle}>
+            Everything you want to learn from &mdash; books, videos, online
+            courses, podcasts and more &mdash; in one place
+          </p>
+          <GetStartedButton />
         </div>
         <div className={styles.phoneGraphicContainer}>
           <PhoneGraphic />
@@ -25,7 +34,10 @@ const LandingPage = () => {
       </section>
       <EnvironmentSection />
       <FeaturesSection />
-      <LastCallToActionSection />
+      <section className={styles.lastCTA}>
+        <h2 style={{ marginBottom: "3rem" }}>Supercharge your learning</h2>
+        <GetStartedButton variant="last" />
+      </section>
       <Footer />
     </div>
   );

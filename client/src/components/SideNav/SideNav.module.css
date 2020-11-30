@@ -1,0 +1,25 @@
+.navItem {
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--salmon-100);
+}
+
+.navItem:hover {
+  background-color: var(--salmon-100);
+  color: var(--gray-800);
+  cursor: pointer;
+}
+
+.navItem a[aria-selected="true"] {
+  background-color: var(--salmon-400);
+  border-color: var(--salmon-400);
+  color: white;
+}
+
+.navLink {
+  display: block;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  color: var(--darkGrey);
+}

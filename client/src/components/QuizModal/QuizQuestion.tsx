@@ -58,7 +58,7 @@ const QuizQuestion = ({
         {currentQuestion !== 1 && (
           <Button
             category="secondary"
-            style={styles.actionButton}
+            className={styles.actionButton}
             onClick={onClickBack}
           >
             Back
@@ -69,7 +69,7 @@ const QuizQuestion = ({
         {currentQuestion !== numQuestions ? (
           <Button
             category="primary"
-            style={styles.actionButton}
+            className={styles.actionButton}
             onClick={onClickNext}
           >
             Next
@@ -77,7 +77,7 @@ const QuizQuestion = ({
         ) : (
           <Button
             category="primary"
-            style={styles.actionButton}
+            className={styles.actionButton}
             onClick={onClickSummary}
             isDisabled={!isQuizComplete}
           >

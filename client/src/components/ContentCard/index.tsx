@@ -1,60 +1,164 @@
 import React from "react";
+import _ from "lodash";
+import moment from "moment";
 import classnames from "classnames/bind";
+// Components
 import { Link } from "react-router-dom";
-import { FiChevronRight } from "react-icons/fi";
+import { FiBook, FiPlusSquare } from "react-icons/fi";
+import { ProgressBar, StackedImages } from "../";
 // Styling
 import styles from "./ContentCard.module.css";
+// Helpers
+import { shortenText } from "../../pages/Shelves/helpers";
+// Types
+import { ContentTypeType } from "../ContentInbox";
+import { ImageUrlType } from "../StackedImages";
 
 const cx = classnames.bind(styles);
 
-export interface ContentCardProps {
-  data: {
-    id?: string;
-    name: string;
-    creator: string;
-    thumbnailUrl: string;
-    contentNameSlug: string;
-    contentCreatorSlug: string;
-  };
-  className?: string;
+interface ContentCardTitleProps {
+  title: string;
+  size: "small" | "large";
+  titleLink?: string;
 }
 
-interface SeeAllCardProps {
-  linkPath: string;
-  className?: string;
+interface ContentCardProps {
+  size: "small" | "large";
+  type: ContentTypeType;
+  title: string;
+  authors?: string[];
+  description?: string;
+  thumbnails: ImageUrlType[];
+  dateCompleted?: string;
+  showAddToLibrary?: boolean;
+  onClick?: () => void;
+  onClickAddToLibrary?: () => void;
+  titleLink?: string; // Link to someplace once title is clicked
+  progressInfo?: {
+    numCompleted: number;
+    total: number;
+  }; // Progress for series
 }
 
-export const SeeAllCard = ({ linkPath, className }: SeeAllCardProps) => {
-  return (
-    <Link to={linkPath}>
-      <div className={cx({ card: true, seeAllCard: true }, className)}>
-        See all <FiChevronRight color="#2d3748" size={22} />
-      </div>
+const ContentCardTitle = ({
+  title,
+  size,
+  titleLink,
+}: ContentCardTitleProps) => {
+  // If title is a link, render Link, otherwise just the title
+  return titleLink ? (
+    <Link to={titleLink} className={styles.titleLink}>
+      <h5 className={cx({ title: true, smallTitle: size === "small" })}>
+        {title}
+      </h5>
     </Link>
+  ) : (
+    <h5 className={cx({ title: true, smallTitle: size === "small" })}>
+      {title}
+    </h5>
   );
 };
 
 const ContentCard = ({
-  data: { name, thumbnailUrl, creator, contentNameSlug, contentCreatorSlug },
-  className,
+  size,
+  showAddToLibrary,
+  type,
+  title,
+  authors,
+  description,
+  thumbnails,
+  dateCompleted,
+  onClick,
+  onClickAddToLibrary,
+  titleLink,
+  progressInfo,
 }: ContentCardProps) => {
   return (
-    <Link
-      to={{
-        pathname: `/${contentCreatorSlug}/content/${contentNameSlug}`,
-      }}
+    <div
+      className={cx({ card: true, clickable: onClick ? true : false })}
+      onClick={onClick}
     >
-      <div className={cx({ card: true }, className)}>
-        <img
-          src={thumbnailUrl}
-          className={styles.img}
-          alt={`Thumbnail for ${name}`}
-        />
-        <div className={styles.name}>{name}</div>
-        <div className={styles.creator}>{`by ${creator}`}</div>
+      <div
+        className={cx({ cardVisual: true, smallCardVisual: size === "small" })}
+      >
+        {type === "series" ? (
+          <StackedImages
+            imageUrls={thumbnails}
+            containerStyle={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "150px",
+              width: "100%",
+            }}
+            imagesStyle={{
+              height: "75px",
+              margin: "0 0.5rem",
+              boxShadow:
+                "0px 4px 4px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(0, 0, 0, 0.25), inset 1px 1px 8px rgba(0, 0, 0, 0.25)",
+            }}
+          />
+        ) : !_.isEmpty(thumbnails) ? (
+          <img
+            src={thumbnails[0].url}
+            alt={thumbnails[0].alt}
+            className={cx({
+              thumbnail: true,
+              smallThumbnail: size === "small",
+            })}
+          />
+        ) : (
+          <FiBook size={24} color="black" />
+        )}
       </div>
-    </Link>
+      <div className={cx({ cardBody: true, smallCardBody: size === "small" })}>
+        {/* If showAddToLibrary props is true, show icon to add content to library.
+            Otherwise just the title. */}
+        {showAddToLibrary ? (
+          <div className={styles.titleContainer}>
+            <ContentCardTitle title={title} size={size} titleLink={titleLink} />
+            <div className={styles.addIconContainer}>
+              <FiPlusSquare
+                size={22}
+                className={styles.addIcon}
+                onClick={onClickAddToLibrary}
+              />
+            </div>
+          </div>
+        ) : (
+          <ContentCardTitle title={title} size={size} titleLink={titleLink} />
+        )}
+        {authors ? (
+          <p
+            className={cx({ authors: true, smallAuthors: size === "small" })}
+          >{`by ${authors.join(", ")}`}</p>
+        ) : null}
+        {/* Progress bar if it's a series */}
+        {type === "series" && size === "large" && progressInfo ? (
+          <ProgressBar
+            percentComplete={Math.round(
+              (progressInfo.numCompleted / progressInfo.total) * 100
+            )}
+            containerStyle={{ height: "20px" }}
+            barStyle={{ height: "20px" }}
+          />
+        ) : null}
+        {description ? (
+          <p className={styles.description}>{shortenText(description, 150)}</p>
+        ) : null}
+        {dateCompleted ? (
+          <p className={cx({ authors: true, smallAuthors: size === "small" })}>
+            {`Completed ${moment(dateCompleted).format("DD MMM")}`}
+          </p>
+        ) : null}
+      </div>
+    </div>
   );
+};
+
+ContentCard.defaultProps = {
+  size: "large",
+  showAddToLibrary: false,
 };
 
 export default ContentCard;

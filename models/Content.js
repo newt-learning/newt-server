@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const newtContentDbConn = require("../connections/newtContentDbConn");
+const { startFinishDatesSchema } = require("./shared");
 
 // Newt Content models
 const NewtContent = newtContentDbConn.model("newt-content");
@@ -8,24 +9,13 @@ const NewtContentCreator = newtContentDbConn.model("newt-content-creators");
 const NewtSeries = newtContentDbConn.model("newt-series");
 const NewtQuiz = newtContentDbConn.model("newt-quizzes");
 
-const startFinishDatesSchema = new Schema(
-  {
-    dateStarted: {
-      type: Date,
-      default: null,
-    },
-    dateCompleted: {
-      type: Date,
-      default: null,
-    },
-  },
-  { _id: false }
-);
-
 const contentSchema = new Schema({
+  // 1 - orignial
+  // 2 - dateAdded/dateCompleted converted to startFinishDates
+  // 3 - Deprecating topics, adding playlists instead
   schemaVersion: {
     type: Number,
-    default: 1,
+    default: 3,
   },
   name: String,
   description: String,
@@ -53,6 +43,12 @@ const contentSchema = new Schema({
       ref: "Topic",
     },
   ],
+  playlists: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Playlist",
+    },
+  ],
   dateAdded: Date,
   dateCompleted: Date, // For backwards compatibility
   startFinishDates: [startFinishDatesSchema],
@@ -62,10 +58,31 @@ const contentSchema = new Schema({
     ref: "User",
   },
   // Newt Content fields
+  // Old one
   isOnNewtContentDatabase: {
     type: Boolean,
     default: false,
   },
+  // New one
+  isFromNewtDiscover: {
+    type: Boolean,
+    default: false,
+  },
+  // New DB
+  newtInfo: {
+    newtContentId: {
+      type: Schema.Types.ObjectId,
+    },
+    newtCreatorIds: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    newtSeriesId: {
+      type: Schema.Types.ObjectId,
+    },
+  },
+  // Old (newtContentInfo)
   newtContentInfo: {
     newtContentId: {
       type: Schema.Types.ObjectId,

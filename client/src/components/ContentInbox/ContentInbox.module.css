@@ -3,9 +3,18 @@
   flex-direction: column;
 }
 
+.header:not(:only-child) {
+  margin-right: 1rem;
+}
+
 .titleContainer {
   display: flex;
   flex-direction: row;
+}
+
+.optionsContainer {
+  display: flex;
+  align-items: center;
 }
 
 .creatorsContainer {
@@ -35,24 +44,4 @@
   align-self: flex-end;
   font-size: var(--FS-base);
   color: var(--gray-600);
-}
-
-.optionsDropdown {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 26px;
-  height: 30px;
-  border-radius: 0.5rem;
-  transition: 0.15s linear;
-}
-
-.optionsDropdown:hover {
-  background-color: var(--gray-200);
-}
-
-/* Remove down-arrow that's there by default on dropdowns */
-.dropdownToggle::after {
-  content: none;
 }

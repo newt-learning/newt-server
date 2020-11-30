@@ -1,0 +1,81 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background: var(--newtBlue-500); /* lightBlue */
+  transition: width 0.5s;
+}
+
+.expandedSidebar {
+  width: 220px;
+}
+
+.collapsedSidebar {
+  width: 68px;
+}
+
+.logo {
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px; /* 56px is height of navbar */
+}
+
+.logo h5 {
+  font-family: "Righteous", cursive;
+  font-weight: 400;
+  color: white;
+  font-size: var(--FS-2xl);
+  letter-spacing: 0.1rem;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sidebarNavlinks {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.navlinkRow {
+  display: flex;
+  padding: 0.5rem 1rem;
+  color: var(--gray-800);
+}
+
+.collapsedNavlinkRow {
+  justify-content: center;
+}
+
+.navlinkRow:hover {
+  background-color: var(--newtBlue-300);
+}
+
+.activeNav > div {
+  background-color: var(--newtBlue-300);
+  font-weight: bold;
+}
+
+.icon {
+  margin: 0 0.5rem;
+}
+
+.collapse {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 21.5px 2rem 21.5px; /* Centering hack because transitions/animations are a bitch */
+}
+
+.collapseIcon {
+  cursor: pointer;
+}
+
+.collapseIcon:hover {
+  color: white;
+}

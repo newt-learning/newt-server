@@ -36,10 +36,26 @@
 }
 
 .title {
-  font-size: var(--FS-3xl);
+  font-size: var(--FS-4xl);
   color: white;
   margin-bottom: 2rem;
   text-align: center;
+}
+
+.subtitle {
+  font-size: var(--FS-lg);
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.lastCTA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 2rem;
+}
+.lastCTA h2 {
+  color: var(--gray-800);
 }
 
 @media screen and (min-width: 640px) {
@@ -61,7 +77,7 @@
   }
 
   .titleContainer {
-    margin-top: 200px;
+    margin-top: 175px;
     width: 50%;
     min-width: 400px;
     justify-content: center;
@@ -73,6 +89,15 @@
     font-size: var(--FS-5xl);
     text-align: start;
     margin-bottom: 3rem;
+  }
+
+  .lastCTA {
+    padding: 7rem 2rem;
+  }
+
+  .lastCTA h2 {
+    font-size: var(--FS-3xl);
+    font-weight: 600;
   }
 }
 

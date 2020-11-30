@@ -1,20 +1,26 @@
 import React from "react";
+import _ from "lodash";
 import classnames from "classnames/bind";
+import { StackedImages } from "..";
 import styles from "./AppContentListCard.module.css";
+import { ContentTypeType } from "../ContentInbox";
+import { ImageUrlType } from "../StackedImages";
 
 let cx = classnames.bind(styles);
 
 interface AppContentListCardProps {
   name: string;
-  thumbnailUrl?: string;
+  contentType: ContentTypeType;
+  thumbnails: ImageUrlType[];
   isActive: boolean;
   onClick: () => void;
 }
 
 const AppContentListCard = ({
   name,
+  contentType,
   isActive,
-  thumbnailUrl,
+  thumbnails,
   onClick,
 }: AppContentListCardProps) => {
   return (
@@ -25,13 +31,26 @@ const AppContentListCard = ({
       })}
       onClick={onClick}
     >
-      {/* If there's a thumbnail url, show thumbnail */}
       <div className={styles.thumbnailContainer}>
-        {thumbnailUrl ? (
+        {contentType === "series" ? (
+          <StackedImages
+            imageUrls={thumbnails}
+            containerStyle={{ height: "55px", width: "100%" }}
+            imagesStyle={{
+              height: "45px",
+              borderRadius: "0.25rem",
+              marginRight: "0.75rem",
+            }}
+          />
+        ) : /* If there's a thumbnail url, show thumbnail */
+        !_.isEmpty(thumbnails) ? (
           <img
-            src={thumbnailUrl}
-            alt={`Thumbnail for ${name}`}
-            className={styles.thumbnail}
+            src={thumbnails[0].url}
+            alt={thumbnails[0].alt}
+            className={cx({
+              thumbnail: true,
+              bookThumbnail: contentType === "book",
+            })}
           />
         ) : null}
       </div>

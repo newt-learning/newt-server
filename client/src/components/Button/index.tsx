@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames/bind";
 import ClipLoader from "react-spinners/ClipLoader";
 import styles from "./Button.module.css";
 
@@ -6,26 +7,27 @@ export declare type ButtonCategory =
   | "primary"
   | "secondary"
   | "landing"
+  | "success"
+  | "danger"
   | undefined;
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  type: "button" | "submit";
   onClick?: () => void;
   category?: ButtonCategory;
   isLoading?: boolean;
   isDisabled?: boolean;
-  style?: string;
 }
+
+let cx = classnames.bind(styles);
 
 const Button = ({
   children,
-  type,
   onClick,
   category,
   isLoading,
   isDisabled,
-  style,
+  ...props
 }: ButtonProps) => {
   const selectClassFromCategory = (category: ButtonCategory) => {
     switch (category) {
@@ -35,6 +37,10 @@ const Button = ({
         return styles.primaryBtn;
       case "secondary":
         return styles.secondaryBtn;
+      case "success":
+        return styles.successBtn;
+      case "danger":
+        return styles.dangerBtn;
       default:
         return "";
     }
@@ -42,15 +48,25 @@ const Button = ({
 
   return (
     <button
-      type={type}
-      onClick={isDisabled ? () => {} : onClick}
-      className={`${styles.btn} ${selectClassFromCategory(category)} ${style} ${
-        isDisabled ? styles.disabledBtn : ""
-      }`}
+      {...props}
+      onClick={isDisabled ? undefined : onClick}
+      className={cx(
+        styles.btn,
+        selectClassFromCategory(category),
+        // Don't show custom button styling if it's disabled
+        isDisabled ? undefined : props.className,
+        {
+          disabledBtn: isDisabled,
+        }
+      )}
     >
       {isLoading ? (
         <div className={styles.spinnerContainer}>
-          <ClipLoader color="#003e53" size="0.9rem" loading={isLoading} />
+          <ClipLoader
+            color={selectClassFromCategory(category)}
+            size="1rem"
+            loading={isLoading}
+          />
         </div>
       ) : (
         children
