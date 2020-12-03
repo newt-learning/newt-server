@@ -37,7 +37,7 @@ const Navbar = ({ variant }: NavbarProps) => {
 
   return (
     <BootstrapNavbar
-      expand="sm"
+      expand="md"
       className={cx({
         nav: true,
         landingNav: variant === "landing",
@@ -89,14 +89,7 @@ const Navbar = ({ variant }: NavbarProps) => {
         </BootstrapNav>
         {isAuthenticated ? (
           <div className={styles.rightNav}>
-            <NavLink
-              to="/dashboard"
-              style={{
-                display: "flex",
-                flexWrap: "nowrap",
-                marginRight: "1rem",
-              }}
-            >
+            <NavLink to="/dashboard" className={styles.toDash}>
               <Button
                 className={cx({
                   signInBtn: true,
