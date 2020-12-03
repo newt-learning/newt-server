@@ -19,7 +19,7 @@ import {
 import ContentFlow from "./ContentFlow";
 import ContentInfo from "./ContentInfo";
 // Hooks
-import useMetaTags from "../../hooks/useMetaTags";
+import { useMetaTags, useTakeQuiz } from "../../hooks";
 // Styling
 import styles from "./Content.module.css";
 import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
@@ -32,13 +32,6 @@ const ContentPage = () => {
 
   // Toasts
   const { addToast } = useToasts();
-
-  const [showQuizModal, setShowQuizModal] = useState(false);
-  const [quiz, setQuiz] = useState(null);
-  // Used to determine what text to show on the button: if false, say "Take quiz",
-  // otherwise "Continue quiz".
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [showReview, setShowReview] = useState(false);
 
   // Fetch content data from slug
   const { data, isLoading, isError } = useFetchIndividualNewtContentBySlug(
@@ -61,22 +54,14 @@ const ContentPage = () => {
     isError: isQuizError,
   } = useFetchNewtQuiz(data?.quiz?.id);
 
-  useEffect(() => {
-    if (quizData) {
-      setQuiz(quizData);
-    }
-  }, [quizData]);
-
-  const handleTakeQuiz = () => {
-    setShowQuizModal(true);
-    setQuizStarted(true);
-  };
-
-  const handleCompleteQuiz = (results: QuizQuestionType[]) => {
-    setShowReview(true);
-    // @ts-ignore
-    setQuiz({ ...quiz, questions: results });
-  };
+  const {
+    quiz,
+    showQuizModal,
+    handleTakeQuiz,
+    handleCompleteQuiz,
+    quizState,
+    closeQuizModal,
+  } = useTakeQuiz(quizData);
 
   const handleAddToLibrary = async () => {
     const formattedContent = formatNewtContent(data);
@@ -143,9 +128,9 @@ const ContentPage = () => {
                 hasQuiz={data?.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}
                 buttonText={
-                  showReview
+                  quizState === "review"
                     ? "See results"
-                    : quizStarted
+                    : quizState === "in-progress"
                     ? "Continue quiz"
                     : "Take the quiz"
                 }
@@ -173,8 +158,8 @@ const ContentPage = () => {
         hasError={isQuizError}
         quiz={quiz}
         quizName={data ? `Quiz for ${data.name}` : "Quiz"}
-        onCloseModal={() => setShowQuizModal(false)}
-        showReview={showReview}
+        onCloseModal={closeQuizModal}
+        showReview={quizState === "review"}
         onComplete={handleCompleteQuiz}
       />
     </section>
