@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory, useParams } from "react-router-dom";
 import classnames from "classnames/bind";
+// API
+import { useFetchNewtQuiz } from "../../api/newtContent";
 // Context
 import { useData as useAuthData } from "../../context/AuthContext";
 // Components
@@ -17,11 +19,14 @@ import {
   AppContentDetails,
   Button,
   OptionsDropdown,
+  QuizModal,
 } from "..";
 import ContentFlow from "../../pages/Content/ContentFlow";
 import Skeleton from "react-loading-skeleton";
 import Modal from "react-bootstrap/Modal";
 import AddToLibrarySignIn from "./AddToLibrarySignIn";
+// Hooks
+import { useTakeQuiz } from "../../hooks";
 // Styling
 import styles from "./ContentInbox.module.css";
 // Helpers
@@ -83,6 +88,22 @@ const ContentInbox = ({
   // Get contentId from route params, if it exists. This is used to set the inbox
   // to the right content immediately, rather than always starting at the top
   const { contentId } = useParams();
+
+  const {
+    data: quizData,
+    isLoading: isQuizLoading,
+    isError: isQuizError,
+  } = useFetchNewtQuiz(currentContent?.quiz);
+
+  const {
+    quiz,
+    showQuizModal,
+    handleTakeQuiz,
+    handleCompleteQuiz,
+    showReview,
+    hasQuizStarted,
+    closeQuizModal,
+  } = useTakeQuiz(quizData);
 
   // Okay there's this weird bug where the Inbox keeps moving to the first item
   // if I go to a different tab, or go off screen, or even open Inspector and close
@@ -249,8 +270,15 @@ const ContentInbox = ({
               seriesContent: currentContent?.contentIds,
             }}
             isLoading={isLoading}
-            // hasQuiz={currentContent?.isOnNewtContentDatabase ?? false}
-            hasQuiz={false} // Don't show for now
+            hasQuiz={quizData ? true : false}
+            onTakeQuiz={handleTakeQuiz}
+            buttonText={
+              showReview
+                ? "See results"
+                : hasQuizStarted
+                ? "Continue quiz"
+                : "Take the quiz"
+            }
           />
         </AppContentDetails>
       </AppContentContainer>
@@ -277,6 +305,17 @@ const ContentInbox = ({
           </Modal.Body>
         </Modal>
       ) : null}
+      {/* Quiz modal */}
+      <QuizModal
+        showModal={showQuizModal}
+        isLoading={isQuizLoading}
+        hasError={isQuizError}
+        quiz={quiz}
+        quizName={currentContent ? `Quiz for ${currentContent?.name}` : "Quiz"}
+        onCloseModal={closeQuizModal}
+        showReview={showReview}
+        onComplete={handleCompleteQuiz}
+      />
     </AppMainContainer>
   );
 };
