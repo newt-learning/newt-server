@@ -100,8 +100,7 @@ const ContentInbox = ({
     showQuizModal,
     handleTakeQuiz,
     handleCompleteQuiz,
-    showReview,
-    hasQuizStarted,
+    quizState,
     closeQuizModal,
   } = useTakeQuiz(quizData);
 
@@ -273,9 +272,9 @@ const ContentInbox = ({
             hasQuiz={quizData ? true : false}
             onTakeQuiz={handleTakeQuiz}
             buttonText={
-              showReview
+              quizState === "review"
                 ? "See results"
-                : hasQuizStarted
+                : quizState === "in-progress"
                 ? "Continue quiz"
                 : "Take the quiz"
             }
@@ -313,7 +312,7 @@ const ContentInbox = ({
         quiz={quiz}
         quizName={currentContent ? `Quiz for ${currentContent?.name}` : "Quiz"}
         onCloseModal={closeQuizModal}
-        showReview={showReview}
+        showReview={quizState === "review"}
         onComplete={handleCompleteQuiz}
       />
     </AppMainContainer>

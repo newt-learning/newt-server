@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { QuizQuestionType } from "../components/QuizModal/quizModalTypes";
 
+type QuizState = "begin" | "in-progress" | "review";
+
 function useTakeQuiz(quizData: any) {
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [quiz, setQuiz] = useState(null);
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [showReview, setShowReview] = useState(false);
+  const [quizState, setQuizState] = useState<QuizState>("begin");
 
   useEffect(() => {
     if (quizData) {
@@ -15,11 +16,13 @@ function useTakeQuiz(quizData: any) {
 
   const handleTakeQuiz = () => {
     setShowQuizModal(true);
-    setQuizStarted(true);
+    if (quizState !== "review") {
+      setQuizState("in-progress");
+    }
   };
 
   const handleCompleteQuiz = (results: QuizQuestionType[]) => {
-    setShowReview(true);
+    setQuizState("review");
     // @ts-ignore
     setQuiz({ ...quiz, questions: results });
   };
@@ -29,8 +32,7 @@ function useTakeQuiz(quizData: any) {
     showQuizModal,
     handleTakeQuiz,
     handleCompleteQuiz,
-    showReview,
-    hasQuizStarted: quizStarted,
+    quizState,
     closeQuizModal: () => setShowQuizModal(false),
   };
 }
