@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { QuizQuestionType } from "../components/QuizModal/quizModalTypes";
 
-type QuizState = "begin" | "in-progress" | "review";
+export type QuizState = "begin" | "in-progress" | "review";
 
 function useTakeQuiz(quizData: any) {
   const [showQuizModal, setShowQuizModal] = useState(false);

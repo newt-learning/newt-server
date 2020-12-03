@@ -39,6 +39,7 @@ import { figureOutShelfMovingDataChanges } from "./helpers";
 // Types
 import { OptionsDropdownItemType } from "../../components/OptionsDropdown";
 import { ContentTypeType } from "../../components/ContentInbox";
+import { QuizState as QuizStateType } from "../../hooks/useTakeQuiz";
 
 export type PlaylistType =
   | {
@@ -76,7 +77,7 @@ interface ContentFlowProps {
   };
   hasQuiz?: boolean;
   onTakeQuiz?: () => void;
-  buttonText?: string;
+  quizState: QuizStateType;
   variant: "default" | "inbox"; // No container styling for inbox
   isLoading?: boolean;
   showOptionsDropdown?: boolean;
@@ -101,7 +102,7 @@ const ContentFlow = ({
   seriesInfo,
   hasQuiz,
   onTakeQuiz,
-  buttonText,
+  quizState,
   variant,
   isLoading,
   showOptionsDropdown = true,
@@ -391,7 +392,11 @@ const ContentFlow = ({
                 className={styles.quizBtn}
                 onClick={onTakeQuiz}
               >
-                {buttonText}
+                {quizState === "review"
+                  ? "See results"
+                  : quizState === "in-progress"
+                  ? "Continue quiz"
+                  : "Take the quiz"}
               </Button>
             </div>
           </>
@@ -508,7 +513,6 @@ const ContentFlow = ({
 };
 
 ContentFlow.defaultProps = {
-  buttonText: "Take the quiz",
   variant: "default",
 };
 

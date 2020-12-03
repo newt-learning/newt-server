@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 // API
@@ -6,6 +6,7 @@ import {
   useFetchIndividualNewtContentBySlug,
   useFetchNewtQuiz,
 } from "../../api/newtContent";
+import { useCreateContentV2 } from "../../api/content";
 // Components
 import { Link } from "react-router-dom";
 import PropagateLoader from "react-spinners/PropagateLoader";
@@ -22,8 +23,6 @@ import ContentInfo from "./ContentInfo";
 import { useMetaTags, useTakeQuiz } from "../../hooks";
 // Styling
 import styles from "./Content.module.css";
-import { QuizQuestionType } from "../../components/QuizModal/quizModalTypes";
-import { useCreateContentV2 } from "../../api/content";
 
 const ContentPage = () => {
   // Get content name slug from URL parameters
@@ -127,13 +126,7 @@ const ContentPage = () => {
                 description={data?.description}
                 hasQuiz={data?.quiz?.id ? true : false}
                 onTakeQuiz={handleTakeQuiz}
-                buttonText={
-                  quizState === "review"
-                    ? "See results"
-                    : quizState === "in-progress"
-                    ? "Continue quiz"
-                    : "Take the quiz"
-                }
+                quizState={quizState}
                 isLoading={isLoading}
                 showOptionsDropdown={false}
                 onAddToLibrary={handleAddToLibrary}

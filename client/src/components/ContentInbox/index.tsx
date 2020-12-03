@@ -271,13 +271,7 @@ const ContentInbox = ({
             isLoading={isLoading}
             hasQuiz={quizData ? true : false}
             onTakeQuiz={handleTakeQuiz}
-            buttonText={
-              quizState === "review"
-                ? "See results"
-                : quizState === "in-progress"
-                ? "Continue quiz"
-                : "Take the quiz"
-            }
+            quizState={quizState}
           />
         </AppContentDetails>
       </AppContentContainer>
