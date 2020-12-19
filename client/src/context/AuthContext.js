@@ -97,6 +97,8 @@ async function authenticateWithProvider(
 
       dispatch(setAuthedUser(res.data));
 
+      firebase.analytics().logEvent("login");
+
       // Redirect to path
       history.push(redirectTo);
 
